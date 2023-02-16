@@ -22,14 +22,12 @@ public class Answer extends Auditable {
 
     @Enumerated(value = EnumType.STRING)
     @Column
-    private AnswerStatus answerStatus;
-
+    private AnswerStatus answerStatus = AnswerStatus.ANSWER_REGISTRATION;
 
     public enum AnswerStatus {
-        ANSWER_NOT_EXISTS("답변 없음"),
-        ANSWER_EXISTS("답변 있음"),
-        ANSWER_SELECTION("답변 채택"),
-        ANSWER_DELETE("답변 삭제");
+        ANSWER_REGISTRATION("답변 등록됨"),
+        ANSWER_SELECTION("답변 채택됨"),
+        ANSWER_DELETE("답변 삭제됨");
 
         @Getter
         private String status;
