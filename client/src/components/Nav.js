@@ -4,7 +4,7 @@ import styled from 'styled-components'
 const NavContainer = styled.div`
     border: 1px solid black;
     width: 200px;
-    height: calc(100vh);
+    /* height: calc(100vh); */
     display: flex;
     flex-direction: column;
     color: var(--main__content);
