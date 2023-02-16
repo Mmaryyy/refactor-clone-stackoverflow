@@ -16,6 +16,6 @@ public class AnswerVote {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long answerVoteId;
 
-    @Column
+    @Column(name = "TOTAL_VOTE", nullable = false)
     private int totalVote;
 }

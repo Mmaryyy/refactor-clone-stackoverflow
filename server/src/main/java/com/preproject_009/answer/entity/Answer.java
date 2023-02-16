@@ -17,11 +17,11 @@ public class Answer extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long answerId;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(name = "CONTENT",columnDefinition = "TEXT", nullable = false)
     private String content;
 
     @Enumerated(value = EnumType.STRING)
-    @Column
+    @Column(name = "ANSWER_STATUS")
     private AnswerStatus answerStatus = AnswerStatus.ANSWER_REGISTRATION;
 
     public enum AnswerStatus {

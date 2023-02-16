@@ -17,6 +17,6 @@ public class AnswerComment extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long answerCommentId;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(name = "CONTENT", columnDefinition = "TEXT", nullable = false)
     private String content;
 }
