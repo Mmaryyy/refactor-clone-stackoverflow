@@ -17,10 +17,11 @@ public class AnswerVote {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long answerVoteId;
 
-    @Column(name = "TOTAL_VOTE", nullable = false)
-    private int totalVote;
-
     @ManyToOne
     @JoinColumn(name = "ANSWER_ID")
     private Answer answer;
+
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
 }

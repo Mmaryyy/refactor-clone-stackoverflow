@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -30,11 +31,11 @@ public class Answer extends Auditable {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @OneToMany(mappedBy = "ANSWER", cascade = CascadeType.PERSIST)
-    private AnswerComment answerComment;
+    @OneToMany(mappedBy = "answer", cascade = CascadeType.PERSIST)
+    private List<AnswerComment> answerComment;
 
-    @OneToMany(mappedBy = "ANSWER", cascade = CascadeType.PERSIST)
-    private AnswerVote answerVote;
+    @OneToMany(mappedBy = "answer", cascade = CascadeType.PERSIST)
+    private List<AnswerVote> answerVote;
 
     public enum AnswerStatus {
         ANSWER_REGISTRATION("답변 등록됨"),
