@@ -1,4 +1,4 @@
-package com.preproject_009.q_comment.entity;
+package com.preproject_009.question.entity;
 
 import com.preproject_009.question.entity.Question;
 import lombok.Getter;
