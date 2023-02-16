@@ -1,6 +1,5 @@
 package com.preproject_009.question.entity;
 
-import com.preproject_009.question.entity.Question;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,7 +15,7 @@ public class QuestionVote {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long questionVoteId;
 
-    @Column(nullable = false)
+    @Column(name = "TOTAL_VOTE", nullable = false)
     private int totalVote;
 
     // Question 클래스 n:1 매핑

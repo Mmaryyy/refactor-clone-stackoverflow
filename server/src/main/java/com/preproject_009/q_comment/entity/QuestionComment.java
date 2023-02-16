@@ -16,7 +16,7 @@ public class QuestionComment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long questionCommentId;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(name = "CONTENT", columnDefinition = "TEXT", nullable = false)
     private String content;
 
     // Question 클래스 n:1 매핑

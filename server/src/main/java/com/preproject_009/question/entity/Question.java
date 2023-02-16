@@ -14,17 +14,17 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long questionId;
 
-    @Column(nullable = false)
+    @Column(name = "TITLE", nullable = false)
     private String title;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(name = "CONTENT", columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @Column(nullable = false)
+    @Column(name = "TOTAL_ANSWER", nullable = false)
     private int totalAnswer;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "QUESTION_STATUS", nullable = false)
     private QuestionStatus questionStatus = QuestionStatus.QUESTION_REGISTRATION;
 
     // member 클래스 n:1 매핑
