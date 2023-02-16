@@ -1,6 +1,8 @@
 package com.preproject_009.answer.entity;
 
+import com.preproject_009.a_comment.entity.AnswerComment;
 import com.preproject_009.audit.Auditable;
+import com.preproject_009.member.entity.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,6 +25,16 @@ public class Answer extends Auditable {
     @Enumerated(value = EnumType.STRING)
     @Column(name = "ANSWER_STATUS")
     private AnswerStatus answerStatus = AnswerStatus.ANSWER_REGISTRATION;
+
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
+
+    @OneToMany(mappedBy = "ANSWER", cascade = CascadeType.PERSIST)
+    private AnswerComment answerComment;
+
+    @OneToMany(mappedBy = "ANSWER", cascade = CascadeType.PERSIST)
+    private AnswerVote answerVote;
 
     public enum AnswerStatus {
         ANSWER_REGISTRATION("답변 등록됨"),

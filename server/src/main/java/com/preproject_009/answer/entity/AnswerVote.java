@@ -1,5 +1,6 @@
 package com.preproject_009.answer.entity;
 
+import com.preproject_009.member.entity.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,4 +19,8 @@ public class AnswerVote {
 
     @Column(name = "TOTAL_VOTE", nullable = false)
     private int totalVote;
+
+    @ManyToOne
+    @JoinColumn(name = "ANSWER_ID")
+    private Answer answer;
 }
