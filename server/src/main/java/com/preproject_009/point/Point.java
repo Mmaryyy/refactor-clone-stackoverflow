@@ -22,17 +22,17 @@ import java.time.LocalDateTime;
 public class Point{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "point_id")
+    @Column(name = "POINT_ID")
     private Long pointId;
 
     private int point;
 
     @CreatedDate
-    @Column(name = "created_at")
+    @Column(name = "CREATED_AT")
     private LocalDateTime createdDate;
 
     @OneToOne
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
     public void setMember(Member member) {

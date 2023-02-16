@@ -33,7 +33,7 @@ public class Member{
     private String name;
 
     // 소셜 가입 여부(true: 소셜가입, false: 일반 가입)
-    @Column(name = "is_social")
+    @Column(name = "IS_SOCIAL")
     private boolean social;
 
     @Column(length = 100)
@@ -42,16 +42,16 @@ public class Member{
     // true : 어드민, false : 일반 회원
     private boolean authority;
 
-    @OneToOne(mappedBy = "member", cascade = CascadeType.PERSIST)
+    @OneToOne(mappedBy = "MEMBER", cascade = CascadeType.PERSIST)
     private Point point;
 
     // 자기 소개
-    @Column(length = 300)
+    @Column(columnDefinition = "TEXT")
     private String about;
     
     // 멤버 활동, 휴면, 탈퇴 여부
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "member_status", length = 30, nullable = false)
+    @Column(name = "MEMBER_STATUS", length = 30, nullable = false)
     private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
 
     public void setPoint(Point point) {
