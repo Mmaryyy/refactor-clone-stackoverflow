@@ -18,7 +18,7 @@ public class Tag {
     @Column(name = "CONTENT", columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    // Question 클래스 n:1 매핑
+    // Question 클래스 n:1 양방향
     @ManyToOne
     @JoinColumn(name = "QUESTION_ID")
     private Question question;

@@ -1,15 +1,23 @@
 package com.preproject_009.question.entity;
 
-import lombok.*;
+import com.preproject_009.answer.entity.Answer;
+import com.preproject_009.audit.Auditable;
+import com.preproject_009.member.entity.Member;
+import com.preproject_009.q_comment.entity.QuestionComment;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @NoArgsConstructor
 @Setter
 @Getter
 @Entity
-public class Question {
+public class Question extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long questionId;
@@ -27,10 +35,26 @@ public class Question {
     @Column(name = "QUESTION_STATUS", nullable = false)
     private QuestionStatus questionStatus = QuestionStatus.QUESTION_REGISTRATION;
 
-    // member 클래스 n:1 매핑
-//    @ManyToOne
-//    @JoinColumn(name = "MEMBER_ID")
-//    private Member member;
+    // member n:1 양방향
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
+
+    // tag 1:n 양방향
+    @OneToMany(mappedBy = "question")
+    private List<Tag> tags = new ArrayList<>();
+
+    // answer 1:n 양방향
+    @OneToMany(mappedBy = "question")
+    private List<Answer> answers = new ArrayList<>();
+
+    // vote 1:n 양방향
+    @OneToMany(mappedBy = "question")
+    private List<QuestionVote> questionVotes = new ArrayList<>();
+
+    // comment 1:n 양방향
+    @OneToMany(mappedBy = "question")
+    private List<QuestionComment> questionComments = new ArrayList<>();
 
     public enum QuestionStatus{
         QUESTION_REGISTRATION("질문 등록"),
