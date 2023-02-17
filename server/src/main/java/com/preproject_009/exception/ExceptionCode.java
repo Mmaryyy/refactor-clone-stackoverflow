@@ -9,7 +9,9 @@ public enum ExceptionCode {
     INVALID_MEMBER_STATUS(400, "Invalid member status"),
     ANSWER_NOT_FOUND(404, "Answer not found"),
     ANSWER_COMMENT_NOT_FOUND(404, "AnswerComment not found"),
-    CANNOT_CHANGE_ANSWER(400, "Cannot change answer");
+    CANNOT_CHANGE_ANSWER(400, "Cannot change answer"),
+    QUESTION_NOT_FOUND(404, "Question not found"),
+    CANNOT_CHANGE_QUESTION(400, "Cannot change question");
     @Getter
     private int status;
 
