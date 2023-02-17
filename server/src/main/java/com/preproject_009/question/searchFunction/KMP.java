@@ -50,8 +50,4 @@ public class KMP {
         return isContain;
     }
 
-    public static void main(String[] args) {
-        boolean output = kmp("I want to ask javacript and java","java");
-        System.out.println(output);
-    }
 }
