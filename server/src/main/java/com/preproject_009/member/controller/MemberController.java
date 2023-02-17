@@ -1,13 +1,11 @@
 package com.preproject_009.member.controller;
 
 import com.preproject_009.member.dto.MemberDto;
-import com.preproject_009.member.dto.MemberPatchDto;
 import com.preproject_009.member.dto.MultiResponseDto;
 import com.preproject_009.member.entity.Member;
 import com.preproject_009.member.mapper.MemberMapper;
 import com.preproject_009.member.service.MemberService;
 import com.preproject_009.point.Point;
-import com.preproject_009.utils.UriCreator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
-import java.net.URI;
 import java.util.List;
 
 /**

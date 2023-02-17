@@ -10,5 +10,5 @@ import java.util.Optional;
 
 public interface QuestionRepository extends JpaRepository<Question, Long> {
     Optional<Question> findByTitleContains(String str);
-    Page<List<Question>> findByCategory_TitleContaining(String category_name, String keyword, Pageable pageable);
+    //Page<List<Question>> findByCategory_TitleContaining(String category_name, String keyword, Pageable pageable);
 }
