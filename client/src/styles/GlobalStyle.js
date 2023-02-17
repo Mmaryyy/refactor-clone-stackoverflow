@@ -9,6 +9,10 @@ const GlobalStyle = createGlobalStyle`
     ol,ul {
         list-style: none;
     }
+    .app_wrap {
+        display: flex;
+        padding: 15px;
+    }
 `
 
 export default GlobalStyle

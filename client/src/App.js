@@ -1,24 +1,16 @@
 import './styles/global.css';
 import { useState } from 'react';
+import Header from './components/Header'
 import Nav from './components/Nav'
+import Sidebar from './components/Sidebar';
 import Index from './page/Index'
 import GlobalStyle from './styles/GlobalStyle'
 import { Fragment, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Sidebar from './components/Sidebar';
-import styled from "styled-components";
-import Sidebar2 from './components/Sidebar2';
-
-
-const Container = styled.div`
-display:flex;
-flex-direction: row;
-`;
-
-
+import Contents from './page/Contents';
 
 function App() {
-  const [isReady, setIsReady] = useState(true)
+  const [isReady, setIsReady] = useState(false)
   useEffect(() => {
     setTimeout(() => {
       setIsReady(false)
@@ -31,17 +23,16 @@ function App() {
         {isReady ? (
           <Index />
         ) : (
-          <Container>
+          <div className="app_wrap">
             <Nav />
             <Routes>
-              {/* <Route path='/' element={<Index/>}></Route> */}
+              <Route path='/questions' element={<Contents/>}></Route>
               {/* <Route path='/questions' element={}></Route>
           <Route path='/tags' element={}></Route>
           <Route path='/users' element={}></Route> */}
             </Routes>
             <Sidebar />
-            <Sidebar2 />
-          </Container>
+          </div>
         )}
       </Fragment>
     </BrowserRouter>
