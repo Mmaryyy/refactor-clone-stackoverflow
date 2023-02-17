@@ -1,5 +1,20 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom"
+import userData from "../datas/userData.json"
+// import aratar1 from "../img/Avatar1.png"
+// import aratar2 from "../img/Avatar2.png"
+// import aratar3 from "../img/Avatar3.png"
+// import aratar4 from "../img/Avatar4.png"
+// import aratar5 from "../img/Avatar5.png"
+// import aratar6 from "../img/Avatar6.png"
+// import aratar7 from "../img/Avatar7.png"
+// import aratar8 from "../img/Avatar8.png"
+// import aratar9 from "../img/Avatar9.png"
+// import aratar10 from "../img/Avatar10.png"
+
+
+
+
 
 //* sidebar에 있는 컨테이너 컴포넌트 App.js에 적용하기(왼쪽 전체마진 잡혀야 함)
 //* Color 변수이름, 검은색 글씨 나누기
@@ -59,6 +74,8 @@ function Sidebar() {
           <BlogUl>
 
             <BlogHLi>The Overflow Blog</BlogHLi>
+            {/* <BlogHLi>{userData[1].avatarUrl}</BlogHLi> */}
+            <img src={userData[0].avatarUrl}></img>
 
             <BlogLi>
               <div>✏️</div>
