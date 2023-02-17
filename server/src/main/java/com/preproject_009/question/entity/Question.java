@@ -2,6 +2,8 @@ package com.preproject_009.question.entity;
 
 import com.preproject_009.answer.entity.Answer;
 import com.preproject_009.audit.Auditable;
+import com.preproject_009.exception.BusinessLogicException;
+import com.preproject_009.exception.ExceptionCode;
 import com.preproject_009.member.entity.Member;
 import com.preproject_009.q_comment.entity.QuestionComment;
 import lombok.Getter;
@@ -71,5 +73,16 @@ public class Question extends Auditable {
         QuestionStatus(String string) {
             this.string = string;
         }
+    }
+
+    public void canChangeQuestion(QuestionStatus questionStatus) {
+        if(this.questionStatus == QuestionStatus.QUESTION_ANSWER_ACCEPTED) {
+            throw new BusinessLogicException(ExceptionCode.CANNOT_CHANGE_QUESTION);
+        }
+    }
+
+    public void setQuestionStatus(QuestionStatus questionStatus) {
+        canChangeQuestion(questionStatus);
+        this.questionStatus = questionStatus;
     }
 }
