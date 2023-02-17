@@ -1,12 +1,12 @@
 [
     {
-        "id": "mmarry",
-        "pw": "12341234",
-        "contents": [
-            1
-        ],
-        "comments": [
-            
-        ]
+        "shortId": 1,
+        "nickname": "윤혜",
+        "email": "oonae7@github.com",
+        "password": 1234,
+        "joinDate": "dateObject",
+        "isSocial": true,
+        "avatarUrl": "http://www.naver.com",
+        "authority": false
     }
 ]
