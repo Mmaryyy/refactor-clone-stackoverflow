@@ -5,14 +5,10 @@ const Wrapper = styled.footer`
   background-color: #23262a;
   height: 300px;
   width: 100%;
-  position: fixed;
-  bottom: 0;
   display: flex;
   flex-direction: row;
   justify-content: center;
   color: #babfc4;
-  grid-column: 1/3;
-  /* ----------------------------------------------- */
   .group {
     margin: 30px;
     display: flex;
