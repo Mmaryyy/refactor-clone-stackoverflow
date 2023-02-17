@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-const NavContainer = styled.div`
-    border: 1px solid black;
+const NavContainer = styled.ul`
+    border-right: 1px solid var(--tab__focus);
     width: 200px;
     height: calc(100vh);
     display: flex;
@@ -28,13 +28,18 @@ const TapLink = styled(Link)`
     }
 `
 
+const TabTitle = styled.p`
+    margin-left: 10px;
+    font-size: var(--fs-caption);
+`
+
 const Nav = () => {
-    
+
   return (
     <div>
         <NavContainer>
             <TapLink to='/'>Home</TapLink>
-            <p>PUBLIC</p>
+            <TabTitle>PUBLIC</TabTitle>
                 <TapContainer>
                 <TapLink to='/questions'> 🌏 Questions</TapLink>
                 <TapLink to='/tags' paddingLeft={'40px'}>Tags</TapLink>
