@@ -2,7 +2,10 @@ package com.preproject_009.answer.entity;
 
 import com.preproject_009.a_comment.entity.AnswerComment;
 import com.preproject_009.audit.Auditable;
+import com.preproject_009.exception.BusinessLogicException;
+import com.preproject_009.exception.ExceptionCode;
 import com.preproject_009.member.entity.Member;
+import com.preproject_009.question.entity.Question;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,6 +35,11 @@ public class Answer extends Auditable {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
+    // question n:1 양방향
+    @ManyToOne
+    @JoinColumn(name = "QUESTION_ID")
+    private Question question;
+
     // answerComment 1:n 양방향
     @OneToMany(mappedBy = "answer", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<AnswerComment> answerComment;
@@ -42,7 +50,7 @@ public class Answer extends Auditable {
 
     public enum AnswerStatus {
         ANSWER_REGISTRATION("답변 등록됨"),
-        ANSWER_SELECTION("답변 채택됨"),
+        ANSWER_ACCEPTED("답변 채택됨"),
         ANSWER_DELETE("답변 삭제됨");
 
         @Getter
@@ -50,6 +58,12 @@ public class Answer extends Auditable {
 
         AnswerStatus(String status) {
             this.status = status;
+        }
+    }
+
+    public void canChangeAnswer(AnswerStatus answerStatus) {
+        if(this.answerStatus == AnswerStatus.ANSWER_ACCEPTED) {
+            throw new BusinessLogicException(ExceptionCode.CANNOT_CHANGE_ANSWER);
         }
     }
 }

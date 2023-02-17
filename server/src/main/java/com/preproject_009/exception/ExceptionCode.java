@@ -6,7 +6,10 @@ public enum ExceptionCode {
     MEMBER_NOT_FOUND(404, "Member not found"),
     MEMBER_EXISTS(409, "Member exists"),
     NOT_IMPLEMENTATION(501, "Not Implementation"),
-    INVALID_MEMBER_STATUS(400, "Invalid member status");
+    INVALID_MEMBER_STATUS(400, "Invalid member status"),
+    ANSWER_NOT_FOUND(404, "Answer not found"),
+    ANSWER_COMMENT_NOT_FOUND(404, "AnswerComment not found"),
+    CANNOT_CHANGE_ANSWER(400, "Cannot change answer");
     @Getter
     private int status;
 
