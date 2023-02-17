@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -23,18 +24,21 @@ public class Answer extends Auditable {
     private String content;
 
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "ANSWER_STATUS")
+    @Column(name = "ANSWER_STATUS", nullable = false)
     private AnswerStatus answerStatus = AnswerStatus.ANSWER_REGISTRATION;
 
+    // member n:1 양방향
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @OneToMany(mappedBy = "ANSWER", cascade = CascadeType.PERSIST)
-    private AnswerComment answerComment;
+    // answerComment 1:n 양방향
+    @OneToMany(mappedBy = "answer", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<AnswerComment> answerComment;
 
-    @OneToMany(mappedBy = "ANSWER", cascade = CascadeType.PERSIST)
-    private AnswerVote answerVote;
+    // answerVote 1:n 양방향
+    @OneToMany(mappedBy = "answer", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<AnswerVote> answerVote;
 
     public enum AnswerStatus {
         ANSWER_REGISTRATION("답변 등록됨"),

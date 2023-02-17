@@ -17,10 +17,13 @@ public class AnswerVote {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long answerVoteId;
 
-    @Column(name = "TOTAL_VOTE", nullable = false)
-    private int totalVote;
-
+    // answer n:1 양방향
     @ManyToOne
     @JoinColumn(name = "ANSWER_ID")
     private Answer answer;
+
+    // member n:1 단방향
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
 }
