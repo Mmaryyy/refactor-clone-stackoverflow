@@ -17,10 +17,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-/** Writer : 최준영
-    Date   : 2023-02-16
-    Description : Member entity
-*/
+/**
+ * Writer : 최준영
+ * Date   : 2023-02-16
+ * Description : Member entity
+ */
 
 @NoArgsConstructor
 @Getter
@@ -45,17 +46,17 @@ public class Member extends Auditable {
 
     @Column(length = 100)
     private String password;
-    
+
     // true : 어드민, false : 일반 회원
     private boolean authority;
 
     // 자기 소개
     @Column(columnDefinition = "TEXT")
     private String about;
-    
+
     // img 이름
     private String img;
-    
+
     // 멤버 활동, 휴면, 탈퇴 여부
     @Enumerated(value = EnumType.STRING)
     @Column(name = "MEMBER_STATUS", length = 30, nullable = false)
@@ -87,6 +88,7 @@ public class Member extends Auditable {
             point.setMember(this);
         }
     }
+
     public enum MemberStatus {
         MEMBER_ACTIVE("활동 상태"),
         MEMBER_SLEEP("휴면 상태"),
