@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { SubmitButton } from '../styles/styledcomponents'
 import Content from '../components/Content'
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
