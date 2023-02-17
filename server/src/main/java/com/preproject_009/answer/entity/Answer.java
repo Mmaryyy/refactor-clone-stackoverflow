@@ -24,17 +24,20 @@ public class Answer extends Auditable {
     private String content;
 
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "ANSWER_STATUS")
+    @Column(name = "ANSWER_STATUS", nullable = false)
     private AnswerStatus answerStatus = AnswerStatus.ANSWER_REGISTRATION;
 
+    // member n:1 양방향
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @OneToMany(mappedBy = "answer", cascade = CascadeType.PERSIST)
+    // answerComment 1:n 양방향
+    @OneToMany(mappedBy = "answer", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<AnswerComment> answerComment;
 
-    @OneToMany(mappedBy = "answer", cascade = CascadeType.PERSIST)
+    // answerVote 1:n 양방향
+    @OneToMany(mappedBy = "answer", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<AnswerVote> answerVote;
 
     public enum AnswerStatus {
