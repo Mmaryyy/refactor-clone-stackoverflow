@@ -20,7 +20,7 @@ public class Point extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "POINT_ID")
-    private Long pointId;
+    private long pointId;
 
     private int point;
 
