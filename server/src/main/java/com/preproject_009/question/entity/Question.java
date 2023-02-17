@@ -31,6 +31,9 @@ public class Question extends Auditable {
     @Column(name = "TOTAL_ANSWER", nullable = false)
     private int totalAnswer;
 
+    @Column(name = "VIEW", nullable = false)
+    private int view;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "QUESTION_STATUS", nullable = false)
     private QuestionStatus questionStatus = QuestionStatus.QUESTION_REGISTRATION;
@@ -45,15 +48,15 @@ public class Question extends Auditable {
     private List<Tag> tags = new ArrayList<>();
 
     // answer 1:n 양방향
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private List<Answer> answers = new ArrayList<>();
 
     // vote 1:n 양방향
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private List<QuestionVote> questionVotes = new ArrayList<>();
 
     // comment 1:n 양방향
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private List<QuestionComment> questionComments = new ArrayList<>();
 
     public enum QuestionStatus{
