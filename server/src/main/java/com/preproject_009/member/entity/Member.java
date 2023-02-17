@@ -30,7 +30,7 @@ public class Member extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
-    private Long memberId;
+    private long memberId;
 
     // 수정 X, 중복 X
     @Column(nullable = false, updatable = false, unique = true)
@@ -53,29 +53,32 @@ public class Member extends Auditable {
     @Column(columnDefinition = "TEXT")
     private String about;
     
+    // img 이름
+    private String img;
+    
     // 멤버 활동, 휴면, 탈퇴 여부
     @Enumerated(value = EnumType.STRING)
     @Column(name = "MEMBER_STATUS", length = 30, nullable = false)
     private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
 
     // Point 클래스 1:1 매핑
-    @OneToOne(mappedBy = "member", cascade = CascadeType.PERSIST)
+    @OneToOne(mappedBy = "member", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Point point;
 
     // Question 클래스 1:n 매핑
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
     private List<Question> question = new ArrayList<>();
 
     // Answer 클래스 1:n 매핑
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
     private List<Answer> answer = new ArrayList<>();
 
     // Answer Comment 클래스 1:n 매핑
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
     private List<AnswerComment> answerComment = new ArrayList<>();
 
     // Question_Comment 클래스 1:n 매핑
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
     private List<QuestionComment> questionComment = new ArrayList<>();
 
     public void setPoint(Point point) {
