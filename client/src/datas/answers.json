@@ -1,14 +1,11 @@
 [
   {
     "shortId": 1,
-    "title": "Why this...",
-    "content": "I think ... ",
-    "tag": ["javascript", "react", "ERC"],
+    "author": "혜림",
+    "content": "몬소린지 1도 몰릅니다",
     "createdAt": "dateObject",
     "lastModifiedAt": "dateObject",
-    "view": 1,
-    "votes": 0,
-    "isSelected": true,
+    "contentNumber": 1,
     "comments": [
       {
         "shortId": 1,
