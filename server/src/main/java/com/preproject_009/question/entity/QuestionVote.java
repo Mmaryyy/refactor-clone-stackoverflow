@@ -17,9 +17,6 @@ public class QuestionVote extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long questionVoteId;
 
-    @Column(name = "TOTAL_VOTE", nullable = false)
-    private int totalVote;
-
     // Question 클래스 n:1 양방향
     @ManyToOne
     @JoinColumn(name = "QUESTION_ID")

@@ -22,10 +22,12 @@ public class AnswerComment extends Auditable {
     @Column(name = "CONTENT", columnDefinition = "TEXT", nullable = false)
     private String content;
 
+    // member n:1 양방향
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
+    // answer n:1 양방향
     @ManyToOne
     @JoinColumn(name = "ANSWER_ID")
     private Answer answer;
