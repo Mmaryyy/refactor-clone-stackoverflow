@@ -55,7 +55,7 @@ public class Member extends Auditable {
     private String about;
 
     // img 이름
-    private String img;
+//    private String img;
 
     // 멤버 활동, 휴면, 탈퇴 여부
     @Enumerated(value = EnumType.STRING)
@@ -81,6 +81,16 @@ public class Member extends Auditable {
     // Question_Comment 클래스 1:n 매핑
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
     private List<QuestionComment> questionComment = new ArrayList<>();
+
+    public Member(String email) {
+        this.email = email;
+    }
+
+    public Member(String email, String name, String about) {
+        this.email = email;
+        this.name = name;
+        this.about = about;
+    }
 
     public void setPoint(Point point) {
         this.point = point;
