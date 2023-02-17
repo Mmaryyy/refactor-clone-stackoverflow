@@ -1,7 +1,6 @@
 :root {
     /* color */
     --point__color: #F48225;
-    --main__content: #6A737C;
 
     --menu__active: #F1F2F3;
     --tab__focus: #E3E6E8;
@@ -15,9 +14,9 @@
     --sidebar__top: #FBF3D5;
     --sidebar__body: #FDF7E2;
     --sidebar__line: #F1E5BC;
+    --sidebar__title: ;
     
     --footer__back: #23262A;
-    --footer__content: #BABFC4;
 
     --content__view--low: #989EA4;
     --content__view--mid: #83690B;
@@ -27,6 +26,13 @@
     --sidebar__related: #5EBA7C;
 
     --link__content: #0074CC;
+
+    /* text color */
+    --black__100:#BABFC4;
+    --black__100:#989EA4;
+    --black__100:#6A737C;
+    --black__100:#3B4044;
+    --black__100:#0c0d0e;
 
     /* font size */
     --fs-fine: 11px;
@@ -52,5 +58,4 @@
     --fs-display2-relative: 4.23076923em;
     --fs-display3-relative: 5.30769231em;
     --fs-display4-relative: 7.61538461em;
-    --fs-base: 13px;
 }
