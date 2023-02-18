@@ -5,7 +5,6 @@ import com.preproject_009.exception.ExceptionCode;
 import com.preproject_009.member.service.MemberService;
 import com.preproject_009.question.entity.Question;
 import com.preproject_009.question.repository.QuestionRepository;
-import com.preproject_009.question.searchFunction.KMP;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -13,8 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Transactional
@@ -80,17 +77,14 @@ public class QuestionService {
         return null;
     }
 
-    public Page<Question> findQuestionByKeyword(int page, String keyword, int sortType) {
+    public Optional<Question> findQuestionByKeyword(int page, String keyword, int sortType) {
         // TODO: 2023/02/17 : 키워드 검색 기능 구현
-        List<Question> resultQuestions = new ArrayList<>();
-
-        for(Question q : questionRepository.findAll()) {
-            if (KMP.kmp(q.getTitle(), keyword)) {
-                resultQuestions.add(q);
-            }
-        }
 
         return null;
+   }
+
+    public void deleteQuestion(long questionId) {
+        questionRepository.deleteById(questionId);
     }
 
 }

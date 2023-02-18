@@ -1,6 +1,6 @@
 package com.preproject_009.answer.controller;
 
-import com.preproject_009.answer.mapper.AnswerMapper;
+//import com.preproject_009.answer.mapper.AnswerMapper;
 import com.preproject_009.answer.service.AnswerService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 public class AnswerController {
     private final AnswerService answerService;
-    private final AnswerMapper mapper;
+    //private final AnswerMapper mapper;
 
-    public AnswerController(AnswerService answerService, AnswerMapper mapper) {
+    public AnswerController(AnswerService answerService) {
         this.answerService = answerService;
-        this.mapper = mapper;
+        //this.mapper = mapper;
     }
 
 }
