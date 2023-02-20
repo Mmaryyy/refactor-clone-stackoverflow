@@ -58,26 +58,9 @@ public class QuestionService {
         return question;
     }
 
-    public Page<Question> findQuestions(int page, String keyword, int sortType){
-        PageRequest pageRequest = null;
-        switch (sortType) {
-            // 최신순 == 1
-            case 1:
-                pageRequest = PageRequest.of(page, pageSize, Sort.by("createdAt").descending());
-                break;
-            // 좋아요순 == 2
-            case 2:
-                pageRequest = PageRequest.of(page, pageSize, Sort.by("totalVote").descending());
-                break;
-            // 최신수정순 == 3
-            case 3:
-                pageRequest = PageRequest.of(page, pageSize, Sort.by("modifiedAt").descending());
-                break;
-            // 조회수순 == 4
-            case 4:
-                pageRequest = PageRequest.of(page, pageSize, Sort.by("view").descending());
-                break;
-        }
+    public Page<Question> findQuestions(int page, String keyword, String sortType){
+        PageRequest pageRequest = PageRequest.of(page, pageSize, Sort.by(sortType).descending());
+
         return questionRepository.findByTitleContains(keyword, pageRequest);
     }
 
@@ -91,5 +74,6 @@ public class QuestionService {
         int view = question.getView();
         question.setView(view + 1);
     }
+
 
 }
