@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { TagButton } from '../styles/styledcomponents'
-import userData from '../datas/userData.json'
 
 const ContentContainer = styled.div`
   display: flex;
@@ -9,14 +8,15 @@ const ContentContainer = styled.div`
   padding: 15px;
 `
 const SummaryContainer = styled.div`
-  width: 250px;
-  padding: 15px;
+  width: 9rem;
+  padding: 10px;
+  gap: 10px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
 `
 const ContentDetailContainer = styled.div`
-    height: 180px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     > *{
@@ -25,14 +25,15 @@ const ContentDetailContainer = styled.div`
 `
 const PostSummaryContainer = styled.div`
     display: flex;
+    justify-content: space-between;
 `
-const SummaryTitle = styled.p`
-  margin-top: 10px;
+const SummaryTitle = styled.div`
+  
   color: var(--content__view--low);
+  font-weight: 600;
   
   &.view__vote {
     color: black;
-    font-weight: 600;
   }
   &.view__mid {
     color: var(--content__view--mid);
@@ -40,40 +41,45 @@ const SummaryTitle = styled.p`
   &.view__high {
     color: var(--content__view--high);
   }
+  &.answer__selected {
+    background: var(--content__answer);
+    color: white;
+    border-radius: 3px;
+    padding: 4px;
+  }
 `
 const PostTitle = styled.p`
   color: var(--link__content);
-  font-size: var(--fs-title-relative);
+  font-size: var(--fs-body2);
+  font-weight: 500;
 `
-const Content = () => {
+const BodyContainer = styled.p`
+  overflow: hidden;
+  width: inherit;
+`
+const Content = ({ contents, answer }) => {
+  const { content, createdAt, isSelected, lastModifiedAt, tag, title, view, votes } = contents
+  console.log(answer)
   return (
     <ContentContainer>
-        {/* <img src={userData[0].avatarUrl}/> */}
       <SummaryContainer className="content_summary">
-        <SummaryTitle className="view__vote">0 votes</SummaryTitle>
-        <SummaryTitle>0 answers</SummaryTitle>
-        <SummaryTitle>9 views</SummaryTitle>
+        <SummaryTitle className="view__vote">{votes} votes</SummaryTitle>
+        <SummaryTitle className={isSelected ? 'answer__selected' : null}>{answer.length} answers</SummaryTitle>
+        <SummaryTitle>{view} views</SummaryTitle>
       </SummaryContainer>
       <ContentDetailContainer className="content_details">
-        <PostTitle>
-          Why do I need to set 'path' on both Socket.IO and Nignix?
-        </PostTitle>
-        <p>
-          I'm trying to set up multiple APIs on a single VPS and serve them
-          through Nginx. I want to have all of them in separate sub-locations
-          like the example...
-        </p>
+        <PostTitle>{title}</PostTitle>
+        <BodyContainer>
+          {content}
+        </BodyContainer>
         <PostSummaryContainer className="post_summary_meta">
           <div className="tag_container">
-            <TagButton>javascript</TagButton>
-            <TagButton>express</TagButton>
-            <TagButton>nginx</TagButton>
-            <TagButton>socket.io</TagButton>
+            {tag.map((el, idx) => <TagButton key={idx}>{el}</TagButton>)}
           </div>
           <div className="author_datas">
             <img></img>
             <a href="#">Octopus</a>
-            <span>1 modified 15 secs ago</span>
+            <span>{lastModifiedAt}</span>
           </div>
         </PostSummaryContainer>
       </ContentDetailContainer>

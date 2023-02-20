@@ -2,6 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import { SubmitButton } from '../styles/styledcomponents'
 import Content from '../components/Content'
+import contents from '../datas/contents.json'
+import answers from '../datas/answers.json'
 
 const Container = styled.div`
   display: flex;
@@ -25,22 +27,25 @@ const HeadContainer = styled.div`
 const Title = styled.h1`
   font-weight: 500;
 `
-
 const Contents = () => {
+  console.log(answers)
   return (
-    <Container className='contents_container'>
+    <Container className="contents_container">
       <HeadContainer>
-        <div className='head_first'>
-        <Title>All Questions</Title>
-        <SubmitButton>Ask Question</SubmitButton>
+        <div className="head_first">
+          <Title>All Questions</Title>
+          <SubmitButton>Ask Question</SubmitButton>
         </div>
-        <div className='head_second'>
-          <span>number questions</span>
+        <div className="head_second">
+          <span>{contents.length} questions</span>
         </div>
       </HeadContainer>
-      <Content/>
+      {contents.map((content) => {
+        const answer = answers.filter(el => el.contentNumber === content.shortId)
+        return <Content contents={content} key={content.shortId} answer={answer}/>
+      })}
     </Container>
-  )
+  );
 }
 
 export default Contents
