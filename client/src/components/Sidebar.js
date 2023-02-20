@@ -1,143 +1,151 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom"
-import userData from "../datas/userData.json"
-// import aratar1 from "../img/Avatar1.png"
-// import aratar2 from "../img/Avatar2.png"
-// import aratar3 from "../img/Avatar3.png"
-// import aratar4 from "../img/Avatar4.png"
-// import aratar5 from "../img/Avatar5.png"
-// import aratar6 from "../img/Avatar6.png"
-// import aratar7 from "../img/Avatar7.png"
-// import aratar8 from "../img/Avatar8.png"
-// import aratar9 from "../img/Avatar9.png"
-// import aratar10 from "../img/Avatar10.png"
 
 
+//* GlobalStyle -> sidebar(전체 컨테이너) 반영 전
+// const Container = styled.div`
+// width: 300px;
+// background-color: rgb(253,247,226);
+// margin: 0px 0px 15px 24px;
+// box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+// `;
 
+// const Blog = styled.div`
+// margin: 0px 0px 16px 0px;
+// `;
 
+//* GlobalStyle -> sidebar(전체 컨테이너) 반영 후
+//! GlobalStyle .sidebar추가
+// .sidebar {
+//   width: 300px;
+//   margin: 0px 0px 15px 24px;
+// }
+//! App.js 엘리먼트 추가(</Routes> 밑에 추가해서 작업함)
+//<div className="sidebar">
+//  <Sidebar />
+//  <Sidebar2 />
+//</div> */}
 
-//* sidebar에 있는 컨테이너 컴포넌트 App.js에 적용하기(왼쪽 전체마진 잡혀야 함)
-//* Color 변수이름, 검은색 글씨 나누기
-//! 마진 상쇄(BlogLi)
 
 const Container = styled.div`
-width: 300px;
-background-color: rgb(253,247,226);
-margin: 0px 0px 15px 24px;
-box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-`;
-
-const Blog = styled.div`
 margin: 0px 0px 16px 0px;
-`;
+background-color: rgb(253,247,226);
+box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  ul {
+    display:flex;
+    flex-direction: column;
+  }
 
-const BlogUl = styled.ul`
-display:flex;
-flex-direction: column;
-`;
+  .li-header {
+    list-style: none;
+    padding: 12px 15px;
+    font-weight: 700;
+    font-size: var(--fs-caption);
+    border: 1px solid rgb(241,230,187);
+    background-color: rgb(251,243,213);
+    color: var(--black__400);
+    margin-bottom: 12px;
+  }
 
-const BlogHLi = styled.li`
-list-style: none;
-padding: 12px 15px;
-font-weight: bold;
-font-size: var(--fs-caption);
-border: 1px solid rgb(241,230,187);
-background-color: rgb(251,243,213);
-`;
+  .li-list {
+    display: flex !important;
+    flex-direction: row;
+    list-style: none;
+    padding: 0px 16px;
+    margin-bottom: 12px;
+  }
 
-const BlogLi = styled.li`
-display: flex !important;
-flex-direction: row;
-list-style: none;
-padding: 0px 16px;
-margin: calc(12px * 1) 0;
-`;
+  .li-text {
+    overflow-wrap: break-word !important;
+    margin-left: 10px;
+    color: var(--black__500);
+    font-size: var(--fs-caption);
+    font-weight: 500;
+    height: auto;
+  }
 
-const TextLi = styled.div`
-overflow-wrap: break-word !important;
-margin-left: 10px;
-color: black;
-font-size: var(--fs-caption);
-font-weight: 500;
-height: auto;
-`;
-
-const LinkText = styled(Link)`
-text-decoration: none;
+  .li-link {
+    text-decoration: none;
+  }
 `;
 
 
 function Sidebar() {
   return (
-      <Container>
-        <Blog>
-          <BlogUl>
+    <Container>
+      <ul>
+        <li className="li-header">The Overflow Blog</li>
 
-            <BlogHLi>The Overflow Blog</BlogHLi>
-            {/* <BlogHLi>{userData[1].avatarUrl}</BlogHLi> */}
-            <img src={userData[0].avatarUrl}></img>
+        <li className="li-list">
+          <div>✏️</div>
+          <Link to="#" className="li-link">
+            <div className="li-text">
+              You don’t have to build a browser in JavaScript anymore (Ep. 538)
+            </div>
+          </Link>
+        </li>
 
-            <BlogLi>
-              <div>✏️</div>
-              <LinkText to="#">
-                <TextLi>You don’t have to build a browser in JavaScript anymore (Ep. 538)</TextLi>
-              </LinkText>
-            </BlogLi>
+        <li className="li-list">
+          <div>✏️</div>
+          <Link to="#" className="li-link">
+            <div className="li-text">
+              Serverless scales well, but most databases don’t
+            </div>
+          </Link>
+        </li>
 
-            <BlogLi>
-              <div>✏️</div>
-              <LinkText to="#">
-                <TextLi>Serverless scales well, but most databases don’t</TextLi>
-              </LinkText>
-            </BlogLi>
+        <li className="li-header">Featured on Meta</li>
 
-            <BlogHLi>Featured on Meta</BlogHLi>
+        <li className="li-list">
+          <div>📋</div>
+          <Link to="#" className="li-link">
+            <div className="li-text">
+              Ticket smash for [status-review] tag: Part Deux
+            </div>
+          </Link>
+        </li>
 
-            <BlogLi>
-              <div>📋</div>
-              <LinkText to="#">
-                <TextLi>Ticket smash for [status-review] tag: Part Deux</TextLi>
-              </LinkText>
-            </BlogLi>
+        <li className="li-list">
+          <div>📋</div>
+          <Link to="#" className="li-link">
+            <div className="li-text">
+              Updated cookie consent popup adds a "Necessary cookies only"
+              button
+            </div>
+          </Link>
+        </li>
 
-            <BlogLi>
-              <div>📋</div>
-              <LinkText to="#">
-                <TextLi>Updated cookie consent popup adds a "Necessary cookies only" button</TextLi>
-              </LinkText>
-            </BlogLi>
+        <li className="li-list">
+          <div>⭐️</div>
+          <Link to="#" className="li-link">
+            <div className="li-text">Collectives: The next iteration</div>
+          </Link>
+        </li>
 
-            <BlogLi>
-              <div>⭐️</div>
-              <LinkText to="#">
-                <TextLi>Collectives: The next iteration</TextLi>
-              </LinkText>
-            </BlogLi>
+        <li className="li-list">
+          <div>⭐️</div>
+          <Link to="#" className="li-link">
+            <div className="li-text">
+              We’ve made changes to our Privacy Notice for Collectives™
+            </div>
+          </Link>
+        </li>
 
-            <BlogLi>
-              <div>⭐️</div>
-              <LinkText to="#">
-                <TextLi>We’ve made changes to our Privacy Notice for Collectives™</TextLi>
-              </LinkText>
-            </BlogLi>
+        <li className="li-list">
+          <div>⭐️</div>
+          <Link to="#" className="li-link">
+            <div className="li-text">Temporary policy: ChatGPT is banned</div>
+          </Link>
+        </li>
 
-            <BlogLi>
-              <div>⭐️</div>
-              <LinkText to="#">
-                <TextLi>Temporary policy: ChatGPT is banned</TextLi>
-              </LinkText>
-            </BlogLi>
-
-            <BlogLi>
-              <div>⭐️</div>
-              <LinkText to="#">
-                <TextLi>The [amazon] tag is being burninated</TextLi>
-              </LinkText>
-            </BlogLi>
-
-          </BlogUl>
-        </Blog>
-      </Container>
+        <li className="li-list">
+          <div>⭐️</div>
+          <Link to="#" className="li-link">
+            <div className="li-text">The [amazon] tag is being burninated</div>
+          </Link>
+        </li>
+      </ul>
+    </Container>
   );
 }
 

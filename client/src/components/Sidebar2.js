@@ -6,101 +6,97 @@ import { Link } from "react-router-dom"
 
 
 const Container = styled.div`
-width: 300px;
+/* width: 300px; */
 background-color: white;
 margin: 0px 0px 19px 0px;
+  .title {
+    font-size: var(--fs-subheading);
+    color: hsl(210,8%,25%);
+    font-weight: 400;
+    margin-bottom: 1em;
+  }
+
+  ul {
+    display:flex;
+    flex-direction: column;
+  }
+
+  li {
+    display:flex;
+    flex-direction: row;
+    list-style: none;
+    height: auto;
+    padding: 0px;
+    margin: 0px 0px 10px 0px;
+  }
+
+  .li-icon {
+    margin: 0px 6px 0px 0px;
+  }
+
+  .li-link {
+    text-decoration: none;
+  }
+
+  .li-text {
+    color: var(--link__content);
+    font-size: var(--fs-caption);
+    font-weight: 500;
+  }
 `;
-
-const Title = styled.div`
-font-size: var(--fs-subheading);
-color: hsl(210,8%,25%);
-font-weight: 400;
-margin-bottom: 1em;
-`;
-
-const BlogUl = styled.ul`
-display:flex;
-flex-direction: column;
-
-`;
-
-const BlogLi = styled.li`
-display:flex;
-flex-direction: row;
-list-style: none;
-height: auto;
-padding: 0px;
-margin: 0px 0px 10px 0px;
-`;
-
-const Favicon = styled.div`
-margin: 0px 6px 0px 0px;
-`;
-
-const LinkText = styled(Link)`
-text-decoration: none;
-
-`;
-
-const TextLi = styled.div`
-color: var(--link__content);
-font-weight: 500;
-font-size: var(--fs-caption);
-`;
-
 
 function Sidebar2() {
   return (
     <Container>
-      <Title>Hot Network Questions</Title>
-      <BlogUl>
-        <BlogLi>
-          <Favicon>🍓</Favicon>
-          <LinkText to="#">
-            <TextLi>
-            Do humans need some agency over the world around them for their lives to have some sense or purpose?
-            </TextLi>
-          </LinkText>
-        </BlogLi>
+      <div className="title">Hot Network Questions</div>
+      <ul>
+        <li>
+          <div className="li-icon">🍓</div>
+          <Link to="#" className="li-link">
+            <div className="li-text">
+              Do humans need some agency over the world around them for their
+              lives to have some sense or purpose?
+            </div>
+          </Link>
+        </li>
 
-        <BlogLi>
-          <Favicon>🍓</Favicon>
-          <LinkText to="#">
-            <TextLi>
-            What are the cheapest options for a thickening agent for making soups?
-            </TextLi>
-          </LinkText>
-        </BlogLi>
+        <li>
+          <div className="li-icon">🍓</div>
+          <Link to="#" className="li-link">
+            <div className="li-text">
+              What are the cheapest options for a thickening agent for making
+              soups?
+            </div>
+          </Link>
+        </li>
 
-        <BlogLi>
-          <Favicon>🍓</Favicon>
-          <LinkText to="#">
-            <TextLi>
-            Difference between Sunbeam and Lightning Bolt
-            </TextLi>
-          </LinkText>
-        </BlogLi>
+        <li>
+          <div className="li-icon">🍓</div>
+          <Link to="#" className="li-link">
+            <div className="li-text">
+              Difference between Sunbeam and Lightning Bolt
+            </div>
+          </Link>
+        </li>
 
-        <BlogLi>
-          <Favicon>🍓</Favicon>
-          <LinkText to="#">
-            <TextLi>
-            Aluminum window screen as wire mesh be for strengthening concrete?
-            </TextLi>
-          </LinkText>
-        </BlogLi>
+        <li>
+          <div className="li-icon">🍓</div>
+          <Link to="#" className="li-link">
+            <div className="li-text">
+              Aluminum window screen as wire mesh be for strengthening concrete?
+            </div>
+          </Link>
+        </li>
 
-        <BlogLi>
-          <Favicon>🍓</Favicon>
-          <LinkText to="#">
-            <TextLi>
-            MOSFETs turn on without any voltage applied to the gate
-            </TextLi>
-          </LinkText>
-        </BlogLi>
-
-
-      </BlogUl>
+        <li>
+          <div className="li-icon">🍓</div>
+          <Link to="#" className="li-link">
+            <div className="li-text">
+              MOSFETs turn on without any voltage applied to the gate
+            </div>
+          </Link>
+        </li>
+      </ul>
     </Container>
   );
 }

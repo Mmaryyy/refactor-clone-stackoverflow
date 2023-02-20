@@ -29,10 +29,12 @@
 
     /* text color */
     --black__100:#BABFC4;
-    --black__100:#989EA4;
-    --black__100:#6A737C;
-    --black__100:#3B4044;
-    --black__100:#0c0d0e;
+    --black__200:#989EA4;
+    --black__300:#6A737C;
+    --black__400:#3B4044;
+    --black__500:#2e3235;
+    --black__600:#222427;
+    --black__700:#0c0d0e;
 
     /* font size */
     --fs-fine: 11px;
