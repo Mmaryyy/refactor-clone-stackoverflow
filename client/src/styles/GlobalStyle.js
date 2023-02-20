@@ -12,6 +12,7 @@ const GlobalStyle = createGlobalStyle`
     .app_wrap {
         display: flex;
         padding: 15px 15px 15px 0px;
+        justify-content: center;
     }
     .sidebar {
         width: 300px;

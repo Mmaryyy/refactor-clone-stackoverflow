@@ -37,27 +37,9 @@
     --black__700:#0c0d0e;
 
     /* font size */
-    --fs-fine: 11px;
-    --fs-caption: 12px;
-    --fs-body1: 13px;
-    --fs-body2: 1.15384615rem;
-    --fs-body3: 1.30769231rem;
-    --fs-subheading: 1.46153846rem;
-    --fs-title: 1.61538462rem;
-    --fs-headline1: 2.07692308rem;
-    --fs-headline2: 2.61538461rem;
-    --fs-display1: 3.30769231rem;
-    --fs-display2: 4.23076923rem;
-    --fs-display3: 5.30769231rem;
-    --fs-display4: 7.61538461rem;
-    --fs-body2-relative: 1.15384615em;
-    --fs-body3-relative: 1.30769231em;
-    --fs-subheading-relative: 1.46153846em;
-    --fs-title-relative: 1.61538462em;
-    --fs-headline1-relative: 2.07692308em;
-    --fs-headline2-relative: 2.61538461em;
-    --fs-display1-relative: 3.30769231em;
-    --fs-display2-relative: 4.23076923em;
-    --fs-display3-relative: 5.30769231em;
-    --fs-display4-relative: 7.61538461em;
+    --fs--caption: 12px;
+    --fs--mid: 14px;
+    --fs--lg: 16px;
+    --fs--big: 18px;
+    --fs--title: 27px;
 }

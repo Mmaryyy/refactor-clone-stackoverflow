@@ -13,6 +13,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Contents from './page/Contents';
 import Footer from './components/Footer';
 import Mypage from './page/Mypage';
+import Post from './page/Post'
 
 function App() {
   const [isReady, setIsReady] = useState(false);
@@ -32,11 +33,9 @@ function App() {
           <div className='app_wrap'>
             <Nav />
             <Routes>
-              <Route path='/questions' element={<Contents />}></Route>
+              <Route path='/questions' element={<Contents />} />
               <Route path='/mypage' element={<Mypage />} />
-              {/* <Route path='/questions' element={}></Route>
-          <Route path='/tags' element={}></Route>
-          <Route path='/users' element={}></Route> */}
+              <Route path={`/content/id=${1}`} element={<Post/>} />
             </Routes>
             <div className="sidebar">
               <Sidebar />

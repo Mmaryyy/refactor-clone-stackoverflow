@@ -4,18 +4,18 @@ import { SubmitButton } from '../styles/styledcomponents'
 import Content from '../components/Content'
 import contents from '../datas/contents.json'
 import answers from '../datas/answers.json'
+import userData from '../datas/userData.json'
 
-const Container = styled.div`
+const Container = styled.main`
   display: flex;
   flex-direction: column;
-  width: 100%;
   height: 100vh;
 `
 const HeadContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  width: 100%;
+  /* width: 100%; */
   height: 10rem;
   padding: 20px;
   border-bottom: 1px solid var(--tab__focus);
@@ -29,6 +29,7 @@ const Title = styled.h1`
 `
 const Contents = () => {
   console.log(answers)
+  console.log(userData)
   return (
     <Container className="contents_container">
       <HeadContainer>
@@ -42,7 +43,8 @@ const Contents = () => {
       </HeadContainer>
       {contents.map((content) => {
         const answer = answers.filter(el => el.contentNumber === content.shortId)
-        return <Content contents={content} key={content.shortId} answer={answer}/>
+        const author = userData.filter(el => el.contents.includes(content.shortId))
+        return <Content contents={content} key={content.shortId} answer={answer} author={author}/>
       })}
     </Container>
   );

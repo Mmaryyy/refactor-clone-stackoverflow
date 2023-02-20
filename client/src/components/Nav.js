@@ -5,14 +5,13 @@ import { useState } from 'react'
 const NavContainer = styled.ul`
     border-right: 1px solid var(--tab__focus);
     margin-left: 30px;
-    width: 200px;
+    width: 10rem;
     height: calc(100vh);
     display: flex;
     flex-direction: column;
     color: var(--black__300);
     font-weight: 400;
 `
-
 const TapContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -24,10 +23,10 @@ const BlankBox = styled.div`
 const TapLink = styled(Link)`
     display: flex;
     align-items: center;
+    width: 100%;
     color: var(--black__300);
     padding: 10px;
     text-decoration: none;
-    width: 90%;
     cursor: pointer;
     &:focus {
         background: var(--menu__active);
@@ -42,12 +41,10 @@ const TapLink = styled(Link)`
         padding-left: 35px;
     }
 `
-
 const TabTitle = styled.p`
     margin-left: 10px;
-    font-size: var(--fs-caption);
+    font-size: var(--fs--caption);
 `
-
 const Nav = () => {
 
   return (
