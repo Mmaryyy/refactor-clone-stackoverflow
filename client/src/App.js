@@ -12,6 +12,7 @@ import { Fragment, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Contents from './page/Contents';
 import Footer from './components/Footer';
+import Mypage from './page/Mypage';
 
 function App() {
   const [isReady, setIsReady] = useState(false);
@@ -32,6 +33,7 @@ function App() {
             <Nav />
             <Routes>
               <Route path='/questions' element={<Contents />}></Route>
+              <Route path='/mypage' element={<Mypage />} />
               {/* <Route path='/questions' element={}></Route>
           <Route path='/tags' element={}></Route>
           <Route path='/users' element={}></Route> */}
