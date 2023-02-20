@@ -6,15 +6,20 @@ import com.preproject_009.member.entity.Member;
 import com.preproject_009.member.mapper.MemberMapper;
 import com.preproject_009.member.service.MemberService;
 import com.preproject_009.point.Point;
+import com.preproject_009.question.entity.Question;
+import com.preproject_009.question.service.QuestionService;
+import com.preproject_009.utils.UriCreator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.net.URI;
 import java.util.List;
 
 /**
@@ -30,10 +35,12 @@ import java.util.List;
 public class MemberController {
     private final static String MEMBER_DEFAULT_URL = "/v1/members";
     private final MemberService memberService;
+    private final QuestionService questionService;
     private final MemberMapper mapper;
 
-    public MemberController(MemberService memberService, MemberMapper mapper){
+    public MemberController(MemberService memberService, MemberMapper mapper, QuestionService questionService){
         this.memberService = memberService;
+        this.questionService = questionService;
         this.mapper = mapper;
     }
 
@@ -44,8 +51,11 @@ public class MemberController {
         member.setPoint(new Point());
 
         Member createdMember = memberService.createMember(member);
-//      URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, createdMember.getMemberId());
-        return new ResponseEntity<>(response(createdMember), HttpStatus.CREATED);
+        System.out.println("id는 " + createdMember.getMemberId());
+        URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, createdMember.getMemberId());
+
+        return ResponseEntity.created(location).build();
+//        return new ResponseEntity<>(response(createdMember), HttpStatus.CREATED);
     }
 
     // 유저 수정
@@ -83,8 +93,20 @@ public class MemberController {
                         pageMembers),
                 HttpStatus.OK);
     }
+    
+    // 질문 조회
+//    public ResponseEntity getQuestions(@Positive @RequestParam int page,
+//                                       @Positive @RequestParam int size){
+//        Page<Question> pageQuestions = questionService.findQuestions(page -1, size);
+//        List<Question> questions = pageQuestions.getContent();
+//        return new ResponseEntity<>(
+//                new MultiResponseDto<>(mapper.questionsToMemberResponses(questions),
+//                        pageQuestions),
+//                HttpStatus.OK);
+//    }
 
 
+    // 유저 삭제 처리
     @DeleteMapping("/{member-id}")
     public ResponseEntity deleteMember(
             @PathVariable("member-id") @Positive long memberId){
