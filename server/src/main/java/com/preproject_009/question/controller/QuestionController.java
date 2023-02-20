@@ -10,12 +10,11 @@ import com.preproject_009.question.repository.QuestionRepository;
 import com.preproject_009.question.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.PostConstruct;
+import javax.validation.constraints.Positive;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,23 +37,22 @@ public class QuestionController {
         return new ResponseEntity<>(response(createdQuestion), HttpStatus.CREATED);
     }
 
-    @GetMapping("/v1/questions")
-    public Page<Question> getKeyword(@RequestParam("page") int page,
-                                     @RequestParam("keyword") String keyword) {
-        PageRequest pageRequest = PageRequest.of(page, 5);
-        initializing();
-        return questionRepository.findByTitleContains(keyword, pageRequest);
+    @GetMapping(QUESTION_DEFAULT_URL + "/{question_id}")
+    public ResponseEntity getQuestion(@PathVariable("question_id") @Positive Long questionId) {
+        Question question = questionService.findQuestion(questionId);
+        QuestionDto.Response response = questionMapper.questionToQuestionResponseDto(question);
+        questionService.updateView(question);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostConstruct
-    public void initializing() {
-        for (int i = 0; i < 100; i++) {
-            Question question = new Question();
-            question.setTitle("java" + i);
-            question.setContent("d");
+    @GetMapping(QUESTION_DEFAULT_URL)
+    public Page<QuestionDto.ResponseAll> getKeyword(@RequestParam("page") int page,
+                                                    @RequestParam("keyword") String keyword) {
+        Page<Question> questions = questionService.findQuestionByKeyword(page, keyword, 1);
+        Page<QuestionDto.ResponseAll> response = questions.map(questionMapper::questionsToQuestionResponseDto);
 
-            questionRepository.save(question);
-        }
+        return response;
     }
 
     public QuestionDto.Response response(Question question) {

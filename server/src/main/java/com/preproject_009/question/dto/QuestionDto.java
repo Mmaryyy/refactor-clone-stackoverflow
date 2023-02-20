@@ -26,10 +26,24 @@ public class QuestionDto {
     @AllArgsConstructor
     public static class Response{
         private long questionId;
+        private long memberId;
         private String title;
         private String content;
+        private int view;
+        private int totalVote;
         private Question.QuestionStatus questionStatus;
         private int totalAnswer;
+    }
 
+    @Getter
+    @AllArgsConstructor
+    public static class ResponseAll{
+        private long questionId;
+        private long memberId;
+        private String title;
+        private String content;
+        private int totalVote;
+        private int view;
+        private int totalAnswer;
     }
 }

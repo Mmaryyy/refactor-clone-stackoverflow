@@ -5,11 +5,9 @@ import com.preproject_009.question.entity.Question;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 
-import java.util.List;
-
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface QuestionMapper {
     Question questionPostDtoToQuestion(QuestionDto.Post requestBody);
     QuestionDto.Response questionToQuestionResponseDto(Question question);
-    List<QuestionDto.Response> questionsToQuestionResponseDto(List<Question> questions);
+    QuestionDto.ResponseAll questionsToQuestionResponseDto(Question questions);
 }

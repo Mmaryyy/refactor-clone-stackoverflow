@@ -67,24 +67,35 @@ public class QuestionService {
                 break;
             // 좋아요순 == 2
             case 2:
-                // TODO: 2023/02/17
-//                questionRepository.findAll(PageRequest
-//                        .of(page, 15, Sort.by().descending()));
-
+                questionRepository.findAll(PageRequest
+                        .of(page, 15, Sort.by("totalVote").descending()));
                 break;
-            //
+            // 최신수정순 == 3
+            case 3:
+                questionRepository.findAll(PageRequest
+                        .of(page, 15, Sort.by("modifiedAt").descending()));
+                break;
+            // 조회수순 == 4
+            case 4:
+                questionRepository.findAll(PageRequest
+                        .of(page, 15, Sort.by("view").descending()));
+                break;
         }
         return null;
     }
 
-    public Optional<Question> findQuestionByKeyword(int page, String keyword, int sortType) {
-        // TODO: 2023/02/17 : 키워드 검색 기능 구현
-
-        return null;
+    public Page<Question> findQuestionByKeyword(int page, String keyword, int sortType) {
+        PageRequest pageRequest = PageRequest.of(page, 15);
+        return questionRepository.findByTitleContains(keyword, pageRequest);
    }
 
     public void deleteQuestion(long questionId) {
         questionRepository.deleteById(questionId);
+    }
+
+    public void updateView(Question question) {
+        int view = question.getView();
+        question.setView(view + 1);
     }
 
 }
