@@ -13,6 +13,10 @@ const GlobalStyle = createGlobalStyle`
         display: flex;
         padding: 15px;
     }
+    .sidebar {
+        width: 300px;
+        margin: 0px 0px 15px 24px;
+    }
 `
 
 export default GlobalStyle
