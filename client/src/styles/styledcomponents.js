@@ -5,7 +5,7 @@ export const SubmitButton = styled.button`
     background: var(--button__back);
     color: white;
     border: 1px solid var(--link__content);
-    box-shadow: inset 0 1px white;
+    box-shadow: inset 0 1px rgb(128, 192, 255);
     border-radius: 5px;
     font-size: 15px;
     font-weight: 600;

@@ -11,7 +11,7 @@ const GlobalStyle = createGlobalStyle`
     }
     .app_wrap {
         display: flex;
-        padding: 15px;
+        padding: 15px 15px 15px 0px;
     }
     .sidebar {
         width: 300px;
