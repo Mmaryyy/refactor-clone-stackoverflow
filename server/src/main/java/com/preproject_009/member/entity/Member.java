@@ -86,10 +86,11 @@ public class Member extends Auditable {
         this.email = email;
     }
 
-    public Member(String email, String name, String about) {
+    public Member(String email, String name, String about, String password) {
         this.email = email;
         this.name = name;
         this.about = about;
+        this.password = password;
     }
 
     public void setPoint(Point point) {

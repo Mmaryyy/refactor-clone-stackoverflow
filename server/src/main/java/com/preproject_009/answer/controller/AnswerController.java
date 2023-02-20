@@ -22,6 +22,7 @@ public class AnswerController {
     private final AnswerService answerService;
     private final AnswerMapper answerMapper;
 
+
     public AnswerController(AnswerService answerService, AnswerMapper answerMapper) {
         this.answerService = answerService;
         this.answerMapper = answerMapper;
@@ -35,7 +36,7 @@ public class AnswerController {
 
         return new ResponseEntity<>(answerMapper.answerToAnswerResponse(createdAnswer), HttpStatus.CREATED);
     }
-
+    
     @PatchMapping("/{answer-id}")
     public ResponseEntity patchAnswer(@PathVariable("answer-id") @Positive long answerId,
                                       @Valid @RequestBody AnswerDto.Patch requestBody) {
