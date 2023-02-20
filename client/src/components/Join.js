@@ -22,29 +22,29 @@ const LeftSide = styled.div`
       color: hsl(210,8%,15%);
     }
 
-    .li-box {
+    .li_box {
       display: flex;
       margin-bottom: 24px;
     }
 
-    .li-icon {
+    .li_icon {
       margin-right: 8px;
       fill: hsl(206,100%,52%);
     }
 
-    .li-text {
+    .li_text {
       font-size: 16px;
       line-height: 1.5;
     }
 
-    .bottom-text {
+    .bottom_text {
       font-size: 13px;
       font-weight: 500;
       color: hsl(210,8%,45%);
       line-height: 1.3;
     }
 
-    .bottom-link {
+    .bottom_link {
       text-decoration: none;
       color: hsl(206,100%,40%);
     }
@@ -77,7 +77,7 @@ const RightSide = styled.div`
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    .google-icon {
+    .google_icon {
       margin-right: 5px;
     }
     span {
@@ -85,12 +85,12 @@ const RightSide = styled.div`
     }
   }
 
-  .signup-field {
+  .signup_field {
     text-align: center !important;
-    font-size: var(--fs-body1);
+    font-size: 13px;
     padding: 16px;
     margin-bottom: 24px;
-    .signup-link {
+    .signup_link {
       position: relative;
       padding-left: 4px;
       font-weight: 500;
@@ -103,8 +103,9 @@ const RightSide = styled.div`
         fill: var(--link__content);
       }
     }
-    .signup-talent {
+    .signup_talent {
       margin-top: 12px;
+      padding-right: 15px;
     }
   }
 `;
@@ -125,7 +126,7 @@ const InputContainer = styled.div`
     justify-content: space-between;
   }
 
-  .input-field {
+  .input_field {
     display: flex;
     flex-direction: column;
     margin: 6px 0;
@@ -139,7 +140,7 @@ const InputContainer = styled.div`
     margin: 2px 0px;
   }
 
-  .input-error {
+  .input_error {
     display: flex;
     flex-direction: column;
     position: relative;
@@ -179,7 +180,7 @@ const InputContainer = styled.div`
     font-weight: 500;
   }
 
-  .password-label {
+  .password_label {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -187,7 +188,7 @@ const InputContainer = styled.div`
     font-weight: 500;
   }
 
-  .password-link {
+  .password_link {
     text-decoration: none;
     font-size: var(--fs-caption);
     color: var(--link__content);
@@ -210,19 +211,19 @@ const InputContainer = styled.div`
       background: var(--button__back--hover);
     }
   }
-    .password-info {
+    .password_info {
       font-size: var(--fs-caption);
       color: var(--black__400);
       margin: 4px;
     }
-    .opt-field {
+    .opt_field {
       margin: 6px 0;
 
       .opt {
         display: flex;
         flex-direction: row;
   
-        #opt-in {
+        #opt_in {
           cursor: pointer;
           border: 1px solid var(--black__100);
           position: relative;
@@ -241,7 +242,7 @@ const InputContainer = styled.div`
           padding-left: 5px;
         }
   
-        .opt-icon {
+        .opt_icon {
           margin-top: 2px;
         }
   
@@ -251,12 +252,12 @@ const InputContainer = styled.div`
       }
     }
 
-  .policy-info {
+  .policy_info {
     margin-top: 32px;
     font-size: var(--fs-caption);
     color: var(--black__400);
 
-    .policy-link {
+    .policy_link {
       text-decoration: none;
       font-size: var(--fs-caption);
       color: var(--link__content);
@@ -390,8 +391,8 @@ function Join() {
     <Container>
       <LeftSide>
         <div className="title">Join the Stack Overflow community</div>
-        <div className="li-box">
-          <div className="li-icon">
+        <div className="li_box">
+          <div className="li_icon">
             <svg width="26" height="26" class="svg-icon">
               <path
                 opacity=".5"
@@ -399,11 +400,11 @@ function Join() {
               <path d="M1 7c0-1.1.9-2 2-2h18a2 2 0 012 2v12a2 2 0 01-2 2h-2v5l-5-5H3a2 2 0 01-2-2V7zm10.6 11.3c.7 0 1.2-.5 1.2-1.2s-.5-1.2-1.2-1.2c-.6 0-1.2.4-1.2 1.2 0 .7.5 1.1 1.2 1.2zm2.2-5.4l1-.9c.3-.4.4-.9.4-1.4 0-1-.3-1.7-1-2.2-.6-.5-1.4-.7-2.4-.7-.8 0-1.4.2-2 .5-.7.5-1 1.4-1 2.8h1.9v-.1c0-.4 0-.7.2-1 .2-.4.5-.6 1-.6s.8.1 1 .4a1.3 1.3 0 010 1.8l-.4.3-1.4 1.3c-.3.4-.4 1-.4 1.6 0 0 0 .2.2.2h1.5c.2 0 .2-.1.2-.2l.1-.7.5-.7.6-.4z"></path>
             </svg>
           </div>
-          <div className="li-text">Get unstuck — ask a question</div>
+          <div className="li_text">Get unstuck — ask a question</div>
         </div>
 
-        <div className="li-box">
-          <div className="li-icon">
+        <div className="li_box">
+          <div className="li_icon">
             <svg width="26" height="26" class="svg-icon">
               <path d="M12 .7a2 2 0 013 0l8.5 9.6a1 1 0 01-.7 1.7H4.2a1 1 0 01-.7-1.7L12 .7z"></path>
               <path
@@ -411,13 +412,13 @@ function Join() {
                 d="M20.6 16H6.4l7.1 8 7-8zM15 25.3a2 2 0 01-3 0l-8.5-9.6a1 1 0 01.7-1.7h18.6a1 1 0 01.7 1.7L15 25.3z"></path>
             </svg>
           </div>
-          <div className="li-text">
+          <div className="li_text">
             Unlock new privileges like voting and commenting
           </div>
         </div>
 
-        <div className="li-box">
-          <div className="li-icon">
+        <div className="li_box">
+          <div className="li_icon">
             <svg width="26" height="26" class="svg-icon">
               <path d="M14.8 3a2 2 0 00-1.4.6l-10 10a2 2 0 000 2.8l8.2 8.2c.8.8 2 .8 2.8 0l10-10c.4-.4.6-.9.6-1.4V5a2 2 0 00-2-2h-8.2zm5.2 7a2 2 0 110-4 2 2 0 010 4z"></path>
               <path
@@ -425,24 +426,24 @@ function Join() {
                 d="M13 0a2 2 0 00-1.4.6l-10 10a2 2 0 000 2.8c.1-.2.3-.6.6-.8l10-10a2 2 0 011.4-.6h9.6a2 2 0 00-2-2H13z"></path>
             </svg>
           </div>
-          <div className="li-text">
+          <div className="li_text">
             Save your favorite tags, filters, and jobs
           </div>
         </div>
 
-        <div className="li-box">
-          <div className="li-icon">
+        <div className="li_box">
+          <div className="li_icon">
             <svg width="26" height="26" class="svg-icon">
               <path d="M21 4V2H5v2H1v5c0 2 2 4 4 4v1c0 2.5 3 4 7 4v3H7s-1.2 2.3-1.2 3h14.4c0-.6-1.2-3-1.2-3h-5v-3c4 0 7-1.5 7-4v-1c2 0 4-2 4-4V4h-4zM5 11c-1 0-2-1-2-2V6h2v5zm11.5 2.7l-3.5-2-3.5 1.9L11 9.8 7.2 7.5h4.4L13 3.8l1.4 3.7h4L15.3 10l1.4 3.7h-.1zM23 9c0 1-1 2-2 2V6h2v3z"></path>
             </svg>
           </div>
-          <div className="li-text">Earn reputation and badges</div>
+          <div className="li_text">Earn reputation and badges</div>
         </div>
 
-        <div className="bottom-text">
+        <div className="bottom_text">
           Collaborate and share knowledge with a private group for FREE.
           <br />
-          <Link to="#" className="bottom-link">
+          <Link to="#" className="bottom_link">
             Get Stack Overflow for Teams free for up to 50 users.
           </Link>
         </div>
@@ -451,7 +452,7 @@ function Join() {
         <button className="social">
           <svg
             aria-hidden="true"
-            className="google-icon"
+            className="google_icon"
             width="18"
             height="18"
             viewBox="0 0 18 18">
@@ -472,9 +473,9 @@ function Join() {
         </button>
         <InputContainer>
           <form onSubmit={e => e.preventDefault()}>
-            <div className="input-field">
+            <div className="input_field">
               <label htmlFor="name">Display name</label>
-              <div className="input-error">
+              <div className="input_error">
                 <input
                   id="name"
                   type="text"
@@ -482,9 +483,9 @@ function Join() {
               </div>
             </div>
 
-            <div className="input-field">
+            <div className="input_field">
               <label htmlFor="email">Email</label>
-              <div className="input-error">
+              <div className="input_error">
                 <input
                   id="email"
                   className={errorMessage.userEmail ? "errorbox" : null}
@@ -499,11 +500,11 @@ function Join() {
               )}
             </div>
 
-            <div className="input-field">
-              <div className="password-label">
+            <div className="input_field">
+              <div className="password_label">
                 <label htmlFor="password">Password</label>
               </div>
-              <div className="input-error">
+              <div className="input_error">
                 <input
                   id="password"
                   className={errorMessage.password ? "errorbox" : null}
@@ -523,21 +524,21 @@ function Join() {
               ) : (
                 null
               )}
-              <p className="password-info">
+              <p className="password_info">
                 Passwords must contain at least eight characters, including at
                 least 1 letter and 1 number.
               </p>
             </div>
-            <div className="opt-field">
+            <div className="opt_field">
               <div className="opt">
-                <div className="opt-input">
-                  <input id="opt-in" type="checkbox"></input>
+                <div className="opt_input">
+                  <input id="opt_in" type="checkbox"></input>
                 </div>
-                <label htmlFor="opt-in">
+                <label htmlFor="opt_in">
                   Opt-in to receive occasional product updates, user research
                   invitations, company announcements, and digests.
                 </label>
-                <div className="opt-icon">
+                <div className="opt_icon">
                   <svg
                     aria-hidden="true"
                     class="svg-icon iconHelpSm"
@@ -555,30 +556,30 @@ function Join() {
               onClick={loginRequestHandler}>
               Sign up
             </button>
-            <div className="policy-info">
+            <div className="policy_info">
               By clicking “Sign up”, you agree to our
-              <Link to="#" className="policy-link">
+              <Link to="#" className="policy_link">
                 terms of service
               </Link>
               ,
-              <Link to="#" className="policy-link">
+              <Link to="#" className="policy_link">
                 privacy policy
               </Link>
               and
-              <Link to="#" className="policy-link">
+              <Link to="#" className="policy_link">
                 cookie policy
               </Link>
             </div>
           </form>
         </InputContainer>
-        <div className="signup-field">
+        <div className="signup_field">
           Already have an account?
-          <Link to="#" className="signup-link">
+          <Link to="#" className="signup_link">
             Log in
           </Link>
-          <div className="signup-talent">
+          <div className="signup_talent">
             Are you an employer?
-            <Link to="#" className="signup-link">
+            <Link to="#" className="signup_link">
               Sign up on Talent
               <svg
                 aria-hidden="true"
