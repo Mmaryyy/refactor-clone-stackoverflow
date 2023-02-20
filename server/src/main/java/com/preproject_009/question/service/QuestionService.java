@@ -17,6 +17,7 @@ import java.util.Optional;
 @Transactional
 @Service
 public class QuestionService {
+    private final int pageSize = 3;
     private final QuestionRepository questionRepository;
     private final MemberService memberService;
 
@@ -33,7 +34,6 @@ public class QuestionService {
         return questionRepository.save(question);
     }
 
-    // 여기 로직 논의해보기
     public Question updateQuestion(Question question) {
         Question updatedQuestion = findQuestion(question.getQuestionId());
         question.canChangeQuestion(question.getQuestionStatus());
@@ -54,7 +54,7 @@ public class QuestionService {
         Question question =
                 questionRepository.findById(questionId)
                         .orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
-
+        updateView(question);
         return question;
     }
 
@@ -63,26 +63,28 @@ public class QuestionService {
         switch (sortType) {
             // 최신순 == 1
             case 1:
-                pageRequest = PageRequest.of(page, 15, Sort.by("createdAt").descending());
+                pageRequest = PageRequest.of(page, pageSize, Sort.by("createdAt").descending());
                 break;
             // 좋아요순 == 2
             case 2:
-                pageRequest = PageRequest.of(page, 15, Sort.by("totalVote").descending());
+                pageRequest = PageRequest.of(page, pageSize, Sort.by("totalVote").descending());
                 break;
             // 최신수정순 == 3
             case 3:
-                pageRequest = PageRequest.of(page, 15, Sort.by("modifiedAt").descending());
+                pageRequest = PageRequest.of(page, pageSize, Sort.by("modifiedAt").descending());
                 break;
             // 조회수순 == 4
             case 4:
-                pageRequest = PageRequest.of(page, 15, Sort.by("view").descending());
+                pageRequest = PageRequest.of(page, pageSize, Sort.by("view").descending());
                 break;
         }
         return questionRepository.findByTitleContains(keyword, pageRequest);
     }
 
     public void deleteQuestion(long questionId) {
-        questionRepository.deleteById(questionId);
+        Question question = findQuestion(questionId);
+        question.canChangeQuestion(question.getQuestionStatus());
+        question.setQuestionStatus(Question.QuestionStatus.QUESTION_DELETE);
     }
 
     public void updateView(Question question) {

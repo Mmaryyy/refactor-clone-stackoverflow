@@ -13,12 +13,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
 @RestController
 @RequiredArgsConstructor
+@Validated
+@RequestMapping("v1/questions")
 public class QuestionController {
     private final static String QUESTION_DEFAULT_URL = "/v1/questions";
     private final QuestionRepository questionRepository;
@@ -27,7 +31,7 @@ public class QuestionController {
     private final MemberService memberService;
     private final MemberRepository memberRepository;
 
-    @PostMapping(QUESTION_DEFAULT_URL)
+    @PostMapping()
     public ResponseEntity postQuestion(@RequestBody QuestionDto.Post requestBody) {
         Member member = memberService.findMember(1);
         Question question = questionMapper.questionPostDtoToQuestion(requestBody);
@@ -38,8 +42,18 @@ public class QuestionController {
         return new ResponseEntity<>(response(createdQuestion), HttpStatus.CREATED);
     }
 
-    @GetMapping(QUESTION_DEFAULT_URL + "/{question_id}")
-    public ResponseEntity getQuestion(@PathVariable("question_id") @Positive Long questionId) {
+    @PatchMapping("/{question_id}")
+    public ResponseEntity patchQuestion(@PathVariable("question_id") @Positive long questionId,
+                                        @Valid @RequestBody QuestionDto.Patch requestBody) {
+        Question question = questionMapper.questionPatchDtoToQuestion(requestBody);
+        Question updatedQuestion = questionService.updateQuestion(question);
+        QuestionDto.Response response = questionMapper.questionToQuestionResponseDto(updatedQuestion);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/{question_id}")
+    public ResponseEntity getQuestion(@PathVariable("question_id") @Positive long questionId) {
         Question question = questionService.findQuestion(questionId);
         QuestionDto.Response response = questionMapper.questionToQuestionResponseDto(question);
         questionService.updateView(question);
@@ -47,14 +61,20 @@ public class QuestionController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping(QUESTION_DEFAULT_URL)
-    public Page<QuestionDto.ResponseAll> getKeyword(@RequestParam("page") int page,
+    @GetMapping
+    public Page<QuestionDto.ResponseAll> getQuestions(@RequestParam("page") int page,
                                                     @Nullable @RequestParam("keyword") String keyword,
                                                     @RequestParam("sortType") int sortType) {
         Page<Question> questions = questionService.findQuestions(page - 1, keyword, sortType);
         Page<QuestionDto.ResponseAll> response = questions.map(questionMapper::questionsToQuestionResponseDto);
 
         return response;
+    }
+
+    @DeleteMapping("/{question-id}")
+    public ResponseEntity deleteQuestion(@PathVariable("question_id") @Positive long questionId) {
+        questionService.deleteQuestion(questionId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     public QuestionDto.Response response(Question question) {

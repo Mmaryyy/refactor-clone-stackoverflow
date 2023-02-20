@@ -8,6 +8,7 @@ import org.mapstruct.MappingConstants;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface QuestionMapper {
     Question questionPostDtoToQuestion(QuestionDto.Post requestBody);
+    Question questionPatchDtoToQuestion(QuestionDto.Patch requestBody);
     QuestionDto.Response questionToQuestionResponseDto(Question question);
     QuestionDto.ResponseAll questionsToQuestionResponseDto(Question questions);
 }
