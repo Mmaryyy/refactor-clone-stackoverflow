@@ -58,36 +58,28 @@ public class QuestionService {
         return question;
     }
 
-    public Page<Question> findQuestions(int page, int sortType){
+    public Page<Question> findQuestions(int page, String keyword, int sortType){
+        PageRequest pageRequest = null;
         switch (sortType) {
             // 최신순 == 1
             case 1:
-                questionRepository.findAll(PageRequest
-                        .of(page, 15, Sort.by("createdAt").descending()));
+                pageRequest = PageRequest.of(page, 15, Sort.by("createdAt").descending());
                 break;
             // 좋아요순 == 2
             case 2:
-                questionRepository.findAll(PageRequest
-                        .of(page, 15, Sort.by("totalVote").descending()));
+                pageRequest = PageRequest.of(page, 15, Sort.by("totalVote").descending());
                 break;
             // 최신수정순 == 3
             case 3:
-                questionRepository.findAll(PageRequest
-                        .of(page, 15, Sort.by("modifiedAt").descending()));
+                pageRequest = PageRequest.of(page, 15, Sort.by("modifiedAt").descending());
                 break;
             // 조회수순 == 4
             case 4:
-                questionRepository.findAll(PageRequest
-                        .of(page, 15, Sort.by("view").descending()));
+                pageRequest = PageRequest.of(page, 15, Sort.by("view").descending());
                 break;
         }
-        return null;
-    }
-
-    public Page<Question> findQuestionByKeyword(int page, String keyword, int sortType) {
-        PageRequest pageRequest = PageRequest.of(page, 15);
         return questionRepository.findByTitleContains(keyword, pageRequest);
-   }
+    }
 
     public void deleteQuestion(long questionId) {
         questionRepository.deleteById(questionId);

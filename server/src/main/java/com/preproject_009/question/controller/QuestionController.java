@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Positive;
@@ -48,8 +49,9 @@ public class QuestionController {
 
     @GetMapping(QUESTION_DEFAULT_URL)
     public Page<QuestionDto.ResponseAll> getKeyword(@RequestParam("page") int page,
-                                                    @RequestParam("keyword") String keyword) {
-        Page<Question> questions = questionService.findQuestionByKeyword(page, keyword, 1);
+                                                    @Nullable @RequestParam("keyword") String keyword,
+                                                    @RequestParam("sortType") int sortType) {
+        Page<Question> questions = questionService.findQuestions(page - 1, keyword, sortType);
         Page<QuestionDto.ResponseAll> response = questions.map(questionMapper::questionsToQuestionResponseDto);
 
         return response;
