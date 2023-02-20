@@ -5,7 +5,7 @@ import com.preproject_009.answer.repository.AnswerRepository;
 import com.preproject_009.exception.BusinessLogicException;
 import com.preproject_009.exception.ExceptionCode;
 import com.preproject_009.member.service.MemberService;
-import com.preproject_009.question.entity.Question;
+import com.preproject_009.question.service.QuestionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,11 +17,12 @@ import java.util.Optional;
 public class AnswerService {
     private final AnswerRepository answerRepository;
     private final MemberService memberService;
-    //private final QuestionService questionService;
+    private final QuestionService questionService;
 
-    public AnswerService(AnswerRepository answerRepository, MemberService memberService) {
+    public AnswerService(AnswerRepository answerRepository, MemberService memberService, QuestionService questionService) {
         this.answerRepository = answerRepository;
         this.memberService = memberService;
+        this.questionService = questionService;
     }
 
     public Answer createAnswer(Answer answer) {
@@ -78,6 +79,6 @@ public class AnswerService {
         memberService.findMember(answer.getMember().getMemberId());
 
         //질문 존재 확인
-        //questionService.findQuestion(answer.getQuestion().getQuestionId());
+        questionService.findQuestion(answer.getQuestion().getQuestionId());
     }
 }

@@ -36,6 +36,9 @@ public class Question extends Auditable {
     @Column(name = "VIEW", nullable = false)
     private int view;
 
+    @Column(name = "TOTAL_VOTE", nullable = false)
+    private int totalVote = 0;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "QUESTION_STATUS", nullable = false)
     private QuestionStatus questionStatus = QuestionStatus.QUESTION_REGISTRATION;
