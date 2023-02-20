@@ -33,9 +33,8 @@ const Wrapper = styled.footer`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    font-size: 0.7rem;
-    width: 20%;
-    margin: 2rem;
+    font-size: 13px;
+    margin-bottom: 35px;
   }
 
   .link {
