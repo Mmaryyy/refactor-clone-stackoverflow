@@ -29,7 +29,7 @@ const Container = styled.div`
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    .google-icon {
+    .google_icon {
       margin-right: 5px;
     }
     span {
@@ -37,12 +37,12 @@ const Container = styled.div`
     }
   }
 
-  .signup-field {
+  .signup_field {
     text-align: center !important;
-    font-size: var(--fs-body1);
+    font-size: 13px;
     padding: 16px;
     margin-bottom: 24px;
-    .signup-link {
+    .signup_link {
       position: relative;
       padding-left: 4px;
       font-weight: 500;
@@ -55,8 +55,12 @@ const Container = styled.div`
         fill: var(--link__content);
       }
     }
-    .signup-talent {
+    .signup_talent {
+      /* display: flex;
+      justify-content: center; */
+      padding-right: 15px;
       margin-top: 12px;
+      
     }
   }
 `;
@@ -75,7 +79,7 @@ const InputContainer = styled.div`
     justify-content: space-between;
   }
 
-  .input-field {
+  .input_field {
     display: flex;
     flex-direction: column;
     margin: 6px 0;
@@ -89,7 +93,7 @@ const InputContainer = styled.div`
     margin: 2px 0px;
   }
 
-  .input-error {
+  .input_error {
     display: flex;
     flex-direction: column;
     position: relative;
@@ -129,7 +133,7 @@ const InputContainer = styled.div`
     font-weight: 500;
   }
 
-  .password-label {
+  .password_label {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -137,7 +141,7 @@ const InputContainer = styled.div`
     font-weight: 500;
   }
 
-  .password-link {
+  .password_link {
     text-decoration: none;
     font-size: var(--fs-caption);
     color: var(--link__content);
@@ -176,6 +180,7 @@ function Login() {
 
   //* 로그인 버튼 onClick 이벤트 함수
   const loginRequestHandler = () => {
+    setErrorMessage({userEmail: '', password: ''})
     if(!loginInfo.userEmail && !loginInfo.password) {
       setErrorMessage({userEmail: 'Email cannot be empty.', password: 'Password cannot be empty.'})
     } 
@@ -187,7 +192,6 @@ function Login() {
     else if(loginInfo.userEmail && !loginInfo.password) {
       setErrorMessage({userEmail: '', password: 'Password cannot be empty.'})
     }
-
 
     // return axios
     //   .post("url", {loginInfo, checkedKeepLogin})
@@ -220,7 +224,7 @@ function Login() {
       <button className="social">
         <svg
           aria-hidden="true"
-          className="google-icon"
+          className="google_icon"
           width="18"
           height="18"
           viewBox="0 0 18 18">
@@ -241,9 +245,9 @@ function Login() {
       </button>
       <InputContainer>
         <form onSubmit={(e) => e.preventDefault()}>
-          <div className="input-field">
+          <div className="input_field">
             <label htmlFor="email">Email</label>
-            <div className="input-error">
+            <div className="input_error">
               <input id="email" className={errorMessage.userEmail ? 'errorbox' : null} type="text" onChange={handleInputValue('userEmail')}></input>
               {errorMessage.userEmail ? <div className="error">❗️</div> : ''}
               {/* <div className="error">❗️</div> */}
@@ -253,14 +257,14 @@ function Login() {
             <p>The email or password is incorrect.</p> */}
           </div>
 
-          <div className="input-field">
-            <div className="password-label">
+          <div className="input_field">
+            <div className="password_label">
               <label htmlFor="password">Password</label>
-              <Link to="#" className="password-link">
+              <Link to="#" className="password_link">
                 Forgot password?
               </Link>
             </div>
-            <div className="input-error">
+            <div className="input_error">
               <input id="password" type='password' className={errorMessage.password ? 'errorbox' : null} onChange={handleInputValue('password')}></input>
               {errorMessage.password ? <div className="error">❗️</div> : ''}
               {/* <div className="error">❗️</div> */}
@@ -271,14 +275,14 @@ function Login() {
           <button className="loginbutton" type="submit" onClick={loginRequestHandler}>Log in</button>
         </form>
       </InputContainer>
-      <div className="signup-field">
+      <div className="signup_field">
         Don't have an account?
-        <Link to="#" className="signup-link">
+        <Link to="#" className="signup_link">
           Sign up
         </Link>
-        <div className="signup-talent">
+        <div className="signup_talent">
           Are you an employer?
-          <Link to="#" className="signup-link">
+          <Link to="#" className="signup_link">
             Sign up on Talent
             <svg aria-hidden="true" class="va-text-bottom sm:d-none svg-icon iconShareSm" width="14" height="14" viewBox="0 0 14 14">
               <path d="M5 1H3a2 2 0 0 0-2 2v8c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V9h-2v2H3V3h2V1Zm2 0h6v6h-2V4.5L6.5 9 5 7.5 9.5 3H7V1Z"></path>
