@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { TagButton } from '../styles/styledcomponents'
 import userData from '../datas/userData.json'
+
 const ContentContainer = styled.div`
   display: flex;
   border-bottom: 1px solid var(--tab__focus);
@@ -47,7 +48,7 @@ const PostTitle = styled.p`
 const Content = () => {
   return (
     <ContentContainer>
-        <img src={userData[0].avatarUrl}/>
+        {/* <img src={userData[0].avatarUrl}/> */}
       <SummaryContainer className="content_summary">
         <SummaryTitle className="view__vote">0 votes</SummaryTitle>
         <SummaryTitle>0 answers</SummaryTitle>

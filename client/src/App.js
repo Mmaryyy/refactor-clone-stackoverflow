@@ -3,6 +3,9 @@ import { useState } from 'react';
 import Header from './components/Header';
 import Nav from './components/Nav';
 import Sidebar from './components/Sidebar';
+// import Sidebar2 from './components/Sidebar2';
+import Login from './components/Login';
+import Join from './components/Join';
 import Index from './page/Index';
 import GlobalStyle from './styles/GlobalStyle';
 import { Fragment, useEffect } from 'react';
@@ -35,7 +38,13 @@ function App() {
           <Route path='/tags' element={}></Route>
           <Route path='/users' element={}></Route> */}
             </Routes>
-            <Sidebar />
+            <div className="sidebar">
+              <Sidebar />
+              {/* <Sidebar2 /> */}
+            </div>
+            {/* <Login />
+            <Join /> */}
+            {/* <Login /> */}
           </div>
         )}
       </Fragment>
