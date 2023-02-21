@@ -102,13 +102,6 @@ public class QuestionControllerTest {
                                         fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("회원 식별자"),
                                         fieldWithPath("content").type(JsonFieldType.STRING).description("내용")
                                 )
-                        ),
-                        responseFields(
-                                List.of(
-                                        fieldWithPath("answerId").type(JsonFieldType.NUMBER).description("질문 식별자"),
-                                        fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("회원 식별자"),
-                                        fieldWithPath("content").type(JsonFieldType.STRING).description("내용")
-                                )
                         )
                 ));
     }

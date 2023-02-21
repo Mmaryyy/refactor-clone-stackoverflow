@@ -20,6 +20,7 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
@@ -89,7 +90,7 @@ public class AnswerControllerTest {
         ResultActions actions =
                 mockMvc.perform(
                         RestDocumentationRequestBuilders
-                                .post("/v1/answers/{answer-id}/answerComments", answerId)
+                                .post("/v1/answers/{answer-id}", answerId + "/answerComments")
                                 .accept(MediaType.APPLICATION_JSON)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(request));
@@ -106,13 +107,6 @@ public class AnswerControllerTest {
                         requestFields(
                                 List.of(
                                         fieldWithPath("answerId").type(JsonFieldType.NUMBER).description("답변 식별자"),
-                                        fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("회원 식별자"),
-                                        fieldWithPath("content").type(JsonFieldType.STRING).description("내용")
-                                )
-                        ),
-                        responseFields(
-                                List.of(
-                                        fieldWithPath("answerCommentId").type(JsonFieldType.NUMBER).description("답변 식별자"),
                                         fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("회원 식별자"),
                                         fieldWithPath("content").type(JsonFieldType.STRING).description("내용")
                                 )
