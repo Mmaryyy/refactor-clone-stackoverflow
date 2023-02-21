@@ -5,14 +5,10 @@ import com.preproject_009.member.dto.MultiResponseDto;
 import com.preproject_009.member.entity.Member;
 import com.preproject_009.member.mapper.MemberMapper;
 import com.preproject_009.member.service.MemberService;
-<<<<<<< HEAD
-=======
-import com.preproject_009.point.Point;
 import com.preproject_009.question.dto.QuestionDto;
 import com.preproject_009.question.entity.Question;
 import com.preproject_009.question.entity.Tag;
 import com.preproject_009.question.mapper.QuestionMapper;
->>>>>>> 1afaec360bf4ea5b3ce8ff23a1f4b844eaccd378
 import com.preproject_009.question.service.QuestionService;
 import com.preproject_009.utils.UriCreator;
 import org.springframework.data.domain.Page;
@@ -41,16 +37,15 @@ public class MemberController {
     private final MemberService memberService;
     private final MemberMapper mapper;
 
-<<<<<<< HEAD
-    public MemberController(MemberService memberService, MemberMapper mapper){
-=======
     private final QuestionMapper questionMapper;
 
+    private final QuestionService questionService;
+
     public MemberController(MemberService memberService, QuestionService questionService, MemberMapper mapper, QuestionMapper questionMapper) {
->>>>>>> 1afaec360bf4ea5b3ce8ff23a1f4b844eaccd378
         this.memberService = memberService;
         this.mapper = mapper;
         this.questionMapper = questionMapper;
+        this.questionService = questionService;
     }
 
     // 유저 생성
