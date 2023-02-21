@@ -3,7 +3,6 @@ package com.preproject_009.member.entity;
 import com.preproject_009.a_comment.entity.AnswerComment;
 import com.preproject_009.answer.entity.Answer;
 import com.preproject_009.audit.Auditable;
-import com.preproject_009.point.Point;
 import com.preproject_009.q_comment.entity.QuestionComment;
 import com.preproject_009.question.entity.Question;
 import lombok.Getter;
@@ -62,10 +61,6 @@ public class Member extends Auditable {
     @Column(name = "MEMBER_STATUS", length = 30, nullable = false)
     private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
 
-    // Point 클래스 1:1 매핑
-    @OneToOne(mappedBy = "member", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    private Point point;
-
     // Question 클래스 1:n 매핑
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
     private List<Question> question = new ArrayList<>();
@@ -91,13 +86,6 @@ public class Member extends Auditable {
         this.name = name;
         this.about = about;
         this.password = password;
-    }
-
-    public void setPoint(Point point) {
-        this.point = point;
-        if (point.getMember() != this) {
-            point.setMember(this);
-        }
     }
 
     public enum MemberStatus {
