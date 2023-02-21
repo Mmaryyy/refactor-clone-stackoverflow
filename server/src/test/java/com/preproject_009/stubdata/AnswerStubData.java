@@ -1,7 +1,10 @@
 package com.preproject_009.stubdata;
 
+import com.preproject_009.a_comment.dto.AnswerCommentDto;
+import com.preproject_009.a_comment.entity.AnswerComment;
 import com.preproject_009.answer.dto.AnswerDto;
 import com.preproject_009.answer.entity.Answer;
+import org.hibernate.loader.entity.NaturalIdEntityJoinWalker;
 import org.springframework.http.HttpMethod;
 
 import java.util.HashMap;
@@ -10,29 +13,69 @@ import java.util.Map;
 
 public class AnswerStubData {
     public static class MockAnswer {
-        private static Map<HttpMethod, Object> stubRequestBody;
+        private static Map<HttpMethod, Object> stubAnswerRequestBody;
         static {
-            stubRequestBody = new HashMap<>();
-            stubRequestBody.put(HttpMethod.PUT, new AnswerDto.Post(1, 1, "이것은 스텁데이터입니다."));
-            stubRequestBody.put(HttpMethod.PATCH, new AnswerDto.Patch(1, "이것은 수정된 스텁데이터입니다."));
+            stubAnswerRequestBody = new HashMap<>();
+            stubAnswerRequestBody.put(HttpMethod.POST, new AnswerDto.Post(1L, 1L, "이것은 스텁데이터입니다."));
+            stubAnswerRequestBody.put(HttpMethod.PATCH, new AnswerDto.Patch(1L, "이것은 스텁데이터입니다."));
         }
 
-        public static Object getRequestBody(HttpMethod method) {
-            return stubRequestBody.get(method);
+        private static Map<HttpMethod, Object> stubAnswerCommentRequestBody;
+        static {
+            stubAnswerCommentRequestBody = new HashMap<>();
+            stubAnswerCommentRequestBody.put(HttpMethod.POST, new AnswerCommentDto.Post(1L, 1L, "이것은 스텁데이터입니다."));
+            stubAnswerCommentRequestBody.put(HttpMethod.PATCH, new AnswerCommentDto.Patch(1L, "이것은 스텁데이터입니다."));
         }
 
-        /*public static Answer getSingleResultAnswer(long answerId) {
+        public static Object getAnswerRequestBody(HttpMethod method) {
+            return stubAnswerRequestBody.get(method);
+        }
 
-        }*/
+        public static Object getAnswerCommentRequestBody(HttpMethod method) {
+            return stubAnswerCommentRequestBody.get(method);
+        }
+
+        public static Answer getSingleResultAnswer() {
+            return new Answer(1L, "이것은 스텁데이터입니다.");
+        }
+
+        public static List<Answer> getMultiResultAnswer() {
+            return List.of(
+                    new Answer(1L, "이것은 첫번째 스텁데이터입니다."),
+                    new Answer(2L, "이것은 두번째 스텁데이터입니다.")
+            );
+        }
 
         public static AnswerDto.Response getSingleResponseBody() {
-            return new AnswerDto.Response(1, 1, "이것은 스텁데이터입니다.");
+            return new AnswerDto.Response(1L, 1L, "이것은 스텁데이터입니다.");
         }
 
         public static List<AnswerDto.Response> getMultiResponseBody() {
             return List.of(
-                    new AnswerDto.Response(1, 1, "이것은 첫번째 스텁데이터입니다."),
-                    new AnswerDto.Response(2, 2, "이것은 두번째 스텁데이터입니다.")
+                    new AnswerDto.Response(1L, 1L, "이것은 첫번째 스텁데이터입니다."),
+                    new AnswerDto.Response(2L, 2L, "이것은 두번째 스텁데이터입니다.")
+            );
+        }
+
+        public static AnswerComment getSingleResultAnswerComment() {
+            return new AnswerComment(1L, "이것은 스텁데이터입니다.");
+        }
+
+        public static List<AnswerComment> getMultiResultAnswerComment() {
+            return List.of(
+                    new AnswerComment(1L, "이것은 첫번째 스텁데이터입니다."),
+                    new AnswerComment(2L, "이것은 두번째 스텁데이터입니다.")
+            );
+        }
+
+        public static AnswerCommentDto.Response getSingleCommentResponseBody() {
+            return new AnswerCommentDto.Response(1L, 1L, "이것은 스텁데이터입니다.");
+        }
+
+        public static List<AnswerCommentDto.Response> getMultiCommentResponseBody() {
+            return List.of(
+                    new AnswerCommentDto.Response(1L, 1L, "이것은 첫번째 스텁데이터입니다."),
+                    new AnswerCommentDto.Response(2L, 2L, "이것은 두번째 스텁데이터입니다.")
             );
         }
     }
