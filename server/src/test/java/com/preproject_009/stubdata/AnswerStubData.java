@@ -7,6 +7,7 @@ import com.preproject_009.answer.entity.Answer;
 import org.hibernate.loader.entity.NaturalIdEntityJoinWalker;
 import org.springframework.http.HttpMethod;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,13 +48,22 @@ public class AnswerStubData {
         }
 
         public static AnswerDto.Response getSingleResponseBody() {
-            return new AnswerDto.Response(1L, 1L, "이것은 스텁데이터입니다.");
+            return new AnswerDto.Response(1L, 1L, "이것은 스텁데이터입니다.", 1,
+                    Answer.AnswerStatus.ANSWER_REGISTRATION,
+                    /*LocalDateTime.of(2023, 2, 21, 15, 30, 0),*/
+                    LocalDateTime.of(2023, 2, 21, 15, 30, 0));
         }
 
         public static List<AnswerDto.Response> getMultiResponseBody() {
             return List.of(
-                    new AnswerDto.Response(1L, 1L, "이것은 첫번째 스텁데이터입니다."),
-                    new AnswerDto.Response(2L, 2L, "이것은 두번째 스텁데이터입니다.")
+                    new AnswerDto.Response(1L, 1L, "이것은 첫번째 스텁데이터입니다.", 1,
+                            Answer.AnswerStatus.ANSWER_REGISTRATION,
+                            /*LocalDateTime.of(2023, 2, 21, 15, 30),*/
+                            LocalDateTime.of(2023, 2, 21, 15, 30)),
+                    new AnswerDto.Response(2L, 2L, "이것은 두번째 스텁데이터입니다.", 1,
+                            Answer.AnswerStatus.ANSWER_REGISTRATION,
+                            /*LocalDateTime.of(2023, 2, 21, 15, 30),*/
+                            LocalDateTime.of(2023, 2, 21, 15, 30))
             );
         }
 

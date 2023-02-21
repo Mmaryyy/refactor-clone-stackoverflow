@@ -1,5 +1,6 @@
 package com.preproject_009.answer.dto;
 
+import com.preproject_009.answer.entity.Answer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,6 +8,7 @@ import org.springframework.util.Assert;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
+import java.time.LocalDateTime;
 
 public class AnswerDto {
     @Getter
@@ -44,5 +46,9 @@ public class AnswerDto {
         private long answerId;
         private long memberId;
         private String content;
+        private int totalVote;
+        private Answer.AnswerStatus answerStatus;
+        /*private LocalDateTime createdAt;*/
+        private LocalDateTime modifiedAt;
     }
 }
