@@ -5,11 +5,8 @@ import com.preproject_009.member.dto.MultiResponseDto;
 import com.preproject_009.member.entity.Member;
 import com.preproject_009.member.mapper.MemberMapper;
 import com.preproject_009.member.service.MemberService;
-import com.preproject_009.point.Point;
-import com.preproject_009.question.entity.Question;
 import com.preproject_009.question.service.QuestionService;
 import com.preproject_009.utils.UriCreator;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,16 +28,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/v1/members")
 @Validated
-@Slf4j
 public class MemberController {
     private final static String MEMBER_DEFAULT_URL = "/v1/members";
     private final MemberService memberService;
-    private final QuestionService questionService;
     private final MemberMapper mapper;
 
-    public MemberController(MemberService memberService, MemberMapper mapper, QuestionService questionService){
+    public MemberController(MemberService memberService, MemberMapper mapper){
         this.memberService = memberService;
-        this.questionService = questionService;
         this.mapper = mapper;
     }
 
@@ -48,7 +42,6 @@ public class MemberController {
     @PostMapping
     public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post requestBody){
         Member member = mapper.memberPostToMember(requestBody);
-        member.setPoint(new Point());
 
         Member createdMember = memberService.createMember(member);
         System.out.println("id는 " + createdMember.getMemberId());
@@ -63,7 +56,7 @@ public class MemberController {
     public ResponseEntity patchMember(
             @PathVariable("member-id") @Positive long memberId,
             @Valid @RequestBody MemberDto.Patch requestBody){
-        requestBody.setMemberId(memberId);
+        requestBody.addMemberId(memberId);
 
         Member member =
                 memberService.updateMember(mapper.memberPatchToMember(requestBody));
@@ -76,9 +69,6 @@ public class MemberController {
     public ResponseEntity getMember(
             @PathVariable("member-id") @Positive long memberId){
         Member member = memberService.findMember(memberId);
-        System.out.println("조회 : memberId" + member.getMemberId());
-        System.out.println("조회 : Email" + member.getEmail());
-        System.out.println("조회 : password" + member.getPassword());
         return new ResponseEntity<>(response(member), HttpStatus.OK);
     }
 
@@ -93,17 +83,6 @@ public class MemberController {
                         pageMembers),
                 HttpStatus.OK);
     }
-    
-    // 질문 조회
-//    public ResponseEntity getQuestions(@Positive @RequestParam int page,
-//                                       @Positive @RequestParam int size){
-//        Page<Question> pageQuestions = questionService.findQuestions(page -1, size);
-//        List<Question> questions = pageQuestions.getContent();
-//        return new ResponseEntity<>(
-//                new MultiResponseDto<>(mapper.questionsToMemberResponses(questions),
-//                        pageQuestions),
-//                HttpStatus.OK);
-//    }
 
 
     // 유저 삭제 처리

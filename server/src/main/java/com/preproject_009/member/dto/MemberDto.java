@@ -1,11 +1,11 @@
 package com.preproject_009.member.dto;
 
 import com.preproject_009.member.entity.Member;
-import com.preproject_009.point.Point;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.util.Assert;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -14,7 +14,6 @@ import javax.validation.constraints.Pattern;
 public class MemberDto {
     @Getter
     @AllArgsConstructor
-    @NoArgsConstructor
     public static class Post {
         @NotBlank
         @Email
@@ -31,8 +30,8 @@ public class MemberDto {
         private String password;
 
     }
-
     @Getter
+    @AllArgsConstructor
     public static class Patch {
         private long memberId;
 
@@ -43,9 +42,12 @@ public class MemberDto {
 
         private Member.MemberStatus memberStatus;
 
-        public void setMemberId(long memberId) {
+        public Patch addMemberId(Long memberId) {
+            Assert.notNull(memberId, "member id must not be null.");
             this.memberId = memberId;
+            return this;
         }
+
     }
 
     @AllArgsConstructor
@@ -57,14 +59,5 @@ public class MemberDto {
         private String password;
         private String about;
         private Member.MemberStatus memberStatus;
-        private Point point;
-
-        public String getMemberStatus() {
-            return memberStatus.getStatus();
-        }
-
-        public int getPoint() {
-            return point.getPoint();
-        }
     }
 }

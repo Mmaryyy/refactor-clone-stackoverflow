@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import java.util.Optional;
  * findMember -> 유저 찾기 -> parameter : memberId(PK)
  */
 
+@Transactional
 @Service
 public class MemberService {
     private final MemberRepository memberRepository;
@@ -33,6 +35,7 @@ public class MemberService {
     // 유저 가입
     public Member createMember(Member member) {
         member.setCreatedAt(LocalDateTime.now());
+        member.setModifiedAt(LocalDateTime.now());
         return memberRepository.save(member);
     }
 
