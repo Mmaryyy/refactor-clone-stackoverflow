@@ -10,7 +10,7 @@ const Container = styled.div`
 background-color: white;
 margin: 0px 0px 19px 0px;
   .title {
-    font-size: var(--fs-subheading);
+    font-size: 20px;
     color: hsl(210,8%,25%);
     font-weight: 400;
     margin-bottom: 1em;
@@ -40,15 +40,18 @@ margin: 0px 0px 19px 0px;
 
   .li-text {
     color: var(--link__content);
-    font-size: var(--fs-caption);
-    font-weight: 500;
+    font-size: 13px;
+    font-weight: 400;
+    :hover {
+        color: var(--button__back);
+    }
   }
 `;
 
 function Sidebar2() {
   return (
     <Container>
-      <div className="title">Hot Network Questions</div>
+      <h4 className="title">Hot Network Questions</h4>
       <ul>
         <li>
           <div className="li-icon">🍓</div>

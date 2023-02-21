@@ -6,11 +6,12 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 12px;
-  border: 1px solid var(--black__300);
+  border: 1px solid var(--black__100);
+  border-radius: 5px;
+
   .top_field {
     display: flex;
     margin-bottom: 12px;
-
   }
 
   .middle_field {
@@ -18,16 +19,6 @@ const Container = styled.div`
     font-weight: 400;
     color: var(--black__400);
     margin-bottom: 12px;
-  }
-
-  .bottom_field {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .bottom_field2 {
-    display: flex;
-    flex-direction: column;
   }
 
   .linkStyle {
@@ -42,31 +33,20 @@ const Container = styled.div`
       border: 1px solid rgb(225,236,244);
       border-radius: 3px;
     }
-    &.bottom_info {
-      color: var(--black__300);
-      display: table-cell;
-    }
   }
 `
 
 
-const TagList = () => {
+const TagList = ({data}) => {
   return (
     <Container>
       <div className="top_field">
         <div>
-          <Link to="#" className="linkStyle tagname">Javascript</Link>
+          <Link to="#" className="linkStyle tagname">{data.title}</Link>
         </div>
       </div>
       <div className="middle_field">
-        For questions about programming in ECMAScript (JavaScript/JS) and its different dialects/implementations...
-      </div>
-      <div className="bottom_field">
-        <div className="linkStyle bottom_info">2476794y questions</div>
-        <div className="bottom_field2">
-          <Link to="#" className="linkStyle bottom_info">379 asked today,</Link>
-          <Link to="#" className="linkStyle bottom_info">3259 this week</Link>
-        </div>
+        {`${data.body.slice(0, 100)}...`}
       </div>
     </Container>
   );

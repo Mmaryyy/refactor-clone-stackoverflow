@@ -28,7 +28,7 @@ import { Link } from "react-router-dom"
 
 
 const Container = styled.div`
-margin: 0px 0px 16px 0px;
+margin-bottom: 20px;
 background-color: rgb(253,247,226);
 box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   ul {
@@ -40,7 +40,7 @@ box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     list-style: none;
     padding: 12px 15px;
     font-weight: 700;
-    font-size: var(--fs-caption);
+    font-size: 13px;
     border: 1px solid rgb(241,230,187);
     background-color: rgb(251,243,213);
     color: var(--black__400);
@@ -59,13 +59,20 @@ box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     overflow-wrap: break-word !important;
     margin-left: 10px;
     color: var(--black__500);
-    font-size: var(--fs-caption);
-    font-weight: 500;
+    font-size: 13px;
+    font-weight: 400;
     height: auto;
+      :hover {
+        color: var(--black__300);
+    }
   }
 
   .li-link {
     text-decoration: none;
+  }
+
+  .svg-icon {
+    fill: var(--black__400);
   }
 `;
 
@@ -77,7 +84,16 @@ function Sidebar() {
         <li className="li-header">The Overflow Blog</li>
 
         <li className="li-list">
-          <div>✏️</div>
+          <div>
+            <svg
+              aria-hidden="true"
+              class="svg-icon"
+              width="14"
+              height="14"
+              viewBox="0 0 14 14">
+              <path d="m11.1 1.71 1.13 1.12c.2.2.2.51 0 .71L11.1 4.7 9.21 2.86l1.17-1.15c.2-.2.51-.2.71 0ZM2 10.12l6.37-6.43 1.88 1.88L3.88 12H2v-1.88Z"></path>
+            </svg>
+          </div>
           <Link to="#" className="li-link">
             <div className="li-text">
               You don’t have to build a browser in JavaScript anymore (Ep. 538)
@@ -86,7 +102,16 @@ function Sidebar() {
         </li>
 
         <li className="li-list">
-          <div>✏️</div>
+          <div>
+            <svg
+              aria-hidden="true"
+              class="svg-icon"
+              width="14"
+              height="14"
+              viewBox="0 0 14 14">
+              <path d="m11.1 1.71 1.13 1.12c.2.2.2.51 0 .71L11.1 4.7 9.21 2.86l1.17-1.15c.2-.2.51-.2.71 0ZM2 10.12l6.37-6.43 1.88 1.88L3.88 12H2v-1.88Z"></path>
+            </svg>
+          </div>
           <Link to="#" className="li-link">
             <div className="li-text">
               Serverless scales well, but most databases don’t
