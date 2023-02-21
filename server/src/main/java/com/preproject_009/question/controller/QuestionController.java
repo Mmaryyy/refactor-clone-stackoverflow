@@ -5,9 +5,11 @@ import com.preproject_009.member.repository.MemberRepository;
 import com.preproject_009.member.service.MemberService;
 import com.preproject_009.question.dto.QuestionDto;
 import com.preproject_009.question.entity.Question;
+import com.preproject_009.question.entity.Tag;
 import com.preproject_009.question.mapper.QuestionMapper;
 import com.preproject_009.question.repository.QuestionRepository;
 import com.preproject_009.question.service.QuestionService;
+import com.preproject_009.utils.UriCreator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -18,11 +20,13 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.net.URI;
+import java.util.ArrayList;
 
 @RestController
 @RequiredArgsConstructor
 @Validated
-@RequestMapping("v1/questions")
+@RequestMapping("/v1/questions")
 public class QuestionController {
     private final static String QUESTION_DEFAULT_URL = "/v1/questions";
     private final QuestionRepository questionRepository;
@@ -36,10 +40,12 @@ public class QuestionController {
         Member member = memberService.findMember(1);
         Question question = questionMapper.questionPostDtoToQuestion(requestBody);
         question.setMember(member);
+        question.setTags(new ArrayList<Tag>());
         Question createdQuestion = questionService.createQuestion(question);
-        //URI location = UriCreator.createUri(QUESTION_DEFAULT_URL, createdQuestion.getQuestionId());
+        URI location = UriCreator.createUri(QUESTION_DEFAULT_URL, createdQuestion.getQuestionId());
 
-        return new ResponseEntity<>(response(createdQuestion), HttpStatus.CREATED);
+        return ResponseEntity.created(location).build();
+        //return new ResponseEntity<>(response(createdQuestion), HttpStatus.CREATED);
     }
 
     @PatchMapping("/{question_id}")
