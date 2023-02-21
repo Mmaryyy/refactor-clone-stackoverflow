@@ -11,7 +11,8 @@ public enum ExceptionCode {
     ANSWER_COMMENT_NOT_FOUND(404, "AnswerComment not found"),
     CANNOT_CHANGE_ANSWER(400, "Cannot change answer"),
     QUESTION_NOT_FOUND(404, "Question not found"),
-    CANNOT_CHANGE_QUESTION(400, "Cannot change question");
+    CANNOT_CHANGE_QUESTION(400, "Cannot change question"),
+    QUESTION_COMMENT_NOT_FOUND(404, "QuestionComment not found");
     @Getter
     private int status;
 

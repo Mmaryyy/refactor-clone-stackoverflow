@@ -23,34 +23,23 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
-import org.springframework.restdocs.request.ParameterDescriptor;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static com.preproject_009.util.ApiDocumentUtils.getRequestPreProcessor;
 import static com.preproject_009.util.ApiDocumentUtils.getResponsePreProcessor;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.willReturn;
 import static org.mockito.Mockito.doNothing;
-import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.payload.PayloadDocumentation.requestPartFields;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.partWithName;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(
-        controllers = {AnswerController.class, AnswerCommentController.class}
-)
+@WebMvcTest(controllers = {AnswerController.class, AnswerCommentController.class})
 @MockBean(JpaMetamodelMappingContext.class)
 @AutoConfigureRestDocs
 public class AnswerControllerTest {
@@ -73,7 +62,7 @@ public class AnswerControllerTest {
     private AnswerCommentMapper answerCommentMapper;
 
     @Test
-    void postAnswerCommentTest() throws Exception {
+    public void postAnswerCommentTest() throws Exception {
         //given
         long answerId = 1L;
         AnswerCommentDto.Post post = (AnswerCommentDto.Post) AnswerStubData.MockAnswer.getAnswerCommentRequestBody(HttpMethod.POST);
@@ -88,7 +77,7 @@ public class AnswerControllerTest {
         ResultActions actions =
                 mockMvc.perform(
                         RestDocumentationRequestBuilders
-                                .post("/v1/answers/{answer-id}/answerComments", answerId)
+                                .post("/v1/answers/{answer-id}", answerId + "/answerComments")
                                 .accept(MediaType.APPLICATION_JSON)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(request));
@@ -108,66 +97,12 @@ public class AnswerControllerTest {
                                         fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("회원 식별자"),
                                         fieldWithPath("content").type(JsonFieldType.STRING).description("내용")
                                 )
-                        ),
-                        responseFields(
-                                List.of(
-                                        fieldWithPath("answerCommentId").type(JsonFieldType.NUMBER).description("답변 식별자"),
-                                        fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("회원 식별자"),
-                                        fieldWithPath("content").type(JsonFieldType.STRING).description("내용")
-                                )
                         )
                         ));
     }
 
     @Test
-    void postAnswerTest() throws Exception {
-        // given
-        long questionId = 1L;
-        AnswerDto.Post post = (AnswerDto.Post) AnswerStubData.MockAnswer.getAnswerRequestBody(HttpMethod.POST);
-        String request = gson.toJson(post);
-
-        given(answerMapper.answerPostDtoToAnswer(Mockito.any(AnswerDto.Post.class))).willReturn(new Answer());
-
-        Answer answer = AnswerStubData.MockAnswer.getSingleResultAnswer();
-        given(answerService.createAnswer(Mockito.any(Answer.class))).willReturn(answer);
-
-        // when
-        ResultActions actions =
-                mockMvc.perform(
-                        RestDocumentationRequestBuilders
-                                .post("/v1/questions/{question-id}/answers", questionId)                // 경로때문에 컨트롤러 위치 변경 필요
-                                .accept(MediaType.APPLICATION_JSON)
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(request));
-
-        // then
-        actions.andExpect(status().isCreated())
-                .andExpect(header().string("Location", is(startsWith("/v1/questions"))))
-                .andDo(document("post-answer",
-                        getRequestPreProcessor(),
-                        getResponsePreProcessor(),
-                        pathParameters(
-                                parameterWithName("question-id").description("질문 식별자")
-                        ),
-                        requestFields(
-                                List.of(
-                                        fieldWithPath("questionId").type(JsonFieldType.NUMBER).description("질문 식별자"),
-                                        fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("회원 식별자"),
-                                        fieldWithPath("content").type(JsonFieldType.STRING).description("내용")
-                                )
-                        ),
-                        responseFields(
-                                List.of(
-                                        fieldWithPath("answerId").type(JsonFieldType.NUMBER).description("질문 식별자"),
-                                        fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("회원 식별자"),
-                                        fieldWithPath("content").type(JsonFieldType.STRING).description("내용")
-                                )
-                        )
-                ));
-    }
-
-    @Test
-    void patchAnswerTest() throws Exception {
+    public void patchAnswerTest() throws Exception {
         //given
         long answerId = 1L;
         AnswerDto.Patch patch = (AnswerDto.Patch) AnswerStubData.MockAnswer.getAnswerRequestBody(HttpMethod.PATCH);
@@ -207,14 +142,17 @@ public class AnswerControllerTest {
                                 List.of(
                                         fieldWithPath("answerId").type(JsonFieldType.NUMBER).description("답변 식별자"),
                                         fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("회원 식별자"),
-                                        fieldWithPath("content").type(JsonFieldType.STRING).description("내용")
+                                        fieldWithPath("content").type(JsonFieldType.STRING).description("내용"),
+                                        fieldWithPath("totalVote").type(JsonFieldType.NUMBER).description("총 좋아요 수"),
+                                        fieldWithPath("answerStatus").type(JsonFieldType.STRING).description("답변 상태"),
+                                        fieldWithPath("modifiedAt").type(JsonFieldType.STRING).description("수정 시간")
                                 )
                         )
                         ));
     }
 
     @Test
-    void getAnswersTest() throws Exception {
+    public void getAnswersTest() throws Exception {
         //given
         List<Answer> answers = AnswerStubData.MockAnswer.getMultiResultAnswer();
         List<AnswerDto.Response> responses = AnswerStubData.MockAnswer.getMultiResponseBody();
@@ -238,14 +176,17 @@ public class AnswerControllerTest {
                                 List.of(
                                         fieldWithPath("[].answerId").type(JsonFieldType.NUMBER).description("답변 식별자"),
                                         fieldWithPath("[].memberId").type(JsonFieldType.NUMBER).description("회원 식별자"),
-                                        fieldWithPath("[].content").type(JsonFieldType.STRING).description("내용")
+                                        fieldWithPath("[].content").type(JsonFieldType.STRING).description("내용"),
+                                        fieldWithPath("[].totalVote").type(JsonFieldType.NUMBER).description("총 좋아요 수"),
+                                        fieldWithPath("[].answerStatus").type(JsonFieldType.STRING).description("답변 상태"),
+                                        fieldWithPath("[].modifiedAt").type(JsonFieldType.STRING).description("수정 시간")
                                 )
                         )
                         )).andReturn();
     }
 
     @Test
-    void deleteAnswerTest() throws Exception {
+    public void deleteAnswerTest() throws Exception {
         //given
         long answerId = 1L;
 

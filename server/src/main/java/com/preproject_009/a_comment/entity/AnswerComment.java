@@ -22,6 +22,11 @@ public class AnswerComment extends Auditable {
     @Column(name = "CONTENT", columnDefinition = "TEXT", nullable = false)
     private String content;
 
+    public AnswerComment(long answerCommentId, String content) {
+        this.answerCommentId = answerCommentId;
+        this.content = content;
+    }
+
     // member n:1 양방향
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")

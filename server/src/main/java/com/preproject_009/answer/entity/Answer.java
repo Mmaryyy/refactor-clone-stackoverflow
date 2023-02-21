@@ -48,6 +48,11 @@ public class Answer extends Auditable {
     @OneToMany(mappedBy = "answer", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<AnswerVote> answerVote;
 
+    public Answer(long answerId, String content) {
+        this.answerId = answerId;
+        this.content = content;
+    }
+
     public enum AnswerStatus {
         ANSWER_REGISTRATION("답변 등록됨"),
         ANSWER_ACCEPTED("답변 채택됨"),

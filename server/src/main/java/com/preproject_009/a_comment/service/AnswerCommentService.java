@@ -10,6 +10,7 @@ import com.preproject_009.member.service.MemberService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,10 +36,8 @@ public class AnswerCommentService {
     public AnswerComment updateAnswerComment(AnswerComment answerComment) {
         AnswerComment findAnswerComment = findVerifiedAnswerComment(answerComment.getAnswerCommentId());
 
-        Optional.ofNullable(answerComment.getContent())
-                .ifPresent(content -> findAnswerComment.setContent(content));
-        Optional.ofNullable(answerComment.getModifiedAt())
-                .ifPresent(modifiedAt -> findAnswerComment.setModifiedAt(modifiedAt));
+        findAnswerComment.setModifiedAt(LocalDateTime.now());
+        findAnswerComment.setContent(answerComment.getContent());
 
         return answerCommentRepository.save(findAnswerComment);
     }
@@ -53,6 +52,7 @@ public class AnswerCommentService {
         answerCommentRepository.delete(findAnswerComment);
     }
 
+    // 답변 댓글 존재 확인
     private AnswerComment findVerifiedAnswerComment(long answerCommentId) {
         Optional<AnswerComment> optionalAnswerComment = answerCommentRepository.findById(answerCommentId);
         AnswerComment findAnswerComment =
