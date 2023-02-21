@@ -4,6 +4,8 @@ import com.preproject_009.question.entity.Question;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 public class QuestionDto {
     @Getter
     @AllArgsConstructor
@@ -33,6 +35,8 @@ public class QuestionDto {
         private int totalVote;
         private Question.QuestionStatus questionStatus;
         private int totalAnswer;
+        private LocalDateTime createdAt;
+        private LocalDateTime modifiedAt;
     }
 
     @Getter

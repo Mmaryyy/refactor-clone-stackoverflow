@@ -64,8 +64,10 @@ public class QuestionController {
     @GetMapping
     public Page<QuestionDto.ResponseAll> getQuestions(@RequestParam("page") int page,
                                                     @Nullable @RequestParam("keyword") String keyword,
-                                                    @RequestParam("sortType") QuestionController.SortType sortType) {
-        Page<Question> questions = questionService.findQuestions(page - 1, keyword, sortType.toString());
+                                                    @RequestParam("sortType") QuestionController.SortType sortType,
+                                                      @RequestParam("filterType") int filterType) {
+        Page<Question> questions = questionService.findQuestions(page - 1, keyword, sortType.toString(), filterType);
+
         Page<QuestionDto.ResponseAll> response = questions.map(questionMapper::questionsToQuestionResponseDto);
 
         return response;
@@ -82,9 +84,9 @@ public class QuestionController {
     }
 
     public enum SortType{
-        createdAt,
-        modifiedAt,
-        vote,
+        created_At,
+        modified_At,
+        total_Vote,
         view
     }
 }

@@ -58,10 +58,11 @@ public class QuestionService {
         return question;
     }
 
-    public Page<Question> findQuestions(int page, String keyword, String sortType){
+    public Page<Question> findQuestions(int page, String keyword, String sortType, int filterType){
         PageRequest pageRequest = PageRequest.of(page, pageSize, Sort.by(sortType).descending());
-
-        return questionRepository.findByTitleContains(keyword, pageRequest);
+        if(filterType == 1) return questionRepository.findByTitleContains(keyword, pageRequest);
+        else if (filterType == 2) return questionRepository.findQuestionsWithFilterNotAnswered(keyword, pageRequest);
+        else return questionRepository.findQuestionsWithFilterNotAccepted(keyword, pageRequest);
     }
 
     public void deleteQuestion(long questionId) {
