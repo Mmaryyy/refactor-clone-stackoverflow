@@ -2,12 +2,13 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
+//
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 306px;
+  width: 290px;
   height: 617px;
-  background-color: lightgrey;
+  background-color: rgb(240, 242, 243);
   .logo {
     margin-bottom: 24px;
     text-align: center !important;
@@ -56,8 +57,6 @@ const Container = styled.div`
       }
     }
     .signup_talent {
-      /* display: flex;
-      justify-content: center; */
       padding-right: 15px;
       margin-top: 12px;
     }
@@ -122,13 +121,16 @@ const InputContainer = styled.div`
     right: 0.7em;
     margin-top: -10px;
     pointer-events: none;
+    .input-icon {
+      fill: rgb(222, 79, 84);
+    }
   }
 
   p {
     padding: 2px;
     margin: 2px 0;
     color: hsl(358, 62%, 52%);
-    font-size: var(--fs-caption);
+    font-size: var(--fs--caption);
     font-weight: 500;
   }
 
@@ -142,7 +144,7 @@ const InputContainer = styled.div`
 
   .password_link {
     text-decoration: none;
-    font-size: var(--fs-caption);
+    font-size: var(--fs--caption);
     color: var(--link__content);
     display: flex;
     align-items: center;
@@ -175,6 +177,10 @@ function Login() {
 
   //* ID, 패스워드 인풋창 onChange 이벤트 함수
   const handleInputValue = (key) => (e) => {
+    if (key === 'userEmail' && e.target.value)
+      setErrorMessage({ ...errorMessage, userEmail: '' });
+    if (key === 'password' && e.target.value)
+      setErrorMessage({ ...errorMessage, password: '' });
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
   };
 
@@ -259,12 +265,23 @@ function Login() {
                 type='text'
                 onChange={handleInputValue('userEmail')}
               ></input>
-              {errorMessage.userEmail ? <div className='error'>❗️</div> : ''}
-              {/* <div className="error">❗️</div> */}
+              {errorMessage.userEmail ? (
+                <div className='error'>
+                  <svg
+                    aria-hidden='true'
+                    class='input-icon'
+                    width='18'
+                    height='18'
+                    viewBox='0 0 18 18'
+                  >
+                    <path d='M9 17c-4.36 0-8-3.64-8-8 0-4.36 3.64-8 8-8 4.36 0 8 3.64 8 8 0 4.36-3.64 8-8 8ZM8 4v6h2V4H8Zm0 8v2h2v-2H8Z'></path>
+                  </svg>
+                </div>
+              ) : (
+                ''
+              )}
             </div>
             {errorMessage.userEmail ? <p>{errorMessage.userEmail}</p> : ''}
-            {/* <p>Email cannot be empty.</p>
-            <p>The email or password is incorrect.</p> */}
           </div>
 
           <div className='input_field'>
@@ -281,11 +298,23 @@ function Login() {
                 className={errorMessage.password ? 'errorbox' : null}
                 onChange={handleInputValue('password')}
               ></input>
-              {errorMessage.password ? <div className='error'>❗️</div> : ''}
-              {/* <div className="error">❗️</div> */}
+              {errorMessage.password ? (
+                <div className='error'>
+                  <svg
+                    aria-hidden='true'
+                    class='input-icon'
+                    width='18'
+                    height='18'
+                    viewBox='0 0 18 18'
+                  >
+                    <path d='M9 17c-4.36 0-8-3.64-8-8 0-4.36 3.64-8 8-8 4.36 0 8 3.64 8 8 0 4.36-3.64 8-8 8ZM8 4v6h2V4H8Zm0 8v2h2v-2H8Z'></path>
+                  </svg>
+                </div>
+              ) : (
+                ''
+              )}
             </div>
             {errorMessage.password ? <p>{errorMessage.password}</p> : ''}
-            {/* <p>Password cannot be empty.</p> */}
           </div>
           <button
             className='loginbutton'
