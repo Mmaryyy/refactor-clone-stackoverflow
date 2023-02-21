@@ -31,6 +31,7 @@ public class QuestionService {
         // 존재하는 회원인지?
         memberService.findVerifiedMember(question.getMember().getMemberId());
         question.setCreatedAt(LocalDateTime.now());
+        question.setModifiedAt(LocalDateTime.now());
         return questionRepository.save(question);
     }
 
