@@ -1,5 +1,9 @@
 package com.preproject_009.question.controller;
 
+import com.preproject_009.answer.dto.AnswerDto;
+import com.preproject_009.answer.entity.Answer;
+import com.preproject_009.answer.mapper.AnswerMapper;
+import com.preproject_009.answer.service.AnswerService;
 import com.preproject_009.member.entity.Member;
 import com.preproject_009.member.repository.MemberRepository;
 import com.preproject_009.member.service.MemberService;
@@ -8,6 +12,7 @@ import com.preproject_009.question.entity.Question;
 import com.preproject_009.question.mapper.QuestionMapper;
 import com.preproject_009.question.repository.QuestionRepository;
 import com.preproject_009.question.service.QuestionService;
+import com.preproject_009.utils.UriCreator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -18,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,6 +36,8 @@ public class QuestionController {
     private final QuestionService questionService;
     private final MemberService memberService;
     private final MemberRepository memberRepository;
+    private final AnswerService answerService;
+    private final AnswerMapper answerMapper;
 
     @PostMapping()
     public ResponseEntity postQuestion(@RequestBody @Valid QuestionDto.Post requestBody) {
@@ -77,6 +85,16 @@ public class QuestionController {
     public ResponseEntity deleteQuestion(@PathVariable("question_id") @Positive long questionId) {
         questionService.deleteQuestion(questionId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping("/{question-id}/answers")
+    public ResponseEntity postAnswerOfQuestion(@PathVariable("question-id") long questionId,
+                                               @Valid @RequestBody AnswerDto.Post requestBody) {
+        requestBody.setQuestionId(questionId);
+        Answer createdAnswer = answerService.createAnswer(answerMapper.answerPostDtoToAnswer(requestBody));
+        URI location = UriCreator.createPostAnswerUri(QUESTION_DEFAULT_URL, createdAnswer.getAnswerId());
+
+        return ResponseEntity.created(location).build();
     }
 
     public QuestionDto.Response response(Question question) {

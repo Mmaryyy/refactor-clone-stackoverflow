@@ -31,15 +31,6 @@ public class AnswerController {
     private final AnswerCommentService answerCommentService;
     private final AnswerCommentMapper answerCommentMapper;
 
-    @PostMapping("/{question-id}/answers")
-    public ResponseEntity postAnswerOfQuestion(@PathVariable("question-id") long questionId,
-                                               @Valid @RequestBody AnswerDto.Post requestBody) {
-        requestBody.setQuestionId(questionId);
-        Answer createdAnswer = answerService.createAnswer(answerMapper.answerPostDtoToAnswer(requestBody));
-        URI location = UriCreator.createUri(ANSWER_DEFAULT_URL, createdAnswer.getAnswerId());
-
-        return ResponseEntity.created(location).build();
-    }
     
     @PatchMapping("/{answer-id}")
     public ResponseEntity patchAnswer(@PathVariable("answer-id") @Positive long answerId,
@@ -72,7 +63,7 @@ public class AnswerController {
         requestBody.setAnswerId(answerId);
         AnswerComment createdAnswerComment =
                 answerCommentService.createAnswerComment(answerCommentMapper.answerCommentPostDtoToAnswer(requestBody));
-        URI location = UriCreator.createUri(ANSWER_DEFAULT_URL, createdAnswerComment.getAnswerCommentId());
+        URI location = UriCreator.createPostAnswerCommentUri(ANSWER_DEFAULT_URL, createdAnswerComment.getAnswerCommentId());
 
         return ResponseEntity.created(location).build();
     }
