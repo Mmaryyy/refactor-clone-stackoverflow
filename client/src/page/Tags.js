@@ -2,13 +2,14 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import styled from 'styled-components';
 import TagList from "../components/TagList"
+import tagList from '../datas/tags.json';
+import { useState } from 'react';
 
 const Container = styled.div`
   max-width: 1100px;
   width: calc(100% - 164px);
   padding: 24px;
 `
-
 const Main = styled.div`
   .title {
     font-size: 27px;
@@ -53,6 +54,10 @@ const Main = styled.div`
         color: var(--black__100);
         font-size: 14px;
       }
+      :focus {
+      outline: 4px solid rgb(221,234,247);
+      border: 1px solid var(--button__back);
+    }
     }
 
     .icon_search {
@@ -77,7 +82,12 @@ const Main = styled.div`
     font-size: 13px;
     font-weight: 500;
     color: var(--black__300);
-
+    &.active {
+      color: var(--black__400);
+      border: 1px solid var(--black__300);
+      background-color: rgb(227,230,232);
+      z-index: 999;
+    }
     &.l_round {
       border-radius: 5px 0 0 5px;
     }
@@ -87,12 +97,23 @@ const Main = styled.div`
   }
 
   .tags_list {
-    border: 1px solid var(--black__300);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    display: grid;
+    gap: 12px;
+    @media (max-width: 1264px) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    @media (max-width: 980px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 `
 
-
 const Tags = () => {
+  const [popularFilter, setPopular] = useState(false);
+  const [nameFilter, setName] = useState(false);
+  const [newFilter, setNew] = useState(false);
+
   return (
     <Container>
       <Main>
@@ -107,13 +128,30 @@ const Tags = () => {
             <svg aria-hidden="true" class="icon_search" width="18" height="18" viewBox="0 0 18 18"><path d="m18 16.5-5.14-5.18h-.35a7 7 0 1 0-1.19 1.19v.35L16.5 18l1.5-1.5ZM12 7A5 5 0 1 1 2 7a5 5 0 0 1 10 0Z"></path></svg>
           </div>
           <div className="tag-filter">
-            <Link to="#" className="filter-box l_round">Popular</Link>
-            <Link to="#" className="filter-box">Name</Link>
-            <Link to="#" className="filter-box r_round">New</Link>
+            <Link to="#" className={popularFilter ? "filter-box l_round active" : "filter-box l_round"}
+              onClick={() => {
+                setPopular(true)
+                setName(false)
+                setNew(false)
+              }}>Popular</Link>
+            <Link to="#" className={nameFilter ? "filter-box active" : "filter-box"}
+            onClick={() => {
+              setPopular(false)
+              setName(true)
+              setNew(false)
+            }}
+            >Name</Link>
+            <Link to="#" className={newFilter ? "filter-box r_round active" : "filter-box r_round"}
+            onClick={() => {
+              setPopular(false)
+              setName(false)
+              setNew(true)
+            }}
+            >New</Link>
           </div>
         </div>
         <div className="tags_list">
-          <TagList />
+          {tagList.map(data => <TagList key={data.id} data={data}/>)}
         </div>
       </Main>
     </Container>

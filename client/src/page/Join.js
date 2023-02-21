@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 
 const Container = styled.div`
@@ -8,7 +8,7 @@ const Container = styled.div`
   flex-direction: row;
   align-items: center;
   width: 775px;
-`
+`;
 const LeftSide = styled.div`
   display: flex;
   flex-direction: column;
@@ -49,13 +49,12 @@ const LeftSide = styled.div`
       color: hsl(206,100%,40%);
     }
 
-`
+`;
 const RightSide = styled.div`
   display: flex;
   flex-direction: column;
   width: 316px;
-  /* height: 933px; */
-  background-color: lightgrey;
+  background-color: rgb(240,242,243);
   .logo {
     margin-bottom: 24px;
     text-align: center !important;
@@ -109,7 +108,6 @@ const RightSide = styled.div`
     }
   }
 `;
-
 const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -170,13 +168,16 @@ const InputContainer = styled.div`
     right: 0.7em;
     margin-top: -10px;
     pointer-events: none;
+    .input-icon {
+      fill: rgb(222,79,84);
+    }
   }
 
   .errorMsg {
     padding: 2px;
     margin: 2px 0 8px 0;
     color: hsl(358, 62%, 52%);
-    font-size: var(--fs-caption);
+    font-size: var(--fs--caption);
     font-weight: 500;
   }
 
@@ -190,7 +191,7 @@ const InputContainer = styled.div`
 
   .password_link {
     text-decoration: none;
-    font-size: var(--fs-caption);
+    font-size: var(--fs--caption);
     color: var(--link__content);
     display: flex;
     align-items: center;
@@ -212,7 +213,7 @@ const InputContainer = styled.div`
     }
   }
     .password_info {
-      font-size: var(--fs-caption);
+      font-size: var(--fs--caption);
       color: var(--black__400);
       margin: 4px;
     }
@@ -236,7 +237,7 @@ const InputContainer = styled.div`
       }
   
         label {
-          font-size: var(--fs-caption);
+          font-size: var(--fs--caption);
           font-weight: 400;
           line-height: 1.3;
           padding-left: 5px;
@@ -254,12 +255,12 @@ const InputContainer = styled.div`
 
   .policy_info {
     margin-top: 32px;
-    font-size: var(--fs-caption);
+    font-size: var(--fs--caption);
     color: var(--black__400);
 
     .policy_link {
       text-decoration: none;
-      font-size: var(--fs-caption);
+      font-size: var(--fs--caption);
       color: var(--link__content);
       line-height: 1.5;
       font-weight: 500;
@@ -276,104 +277,116 @@ const InputContainer = styled.div`
 
 function Join() {
   const [loginInfo, setLoginInfo] = useState({ userEmail: "", password: "" });
-  const [errorMessage, setErrorMessage] = useState({
-    userEmail: "",
-    password: "",
-    pwcheck: "",
-  });
+  const [errorMessage, setErrorMessage] = useState({userEmail: "", password: ""});
   // const [checkedKeepLogin, setCheckedKeepLogin] = useState(false);
 
-  //* ID, 패스워드 인풋창 onChange이벤트 함수
+  //todo ID, 패스워드 인풋창 onChange이벤트 함수
   const handleInputValue = key => e => {
-    setLoginInfo({ ...loginInfo, [key]: e.target.value });
-  };
-
-  //* 회원가입 버튼 onClick이벤트 함수
-  const loginRequestHandler = () => {
-    setErrorMessage({ userEmail: "", password: "", pwcheck: "" });
-
-    //* Email && PW 빈칸? empty경고
-    if (!loginInfo.userEmail && !loginInfo.password) {
-      setErrorMessage({
-        userEmail: "Email cannot be empty.",
-        password: "Password cannot be empty.",
-        pwcheck: "",
-      });
-      return;
-    }
-
+    let emailCheck = true;
+    let pwCheck = true;
+    
+    //* 빈칸이면? 에러메시지 초기화
+    if (!e.target.value) setErrorMessage({ userEmail: "", password: "" });
+    
     //* Email: a@a 형태 아니면? `{loginInfo.userEmail} is not a valid email address.`
-    if (
-      loginInfo.userEmail.search(
-        /^[0-9a-zA-Z]([-_]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/
-      )
-    ) {
-      setErrorMessage({
-        userEmail: `${loginInfo.userEmail} is not a valid email address.`,
-        password: "",
-        pwcheck: "",
-      });
-      return;
+    if (key === "userEmail" && e.target.value 
+      && !e.target.value.match(/^[0-9a-zA-Z]([-_]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/)) {
+        emailCheck = false;
+        setErrorMessage({...errorMessage, userEmail: `${e.target.value} is not a valid email address.`,});
+      }
+
+    //* Email: a@a 형태 맞다면 에러메시지 초기화 
+    if (key === "userEmail" && e.target.value && emailCheck) {
+      setErrorMessage({...errorMessage, userEmail: ""});
+      }
+
+      
+    //* Password: num + letter + symbol
+    if (key === "password" && e.target.value
+      && !e.target.value.match(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]/)) {
+        pwCheck = false;
+        setErrorMessage({...errorMessage, 
+          password: "Please choose a stronger password."});
+        
+      };
+      console.log(pwCheck)
+
+    //* Password: 8글자 미만이면?
+    if (pwCheck && key === "password" && e.target.value) {
+      if(e.target.value.length < 8) {
+        const num = 8 - e.target.value.length;
+        num === 1
+          ? setErrorMessage({...errorMessage,
+            password: `Must contain at least 1 more character.`,
+          })
+          : setErrorMessage({...errorMessage,
+            password: `Must contain at least ${num} more characters.`,
+          });
+        } else setErrorMessage({...errorMessage, password: ""})
+      }
+    setLoginInfo({ ...loginInfo, [key]: e.target.value });
+  } 
+    // Password: 숫자만 있으면?
+    // if (key === "password" && e.target.value 
+    //   && e.target.value.search(/\D/) === -1) {
+    //     pwCheck = false;
+    //     setErrorMessage({...errorMessage, 
+    //       password: "Please add one of the following things to make your password stronger: ", pwcheck: "letters",
+    //   });
+    // }
+
+    // Password: 문자만 있으면?
+    // if (key === "password" && e.target.value && e.target.value.search(/\d/) === -1) {
+    //   pwCheck = false;
+    //   setErrorMessage({...errorMessage,
+    //     password:"Please add one of the following things to make your password stronger: ",
+    //     pwcheck: "numbers",
+    //   });
+    // }
+
+    // Password: 8글자 미만이면?
+    // if (pwCheck && key === "password" && e.target.value && e.target.value.length < 8) {
+    //   const num = 8 - e.target.value.length;
+    //     num === 1
+    //       ? setErrorMessage({...errorMessage,
+    //           password: `Must contain at least 1 more character.`,
+    //           pwcheck: "",
+    //         })
+    //       : setErrorMessage({...errorMessage,
+    //           password: `Must contain at least ${num} more characters.`,
+    //           pwcheck: "",
+    //         });
+    // } else if (pwCheck && key === "password" && e.target.value && e.target.value.length >= 8) {
+    //   setErrorMessage({...errorMessage, password: "", pwcheck: "",});
+    // }
+
+    // else if (pwCheck && key === "password" && e.target.value && e.target.value.length >= 8) {
+    //   setErrorMessage({...errorMessage, password: "", pwcheck: "",});
+    
+
+
+  //* 회원가입 버튼 onClick이벤트 함수 : 빈칸일 때만 경고, 에러메시지 유무에 따라 동작
+  const loginRequestHandler = () => {
+    // //* Email && PW 빈칸? empty경고
+    if (!loginInfo.userEmail && !loginInfo.password) {
+      setErrorMessage({userEmail: "Email cannot be empty.", password: "Password cannot be empty.", pwcheck: "",});
+      // return;
     }
 
     //* PW 빈칸? empty경고
     if (loginInfo.userEmail && !loginInfo.password) {
-      setErrorMessage({
-        userEmail: "",
-        password: "Password cannot be empty.",
-        pwcheck: "",
-      });
-      return;
+      setErrorMessage({userEmail: "", password: "Password cannot be empty.", pwcheck: ""});
+      // return;
     }
 
     //* Email 빈칸? empty경고
     if (!loginInfo.userEmail && loginInfo.password) {
-      setErrorMessage({
-        userEmail: "Email cannot be empty.",
-        password: "",
-        pwcheck: "",
-      });
-      return;
+      setErrorMessage({userEmail: "Email cannot be empty.", password: "", pwcheck: ""});
+      // return;
     }
+    // console.log(errorMessage);
 
-    //* Password: 숫자만 있으면? 
-    if (loginInfo.password.search(/\D/) === -1) {
-      setErrorMessage({
-        userEmail: "",
-        password:
-          "Please add one of the following things to make your password stronger: ",
-        pwcheck: "letters",
-      });
-      return;
-    }
-
-    //* Password: 문자만 있으면? 
-    if (loginInfo.password.search(/\d/) === -1) {
-      setErrorMessage({
-        userEmail: "",
-        password:
-          "Please add one of the following things to make your password stronger: ",
-        pwcheck: "numbers",
-      });
-      return;
-    }
-
-    //* Password: 8글자 미만이면?
-    if (loginInfo.password && loginInfo.password.length < 8) {
-      const num = 8 - loginInfo.password.length;
-      num === 1
-        ? setErrorMessage({
-            userEmail: "",
-            password: `Must contain at least 1 more character.`,
-            pwcheck: "",
-          })
-        : setErrorMessage({
-            userEmail: "",
-            password: `Must contain at least ${num} more characters.`,
-            pwcheck: "",
-          });
-    }
-
+    if(!errorMessage.userEmail && !errorMessage.password) console.log("Sign up Success!")
     // return axios
     //   .post("url", {loginInfo, checkedKeepLogin})
     //   .then((res) => {
@@ -385,8 +398,7 @@ function Join() {
     //     setErrorMessage({userEmail: 'The email or password is incorrect.', password: ''})
     //   });
   };
-      // console.log(errorMessage)
-
+  
   return (
     <Container>
       <LeftSide>
@@ -490,14 +502,13 @@ function Join() {
                   id="email"
                   className={errorMessage.userEmail ? "errorbox" : null}
                   type="text"
+                  // value={loginInfo.userEmail}
                   onChange={handleInputValue("userEmail")}></input>
-                {errorMessage.userEmail ? <div className="error">❗️</div> : ""}
+                {errorMessage.userEmail ? <div className="error"><svg aria-hidden="true" class="input-icon" width="18" height="18" viewBox="0 0 18 18"><path d="M9 17c-4.36 0-8-3.64-8-8 0-4.36 3.64-8 8-8 4.36 0 8 3.64 8 8 0 4.36-3.64 8-8 8ZM8 4v6h2V4H8Zm0 8v2h2v-2H8Z"></path></svg></div> : ""}
               </div>
               {errorMessage.userEmail ? (
                 <p className="errorMsg">{errorMessage.userEmail}</p>
-              ) : (
-                null
-              )}
+              ) : null}
             </div>
 
             <div className="input_field">
@@ -508,25 +519,22 @@ function Join() {
                 <input
                   id="password"
                   className={errorMessage.password ? "errorbox" : null}
-                  type='password'
+                  type="password"
                   onChange={handleInputValue("password")}></input>
-                {errorMessage.password ? <div className="error">❗️</div> : ""}
+                {errorMessage.password ? <div className="error"><svg aria-hidden="true" class="input-icon" width="18" height="18" viewBox="0 0 18 18"><path d="M9 17c-4.36 0-8-3.64-8-8 0-4.36 3.64-8 8-8 4.36 0 8 3.64 8 8 0 4.36-3.64 8-8 8ZM8 4v6h2V4H8Zm0 8v2h2v-2H8Z"></path></svg></div> : ""}
               </div>
               {errorMessage.password ? (
                 <span className="errorMsg">
                   <p>{errorMessage.password}</p>
                   {errorMessage.pwcheck ? (
-                  <ul className="pwcheck">
-                    <li>{errorMessage.pwcheck}</li>
-                  </ul>
+                    <ul className="pwcheck">
+                      <li>{errorMessage.pwcheck}</li>
+                    </ul>
                   ) : null}
                 </span>
-              ) : (
-                null
-              )}
+              ) : null}
               <p className="password_info">
-                Passwords must contain at least eight characters, including at
-                least 1 letter and 1 number.
+                Passwords must contain at least eight characters with a mix of letters, numbers & symbols.
               </p>
             </div>
             <div className="opt_field">
