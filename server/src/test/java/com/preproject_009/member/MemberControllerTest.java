@@ -1,4 +1,4 @@
-package com.preproject_009.preproject.Member;
+package com.preproject_009.member;
 
 import com.google.gson.Gson;
 import com.preproject_009.member.dto.MemberDto;
