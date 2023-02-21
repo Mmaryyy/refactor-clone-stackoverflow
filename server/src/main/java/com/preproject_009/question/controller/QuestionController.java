@@ -89,7 +89,7 @@ public class QuestionController {
     }
 
     @PostMapping("/{question-id}/answers")
-    public ResponseEntity postAnswerOfQuestion(@PathVariable("question-id") long questionId,
+    public ResponseEntity postAnswer(@PathVariable("question-id") long questionId,
                                                @Valid @RequestBody AnswerDto.Post requestBody) {
         requestBody.setQuestionId(questionId);
         Answer createdAnswer = answerService.createAnswer(answerMapper.answerPostDtoToAnswer(requestBody));
