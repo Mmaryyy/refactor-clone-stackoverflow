@@ -15,6 +15,9 @@ public class Tag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long tagId;
 
+    @Column(name = "TITLE", columnDefinition = "TEXT", nullable = false)
+    private String title;
+
     @Column(name = "CONTENT", columnDefinition = "TEXT", nullable = false)
     private String content;
 
