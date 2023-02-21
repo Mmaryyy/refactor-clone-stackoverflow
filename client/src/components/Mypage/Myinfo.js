@@ -69,14 +69,19 @@ const Menu = styled.div`
 const Menusub = styled.div`
   text-align: center;
   margin: 0 0 0 30px;
-  font-size: 18px;
+  font-size: var(--fs--big);
   border-radius: 10px;
   width: 90px;
   height: 35px;
   padding: 5px;
-  color: black;
+  color: ${(props) => (props.color ? props.color : 'var(--black__300)')};
   background-color: ${(props) =>
     props.background ? props.background : 'white'};
+
+  &:hover {
+    background-color: ${(props) =>
+      props.background ? props.background : 'var(--tab__focus)'};
+  }
 `;
 
 const Main = styled.div`
@@ -87,12 +92,20 @@ const Main = styled.div`
 const List = styled.div`
   display: flex;
   flex-direction: column;
-  font-size: 18px;
-  margin: 20px 100px 0 70px;
+  font-size: 1px;
+  margin: 10px 50px 0 70px;
 
   div {
-    margin-bottom: 20px;
+    width: 100px;
+    height: 30px;
+    margin: 5px 0 10px 0;
     color: black;
+    font-size: var(--fs--big);
+
+    &:hover {
+      border-radius: 50px;
+      background-color: var(--tab__focus);
+    }
   }
 `;
 
@@ -101,7 +114,7 @@ const Content = styled.div`
   flex-direction: column;
   div {
     color: black;
-    font-size: 30px;
+    font-size: var(--fs--title);
     text-align: left;
     padding: 10px 0 0 20px;
   }
@@ -145,6 +158,38 @@ const SectionArticle2 = styled(SectionArticle)`
 
 const SectionArticle3 = styled(SectionArticle)`
   width: 300px;
+
+  span {
+    font-size: 17px;
+    color: 'black';
+  }
+  div {
+    font-size: 14px;
+    color: '#88889A';
+    text-align: center;
+    margin-bottom: 10px;
+  }
+`;
+
+const SubList = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  span {
+    font-size: var(--fs--title);
+  }
+  div {
+    width: 550px;
+    height: 80px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    border: 1px solid #d6d9dc;
+    margin-right: 5px;
+    font-size: var(--fs--mid);
+  }
 `;
 
 const Button = styled(TagButton)`
@@ -160,7 +205,7 @@ export default function Myinfo() {
     <div>
       <Header>
         <div className='user_profile'></div>
-        <Avatar width='180px' height='180px' />
+        <Avatar width='180px' height='180px' margin='30px' />
         <MyProfile>
           <div className='user_name'>{user[0].nickname}</div>
           <Myinfor>
@@ -220,8 +265,12 @@ export default function Myinfo() {
         </Sub>
       </Header>
       <Menu>
-        <Menusub>Profile</Menusub>
-        <Menusub background='#F48225'>Activity</Menusub>
+        <Link to='/user/profile/' style={{ textDecoration: 'none' }}>
+          <Menusub>Profile</Menusub>
+        </Link>
+        <Menusub background='#F48225' color='#fff'>
+          Activity
+        </Menusub>
         <Menusub>Saves</Menusub>
         <Menusub>Settings</Menusub>
       </Menu>
@@ -301,7 +350,26 @@ export default function Myinfo() {
               </div>
             </SectionArticle3>
           </Section>
-          <div>Answer</div>
+          <Section>
+            <SubList>
+              <span>Answers</span>
+              <div>You have not answered any questions</div>
+            </SubList>
+            <SubList>
+              <span>Questions</span>
+              <div>You have not asked any questions</div>
+            </SubList>
+          </Section>
+          <Section>
+            <SubList>
+              <span>Tags</span>
+              <div>You have not participated in any tags</div>
+            </SubList>
+            <SubList>
+              <span>Reputation</span>
+              <div>You have no recent reputation changes.</div>
+            </SubList>
+          </Section>
         </Content>
       </Main>
     </div>

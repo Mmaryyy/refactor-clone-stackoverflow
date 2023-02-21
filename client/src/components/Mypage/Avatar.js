@@ -2,21 +2,24 @@ import React from 'react';
 import styled from 'styled-components';
 
 export const UserProfiles = styled.div`
-  margin: 30px;
+  margin: ${(props) => props.margin};
   width: ${(props) => props.width};
   height: ${(props) => props.height};
-  border-radius: 5%;
-
+  border-radius: 7px;
   background-image: ${(props) =>
     props.img
       ? `url(${props.img})`
       : `url("https://placeimg.com/200/100/any")`};
+
+  &:hover {
+    height: ${(props) => props.height};
+  }
 `;
 
-export default function Avatar({ width, height }) {
+export default function Avatar({ width, height, margin }) {
   return (
     <>
-      <UserProfiles width={width} height={height} />
+      <UserProfiles width={width} height={height} margin={margin} />
     </>
   );
 }
