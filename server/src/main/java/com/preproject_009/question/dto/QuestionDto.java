@@ -1,5 +1,6 @@
 package com.preproject_009.question.dto;
 
+import com.preproject_009.answer.entity.Answer;
 import com.preproject_009.question.entity.Question;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,19 +11,20 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class QuestionDto {
     @Getter
     @AllArgsConstructor
     public static class Post {
+        @Positive
+        private long memberId;
         @NotNull
         @NotBlank
         private String title;
         @NotNull
         @NotBlank
         private String content;
-        @Positive
-        private long memberId;
 
         //private List<Tag> tags;
     }
@@ -49,19 +51,8 @@ public class QuestionDto {
         private int totalVote;
         private Question.QuestionStatus questionStatus;
         private int totalAnswer;
+        private List<Answer> answers;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
-    }
-
-    @Getter
-    @AllArgsConstructor
-    public static class ResponseAll{
-        private long questionId;
-        private long memberId;
-        private String title;
-        private String content;
-        private int totalVote;
-        private int view;
-        private int totalAnswer;
     }
 }

@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface QuestionRepository extends JpaRepository<Question, Long> {
-    @Query(value = "SELECT * FROM Question WHERE (:keyword IS NULL OR TITLE LIKE CONCAT('%', :keyword, '%')) AND (Question_Status = 'QUESTION_REGISTRATION' OR Question_Status = 'QUESTION_ANSWERED' OR Question_Status = 'QUESTION_ANSWER_ACCEPTED')", nativeQuery = true)
+    @Query(value = "SELECT * FROM Question WHERE (:keyword IS NULL OR TITLE LIKE CONCAT('%', :keyword, '%')) AND (Question_Status <> 'QUESTION_DELETE')", nativeQuery = true)
     Page<Question> findByTitleContains(String keyword, Pageable pageable);
 
     @Query(value = "SELECT * FROM Question WHERE (:keyword IS NULL OR TITLE LIKE CONCAT('%', :keyword, '%')) AND (Question_Status = 'QUESTION_REGISTRATION' OR Question_Status = 'QUESTION_ANSWERED')", nativeQuery = true)
@@ -16,4 +16,7 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
 
     @Query(value = "SELECT * FROM Question WHERE (:keyword IS NULL OR TITLE LIKE CONCAT('%', :keyword, '%')) AND (Question_Status = 'QUESTION_REGISTRATION')", nativeQuery = true)
     Page<Question> findQuestionsWithFilterNotAnswered(@Param("keyword") String keyword, Pageable pageable);
+
+    @Query(value = "SELECT * FROM Question WHERE MEMBER_ID = :memberId AND Question_Status <> 'QUESTION_DELETE' ", nativeQuery = true)
+    Page<Question> findQuestionByMemberId(@Param("memberId") long memberId, Pageable pageable);
 }

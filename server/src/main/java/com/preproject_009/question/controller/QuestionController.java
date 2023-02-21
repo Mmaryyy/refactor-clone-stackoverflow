@@ -4,7 +4,7 @@ import com.preproject_009.answer.dto.AnswerDto;
 import com.preproject_009.answer.entity.Answer;
 import com.preproject_009.answer.mapper.AnswerMapper;
 import com.preproject_009.answer.service.AnswerService;
-import com.preproject_009.member.entity.Member;
+import com.preproject_009.member.dto.MultiResponseDto;
 import com.preproject_009.member.repository.MemberRepository;
 import com.preproject_009.member.service.MemberService;
 import com.preproject_009.question.dto.QuestionDto;
@@ -24,11 +24,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @Validated
-@RequestMapping("v1/questions")
+@RequestMapping("/v1/questions")
 public class QuestionController {
     private final static String QUESTION_DEFAULT_URL = "/v1/questions";
     private final QuestionRepository questionRepository;
@@ -38,17 +39,6 @@ public class QuestionController {
     private final MemberRepository memberRepository;
     private final AnswerService answerService;
     private final AnswerMapper answerMapper;
-
-    @PostMapping()
-    public ResponseEntity postQuestion(@RequestBody @Valid QuestionDto.Post requestBody) {
-        Member member = memberService.findMember(1);
-        Question question = questionMapper.questionPostDtoToQuestion(requestBody);
-        question.setMember(member);
-        Question createdQuestion = questionService.createQuestion(question);
-        //URI location = UriCreator.createUri(QUESTION_DEFAULT_URL, createdQuestion.getQuestionId());
-
-        return new ResponseEntity<>(response(createdQuestion), HttpStatus.CREATED);
-    }
 
     @PatchMapping("/{question_id}")
     public ResponseEntity patchQuestion(@PathVariable("question_id") @Positive long questionId,
@@ -69,19 +59,30 @@ public class QuestionController {
         return new ResponseEntity<>(response(question), HttpStatus.OK);
     }
 
+//    @GetMapping
+//    public Page<QuestionDto.Response> getQuestionsV1(@RequestParam("page") int page,
+//                                                   @Nullable @RequestParam("keyword") String keyword,
+//                                                   @RequestParam("sortType") QuestionController.SortType sortType,
+//                                                   @RequestParam("filterType") int filterType) {
+//        Page<Question> questions = questionService.findQuestions(page - 1, keyword, sortType.toString(), filterType);
+//
+//        Page<QuestionDto.Response> response = questions.map(questionMapper::questionToQuestionResponseDto);
+//
+//        return response;
+//    }
+
     @GetMapping
-    public Page<QuestionDto.Response> getQuestions(@RequestParam("page") int page,
+    public ResponseEntity getQuestions(@RequestParam("page") int page,
                                                    @Nullable @RequestParam("keyword") String keyword,
                                                    @RequestParam("sortType") QuestionController.SortType sortType,
                                                    @RequestParam("filterType") int filterType) {
-        Page<Question> questions = questionService.findQuestions(page - 1, keyword, sortType.toString(), filterType);
-
-        Page<QuestionDto.Response> response = questions.map(questionMapper::questionToQuestionResponseDto);
-
-        return response;
+        Page<Question> questionPage = questionService.findQuestions(page - 1, keyword, sortType.toString(), filterType);
+        List<Question> questions = questionPage.getContent();
+        return new ResponseEntity<>(
+                new MultiResponseDto<>(questionMapper.questionsToQuestionResponsesDto(questions),
+                        questionPage), HttpStatus.OK);
     }
-
-    @DeleteMapping("/{question-id}")
+    @DeleteMapping("/{question_id}")
     public ResponseEntity deleteQuestion(@PathVariable("question_id") @Positive long questionId) {
         questionService.deleteQuestion(questionId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

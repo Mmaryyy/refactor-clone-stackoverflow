@@ -6,7 +6,10 @@ import com.preproject_009.member.entity.Member;
 import com.preproject_009.member.mapper.MemberMapper;
 import com.preproject_009.member.service.MemberService;
 import com.preproject_009.point.Point;
+import com.preproject_009.question.dto.QuestionDto;
 import com.preproject_009.question.entity.Question;
+import com.preproject_009.question.entity.Tag;
+import com.preproject_009.question.mapper.QuestionMapper;
 import com.preproject_009.question.service.QuestionService;
 import com.preproject_009.utils.UriCreator;
 import lombok.extern.slf4j.Slf4j;
@@ -15,11 +18,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,10 +41,13 @@ public class MemberController {
     private final QuestionService questionService;
     private final MemberMapper mapper;
 
-    public MemberController(MemberService memberService, MemberMapper mapper, QuestionService questionService){
+    private final QuestionMapper questionMapper;
+
+    public MemberController(MemberService memberService, QuestionService questionService, MemberMapper mapper, QuestionMapper questionMapper) {
         this.memberService = memberService;
         this.questionService = questionService;
         this.mapper = mapper;
+        this.questionMapper = questionMapper;
     }
 
     // 유저 생성
@@ -113,6 +119,29 @@ public class MemberController {
         memberService.deleteMember(memberId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping("/{member-id}/questions")
+    public ResponseEntity postQuestion(@PathVariable("member-id") long memberId,
+                                       @RequestBody @Valid QuestionDto.Post requestBody) {
+        Member member = memberService.findMember(memberId);
+        Question question = questionMapper.questionPostDtoToQuestion(requestBody);
+        question.setMember(member);
+        question.setTags(new ArrayList<Tag>());
+        Question createdQuestion = questionService.createQuestion(question);
+        URI location = UriCreator.createPostQuestionUri(MEMBER_DEFAULT_URL, createdQuestion.getQuestionId());
+
+        return ResponseEntity.created(location).build();
+    }
+
+    @GetMapping("/{member-id}/questions")
+    public ResponseEntity getQuestions(@PathVariable("member-id") @Positive long memberId){
+        Page<Question> questionPage = questionService.findQuestionsByMember(memberId);
+        List<Question> questions = questionPage.getContent();
+
+        return new ResponseEntity<>(
+                new MultiResponseDto<>(questionMapper.questionsToQuestionResponsesDto(questions),
+                        questionPage), HttpStatus.OK);
     }
 
     public MemberDto.response response(Member member){

@@ -30,6 +30,7 @@ public class QuestionService {
     public Question createQuestion(Question question) {
         // 존재하는 회원인지?
         memberService.findVerifiedMember(question.getMember().getMemberId());
+
         question.setCreatedAt(LocalDateTime.now());
         question.setModifiedAt(LocalDateTime.now());
         return questionRepository.save(question);
@@ -55,7 +56,6 @@ public class QuestionService {
         Question question =
                 questionRepository.findById(questionId)
                         .orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
-        updateView(question);
         return question;
     }
 
@@ -70,6 +70,11 @@ public class QuestionService {
         Question question = findQuestion(questionId);
         question.canChangeQuestion(question.getQuestionStatus());
         question.setQuestionStatus(Question.QuestionStatus.QUESTION_DELETE);
+    }
+
+    public Page<Question> findQuestionsByMember(long memberId) {
+        PageRequest pageRequest = PageRequest.of(0, 10, Sort.by("TOTAL_VOTE").descending());
+        return questionRepository.findQuestionByMemberId(memberId, pageRequest);
     }
 
     public void updateView(Question question) {

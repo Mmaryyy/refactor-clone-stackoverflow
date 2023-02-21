@@ -28,4 +28,12 @@ public class UriCreator {
                 .buildAndExpand(resourceId)
                 .toUri();
     }
+
+    public static URI createPostQuestionUri(String defaultUrl, long resourceId) {
+        return UriComponentsBuilder
+                .newInstance()
+                .path(defaultUrl + "/{resource-id}/Questions")
+                .buildAndExpand(resourceId)
+                .toUri();
+    }
 }
