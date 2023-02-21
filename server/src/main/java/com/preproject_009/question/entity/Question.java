@@ -64,6 +64,12 @@ public class Question extends Auditable {
     @OneToMany(mappedBy = "question", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private List<QuestionComment> questionComments = new ArrayList<>();
 
+    public Question(long questionId, String title, String content) {
+        this.questionId = questionId;
+        this.title = title;
+        this.content = content;
+    }
+
     public enum QuestionStatus{
         QUESTION_REGISTRATION("질문 등록"),
         QUESTION_ANSWERED("답변 등록"),

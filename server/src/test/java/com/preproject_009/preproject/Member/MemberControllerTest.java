@@ -1,25 +1,32 @@
 package com.preproject_009.preproject.Member;
 
-import com.preproject_009.member.dto.MemberDto;
 import com.google.gson.Gson;
+import com.preproject_009.member.dto.MemberDto;
+import com.preproject_009.question.dto.QuestionDto;
+import com.preproject_009.question.entity.Question;
+import com.preproject_009.question.mapper.QuestionMapper;
+import com.preproject_009.question.service.QuestionService;
+import com.preproject_009.stubdata.QuestionStubData;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-
-import java.net.URL;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.BDDMockito.given;
+
 
 @Transactional
 @SpringBootTest
@@ -31,6 +38,12 @@ public class MemberControllerTest {
 
     @Autowired
     private Gson gson;
+
+    @MockBean
+    private QuestionMapper questionMapper;
+
+    @MockBean
+    private QuestionService questionService;
 
     @Test
     void postMemberTest() throws Exception {
@@ -80,4 +93,28 @@ public class MemberControllerTest {
 //                .andExpect(jsonPath("$.data.about").value(post.getAbout()))
 //                .andExpect(jsonPath("$.data.password").value(post.getPassword()));
 //    }
+
+    @Test
+    void postQuestionTest() throws Exception {
+        //given
+        long memberId = 1L;
+        QuestionDto.Post post = (QuestionDto.Post) QuestionStubData.MockQuestion.getQuestionRequestBody(HttpMethod.POST);
+        String request = gson.toJson(post);
+
+        given(questionMapper.questionPostDtoToQuestion(Mockito.any(QuestionDto.Post.class))).willReturn(new Question());
+
+        Question question = QuestionStubData.MockQuestion.getSingleResultQuestion();
+        given(questionService.createQuestion(Mockito.any(Question.class))).willReturn(question);
+
+        //when
+        ResultActions actions =
+                mockMvc.perform(
+                        RestDocumentationRequestBuilders
+                                .post("/v1/members/{member-id}/questions", memberId)
+                                .accept(MediaType.APPLICATION_JSON)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(request));
+
+        // then
+    }
 }
