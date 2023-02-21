@@ -32,7 +32,7 @@ public class QuestionController {
     private final MemberRepository memberRepository;
 
     @PostMapping()
-    public ResponseEntity postQuestion(@RequestBody QuestionDto.Post requestBody) {
+    public ResponseEntity postQuestion(@RequestBody @Valid QuestionDto.Post requestBody) {
         Member member = memberService.findMember(1);
         Question question = questionMapper.questionPostDtoToQuestion(requestBody);
         question.setMember(member);
@@ -45,28 +45,30 @@ public class QuestionController {
     @PatchMapping("/{question_id}")
     public ResponseEntity patchQuestion(@PathVariable("question_id") @Positive long questionId,
                                         @Valid @RequestBody QuestionDto.Patch requestBody) {
+        requestBody.setQuestionId(questionId);
         Question question = questionMapper.questionPatchDtoToQuestion(requestBody);
         Question updatedQuestion = questionService.updateQuestion(question);
-        QuestionDto.Response response = questionMapper.questionToQuestionResponseDto(updatedQuestion);
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
+
+        return new ResponseEntity<>(response(updatedQuestion), HttpStatus.OK);
     }
 
     @GetMapping("/{question_id}")
     public ResponseEntity getQuestion(@PathVariable("question_id") @Positive long questionId) {
         Question question = questionService.findQuestion(questionId);
-        QuestionDto.Response response = questionMapper.questionToQuestionResponseDto(question);
         questionService.updateView(question);
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(response(question), HttpStatus.OK);
     }
 
     @GetMapping
-    public Page<QuestionDto.ResponseAll> getQuestions(@RequestParam("page") int page,
-                                                    @Nullable @RequestParam("keyword") String keyword,
-                                                    @RequestParam("sortType") QuestionController.SortType sortType) {
-        Page<Question> questions = questionService.findQuestions(page - 1, keyword, sortType.toString());
-        Page<QuestionDto.ResponseAll> response = questions.map(questionMapper::questionsToQuestionResponseDto);
+    public Page<QuestionDto.Response> getQuestions(@RequestParam("page") int page,
+                                                   @Nullable @RequestParam("keyword") String keyword,
+                                                   @RequestParam("sortType") QuestionController.SortType sortType,
+                                                   @RequestParam("filterType") int filterType) {
+        Page<Question> questions = questionService.findQuestions(page - 1, keyword, sortType.toString(), filterType);
+
+        Page<QuestionDto.Response> response = questions.map(questionMapper::questionToQuestionResponseDto);
 
         return response;
     }
@@ -82,9 +84,9 @@ public class QuestionController {
     }
 
     public enum SortType{
-        createdAt,
-        modifiedAt,
-        vote,
-        view
+        created_At, // 최신순
+        modified_At, // 최근 수정순
+        total_Vote, // 좋아요순
+        view // 조회수순
     }
 }
