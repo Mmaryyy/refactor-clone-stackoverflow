@@ -35,10 +35,9 @@ public class AnswerCommentService {
 
     public AnswerComment updateAnswerComment(AnswerComment answerComment) {
         AnswerComment findAnswerComment = findVerifiedAnswerComment(answerComment.getAnswerCommentId());
-        findAnswerComment.setModifiedAt(LocalDateTime.now());
 
-        Optional.ofNullable(answerComment.getContent())
-                .ifPresent(content -> findAnswerComment.setContent(content));
+        findAnswerComment.setModifiedAt(LocalDateTime.now());
+        findAnswerComment.setContent(answerComment.getContent());
 
         return answerCommentRepository.save(findAnswerComment);
     }

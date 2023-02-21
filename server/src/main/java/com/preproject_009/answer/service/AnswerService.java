@@ -44,8 +44,7 @@ public class AnswerService {
         findAnswer.canChangeAnswer(findAnswer.getAnswerStatus());
 
         findAnswer.setModifiedAt(LocalDateTime.now());
-        Optional.ofNullable(answer.getContent())
-                .ifPresent(content -> findAnswer.setContent(content));
+        findAnswer.setContent(answer.getContent());
 
         return answerRepository.save(findAnswer);
     }

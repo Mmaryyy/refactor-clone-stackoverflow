@@ -27,15 +27,6 @@ public class AnswerCommentController {
         this.answerCommentMapper = answerCommentMapper;
     }
 
-    @PostMapping("/{answer-id}/answerComments")
-    public ResponseEntity postAnswerComment(@PathVariable("answer-id") long answerId,
-                                            @Valid @RequestBody AnswerCommentDto.Post requestBody) {
-        requestBody.setAnswerId(answerId);
-        AnswerComment createdAnswerComment = answerCommentService.createAnswerComment(answerCommentMapper.answerCommentPostDtoToAnswer(requestBody));
-
-        return new ResponseEntity<>(answerCommentMapper.answerToAnswerCommentResponse(createdAnswerComment), HttpStatus.CREATED);
-    }
-
     @PatchMapping("/{answerComment-id}")
     public ResponseEntity patchAnswer(@PathVariable("answerComment-id") @Positive long answerCommentId,
                                       @Valid @RequestBody AnswerCommentDto.Patch requestBody) {
@@ -44,7 +35,7 @@ public class AnswerCommentController {
         AnswerComment answerComment =
                 answerCommentService.updateAnswerComment(answerCommentMapper.answerCommentPatchDtoToAnswer(requestBody));
 
-        return new ResponseEntity<>(answerCommentMapper.answerToAnswerCommentResponse(answerComment), HttpStatus.OK);
+        return new ResponseEntity<>(response(answerComment), HttpStatus.OK);
     }
 
     @GetMapping
@@ -59,5 +50,9 @@ public class AnswerCommentController {
         answerCommentService.deleteAnswerComment(answerCommentId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    public AnswerCommentDto.Response response(AnswerComment answerComment) {
+        return answerCommentMapper.answerToAnswerCommentResponse(answerComment);
     }
 }
