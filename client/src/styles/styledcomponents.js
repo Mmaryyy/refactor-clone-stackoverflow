@@ -2,6 +2,9 @@ import styled from 'styled-components'
 
 export const SubmitButton = styled.button`
     padding: 15px;
+    width: fit-content;
+    height: fit-content;
+    white-space: nowrap !important;
     background: var(--button__back);
     color: white;
     border: 1px solid var(--link__content);

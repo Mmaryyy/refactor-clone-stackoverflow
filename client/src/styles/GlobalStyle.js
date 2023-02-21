@@ -11,12 +11,16 @@ const GlobalStyle = createGlobalStyle`
     }
     .app_wrap {
         display: flex;
-        padding: 15px 15px 15px 0px;
+        padding-right: 15px;
         justify-content: center;
+        background: none;
     }
     .sidebar {
         width: 300px;
         margin: 0px 0px 15px 24px;
+    }
+    .hide {
+        display: none;
     }
 `
 

@@ -3,6 +3,7 @@
     --point__color: #F48225;
 
     --menu__active: #F1F2F3;
+    /* component border line color */
     --tab__focus: #E3E6E8;
     
     --button__back: #0A95FF;
@@ -14,7 +15,6 @@
     --sidebar__top: #FBF3D5;
     --sidebar__body: #FDF7E2;
     --sidebar__line: #F1E5BC;
-    --sidebar__title: ;
     
     --footer__back: #23262A;
 

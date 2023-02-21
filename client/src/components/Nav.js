@@ -45,10 +45,10 @@ const TabTitle = styled.p`
     margin-left: 10px;
     font-size: var(--fs--caption);
 `
-const Nav = () => {
+const Nav = ({ hide }) => {
 
   return (
-    <div>
+    <div className={hide}>
       <NavContainer>
         <TapLink className="home" to="/">
           Home
