@@ -5,6 +5,7 @@
     "content": "저는 커피를 좋아합니다",
     "createdAt": "dateObject",
     "lastModifiedAt": "dateObject",
+    "isSelceted": true,
     "contentNumber": 1,
     "comments": [
       {
@@ -23,6 +24,7 @@
     "content": "저는 커피를 내려 먹습니다",
     "createdAt": "dateObject",
     "lastModifiedAt": "dateObject",
+    "isSelceted": false,
     "contentNumber": 1,
     "comments": [
       {
@@ -41,6 +43,7 @@
     "content": "Don't remove the repository",
     "createdAt": "dateObject",
     "lastModifiedAt": "dateObject",
+    "isSelceted": false,
     "contentNumber": 2,
     "comments": [
       {
@@ -59,6 +62,7 @@
     "content": "피그마에서 하이파이브 하실 분",
     "createdAt": "dateObject",
     "lastModifiedAt": "dateObject",
+    "isSelceted": true,
     "contentNumber": 2,
     "comments": [
       {
@@ -104,6 +108,7 @@
     "content": "몬소린지 1도 몰릅니다",
     "createdAt": "dateObject",
     "lastModifiedAt": "dateObject",
+    "isSelceted": false,
     "contentNumber": 1,
     "comments": [
       {
@@ -121,6 +126,7 @@
     "content": "하늘 같은 부팀장님 지나갑니다",
     "createdAt": "dateObject",
     "lastModifiedAt": "dateObject",
+    "isSelceted": false,
     "contentNumber": 3,
     "comments": [
       {
@@ -138,6 +144,7 @@
     "content": "젭 풀장으로 오세요, 선착순 2분",
     "createdAt": "dateObject",
     "lastModifiedAt": "dateObject",
+    "isSelceted": true,
     "contentNumber": 7,
     "comments": [
       {
@@ -169,6 +176,7 @@
     "content": "몬소린지 1도 몰릅니다",
     "createdAt": "dateObject",
     "lastModifiedAt": "dateObject",
+    "isSelceted": false,
     "contentNumber": 10,
     "comments": [
       {
@@ -203,6 +211,7 @@
     "content": "모두들 팥팅입니다. 지금처럼만!",
     "createdAt": "dateObject",
     "lastModifiedAt": "dateObject",
+    "isSelceted": true,
     "contentNumber": 1,
     "comments": [
       {

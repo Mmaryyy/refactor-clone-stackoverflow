@@ -1,8 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 import { TagButton } from '../styles/styledcomponents'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import check from './../img/check.png'
+import { useDispatch, useSelector } from 'react-redux'
+import { getSingleContent } from '../redux/actions/content'
+import { getTimeGap } from '../utils/dateUtil'
 const ContentContainer = styled.section`
   display: flex;
   border-bottom: 1px solid var(--tab__focus);
@@ -32,7 +35,7 @@ const PostSummaryContainer = styled.div`
     display: flex;
     justify-content: space-between;
     > .author_datas {
-      font-size: var(--fs--mid);
+      font-size: var(--fs--caption);
       display: flex;
       align-items: center;
     }
@@ -65,19 +68,27 @@ const SummaryTitle = styled.div`
   }
 `
 const PostTitle = styled(Link)`
-  color: var(--link__content);
+  color: var(--button__back--hover);
   font-size: var(--fs--big);
   font-weight: 500;
   text-decoration: none;
+  cursor: pointer;
+  &:hover {
+    color: var(--button__back)
+  }
 `
 const BodyContainer = styled.p`
   overflow: hidden;
   width: inherit;
 `
 const AuthorLink = styled.h3`
-  color: var(--link__content);
+  color: var(--button__back--hover);
   text-decoration: none;
   margin: 0 5px;
+  cursor: pointer;
+  &:hover {
+    color: var(--button__back);
+  }
 `
 const CheckContainer = styled.img`
   width: 13px;
@@ -88,13 +99,8 @@ const AuthorProfileWrapper = styled.img`
 `
 const Content = ({ contents, answer, author }) => {
   const { content, createdAt, isSelected, lastModifiedAt, tag, title, view, votes } = contents
-  const current = new Date()
-  const modifiedAt = new Date(contents.lastModifiedAt)
-  console.log(`${contents.shortId}번 게시글의 현재 시간: `, current.getTime())
-  console.log(`${contents.shortId}번 게시글의 수정 시간: `, modifiedAt.getTime())
-  const diffMin = parseInt((current.getTime() - modifiedAt.getTime()) / (60 * 60 * 1000))
-  console.log(`${contents.shortId}번 게시글의 지난 시간: `, parseInt(diffMin))
-  console.log('contents: ', content)
+  const passedTime = getTimeGap(lastModifiedAt)
+  const navigate = useNavigate()
   return (
     <ContentContainer>
       <SummaryContainer className="content_summary">
@@ -113,7 +119,7 @@ const Content = ({ contents, answer, author }) => {
         <SummaryTitle>{view} views</SummaryTitle>
       </SummaryContainer>
       <ContentDetailContainer className="content_details">
-        <PostTitle to={`/content/id=${content.shortId}`}>{title}</PostTitle>
+        <PostTitle to={`/post/id=${contents.shortId}`}>{title}</PostTitle>
         <BodyContainer>
           {content}
         </BodyContainer>
@@ -124,7 +130,7 @@ const Content = ({ contents, answer, author }) => {
           <div className="author_datas">
             <AuthorProfileWrapper src={author[0].avatarUrl} alt='avatar_profile'/>
             <AuthorLink to="#">{author[0].nickname}</AuthorLink>
-            <span>modified {diffMin} hours ago</span>
+            <span>modified {passedTime} mins ago</span>
           </div>
         </PostSummaryContainer>
       </ContentDetailContainer>

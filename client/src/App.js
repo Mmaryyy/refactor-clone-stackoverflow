@@ -9,35 +9,47 @@ import Join from './components/Join';
 import Index from './page/Index';
 import GlobalStyle from './styles/GlobalStyle';
 import { Fragment, useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Contents from './page/Contents';
 import Footer from './components/Footer';
 import Mypage from './page/Mypage';
 import Post from './page/Post'
+import { useDispatch, useSelector } from 'react-redux'
+import { setPostId } from './redux/actions/content';
 
 function App() {
-  const [isReady, setIsReady] = useState(false);
+  const dispatch = useDispatch()
+  const [ isReady, setIsReady ] = useState(false);
+  const { pathname } = useLocation()
+  useEffect(() => {
+    dispatch(setPostId(window.location.href))
+  }, []);
   useEffect(() => {
     setTimeout(() => {
       setIsReady(false);
     }, 5000);
-  }, []);
+  }, [])
+  const postId = useSelector(state => state.contentReducer.postId)
+  console.log(postId)
   return (
-    <BrowserRouter>
+    <>
       <Header />
       <Fragment>
         <GlobalStyle />
         {isReady ? (
           <Index />
-        ) : (
+        ) : ( 
           <div className='app_wrap'>
-            <Nav />
+            <Nav hide={pathname.slice(-2) === "in" ? "hide" : null}/>
             <Routes>
+              <Route path='/' element={<Index/>} />
               <Route path='/questions' element={<Contents />} />
               <Route path='/mypage' element={<Mypage />} />
-              <Route path={`/content/id=${1}`} element={<Post/>} />
+              <Route path={`/post/id=${1}`} element={<Post postId={postId}/>} />
+              <Route path='/login' element={<Login />}/>
+              <Route path='/join' element={<Join />}/>
             </Routes>
-            <div className="sidebar">
+            <div className={`sidebar${pathname.slice(-2) === "in" ? " hide" : null}`}>
               <Sidebar />
               {/* <Sidebar2 /> */}
             </div>
@@ -47,8 +59,8 @@ function App() {
           </div>
         )}
       </Fragment>
-      <Footer />
-    </BrowserRouter>
+      <Footer hide={pathname.slice(-2) === "in" ? "hide" : null}/>
+    </>
   );
 }
 

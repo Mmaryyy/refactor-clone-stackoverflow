@@ -41,6 +41,9 @@ const Wrapper = styled.footer`
     width: 250px;
     margin-top: 10px;
   }
+  &.hide {
+    display: none;
+  }
 `;
 
 const Logo = styled.div`
@@ -78,9 +81,9 @@ const stackexchangenetwork = [
   'Data',
 ];
 
-export default function Footer() {
+export default function Footer({ hide }) {
   return (
-    <Wrapper>
+    <Wrapper className={hide}>
       <Container>
         <Logo>
           {/* Logo */}

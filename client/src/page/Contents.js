@@ -2,9 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { SubmitButton } from '../styles/styledcomponents'
 import Content from '../components/Content'
-import contents from '../datas/contents.json'
-import answers from '../datas/answers.json'
-import userData from '../datas/userData.json'
+import { useSelector, useDispatch } from 'react-redux'
 
 const Container = styled.main`
   display: flex;
@@ -28,8 +26,11 @@ const Title = styled.h1`
   font-weight: 500;
 `
 const Contents = () => {
-  console.log(answers)
-  console.log(userData)
+  const contents = useSelector(state => state.contentsReducer.contentList)
+  console.log(contents)
+  const answers = useSelector(state => state.answersReducer.answers)
+  const userData = useSelector(state => state.userDataReducer.userData)
+  
   return (
     <Container className="contents_container">
       <HeadContainer>
