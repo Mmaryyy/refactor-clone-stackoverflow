@@ -1,18 +1,17 @@
 package com.preproject_009.member.controller;
 
+import com.preproject_009.answer.entity.Answer;
+import com.preproject_009.answer.mapper.AnswerMapper;
+import com.preproject_009.answer.service.AnswerService;
 import com.preproject_009.member.dto.MemberDto;
 import com.preproject_009.member.dto.MultiResponseDto;
 import com.preproject_009.member.entity.Member;
 import com.preproject_009.member.mapper.MemberMapper;
 import com.preproject_009.member.service.MemberService;
-<<<<<<< HEAD
-=======
-import com.preproject_009.point.Point;
 import com.preproject_009.question.dto.QuestionDto;
 import com.preproject_009.question.entity.Question;
 import com.preproject_009.question.entity.Tag;
 import com.preproject_009.question.mapper.QuestionMapper;
->>>>>>> 1afaec360bf4ea5b3ce8ff23a1f4b844eaccd378
 import com.preproject_009.question.service.QuestionService;
 import com.preproject_009.utils.UriCreator;
 import org.springframework.data.domain.Page;
@@ -41,16 +40,21 @@ public class MemberController {
     private final MemberService memberService;
     private final MemberMapper mapper;
 
-<<<<<<< HEAD
-    public MemberController(MemberService memberService, MemberMapper mapper){
-=======
     private final QuestionMapper questionMapper;
 
-    public MemberController(MemberService memberService, QuestionService questionService, MemberMapper mapper, QuestionMapper questionMapper) {
->>>>>>> 1afaec360bf4ea5b3ce8ff23a1f4b844eaccd378
+    private final QuestionService questionService;
+
+    private final AnswerService answerService;
+
+    private final AnswerMapper answerMapper;
+
+    public MemberController(MemberService memberService, MemberMapper mapper, QuestionMapper questionMapper, QuestionService questionService, AnswerService answerService, AnswerMapper answerMapper) {
         this.memberService = memberService;
         this.mapper = mapper;
         this.questionMapper = questionMapper;
+        this.questionService = questionService;
+        this.answerService = answerService;
+        this.answerMapper = answerMapper;
     }
 
     // 유저 생성
@@ -130,6 +134,16 @@ public class MemberController {
         return new ResponseEntity<>(
                 new MultiResponseDto<>(questionMapper.questionsToQuestionResponsesDto(questions),
                         questionPage), HttpStatus.OK);
+    }
+
+    @GetMapping("/{member-id}/answers")
+    public ResponseEntity getAnswers(@PathVariable("member-id") @Positive long memberId) {
+        Page<Answer> answerPage = answerService.findAnswersByMember(memberId);
+        List<Answer> answers = answerPage.getContent();
+
+        return new ResponseEntity<>(
+                new MultiResponseDto<>(answerMapper.answersToAnswerResponses(answers),
+                        answerPage), HttpStatus.OK);
     }
 
     public MemberDto.response response(Member member){

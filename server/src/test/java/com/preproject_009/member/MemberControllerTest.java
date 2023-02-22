@@ -1,6 +1,7 @@
 package com.preproject_009.Member;
 
 import com.google.gson.Gson;
+import com.preproject_009.member.*;
 import com.jayway.jsonpath.JsonPath;
 import com.preproject_009.member.controller.MemberController;
 import com.preproject_009.member.dto.MemberDto;
@@ -9,6 +10,11 @@ import com.preproject_009.member.mapper.MemberMapper;
 import com.preproject_009.member.service.MemberService;
 import com.preproject_009.stubdata.MemberStubData;
 import org.junit.jupiter.api.Test;
+import com.preproject_009.question.mapper.QuestionMapper;
+import com.preproject_009.question.service.QuestionService;
+import org.junit.jupiter.api.Test;
+
+import static org.hamcrest.MatcherAssert.assertThat;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -26,6 +32,13 @@ import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.restdocs.payload.FieldDescriptor;
+import org.springframework.restdocs.request.ParameterDescriptor;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
@@ -48,7 +61,33 @@ import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+=======
+import static com.preproject_009.util.ApiDocumentUtils.getRequestPreProcessor;
+import static com.preproject_009.util.ApiDocumentUtils.getResponsePreProcessor;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.startsWith;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.BDDMockito.given;
 
+import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
+import static org.springframework.restdocs.headers.HeaderDocumentation.*;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(
         controllers = {MemberController.class}
@@ -73,6 +112,10 @@ public class MemberControllerTest {
     String MEMBER_DEFAULT_URL = "/v1/members";
     String MEMBER_RESOURCE_ID = "/{member-id}";
     String MEMBER_RESOURCE_URI = MEMBER_DEFAULT_URL + MEMBER_RESOURCE_ID;
+    @MockBean
+    private QuestionService questionService;
+    @MockBean
+    private QuestionMapper questionMapper;
 
     @Test
     public void postMemberTest() throws Exception {
@@ -264,5 +307,59 @@ public class MemberControllerTest {
     }
 
 
+//    @Test
+//    void getMemberTest() throws Exception {
+//        MemberDto.Post post = new MemberDto.Post("jun1@naver.com",
+//                "최준영",
+//                "안녕하세요. 최준영 입니다.",
+//                "12341234a!");
+//
+//        String request = gson.toJson(post);
+//
+//        ResultActions postActions =
+//                mockMvc.perform(
+//                        post("/v1/members")
+//                                .accept(MediaType.APPLICATION_JSON)
+//                                .contentType(MediaType.APPLICATION_JSON)
+//                                .content(request)
+//                );
+//        String location = postActions.andReturn().getResponse().getHeader("Location");
+//        mockMvc.perform(
+//                get(location)
+//                        .accept(MediaType.APPLICATION_JSON)
+//        )
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.data.email").value(post.getEmail()))
+//                .andExpect(jsonPath("$.data.name").value(post.getName()))
+//                .andExpect(jsonPath("$.data.about").value(post.getAbout()))
+//                .andExpect(jsonPath("$.data.password").value(post.getPassword()));
+//    }
+
+//    @Test
+//    void postQuestionTest() throws Exception {
+//        //given
+//        long memberId = 1L;
+//        QuestionDto.Post post = (QuestionDto.Post) QuestionStubData.MockQuestion.getQuestionRequestBody(HttpMethod.POST);
+//        String request = gson.toJson(post);
+//
+//        given(questionMapper.questionPostDtoToQuestion(Mockito.any(QuestionDto.Post.class))).willReturn(new Question());
+//
+//        Question question = QuestionStubData.MockQuestion.getSingleResultQuestion();
+//        given(questionService.createQuestion(Mockito.any(Question.class))).willReturn(question);
+//
+//        //when
+//        ResultActions actions =
+//                mockMvc.perform(
+//                        RestDocumentationRequestBuilders
+//                                .post("/v1/members/{member-id}/questions", memberId)
+//                                .accept(MediaType.APPLICATION_JSON)
+//                                .contentType(MediaType.APPLICATION_JSON)
+//                                .content(request));
+//
+//        // then
+//        actions.andExpect(status().isCreated())
+//                .andExpect(header().string("Location", is(startsWith("/v1/members")))
+//        )
+//    }
 }
 
