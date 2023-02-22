@@ -9,6 +9,8 @@ const Wrapper = styled.footer`
   flex-direction: row;
   justify-content: center;
   color: #babfc4;
+  position: relative;
+  z-index: 999;
   .group {
     margin: 30px;
     display: flex;

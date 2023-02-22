@@ -4,13 +4,15 @@ import { useEffect, useState } from 'react'
 
 const NavContainer = styled.ul`
     border-right: 1px solid var(--tab__focus);
-    margin-left: 30px;
-    width: 10rem;
+    width: 165px;
     height: calc(100vh);
     display: flex;
     flex-direction: column;
     color: var(--black__300);
     font-weight: 400;
+    position: fixed;
+    top: 60px;
+    left: 30px;
 `
 const TapContainer = styled.div`
     display: flex;
@@ -45,9 +47,8 @@ const TabTitle = styled.p`
     margin-left: 10px;
     font-size: var(--fs--caption);
 `
-const Nav = ({ hide }) => {
+const Nav = () => {
   return (
-    <div className={hide}>
       <NavContainer>
         <TapLink className="home" to="/">
           Home
@@ -62,7 +63,6 @@ const Nav = ({ hide }) => {
             <TapLink className='menu' to="/users">Users</TapLink>
         </TapContainer>
       </NavContainer>
-    </div>
   );
 }
 

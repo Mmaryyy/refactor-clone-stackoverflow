@@ -11,12 +11,13 @@ const GlobalStyle = createGlobalStyle`
     }
     .app_wrap {
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         background: none;
     }
     .sidebar {
+        flex: none;
         width: 300px;
-        margin: 0px 0px 15px 24px;
+        margin: 0px 30px 15px 24px;
     }
     .hide {
         display: none;

@@ -12,6 +12,11 @@ const Wrapper = styled.header`
   height: 60px;
   background-color: #f8f9f9;
   border-top: 3px solid #f48225;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  //header 위치 고정
 `;
 
 const Logo = styled.img`

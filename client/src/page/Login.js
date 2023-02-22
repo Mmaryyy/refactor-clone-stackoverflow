@@ -176,7 +176,6 @@ const InputContainer = styled.div`
   }
 `;
 
-<<<<<<< Updated upstream
 function Login({setShowNav, setShowFooter, setShowSidebar }) {
   useEffect(() => {
     setShowNav(false)
@@ -189,10 +188,6 @@ function Login({setShowNav, setShowFooter, setShowSidebar }) {
     }
   }, [])
   const [loginInfo, setLoginInfo] = useState({ userEmail: '', password: '' });
-=======
-function Login() {
-  const [loginInfo, setLoginInfo] = useState({ userEmail: "", password: "" });
->>>>>>> Stashed changes
   const [errorMessage, setErrorMessage] = useState({
     userEmail: "",
     password: "",

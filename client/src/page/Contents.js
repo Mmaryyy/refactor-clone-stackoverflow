@@ -9,6 +9,9 @@ const Container = styled.main`
   display: flex;
   flex-direction: column;
   height: 100vh;
+  margin-left: 195px;
+  width: calc(100% - 165px - 300px - 30px - 30px - 24px);
+  margin-top: 60px;
 `
 const HeadContainer = styled.div`
   display: flex;

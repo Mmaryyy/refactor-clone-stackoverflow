@@ -26,3 +26,13 @@ export const TagButton = styled.button`
     color: var(--tag__content);
     margin: 0 3px;
 `
+
+export const LinkContent = styled.a`
+    text-decoration: none;
+    color: var(--link__content);
+    cursor: pointer;
+    font-size: ${props => props.fs || 'var(--fs--lg)'} ;
+    &:hover {
+        color: var(--button__back);
+    }
+`
