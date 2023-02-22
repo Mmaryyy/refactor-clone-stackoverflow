@@ -57,8 +57,5 @@ public class QuestionDto {
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
 
-        public void setTotalVote(Question question) {
-            this.totalVote = question.getTotalVotes();
-        }
     }
 }

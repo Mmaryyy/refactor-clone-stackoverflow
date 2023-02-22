@@ -7,6 +7,10 @@ import com.preproject_009.answer.service.AnswerService;
 import com.preproject_009.member.dto.MultiResponseDto;
 import com.preproject_009.member.repository.MemberRepository;
 import com.preproject_009.member.service.MemberService;
+import com.preproject_009.q_comment.dto.QuestionCommentDto;
+import com.preproject_009.q_comment.entity.QuestionComment;
+import com.preproject_009.q_comment.mapper.QuestionCommentMapper;
+import com.preproject_009.q_comment.service.QuestionCommentService;
 import com.preproject_009.question.dto.QuestionDto;
 import com.preproject_009.question.entity.Question;
 import com.preproject_009.question.mapper.QuestionMapper;
@@ -35,6 +39,8 @@ public class QuestionController {
     private final QuestionRepository questionRepository;
     private final QuestionMapper questionMapper;
     private final QuestionService questionService;
+    private final QuestionCommentService questionCommentService;
+    private final QuestionCommentMapper questionCommentMapper;
     private final MemberService memberService;
     private final MemberRepository memberRepository;
     private final AnswerService answerService;
@@ -104,7 +110,20 @@ public class QuestionController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/{question-id}/questionComments/{member-id}")
+    public ResponseEntity postQuestionComment(@PathVariable("question-id") long questionId,
+                                              @Valid @RequestBody QuestionCommentDto.Post requestBody) {
+        requestBody.setQuestionId(questionId);
+        QuestionComment createdQuestionComment = questionCommentService.createQuestionComment(questionCommentMapper.questionCommentPostDtoToQuestion(requestBody));
+
+        return new ResponseEntity<>(response(createdQuestionComment), HttpStatus.CREATED);
+    }
+
     public QuestionDto.Response response(Question question) {
         return questionMapper.questionToQuestionResponseDto(question);
+    }
+
+    public QuestionCommentDto.Response response(QuestionComment questionComment) {
+        return questionCommentMapper.questionCommentToQuestionCommentResponseDto(questionComment);
     }
 }

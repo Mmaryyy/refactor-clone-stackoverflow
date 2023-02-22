@@ -2,7 +2,9 @@ package com.preproject_009.question.entity;
 
 import com.preproject_009.audit.Auditable;
 import com.preproject_009.member.entity.Member;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 

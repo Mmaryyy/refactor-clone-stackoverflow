@@ -87,13 +87,41 @@ public class QuestionService {
         question.setView(view + 1);
     }
 
+//    public void addQuestionVote(long questionId, long memberId) {
+//        // Get the question entity from the repository
+//        Question question = questionRepository.findById(questionId)
+//                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+//
+//        // Check if the member has already voted on the question
+//        boolean hasVoted = question.getQuestionVote().stream()
+//                .anyMatch(v -> v.getMember().getMemberId() == memberId);
+//
+//        if (hasVoted) {
+//            throw new BusinessLogicException(ExceptionCode.MEMBER_ALREADY_VOTED);
+//        }
+//
+//        // Create a new QuestionVote entity and associate it with the question and member
+//        QuestionVote vote = new QuestionVote();
+//        vote.setQuestion(question);
+//        vote.setMember(memberRepository.findById(memberId)
+//                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND)));
+//
+//        // Add the new vote to the question's list of votes
+//        question.getQuestionVote().add(vote);
+//        int totalVotes = question.getQuestionVote().size();
+//        question.setTotalVote(totalVotes);
+//
+//        // Save the updated question object to the database.
+//        questionRepository.save(question);
+//    }
+
     public void addQuestionVote(long questionId, long memberId) {
-        // Get the question entity from the repository
+        // Get the latest version of the question entity from the repository
         Question question = questionRepository.findById(questionId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
 
         // Check if the member has already voted on the question
-        boolean hasVoted = question.getQuestionVote().stream()
+        boolean hasVoted = question.getQuestionVotes().stream()
                 .anyMatch(v -> v.getMember().getMemberId() == memberId);
 
         if (hasVoted) {
@@ -107,12 +135,11 @@ public class QuestionService {
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND)));
 
         // Add the new vote to the question's list of votes
-        question.getQuestionVote().add(vote);
-        int totalVotes = question.getQuestionVote().size();
-        question.setTotalVote(totalVotes);
+        question.getQuestionVotes().add(vote);
 
+        // Recalculate the total vote and update the question entity
+        question.updateTotalVote();
         // Save the updated question object to the database.
         questionRepository.save(question);
     }
-
 }

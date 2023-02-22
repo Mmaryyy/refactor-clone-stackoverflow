@@ -7,7 +7,6 @@ import com.preproject_009.exception.ExceptionCode;
 import com.preproject_009.member.entity.Member;
 import com.preproject_009.q_comment.entity.QuestionComment;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -15,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@NoArgsConstructor
 @Setter
 @Getter
 @Entity
@@ -55,10 +53,10 @@ public class Question extends Auditable {
 
     // vote 1:n 양방향
     @OneToMany(mappedBy = "question", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
-    private List<QuestionVote> questionVote = new ArrayList<>();
+    private List<QuestionVote> questionVotes = new ArrayList<>();
 
     @Column(name = "TOTAL_VOTE")
-    private int totalVote = questionVote.size();
+    private int totalVote;
 
     // comment 1:n 양방향
     @OneToMany(mappedBy = "question", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
@@ -68,6 +66,10 @@ public class Question extends Auditable {
         this.questionId = questionId;
         this.title = title;
         this.content = content;
+    }
+
+    public Question(){
+        this.questionVotes = new ArrayList<>();
     }
 
     public enum QuestionStatus{
@@ -96,7 +98,10 @@ public class Question extends Auditable {
     }
 
     public int getTotalVotes() {
-        int totalVote = questionVote.size();
+        int totalVote = questionVotes.size();
         return totalVote;
+    }
+    public void updateTotalVote() {
+        this.totalVote = this.questionVotes.size();
     }
 }
