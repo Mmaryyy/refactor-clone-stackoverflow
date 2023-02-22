@@ -7,14 +7,15 @@ import Sidebar from './components/Sidebar';
 import Login from './page/Login';
 import Join from './page/Join'
 import Index from './page/Index';
+import Tags from './page/Tags';
+import Ask from './page/Ask';
 import GlobalStyle from './styles/GlobalStyle';
 import { Fragment, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Contents from './page/Contents';
 import Footer from './components/Footer';
 import Mypage from './page/Mypage';
-import Post from './page/Post'
-import Tags from './page/Tags'
+import Post from './page/Post';
 import { useDispatch, useSelector } from 'react-redux'
 
 function App() {
