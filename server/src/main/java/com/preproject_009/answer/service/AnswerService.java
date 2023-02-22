@@ -31,13 +31,16 @@ public class AnswerService {
     }
 
     public Answer createAnswer(Answer answer) {
-        verifyAnswer(answer);
-        answer.setCreatedAt(LocalDateTime.now());
+
+        memberService.findVerifiedMember(answer.getMember().getMemberId());
 
         //질문 상태 변경
         Question question = questionService.findQuestion(answer.getQuestion().getQuestionId());
         question.setQuestionStatus(Question.QuestionStatus.QUESTION_ANSWER_ACCEPTED);
+
         answer.setQuestion(question);
+        answer.setCreatedAt(LocalDateTime.now());
+        answer.setModifiedAt(LocalDateTime.now());
 
         return answerRepository.save(answer);
     }
@@ -85,13 +88,5 @@ public class AnswerService {
                 optionalAnswer.orElseThrow(() ->
                         new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
         return findAnswer;
-    }
-
-    private void verifyAnswer(Answer answer) {
-        //회원 존재 확인
-        memberService.findMember(answer.getMember().getMemberId());
-
-        //질문 존재 확인
-        questionService.findQuestion(answer.getQuestion().getQuestionId());
     }
 }

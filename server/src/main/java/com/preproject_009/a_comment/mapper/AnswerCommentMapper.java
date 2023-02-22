@@ -11,11 +11,12 @@ import java.util.List;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface AnswerCommentMapper {
     @Mapping(source = "memberId", target = "member.memberId")
+    @Mapping(source = "answerId", target = "answer.answerId")
     AnswerComment answerCommentPostDtoToAnswer(AnswerCommentDto.Post requestBody);
     AnswerComment answerCommentPatchDtoToAnswer(AnswerCommentDto.Patch requestBody);
 
+    @Mapping(target = "memberId", source = "member.memberId")
     AnswerCommentDto.Response answerToAnswerCommentResponse(AnswerComment AnswerComment);
 
-    @Mapping(source = "memberId", target = "member.memberId")
     List<AnswerCommentDto.Response> answersToAnswerCommentResponses(List<AnswerComment> answerComments);
 }
