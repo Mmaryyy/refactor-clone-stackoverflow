@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 //
 const Container = styled.div`
@@ -167,7 +167,17 @@ const InputContainer = styled.div`
   }
 `;
 
-function Login() {
+function Login({setShowNav, setShowFooter, setShowSidebar }) {
+  useEffect(() => {
+    setShowNav(false)
+    setShowFooter(false)
+    setShowSidebar(false)
+    return () => {
+      setShowNav(true)
+      setShowFooter(true)
+      setShowSidebar(true)
+    }
+  }, [])
   const [loginInfo, setLoginInfo] = useState({ userEmail: '', password: '' });
   const [errorMessage, setErrorMessage] = useState({
     userEmail: '',

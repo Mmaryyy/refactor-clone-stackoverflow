@@ -9,6 +9,11 @@
     "view": 1,
     "votes": 0,
     "isSelected": true,
+    "author": {
+      "nickname": "sagomungchi",
+      "avatarUrl": "/images/Avatar1.png"
+    },
+    "answer": [ 1, 2, 5, 9, 10 ],
     "comments": [
       {
         "shortId": 1,
@@ -30,6 +35,11 @@
     "view": 10,
     "votes": 0,
     "isSelected": false,
+    "author": {
+      "nickname": "yoonae",
+      "avatarUrl": "/images/Avatar2.png"
+    },
+    "answer": [ 3, 4 ],
     "comments": [
       {
         "shortId": 2,
@@ -50,6 +60,11 @@
     "view": 20,
     "votes": 0,
     "isSelected": false,
+    "author": {
+      "nickname": "hyerim",
+      "avatarUrl": "/images/Avatar3.png"
+    },
+    "answer": [ 5 ],
     "comments": [
       {
         "shortId": 3,
@@ -70,6 +85,11 @@
     "view": 0,
     "votes": 0,
     "isSelected": true,
+    "author": {
+      "nickname": "sangwon",
+      "avatarUrl": "/images/Avatar4.png"
+    },
+    "answer": [],
     "comments": [
       {
         "shortId": 4,
@@ -90,6 +110,11 @@
     "view": 0,
     "votes": 0,
     "isSelected": true,
+    "author": {
+      "nickname": "hongjae",
+      "avatarUrl": "/images/Avatar5.png"
+    },
+    "answer": [],
     "comments": [
       {
         "shortId": 5,
@@ -110,6 +135,11 @@
     "view": 11,
     "votes": 0,
     "isSelected": true,
+    "author": {
+      "nickname": "minju",
+      "avatarUrl": "/images/Avatar6.png"
+    },
+    "answer": [],
     "comments": [
       {
         "shortId": 6,
@@ -130,6 +160,11 @@
     "view": 11,
     "votes": 0,
     "isSelected": true,
+    "author": {
+      "nickname": "junyoung",
+      "avatarUrl": "/images/Avatar7.png"
+    },
+    "answer":[ 7 ],
     "comments": [
       {
         "shortId": 7,
@@ -150,6 +185,11 @@
     "view": 11,
     "votes": 0,
     "isSelected": false,
+    "author": {
+      "nickname": "codestates",
+      "avatarUrl": "/images/Avatar8.png"
+    },
+    "answer": [],
     "comments": [
       {
         "shortId": 8,
@@ -170,6 +210,11 @@
     "view": 0,
     "votes": 0,
     "isSelected": false,
+    "author": {
+      "nickname": "coco",
+      "avatarUrl": "/images/Avatar9.png"
+    },
+    "answer": [],
     "comments": [
       {
         "shortId": 9,
@@ -190,6 +235,11 @@
     "view": 11,
     "votes": 0,
     "isSelected": false,
+    "author": {
+      "nickname": "ccomeng",
+      "avatarUrl": "/images/Avatar10.png"
+    },
+    "answer": [ 8 ],
     "comments": [
       {
         "shortId": 10,

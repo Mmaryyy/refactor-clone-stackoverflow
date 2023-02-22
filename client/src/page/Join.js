@@ -275,7 +275,17 @@ const InputContainer = styled.div`
   }
 `;
 
-function Join() {
+function Join({setShowNav, setShowFooter, setShowSidebar}) {
+  useEffect(() => {
+    setShowNav(false)
+    setShowFooter(false)
+    setShowSidebar(false)
+    return () => {
+      setShowNav(true)
+      setShowFooter(true)
+      setShowSidebar(true)
+    }
+  }, [])
   const [loginInfo, setLoginInfo] = useState({ userEmail: '', password: '' });
   const [errorMessage, setErrorMessage] = useState({
     userEmail: '',

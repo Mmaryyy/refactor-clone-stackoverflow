@@ -9,7 +9,11 @@
         "isSocial": true,
         "avatarUrl": "/images/Avatar1.png",
         "authority": true,
-        "contents" : [ 1 ]
+        "contents" : [ 1 ],
+        "about" : {
+            "title": "",
+            "body": ""
+        }
     },
     {
         "shortId": 2,
@@ -20,7 +24,11 @@
         "isSocial": false,
         "avatarUrl": "/images/Avatar2.png",
         "authority": false,
-        "contents" : [ 2 ]
+        "contents" : [ 2 ],
+        "about" : {
+            "title": "",
+            "body": ""
+        }
     },
     {
         "shortId": 3,
@@ -31,7 +39,11 @@
         "isSocial": true,
         "avatarUrl": "/images/Avatar3.png",
         "authority": false,
-        "contents" : [ 3 ]
+        "contents" : [ 3 ],
+        "about" : {
+            "title": "",
+            "body": ""
+        }
     },
     {
         "shortId": 4,
@@ -42,7 +54,11 @@
         "isSocial": false,
         "avatarUrl": "/images/Avatar4.png",
         "authority": false,
-        "contents" : [ 4 ]
+        "contents" : [ 4 ],
+        "about" : {
+            "title": "",
+            "body": ""
+        }
     },
     {
         "shortId": 5,
@@ -53,7 +69,11 @@
         "isSocial": false,
         "avatarUrl": "/images/Avatar5.png",
         "authority": false,
-        "contents" : [ 5 ]
+        "contents" : [ 5 ],
+        "about" : {
+            "title": "",
+            "body": ""
+        }
     },
     {
         "shortId": 6,
@@ -64,7 +84,11 @@
         "isSocial": true,
         "avatarUrl": "/images/Avatar6.png",
         "authority": false,
-        "contents" : [ 6 ]
+        "contents" : [ 6 ],
+        "about" : {
+            "title": "",
+            "body": ""
+        }
     },
     {
         "shortId": 7,
@@ -75,7 +99,11 @@
         "isSocial": true,
         "avatarUrl": "/images/Avatar7.png",
         "authority": false,
-        "contents" : [ 7 ]
+        "contents" : [ 7 ],
+        "about" : {
+            "title": "",
+            "body": ""
+        }
     },
     {
         "shortId": 8,
@@ -86,7 +114,11 @@
         "isSocial": true,
         "avatarUrl": "/images/Avatar8.png",
         "authority": false,
-        "contents" : [ 8 ]
+        "contents" : [ 8 ],
+        "about" : {
+            "title": "",
+            "body": ""
+        }
 
     },
     {
@@ -98,7 +130,11 @@
         "isSocial": false,
         "avatarUrl": "/images/Avatar9.png",
         "authority": false,
-        "contents" : [ 9 ]
+        "contents" : [ 9 ],
+        "about" : {
+            "title": "",
+            "body": ""
+        }
 
     },
     {
@@ -110,7 +146,10 @@
         "isSocial": true,
         "avatarUrl": "/images/Avatar10.png",
         "authority": false,
-        "contents" : [ 10 ]
-
+        "contents" : [ 10 ],
+        "about" : {
+            "title": "",
+            "body": ""
+        }
     }
 ]

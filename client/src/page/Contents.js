@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { SubmitButton } from '../styles/styledcomponents'
 import Content from '../components/Content'
 import { useSelector, useDispatch } from 'react-redux'
+import { getContentList, getSingleContent } from '../redux/actions/contents'
 
 const Container = styled.main`
   display: flex;
@@ -26,12 +27,17 @@ const Title = styled.h1`
   font-weight: 500;
 `
 const Contents = () => {
-  const contents = useSelector(state => state.contentsReducer.contentList)
-  console.log(contents)
-  const answers = useSelector(state => state.answersReducer.answers)
-  const userData = useSelector(state => state.userDataReducer.userData)
-  
+  const dispatch = useDispatch()
+  useEffect(() => {
+    console.log('여기 타니?')
+    dispatch(getContentList())
+  }, [])
+  const contentList = useSelector(state => state.contentsReducer.contentList)
+  console.log('contentList: ', contentList)
   return (
+    contentList.length === 0
+    ? <></>
+    : 
     <Container className="contents_container">
       <HeadContainer>
         <div className="head_first">
@@ -39,13 +45,11 @@ const Contents = () => {
           <SubmitButton>Ask Question</SubmitButton>
         </div>
         <div className="head_second">
-          <span>{contents.length} questions</span>
+          <span>{contentList.length} questions</span>
         </div>
       </HeadContainer>
-      {contents.map((content) => {
-        const answer = answers.filter(el => el.contentNumber === content.shortId)
-        const author = userData.filter(el => el.contents.includes(content.shortId))
-        return <Content contents={content} key={content.shortId} answer={answer} author={author}/>
+      {contentList.map((singleContent) => {
+        return <Content key={singleContent.shortId} singleContent={singleContent}/>
       })}
     </Container>
   );

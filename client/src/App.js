@@ -4,8 +4,8 @@ import Header from './components/Header';
 import Nav from './components/Nav';
 import Sidebar from './components/Sidebar';
 // import Sidebar2 from './components/Sidebar2';
-import Login from './components/Login';
-import Join from './components/Join';
+import Login from './page/Login';
+import Join from './page/Join'
 import Index from './page/Index';
 import GlobalStyle from './styles/GlobalStyle';
 import { Fragment, useEffect } from 'react';
@@ -14,23 +14,20 @@ import Contents from './page/Contents';
 import Footer from './components/Footer';
 import Mypage from './page/Mypage';
 import Post from './page/Post'
+import Tags from './page/Tags'
 import { useDispatch, useSelector } from 'react-redux'
-import { setPostId } from './redux/actions/content';
 
 function App() {
-  const dispatch = useDispatch()
-  const [ isReady, setIsReady ] = useState(false);
+  const [ isReady, setIsReady ] = useState(false)
   const { pathname } = useLocation()
-  useEffect(() => {
-    dispatch(setPostId(window.location.href))
-  }, []);
+  const [ showNav, setShowNav ] = useState(true)
+  const [ showFooter, setShowFooter ] = useState(true)
+  const [ showSidebar, setShowSidebar ] = useState(true)
   useEffect(() => {
     setTimeout(() => {
       setIsReady(false);
     }, 5000);
   }, [])
-  const postId = useSelector(state => state.contentReducer.postId)
-  console.log(postId)
   return (
     <>
       <Header />
@@ -40,26 +37,29 @@ function App() {
           <Index />
         ) : ( 
           <div className='app_wrap'>
-            <Nav hide={pathname.slice(-2) === "in" ? "hide" : null}/>
+            {showNav ? <Nav /> : null}
             <Routes>
               <Route path='/' element={<Index/>} />
               <Route path='/questions' element={<Contents />} />
-              <Route path='/mypage' element={<Mypage />} />
-              <Route path={`/post/id=${1}`} element={<Post postId={postId}/>} />
-              <Route path='/login' element={<Login />}/>
-              <Route path='/join' element={<Join />}/>
+              <Route path='/mypage' element={<Mypage setShowSidebar={setShowSidebar}/>} />
+              <Route path='/post/:postId' element={<Post />} />
+              <Route path='/tags' element={<Tags setShowSidebar={setShowSidebar}/> } />
+              <Route path='/login' element={<Login setShowNav={setShowNav} setShowFooter={setShowFooter} setShowSidebar={setShowSidebar}/>}/>
+              <Route path='/join' element={<Join setShowNav={setShowNav} setShowFooter={setShowFooter} setShowSidebar={setShowSidebar}/>}/>
             </Routes>
-            <div className={`sidebar${pathname.slice(-2) === "in" ? " hide" : null}`}>
+            {showSidebar ? 
+            <div className='sidebar'>
               <Sidebar />
               {/* <Sidebar2 /> */}
             </div>
+            : null}
             {/* <Login />
             <Join /> */}
             {/* <Login /> */}
           </div>
         )}
       </Fragment>
-      <Footer hide={pathname.slice(-2) === "in" ? "hide" : null}/>
+      {showFooter ? <Footer /> : null}
     </>
   );
 }
