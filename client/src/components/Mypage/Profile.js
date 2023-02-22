@@ -146,7 +146,7 @@ export const Sections = styled.article`
     align-items: center;
     text-align: center;
     flex-direction: column;
-    height: 500px;
+    height: 300px;
     border: 1px solid #d6d9dc;
     background-color: #f8f9f9;
   }
@@ -201,7 +201,7 @@ export default function Profile() {
         </MyProfile>
 
         <Sub>
-          <Link to='#' style={{ height: '30px', textDecoration: 'none' }}>
+          <Link to='#' style={{ textDecoration: 'none' }}>
             <div className='edit profile'>
               <svg
                 aria-hidden='true'
@@ -241,16 +241,18 @@ export default function Profile() {
         </Sub>
       </Header>
       <Menu>
-        <Link to='/user/profile/' style={{ textDecoration: 'none' }}>
+        <Link to='/mypage/profile' style={{ textDecoration: 'none' }}>
           <Menusub background='#F48225' color='#fff'>
             Profile
           </Menusub>
         </Link>
-        <Link to='/mypage/' style={{ textDecoration: 'none' }}>
+        <Link to='/mypage' style={{ textDecoration: 'none' }}>
           <Menusub>Activity</Menusub>
         </Link>
         <Menusub>Saves</Menusub>
-        <Menusub>Settings</Menusub>
+        <Link to='/mypage/delete' style={{ textDecoration: 'none' }}>
+          <Menusub>Settings</Menusub>
+        </Link>
       </Menu>
       <Main>
         <Stats>
@@ -286,7 +288,11 @@ export default function Profile() {
                 <div className='contents_about'>
                   Your about me section is currently blank. Would you
                   <br /> like to add one?
-                  <Link className='link' to='#'>
+                  <Link
+                    className='link'
+                    to='#'
+                    style={{ textDecoration: 'none' }}
+                  >
                     Edit profile
                   </Link>
                 </div>
@@ -301,7 +307,11 @@ export default function Profile() {
               ) : (
                 <div className='contents_about'>
                   You have not earned any
-                  <Link className='link' to='#'>
+                  <Link
+                    className='link'
+                    to='#'
+                    style={{ height: '30px', textDecoration: 'none' }}
+                  >
                     badges.
                   </Link>
                 </div>
@@ -335,14 +345,22 @@ export default function Profile() {
                   Just getting started? Try answering a question! <br />
                   <br />
                   Your most helpful questions, answers and tags will appear
-                  here. <br /> Start by{' '}
-                  <Link className='link' to='#'>
+                  here. <br /> Start by
+                  <Link
+                    className='link'
+                    to='#'
+                    style={{ textDecoration: 'none' }}
+                  >
                     answering a question
-                  </Link>{' '}
-                  or{' '}
-                  <Link className='link' to='#'>
+                  </Link>
+                  or
+                  <Link
+                    className='link'
+                    to='#'
+                    style={{ textDecoration: 'none' }}
+                  >
                     selecting tags
-                  </Link>{' '}
+                  </Link>
                   that match topics you’re <br /> interested in.
                 </div>
               )}

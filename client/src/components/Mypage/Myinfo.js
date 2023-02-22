@@ -265,14 +265,16 @@ export default function Myinfo() {
         </Sub>
       </Header>
       <Menu>
-        <Link to='/user/profile/' style={{ textDecoration: 'none' }}>
+        <Link to='/mypage/profile' style={{ textDecoration: 'none' }}>
           <Menusub>Profile</Menusub>
         </Link>
         <Menusub background='#F48225' color='#fff'>
           Activity
         </Menusub>
         <Menusub>Saves</Menusub>
-        <Menusub>Settings</Menusub>
+        <Link to='/mypage/delete' style={{ textDecoration: 'none' }}>
+          <Menusub>Settings</Menusub>
+        </Link>
       </Menu>
       <Main>
         <List>

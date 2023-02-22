@@ -35,6 +35,9 @@ const Products = styled.div`
   color: #7c8186;
   font-size: 16px;
   margin: 0 10px 0px 10px;
+  @media (max-width: 650px) {
+    display: none;
+  }
 `;
 
 const SearchWrapper = styled.form`
@@ -42,15 +45,21 @@ const SearchWrapper = styled.form`
   justify-content: center;
   align-items: center;
   margin-left: 10px;
-`;
-
-const SearchBar = styled.input`
   border: 1px solid #d9dddf;
   font-size: 18px;
   border-radius: 3px;
   margin-top: 5px;
-  width: 850px;
-  height: 40px;
+  width: 35em;
+  height: 2em;
+
+  @media (max-width: 650px) {
+    display: none;
+  }
+`;
+
+const SearchInput = styled.input`
+  width: 100%;
+  height: 100%;
 `;
 
 const Button = styled.button`
@@ -95,7 +104,6 @@ export default function Header() {
   //
   const searchInputHandler = (e) => {
     setSearch(e.target.value);
-    console.log(search);
   };
 
   const searchHandler = () => {
@@ -126,13 +134,8 @@ export default function Header() {
             </ProductsLink>
           </>
         )}
-        <SearchWrapper onSubmit={searchHandler}>
-          <SearchBar
-            type='text'
-            value={search}
-            onChange={searchInputHandler}
-            placeholder='Search...'
-          />
+        <SearchWrapper>
+          <SearchInput type='text' />
         </SearchWrapper>
         {login ? (
           <>

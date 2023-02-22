@@ -6,6 +6,7 @@ export const UserProfiles = styled.div`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   border-radius: 7px;
+  /* 나중에 수정 */
   background-image: ${(props) =>
     props.img
       ? `url(${props.img})`
