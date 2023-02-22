@@ -5,7 +5,7 @@ import Nav from './components/Nav';
 import Sidebar from './components/Sidebar';
 // import Sidebar2 from './components/Sidebar2';
 import Login from './page/Login';
-import Join from './page/Join'
+import Join from './page/Join';
 import Index from './page/Index';
 import Tags from './page/Tags';
 import Ask from './page/Ask';
@@ -16,19 +16,19 @@ import Contents from './page/Contents';
 import Footer from './components/Footer';
 import Mypage from './page/Mypage';
 import Post from './page/Post';
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
 
 function App() {
-  const [ isReady, setIsReady ] = useState(false)
-  const { pathname } = useLocation()
-  const [ showNav, setShowNav ] = useState(true)
-  const [ showFooter, setShowFooter ] = useState(true)
-  const [ showSidebar, setShowSidebar ] = useState(true)
+  const [isReady, setIsReady] = useState(false);
+  const { pathname } = useLocation();
+  const [showNav, setShowNav] = useState(true);
+  const [showFooter, setShowFooter] = useState(true);
+  const [showSidebar, setShowSidebar] = useState(true);
   useEffect(() => {
     setTimeout(() => {
       setIsReady(false);
     }, 5000);
-  }, [])
+  }, []);
   return (
     <>
       <Header />
@@ -36,24 +36,48 @@ function App() {
         <GlobalStyle />
         {isReady ? (
           <Index />
-        ) : ( 
+        ) : (
           <div className='app_wrap'>
             {showNav ? <Nav /> : null}
             <Routes>
-              <Route path='/' element={<Index/>} />
+              <Route path='/' element={<Index />} />
               <Route path='/questions' element={<Contents />} />
-              <Route path='/mypage' element={<Mypage setShowSidebar={setShowSidebar}/>} />
+              <Route
+                path='/mypage'
+                element={<Mypage setShowSidebar={setShowSidebar} />}
+              />
               <Route path='/post/:postId' element={<Post />} />
-              <Route path='/tags' element={<Tags setShowSidebar={setShowSidebar}/> } />
-              <Route path='/login' element={<Login setShowNav={setShowNav} setShowFooter={setShowFooter} setShowSidebar={setShowSidebar}/>}/>
-              <Route path='/join' element={<Join setShowNav={setShowNav} setShowFooter={setShowFooter} setShowSidebar={setShowSidebar}/>}/>
+              <Route
+                path='/tags'
+                element={<Tags setShowSidebar={setShowSidebar} />}
+              />
+              <Route
+                path='/login'
+                element={
+                  <Login
+                    setShowNav={setShowNav}
+                    setShowFooter={setShowFooter}
+                    setShowSidebar={setShowSidebar}
+                  />
+                }
+              />
+              <Route
+                path='/join'
+                element={
+                  <Join
+                    setShowNav={setShowNav}
+                    setShowFooter={setShowFooter}
+                    setShowSidebar={setShowSidebar}
+                  />
+                }
+              />
             </Routes>
-            {showSidebar ? 
-            <div className='sidebar'>
-              <Sidebar />
-              {/* <Sidebar2 /> */}
-            </div>
-            : null}
+            {showSidebar ? (
+              <div className='sidebar'>
+                <Sidebar />
+                {/* <Sidebar2 /> */}
+              </div>
+            ) : null}
             {/* <Login />
             <Join /> */}
             {/* <Login /> */}
