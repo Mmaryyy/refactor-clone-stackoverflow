@@ -50,15 +50,12 @@ public class QuestionDto {
         private String content;
         private int view;
         @JsonProperty("totalVotes")
-        private int totalVote;
+        private int totalVotes;
         private Question.QuestionStatus questionStatus;
         private int totalAnswer;
         private List<Answer> answers;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
 
-        public void setTotalVote(Question question) {
-            this.totalVote = question.getTotalVotes();
-        }
     }
 }

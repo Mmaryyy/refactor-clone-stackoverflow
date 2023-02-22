@@ -7,6 +7,7 @@ import com.preproject_009.member.service.MemberService;
 import com.preproject_009.question.entity.Question;
 import com.preproject_009.question.entity.QuestionVote;
 import com.preproject_009.question.repository.QuestionRepository;
+import com.preproject_009.question.repository.QuestionVoteRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -23,13 +24,16 @@ public class QuestionService {
     private final QuestionRepository questionRepository;
     private final MemberService memberService;
     private final MemberRepository memberRepository;
+    private final QuestionVoteRepository questionVoteRepository;
 
     public QuestionService(QuestionRepository questionRepository,
                            MemberService memberService,
-                           MemberRepository memberRepository) {
+                           MemberRepository memberRepository,
+                           QuestionVoteRepository questionVoteRepository) {
         this.questionRepository = questionRepository;
         this.memberService = memberService;
         this.memberRepository = memberRepository;
+        this.questionVoteRepository = questionVoteRepository;
     }
 
     public Question createQuestion(Question question) {
@@ -61,6 +65,7 @@ public class QuestionService {
         Question question =
                 questionRepository.findById(questionId)
                         .orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+        System.out.println("votesize =" + question.getQuestionVotes().size());
         return question;
     }
 
@@ -87,13 +92,15 @@ public class QuestionService {
         question.setView(view + 1);
     }
 
+
+
     public void addQuestionVote(long questionId, long memberId) {
         // Get the question entity from the repository
         Question question = questionRepository.findById(questionId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
 
         // Check if the member has already voted on the question
-        boolean hasVoted = question.getQuestionVote().stream()
+        boolean hasVoted = question.getQuestionVotes().stream()
                 .anyMatch(v -> v.getMember().getMemberId() == memberId);
 
         if (hasVoted) {
@@ -105,14 +112,15 @@ public class QuestionService {
         vote.setQuestion(question);
         vote.setMember(memberRepository.findById(memberId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND)));
-
-        // Add the new vote to the question's list of votes
-        question.getQuestionVote().add(vote);
-        int totalVotes = question.getQuestionVote().size();
-        question.setTotalVote(totalVotes);
-
-        // Save the updated question object to the database.
+        vote.setCreatedAt(LocalDateTime.now());
+        vote.setModifiedAt(LocalDateTime.now());
+        questionVoteRepository.save(vote);
+        question.getQuestionVotes().add(vote);
         questionRepository.save(question);
     }
+
+
+
+
 
 }

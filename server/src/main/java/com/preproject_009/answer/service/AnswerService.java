@@ -1,9 +1,12 @@
 package com.preproject_009.answer.service;
 
 import com.preproject_009.answer.entity.Answer;
+import com.preproject_009.answer.entity.AnswerVote;
 import com.preproject_009.answer.repository.AnswerRepository;
+import com.preproject_009.answer.repository.AnswerVoteRepository;
 import com.preproject_009.exception.BusinessLogicException;
 import com.preproject_009.exception.ExceptionCode;
+import com.preproject_009.member.repository.MemberRepository;
 import com.preproject_009.member.service.MemberService;
 import com.preproject_009.question.entity.Question;
 import com.preproject_009.question.service.QuestionService;
@@ -23,11 +26,15 @@ public class AnswerService {
     private final AnswerRepository answerRepository;
     private final MemberService memberService;
     private final QuestionService questionService;
+    private final MemberRepository memberRepository;
+    private final AnswerVoteRepository answerVoteRepository;
 
-    public AnswerService(AnswerRepository answerRepository, MemberService memberService, QuestionService questionService) {
+    public AnswerService(AnswerRepository answerRepository, MemberService memberService, QuestionService questionService, MemberRepository memberRepository, AnswerVoteRepository answerVoteRepository) {
         this.answerRepository = answerRepository;
         this.memberService = memberService;
         this.questionService = questionService;
+        this.memberRepository = memberRepository;
+        this.answerVoteRepository = answerVoteRepository;
     }
 
     public Answer createAnswer(Answer answer) {
@@ -88,5 +95,30 @@ public class AnswerService {
                 optionalAnswer.orElseThrow(() ->
                         new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
         return findAnswer;
+    }
+
+    public void addAnswerVote(long answerId, long memberId) {
+        // Get the question entity from the repository
+        Answer answer = answerRepository.findById(answerId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
+
+        // Check if the member has already voted on the question
+        boolean hasVoted = answer.getAnswerVote().stream()
+                .anyMatch(v -> v.getMember().getMemberId() == memberId);
+
+        if (hasVoted) {
+            throw new BusinessLogicException(ExceptionCode.MEMBER_ALREADY_VOTED);
+        }
+
+        // Create a new QuestionVote entity and associate it with the question and member
+        AnswerVote vote = new AnswerVote();
+        vote.setAnswer(answer);
+        vote.setMember(memberRepository.findById(memberId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND)));
+        vote.setCreatedAt(LocalDateTime.now());
+        vote.setModifiedAt(LocalDateTime.now());
+        answerVoteRepository.save(vote);
+        answer.getAnswerVote().add(vote);
+        answerRepository.save(answer);
     }
 }
