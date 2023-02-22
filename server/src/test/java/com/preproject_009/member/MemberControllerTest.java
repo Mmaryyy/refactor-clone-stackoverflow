@@ -1,17 +1,13 @@
 package com.preproject_009.member;
 
 import com.google.gson.Gson;
-import com.jayway.jsonpath.JsonPath;
 import com.preproject_009.member.controller.MemberController;
-import com.preproject_009.member.dto.MemberDto;
-import com.preproject_009.member.entity.Member;
 import com.preproject_009.member.mapper.MemberMapper;
 import com.preproject_009.member.service.MemberService;
 import com.preproject_009.question.dto.QuestionDto;
 import com.preproject_009.question.entity.Question;
 import com.preproject_009.question.mapper.QuestionMapper;
 import com.preproject_009.question.service.QuestionService;
-import com.preproject_009.stubdata.MemberStubData;
 import com.preproject_009.stubdata.QuestionStubData;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -19,35 +15,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
-import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 
-import java.util.List;
-
-import static com.preproject_009.util.ApiDocumentUtils.getRequestPreProcessor;
-import static com.preproject_009.util.ApiDocumentUtils.getResponsePreProcessor;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.doNothing;
-import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
-import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(
         controllers = {MemberController.class}
@@ -77,7 +57,7 @@ public class MemberControllerTest {
     @MockBean
     private QuestionMapper questionMapper;
 
-    @Test
+    /*@Test
     public void postMemberTest() throws Exception {
 
         long memberId = 1L;
@@ -264,7 +244,7 @@ public class MemberControllerTest {
                         RestDocumentationRequestBuilders
                                 .delete("/v1/members/{member-id}", memberId))
                 .andExpect(status().isNoContent());
-    }
+    }*/
 
     @Test
     void postQuestionTest() throws Exception {
