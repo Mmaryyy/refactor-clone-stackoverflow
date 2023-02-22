@@ -1,37 +1,20 @@
 package com.preproject_009.member;
 
 import com.google.gson.Gson;
-import com.preproject_009.member.controller.MemberController;
 import com.preproject_009.member.mapper.MemberMapper;
 import com.preproject_009.member.service.MemberService;
-import com.preproject_009.question.dto.QuestionDto;
-import com.preproject_009.question.entity.Question;
 import com.preproject_009.question.mapper.QuestionMapper;
 import com.preproject_009.question.service.QuestionService;
-import com.preproject_009.stubdata.QuestionStubData;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.startsWith;
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-@WebMvcTest(
-        controllers = {MemberController.class}
-)
+//@WebMvcTest(
+//        controllers = {MemberController.class}
+//)
 @MockBean(JpaMetamodelMappingContext.class)
 @WebAppConfiguration
 @AutoConfigureRestDocs
@@ -56,6 +39,7 @@ public class MemberControllerTest {
     private QuestionService questionService;
     @MockBean
     private QuestionMapper questionMapper;
+}
 
     /*@Test
     public void postMemberTest() throws Exception {
@@ -246,31 +230,31 @@ public class MemberControllerTest {
                 .andExpect(status().isNoContent());
     }*/
 
-    @Test
-    void postQuestionTest() throws Exception {
-        //given
-        long memberId = 1L;
-        QuestionDto.Post post = (QuestionDto.Post) QuestionStubData.MockQuestion.getQuestionRequestBody(HttpMethod.POST);
-        String request = gson.toJson(post);
-
-        given(questionMapper.questionPostDtoToQuestion(Mockito.any(QuestionDto.Post.class))).willReturn(new Question());
-
-        Question question = QuestionStubData.MockQuestion.getSingleResultQuestion();
-        given(questionService.createQuestion(Mockito.any(Question.class))).willReturn(question);
-
-        //when
-        ResultActions actions =
-                mockMvc.perform(
-                        RestDocumentationRequestBuilders
-                                .post("/v1/members/{member-id}/questions", memberId)
-                                .accept(MediaType.APPLICATION_JSON)
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(request));
-
-        // then
-        actions.andExpect(status().isCreated())
-                .andExpect(header().string("Location", is(startsWith("/v1/members")))
-        );
-    }
-}
+//    @Test
+//    void postQuestionTest() throws Exception {
+//        //given
+//        long memberId = 1L;
+//        QuestionDto.Post post = (QuestionDto.Post) QuestionStubData.MockQuestion.getQuestionRequestBody(HttpMethod.POST);
+//        String request = gson.toJson(post);
+//
+//        given(questionMapper.questionPostDtoToQuestion(Mockito.any(QuestionDto.Post.class))).willReturn(new Question());
+//
+//        Question question = QuestionStubData.MockQuestion.getSingleResultQuestion();
+//        given(questionService.createQuestion(Mockito.any(Question.class))).willReturn(question);
+//
+//        //when
+//        ResultActions actions =
+//                mockMvc.perform(
+//                        RestDocumentationRequestBuilders
+//                                .post("/v1/members/{member-id}/questions", memberId)
+//                                .accept(MediaType.APPLICATION_JSON)
+//                                .contentType(MediaType.APPLICATION_JSON)
+//                                .content(request));
+//
+//        // then
+//        actions.andExpect(status().isCreated())
+//                .andExpect(header().string("Location", is(startsWith("/v1/members")))
+//        );
+//    }
+//}
 

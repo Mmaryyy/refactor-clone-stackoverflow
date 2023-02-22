@@ -9,7 +9,6 @@ import com.preproject_009.q_comment.entity.QuestionComment;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -37,10 +36,6 @@ public class Question extends Auditable {
     @Column(name = "VIEW", nullable = false)
     private int view;
 
-    @Column(name = "total_vote")
-    @Formula("(select count(1) from questionVote v where v.question_id = questionId)")
-    private int totalVote = 0;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "QUESTION_STATUS", nullable = false)
     private QuestionStatus questionStatus = QuestionStatus.QUESTION_REGISTRATION;
@@ -61,6 +56,9 @@ public class Question extends Auditable {
     // vote 1:n 양방향
     @OneToMany(mappedBy = "question", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private List<QuestionVote> questionVote = new ArrayList<>();
+
+    @Column(name = "TOTAL_VOTE")
+    private int totalVote = questionVote.size();
 
     // comment 1:n 양방향
     @OneToMany(mappedBy = "question", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
@@ -95,5 +93,10 @@ public class Question extends Auditable {
     public void setQuestionStatus(QuestionStatus questionStatus) {
         canChangeQuestion(questionStatus);
         this.questionStatus = questionStatus;
+    }
+
+    public int getTotalVotes() {
+        int totalVote = questionVote.size();
+        return totalVote;
     }
 }

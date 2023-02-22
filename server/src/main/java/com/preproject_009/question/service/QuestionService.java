@@ -2,8 +2,10 @@ package com.preproject_009.question.service;
 
 import com.preproject_009.exception.BusinessLogicException;
 import com.preproject_009.exception.ExceptionCode;
+import com.preproject_009.member.repository.MemberRepository;
 import com.preproject_009.member.service.MemberService;
 import com.preproject_009.question.entity.Question;
+import com.preproject_009.question.entity.QuestionVote;
 import com.preproject_009.question.repository.QuestionRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,11 +22,14 @@ public class QuestionService {
     private final int pageSize = 3;
     private final QuestionRepository questionRepository;
     private final MemberService memberService;
+    private final MemberRepository memberRepository;
 
     public QuestionService(QuestionRepository questionRepository,
-                           MemberService memberService) {
+                           MemberService memberService,
+                           MemberRepository memberRepository) {
         this.questionRepository = questionRepository;
         this.memberService = memberService;
+        this.memberRepository = memberRepository;
     }
 
     public Question createQuestion(Question question) {
@@ -82,5 +87,32 @@ public class QuestionService {
         question.setView(view + 1);
     }
 
+    public void addQuestionVote(long questionId, long memberId) {
+        // Get the question entity from the repository
+        Question question = questionRepository.findById(questionId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+
+        // Check if the member has already voted on the question
+        boolean hasVoted = question.getQuestionVote().stream()
+                .anyMatch(v -> v.getMember().getMemberId() == memberId);
+
+        if (hasVoted) {
+            throw new BusinessLogicException(ExceptionCode.MEMBER_ALREADY_VOTED);
+        }
+
+        // Create a new QuestionVote entity and associate it with the question and member
+        QuestionVote vote = new QuestionVote();
+        vote.setQuestion(question);
+        vote.setMember(memberRepository.findById(memberId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND)));
+
+        // Add the new vote to the question's list of votes
+        question.getQuestionVote().add(vote);
+        int totalVotes = question.getQuestionVote().size();
+        question.setTotalVote(totalVotes);
+
+        // Save the updated question object to the database.
+        questionRepository.save(question);
+    }
 
 }
