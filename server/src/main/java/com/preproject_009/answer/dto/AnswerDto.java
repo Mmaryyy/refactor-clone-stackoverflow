@@ -17,16 +17,11 @@ public class AnswerDto {
         @Positive
         private long memberId;
 
+        @Positive
         private long questionId;
 
         @NotBlank
         private String content;
-
-        // 이거 필요한가?
-        /*public void addQuestionId(long questionId) {
-            Assert.notNull(questionId, "question id must not be null.");
-            this.questionId = questionId;
-        }*/
     }
 
     @Getter
