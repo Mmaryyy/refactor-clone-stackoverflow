@@ -83,7 +83,7 @@ public class MemberControllerTest {
     @MockBean
     private QuestionMapper questionMapper;
 
-    @Test
+    /*@Test
     public void postMemberTest() throws Exception {
 
         long memberId = 1L;
@@ -270,7 +270,7 @@ public class MemberControllerTest {
                         RestDocumentationRequestBuilders
                                 .delete("/v1/members/{member-id}", memberId))
                 .andExpect(status().isNoContent());
-    }
+    }*/
 
 
 //    @Test

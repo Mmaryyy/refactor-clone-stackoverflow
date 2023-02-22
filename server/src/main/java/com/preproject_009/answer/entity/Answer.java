@@ -9,6 +9,7 @@ import com.preproject_009.question.entity.Question;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.util.List;
@@ -25,6 +26,10 @@ public class Answer extends Auditable {
 
     @Column(name = "CONTENT",columnDefinition = "TEXT", nullable = false)
     private String content;
+
+    @Formula("(select count(1) from answerVote aV where aV.answer_id = answerId)")
+    @Column(name = "TOTAL_VOTE")
+    private int totalVote;
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "ANSWER_STATUS", nullable = false)
