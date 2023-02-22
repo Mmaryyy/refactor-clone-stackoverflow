@@ -1,6 +1,5 @@
 package com.preproject_009.member.controller;
 
-import com.preproject_009.answer.dto.AnswerDto;
 import com.preproject_009.answer.entity.Answer;
 import com.preproject_009.answer.mapper.AnswerMapper;
 import com.preproject_009.answer.service.AnswerService;
@@ -11,7 +10,7 @@ import com.preproject_009.member.mapper.MemberMapper;
 import com.preproject_009.member.service.MemberService;
 import com.preproject_009.question.dto.QuestionDto;
 import com.preproject_009.question.entity.Question;
-import com.preproject_009.question.entity.Tag;
+import com.preproject_009.tag.Tag;
 import com.preproject_009.question.mapper.QuestionMapper;
 import com.preproject_009.question.service.QuestionService;
 import com.preproject_009.utils.UriCreator;
@@ -145,6 +144,15 @@ public class MemberController {
         return new ResponseEntity<>(
                 new MultiResponseDto<>(answerMapper.answersToAnswerResponses(answers),
                         answerPage), HttpStatus.OK);
+    }
+
+    @PatchMapping("/{member-id}/questions/{question-id}/answers/{answer-id}")
+    public ResponseEntity acceptAnswer(@PathVariable("member-id") @Positive long memberId,
+                                       @PathVariable("question-id") @Positive long questionId,
+                                       @PathVariable("answer-id") @Positive long answerId) {
+        Answer answer = answerService.acceptAnswer(memberId, questionId, answerId);
+
+        return new ResponseEntity<>(answerMapper.answerToAnswerResponse(answer), HttpStatus.OK);
     }
 
     public MemberDto.response response(Member member){

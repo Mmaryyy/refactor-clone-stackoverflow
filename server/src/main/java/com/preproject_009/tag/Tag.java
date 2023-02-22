@@ -1,5 +1,6 @@
-package com.preproject_009.question.entity;
+package com.preproject_009.tag;
 
+import com.preproject_009.question.entity.Question;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -42,7 +42,7 @@ public class AnswerDto {
         private String content;
         private int totalVote;
         private Answer.AnswerStatus answerStatus;
-        /*private LocalDateTime createdAt;*/
+        private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
 
     }
