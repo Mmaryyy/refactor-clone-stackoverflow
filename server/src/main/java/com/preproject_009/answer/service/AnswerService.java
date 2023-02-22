@@ -7,6 +7,9 @@ import com.preproject_009.exception.ExceptionCode;
 import com.preproject_009.member.service.MemberService;
 import com.preproject_009.question.entity.Question;
 import com.preproject_009.question.service.QuestionService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -65,8 +68,14 @@ public class AnswerService {
         //member가 admin인지 검증
         //if(front에서 날려주는 memberId.getEmail() == adminEmail) {answerRepository.delete(findAnswer);}
         findAnswer.canChangeAnswer(findAnswer.getAnswerStatus());
+        findAnswer.setAnswerStatus(Answer.AnswerStatus.ANSWER_DELETE);
 
         answerRepository.delete(findAnswer);
+    }
+
+    public Page<Answer> findAnswersByMember(long memberId) {
+        PageRequest pageRequest = PageRequest.of(0, 10, Sort.by("TOTAL_VOTE").descending());
+        return answerRepository.findAnswerByMemberId(memberId, pageRequest);
     }
 
     // 답변 존재 확인

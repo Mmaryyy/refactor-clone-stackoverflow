@@ -53,6 +53,12 @@ public class Answer extends Auditable {
         this.content = content;
     }
 
+    public Answer(long answerId, String content, AnswerStatus answerStatus) {
+        this.answerId = answerId;
+        this.content = content;
+        this.answerStatus = answerStatus;
+    }
+
     public enum AnswerStatus {
         ANSWER_REGISTRATION("답변 등록됨"),
         ANSWER_ACCEPTED("답변 채택됨"),

@@ -37,13 +37,13 @@ public class AnswerStubData {
         }
 
         public static Answer getSingleResultAnswer() {
-            return new Answer(1L, "이것은 스텁데이터입니다.");
+            return new Answer(1L, "이것은 스텁데이터입니다.", Answer.AnswerStatus.ANSWER_REGISTRATION);
         }
 
         public static List<Answer> getMultiResultAnswer() {
             return List.of(
-                    new Answer(1L, "이것은 첫번째 스텁데이터입니다."),
-                    new Answer(2L, "이것은 두번째 스텁데이터입니다.")
+                    new Answer(1L, "이것은 첫번째 스텁데이터입니다.", Answer.AnswerStatus.ANSWER_REGISTRATION),
+                    new Answer(2L, "이것은 두번째 스텁데이터입니다.", Answer.AnswerStatus.ANSWER_REGISTRATION)
             );
         }
 

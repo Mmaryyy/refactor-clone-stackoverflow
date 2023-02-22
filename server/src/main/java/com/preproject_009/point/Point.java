@@ -28,12 +28,12 @@ public class Point extends Auditable {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    public void setMember(Member member) {
+    /*public void setMember(Member member) {
         this.member = member;
         if (member.getPoint() != this) {
             member.setPoint(this);
         }
-    }
+    }*/
 
 }
 
