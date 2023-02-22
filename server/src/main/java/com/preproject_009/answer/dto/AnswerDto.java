@@ -4,7 +4,6 @@ import com.preproject_009.answer.entity.Answer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.util.Assert;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
@@ -48,7 +47,7 @@ public class AnswerDto {
         private String content;
         private int totalVote;
         private Answer.AnswerStatus answerStatus;
-        /*private LocalDateTime createdAt;*/
+        private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
     }
 }

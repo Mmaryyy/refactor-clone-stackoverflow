@@ -9,6 +9,8 @@ import com.preproject_009.member.entity.Member;
 import com.preproject_009.member.mapper.MemberMapper;
 import com.preproject_009.member.service.MemberService;
 import com.preproject_009.stubdata.MemberStubData;
+import com.preproject_009.question.mapper.QuestionMapper;
+import com.preproject_009.question.service.QuestionService;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -86,6 +88,10 @@ public class MemberControllerTest {
     String MEMBER_DEFAULT_URL = "/v1/members";
     String MEMBER_RESOURCE_ID = "/{member-id}";
     String MEMBER_RESOURCE_URI = MEMBER_DEFAULT_URL + MEMBER_RESOURCE_ID;
+    @MockBean
+    private QuestionService questionService;
+    @MockBean
+    private QuestionMapper questionMapper;
 
     @Test
     public void postMemberTest() throws Exception {
@@ -277,4 +283,58 @@ public class MemberControllerTest {
     }
 
 
+//    @Test
+//    void getMemberTest() throws Exception {
+//        MemberDto.Post post = new MemberDto.Post("jun1@naver.com",
+//                "최준영",
+//                "안녕하세요. 최준영 입니다.",
+//                "12341234a!");
+//
+//        String request = gson.toJson(post);
+//
+//        ResultActions postActions =
+//                mockMvc.perform(
+//                        post("/v1/members")
+//                                .accept(MediaType.APPLICATION_JSON)
+//                                .contentType(MediaType.APPLICATION_JSON)
+//                                .content(request)
+//                );
+//        String location = postActions.andReturn().getResponse().getHeader("Location");
+//        mockMvc.perform(
+//                get(location)
+//                        .accept(MediaType.APPLICATION_JSON)
+//        )
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.data.email").value(post.getEmail()))
+//                .andExpect(jsonPath("$.data.name").value(post.getName()))
+//                .andExpect(jsonPath("$.data.about").value(post.getAbout()))
+//                .andExpect(jsonPath("$.data.password").value(post.getPassword()));
+//    }
+
+//    @Test
+//    void postQuestionTest() throws Exception {
+//        //given
+//        long memberId = 1L;
+//        QuestionDto.Post post = (QuestionDto.Post) QuestionStubData.MockQuestion.getQuestionRequestBody(HttpMethod.POST);
+//        String request = gson.toJson(post);
+//
+//        given(questionMapper.questionPostDtoToQuestion(Mockito.any(QuestionDto.Post.class))).willReturn(new Question());
+//
+//        Question question = QuestionStubData.MockQuestion.getSingleResultQuestion();
+//        given(questionService.createQuestion(Mockito.any(Question.class))).willReturn(question);
+//
+//        //when
+//        ResultActions actions =
+//                mockMvc.perform(
+//                        RestDocumentationRequestBuilders
+//                                .post("/v1/members/{member-id}/questions", memberId)
+//                                .accept(MediaType.APPLICATION_JSON)
+//                                .contentType(MediaType.APPLICATION_JSON)
+//                                .content(request));
+//
+//        // then
+//        actions.andExpect(status().isCreated())
+//                .andExpect(header().string("Location", is(startsWith("/v1/members")))
+//        )
+//    }
 }
