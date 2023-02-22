@@ -7,9 +7,12 @@ import com.preproject_009.member.dto.MemberDto;
 import com.preproject_009.member.entity.Member;
 import com.preproject_009.member.mapper.MemberMapper;
 import com.preproject_009.member.service.MemberService;
+import com.preproject_009.question.dto.QuestionDto;
+import com.preproject_009.question.entity.Question;
 import com.preproject_009.question.mapper.QuestionMapper;
 import com.preproject_009.question.service.QuestionService;
 import com.preproject_009.stubdata.MemberStubData;
+import com.preproject_009.stubdata.QuestionStubData;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -263,60 +266,31 @@ public class MemberControllerTest {
                 .andExpect(status().isNoContent());
     }
 
+    @Test
+    void postQuestionTest() throws Exception {
+        //given
+        long memberId = 1L;
+        QuestionDto.Post post = (QuestionDto.Post) QuestionStubData.MockQuestion.getQuestionRequestBody(HttpMethod.POST);
+        String request = gson.toJson(post);
 
-//    @Test
-//    void getMemberTest() throws Exception {
-//        MemberDto.Post post = new MemberDto.Post("jun1@naver.com",
-//                "최준영",
-//                "안녕하세요. 최준영 입니다.",
-//                "12341234a!");
-//
-//        String request = gson.toJson(post);
-//
-//        ResultActions postActions =
-//                mockMvc.perform(
-//                        post("/v1/members")
-//                                .accept(MediaType.APPLICATION_JSON)
-//                                .contentType(MediaType.APPLICATION_JSON)
-//                                .content(request)
-//                );
-//        String location = postActions.andReturn().getResponse().getHeader("Location");
-//        mockMvc.perform(
-//                get(location)
-//                        .accept(MediaType.APPLICATION_JSON)
-//        )
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.data.email").value(post.getEmail()))
-//                .andExpect(jsonPath("$.data.name").value(post.getName()))
-//                .andExpect(jsonPath("$.data.about").value(post.getAbout()))
-//                .andExpect(jsonPath("$.data.password").value(post.getPassword()));
-//    }
+        given(questionMapper.questionPostDtoToQuestion(Mockito.any(QuestionDto.Post.class))).willReturn(new Question());
 
-//    @Test
-//    void postQuestionTest() throws Exception {
-//        //given
-//        long memberId = 1L;
-//        QuestionDto.Post post = (QuestionDto.Post) QuestionStubData.MockQuestion.getQuestionRequestBody(HttpMethod.POST);
-//        String request = gson.toJson(post);
-//
-//        given(questionMapper.questionPostDtoToQuestion(Mockito.any(QuestionDto.Post.class))).willReturn(new Question());
-//
-//        Question question = QuestionStubData.MockQuestion.getSingleResultQuestion();
-//        given(questionService.createQuestion(Mockito.any(Question.class))).willReturn(question);
-//
-//        //when
-//        ResultActions actions =
-//                mockMvc.perform(
-//                        RestDocumentationRequestBuilders
-//                                .post("/v1/members/{member-id}/questions", memberId)
-//                                .accept(MediaType.APPLICATION_JSON)
-//                                .contentType(MediaType.APPLICATION_JSON)
-//                                .content(request));
-//
-//        // then
-//        actions.andExpect(status().isCreated())
-//                .andExpect(header().string("Location", is(startsWith("/v1/members")))
-//        )
-//    }
+        Question question = QuestionStubData.MockQuestion.getSingleResultQuestion();
+        given(questionService.createQuestion(Mockito.any(Question.class))).willReturn(question);
+
+        //when
+        ResultActions actions =
+                mockMvc.perform(
+                        RestDocumentationRequestBuilders
+                                .post("/v1/members/{member-id}/questions", memberId)
+                                .accept(MediaType.APPLICATION_JSON)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(request));
+
+        // then
+        actions.andExpect(status().isCreated())
+                .andExpect(header().string("Location", is(startsWith("/v1/members")))
+        );
+    }
 }
 

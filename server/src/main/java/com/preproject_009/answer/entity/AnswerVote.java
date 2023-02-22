@@ -26,4 +26,6 @@ public class AnswerVote {
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
+
+
 }
