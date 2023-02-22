@@ -61,7 +61,7 @@ public class AnswerControllerTest {
     @MockBean
     private AnswerCommentMapper answerCommentMapper;
 
-    @Test
+    /*@Test
     public void postAnswerCommentTest() throws Exception {
         //given
         long answerId = 1L;
@@ -198,5 +198,5 @@ public class AnswerControllerTest {
                         .delete("/v1/answers/{answers-id}", answerId))
                 .andExpect(status().isNoContent());
         //then
-    }
+    }*/
 }

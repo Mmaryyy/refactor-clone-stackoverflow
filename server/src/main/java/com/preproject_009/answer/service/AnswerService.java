@@ -83,8 +83,21 @@ public class AnswerService {
         answerRepository.delete(findAnswer);
     }
 
+    public Answer acceptAnswer(long memberId, long questionId, long answerId) {
+        long findMemberId = questionService.findQuestion(questionId).getMember().getMemberId();
+        Answer findAnswer = findAnswer(answerId);
+
+        if(memberId != findMemberId) {
+            throw new BusinessLogicException(ExceptionCode.CANNOT_ACCEPT_ANSWER);
+        } else {
+            findAnswer.setAnswerStatus(Answer.AnswerStatus.ANSWER_ACCEPTED);
+        }
+
+        return answerRepository.save(findAnswer);
+    }
+
     public Page<Answer> findAnswersByMember(long memberId) {
-        PageRequest pageRequest = PageRequest.of(0, 10, Sort.by("TOTAL_VOTE").descending());
+        PageRequest pageRequest = PageRequest.of(0, 10, Sort.by("CREATED_AT").descending());
         return answerRepository.findAnswerByMemberId(memberId, pageRequest);
     }
 

@@ -12,6 +12,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -26,10 +27,6 @@ public class Answer extends Auditable {
 
     @Column(name = "CONTENT",columnDefinition = "TEXT", nullable = false)
     private String content;
-
-    @Formula("(select count(1) from answer_Vote aV where aV.answer_id = answer_id)")
-    @Column(name = "TOTAL_VOTE")
-    private int totalVote;
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "ANSWER_STATUS", nullable = false)
@@ -51,7 +48,11 @@ public class Answer extends Auditable {
 
     // answerVote 1:n 양방향
     @OneToMany(mappedBy = "answer", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    private List<AnswerVote> answerVote;
+    private List<AnswerVote> answerVote = new ArrayList<>();
+
+    @Column(name = "TOTAL_VOTE")
+    private int totalVote = answerVote.size();
+
 
     public Answer(long answerId, String content) {
         this.answerId = answerId;

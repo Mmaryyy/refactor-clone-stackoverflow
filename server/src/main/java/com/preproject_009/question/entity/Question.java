@@ -6,6 +6,7 @@ import com.preproject_009.exception.BusinessLogicException;
 import com.preproject_009.exception.ExceptionCode;
 import com.preproject_009.member.entity.Member;
 import com.preproject_009.q_comment.entity.QuestionComment;
+import com.preproject_009.tag.Tag;
 import lombok.Getter;
 import lombok.Setter;
 
