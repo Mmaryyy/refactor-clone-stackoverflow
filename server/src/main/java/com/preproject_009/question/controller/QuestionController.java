@@ -105,8 +105,10 @@ public class QuestionController {
     }
 
     @PostMapping("/{question-Id}/votes/{member-Id}")
-    public ResponseEntity<?> registerVote(@PathVariable("question-Id") Long questionId, @PathVariable("member-Id") Long memberId) {
+    public ResponseEntity<?> registerVote(@PathVariable("question-Id") Long questionId,
+                                          @PathVariable("member-Id") Long memberId) {
         questionService.addQuestionVote(questionId, memberId);
+        System.out.println("cotroller vote well");
         return ResponseEntity.ok().build();
     }
 

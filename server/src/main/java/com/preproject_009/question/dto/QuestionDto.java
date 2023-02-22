@@ -50,7 +50,7 @@ public class QuestionDto {
         private String content;
         private int view;
         @JsonProperty("totalVotes")
-        private int totalVote;
+        private int totalVotes;
         private Question.QuestionStatus questionStatus;
         private int totalAnswer;
         private List<Answer> answers;

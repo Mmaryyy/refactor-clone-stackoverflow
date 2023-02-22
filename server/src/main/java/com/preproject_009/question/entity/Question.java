@@ -53,7 +53,7 @@ public class Question extends Auditable {
 
     // vote 1:n 양방향
     @OneToMany(mappedBy = "question", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
-    private List<QuestionVote> questionVotes = new ArrayList<>();
+    private List<QuestionVote> questionVotes;
 
     @Column(name = "TOTAL_VOTE")
     private int totalVote;
@@ -66,10 +66,6 @@ public class Question extends Auditable {
         this.questionId = questionId;
         this.title = title;
         this.content = content;
-    }
-
-    public Question(){
-        this.questionVotes = new ArrayList<>();
     }
 
     public enum QuestionStatus{
@@ -99,9 +95,14 @@ public class Question extends Auditable {
 
     public int getTotalVotes() {
         int totalVote = questionVotes.size();
+        System.out.println("!!!");
         return totalVote;
     }
-    public void updateTotalVote() {
-        this.totalVote = this.questionVotes.size();
+    public List<QuestionVote> getQuestionVotes() {
+        return questionVotes;
+    }
+
+    public Question() {
+        this.questionVotes = new ArrayList<>();
     }
 }
