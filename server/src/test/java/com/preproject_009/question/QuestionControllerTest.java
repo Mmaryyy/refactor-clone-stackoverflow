@@ -79,7 +79,7 @@ public class QuestionControllerTest {
         ResultActions actions =
                 mockMvc.perform(
                         RestDocumentationRequestBuilders
-                                .post("/v1/questions/{question-id}", questionId + "/answers")                // 경로때문에 컨트롤러 위치 변경 필요
+                                .post("/v1/questions/{question-id}", questionId + "/answers")
                                 .accept(MediaType.APPLICATION_JSON)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(request));

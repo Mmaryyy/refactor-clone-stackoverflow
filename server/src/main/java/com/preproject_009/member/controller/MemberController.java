@@ -1,5 +1,8 @@
 package com.preproject_009.member.controller;
 
+import com.preproject_009.answer.entity.Answer;
+import com.preproject_009.answer.mapper.AnswerMapper;
+import com.preproject_009.answer.service.AnswerService;
 import com.preproject_009.member.dto.MemberDto;
 import com.preproject_009.member.dto.MultiResponseDto;
 import com.preproject_009.member.entity.Member;
@@ -41,11 +44,17 @@ public class MemberController {
 
     private final QuestionService questionService;
 
-    public MemberController(MemberService memberService, QuestionService questionService, MemberMapper mapper, QuestionMapper questionMapper) {
+    private final AnswerService answerService;
+
+    private final AnswerMapper answerMapper;
+
+    public MemberController(MemberService memberService, MemberMapper mapper, QuestionMapper questionMapper, QuestionService questionService, AnswerService answerService, AnswerMapper answerMapper) {
         this.memberService = memberService;
         this.mapper = mapper;
         this.questionMapper = questionMapper;
         this.questionService = questionService;
+        this.answerService = answerService;
+        this.answerMapper = answerMapper;
     }
 
     // 유저 생성
@@ -125,6 +134,16 @@ public class MemberController {
         return new ResponseEntity<>(
                 new MultiResponseDto<>(questionMapper.questionsToQuestionResponsesDto(questions),
                         questionPage), HttpStatus.OK);
+    }
+
+    @GetMapping("/{member-id}/answers")
+    public ResponseEntity getAnswers(@PathVariable("member-id") @Positive long memberId) {
+        Page<Answer> answerPage = answerService.findAnswersByMember(memberId);
+        List<Answer> answers = answerPage.getContent();
+
+        return new ResponseEntity<>(
+                new MultiResponseDto<>(answerMapper.answersToAnswerResponses(answers),
+                        answerPage), HttpStatus.OK);
     }
 
     public MemberDto.response response(Member member){

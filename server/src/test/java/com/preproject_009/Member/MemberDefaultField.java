@@ -1,4 +1,4 @@
-package com.preproject_009.Member;
+package com.preproject_009.member;
 
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.FieldDescriptor;
