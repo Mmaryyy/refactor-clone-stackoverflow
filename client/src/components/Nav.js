@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const NavContainer = styled.ul`
     border-right: 1px solid var(--tab__focus);
@@ -46,7 +46,6 @@ const TabTitle = styled.p`
     font-size: var(--fs--caption);
 `
 const Nav = ({ hide }) => {
-
   return (
     <div className={hide}>
       <NavContainer>

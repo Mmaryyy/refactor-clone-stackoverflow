@@ -7,7 +7,7 @@ const initialState = {
             "password": 1234,
             "joinDate": "dateObject",
             "isSocial": true,
-            "avatarUrl": "./images/Avatar1.png",
+            "avatarUrl": "/images/Avatar1.png",
             "authority": true,
             "contents" : [ 1 ]
         },
@@ -18,7 +18,7 @@ const initialState = {
             "password": 1234,
             "joinDate": "dateObject",
             "isSocial": false,
-            "avatarUrl": "./images/Avatar2.png",
+            "avatarUrl": "/images/Avatar2.png",
             "authority": false,
             "contents" : [ 2 ]
         },
@@ -29,7 +29,7 @@ const initialState = {
             "password": 1234,
             "joinDate": "dateObject",
             "isSocial": true,
-            "avatarUrl": "./images/Avatar3.png",
+            "avatarUrl": "/images/Avatar3.png",
             "authority": false,
             "contents" : [ 3 ]
         },
@@ -40,7 +40,7 @@ const initialState = {
             "password": 1234,
             "joinDate": "dateObject",
             "isSocial": false,
-            "avatarUrl": "./images/Avatar4.png",
+            "avatarUrl": "/images/Avatar4.png",
             "authority": false,
             "contents" : [ 4 ]
         },
@@ -51,7 +51,7 @@ const initialState = {
             "password": 1234,
             "joinDate": "dateObject",
             "isSocial": false,
-            "avatarUrl": "./images/Avatar5.png",
+            "avatarUrl": "/images/Avatar5.png",
             "authority": false,
             "contents" : [ 5 ]
         },
@@ -62,7 +62,7 @@ const initialState = {
             "password": 1234,
             "joinDate": "dateObject",
             "isSocial": true,
-            "avatarUrl": "./images/Avatar6.png",
+            "avatarUrl": "/images/Avatar6.png",
             "authority": false,
             "contents" : [ 6 ]
         },
@@ -73,7 +73,7 @@ const initialState = {
             "password": 1234,
             "joinDate": "dateObject",
             "isSocial": true,
-            "avatarUrl": "./images/Avatar7.png",
+            "avatarUrl": "/images/Avatar7.png",
             "authority": false,
             "contents" : [ 7 ]
         },
@@ -84,7 +84,7 @@ const initialState = {
             "password": 1234,
             "joinDate": "dateObject",
             "isSocial": true,
-            "avatarUrl": "./images/Avatar8.png",
+            "avatarUrl": "/images/Avatar8.png",
             "authority": false,
             "contents" : [ 8 ]
     
@@ -96,7 +96,7 @@ const initialState = {
             "password": 1234,
             "joinDate": "dateObject",
             "isSocial": false,
-            "avatarUrl": "./images/Avatar9.png",
+            "avatarUrl": "/images/Avatar9.png",
             "authority": false,
             "contents" : [ 9 ]
     
@@ -108,7 +108,7 @@ const initialState = {
             "password": 1234,
             "joinDate": "dateObject",
             "isSocial": true,
-            "avatarUrl": "./images/Avatar10.png",
+            "avatarUrl": "/images/Avatar10.png",
             "authority": false,
             "contents" : [ 10 ]
     

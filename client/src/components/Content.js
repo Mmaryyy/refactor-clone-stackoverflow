@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { TagButton } from '../styles/styledcomponents'
 import { Link, useNavigate } from 'react-router-dom'
 import check from './../img/check.png'
 import { useDispatch, useSelector } from 'react-redux'
-import { getSingleContent } from '../redux/actions/content'
+import { getSingleContent } from '../redux/actions/contents'
 import { getTimeGap } from '../utils/dateUtil'
 const ContentContainer = styled.section`
   display: flex;
@@ -97,10 +97,10 @@ const CheckContainer = styled.img`
 const AuthorProfileWrapper = styled.img`
   width: 20px;
 `
-const Content = ({ contents, answer, author }) => {
-  const { content, createdAt, isSelected, lastModifiedAt, tag, title, view, votes } = contents
+const Content = ({ singleContent }) => {
+  const { title, content, createdAt, isSelected, lastModifiedAt, tag, view, votes, author, answer } = singleContent
+  const { avatarUrl, nickname } = author
   const passedTime = getTimeGap(lastModifiedAt)
-  const navigate = useNavigate()
   return (
     <ContentContainer>
       <SummaryContainer className="content_summary">
@@ -119,7 +119,7 @@ const Content = ({ contents, answer, author }) => {
         <SummaryTitle>{view} views</SummaryTitle>
       </SummaryContainer>
       <ContentDetailContainer className="content_details">
-        <PostTitle to={`/post/id=${contents.shortId}`}>{title}</PostTitle>
+        <PostTitle to={`/post/${singleContent.shortId}`}>{title}</PostTitle>
         <BodyContainer>
           {content}
         </BodyContainer>
@@ -128,8 +128,8 @@ const Content = ({ contents, answer, author }) => {
             {tag.map((el, idx) => <TagButton key={idx}>{el}</TagButton>)}
           </div>
           <div className="author_datas">
-            <AuthorProfileWrapper src={author[0].avatarUrl} alt='avatar_profile'/>
-            <AuthorLink to="#">{author[0].nickname}</AuthorLink>
+            <AuthorProfileWrapper src={avatarUrl} alt='avatar_profile'/>
+            <AuthorLink to="#">{nickname}</AuthorLink>
             <span>modified {passedTime} mins ago</span>
           </div>
         </PostSummaryContainer>
