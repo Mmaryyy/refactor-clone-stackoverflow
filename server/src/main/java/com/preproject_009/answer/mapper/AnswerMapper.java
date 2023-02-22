@@ -3,6 +3,7 @@ package com.preproject_009.answer.mapper;
 import com.preproject_009.answer.dto.AnswerDto;
 import com.preproject_009.answer.entity.Answer;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 
 import java.util.List;
@@ -13,8 +14,8 @@ public interface AnswerMapper {
     Answer answerPostDtoToAnswer(AnswerDto.Post requestBody);
     Answer answerPatchDtoToAnswer(AnswerDto.Patch requestBody);
 
+    @Mapping(target = "memberId", source = "member.memberId")
     AnswerDto.Response answerToAnswerResponse(Answer answer);
-
 
     List<AnswerDto.Response> answersToAnswerResponses(List<Answer> answers);
 }

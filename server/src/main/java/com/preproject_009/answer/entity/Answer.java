@@ -27,9 +27,9 @@ public class Answer extends Auditable {
     @Column(name = "CONTENT",columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @Formula("(select count(1) from answer_Vote aV where aV.answer_id = answer_Id)")
+    @Formula("(select count(1) from answer_Vote aV where aV.answer_id = answer_id)")
     @Column(name = "TOTAL_VOTE")
-    private int totalVote = 0;
+    private int totalVote;
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "ANSWER_STATUS", nullable = false)
