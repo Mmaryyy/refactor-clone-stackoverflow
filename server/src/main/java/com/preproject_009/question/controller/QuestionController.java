@@ -29,9 +29,9 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @Validated
-@RequestMapping("/v1/questions")
+@RequestMapping("/questions")
 public class QuestionController {
-    private final static String QUESTION_DEFAULT_URL = "/v1/questions";
+    private final static String QUESTION_DEFAULT_URL = "/questions";
     private final QuestionRepository questionRepository;
     private final QuestionMapper questionMapper;
     private final QuestionService questionService;
@@ -74,9 +74,9 @@ public class QuestionController {
     @GetMapping
     public ResponseEntity getQuestions(@RequestParam("page") int page,
                                                    @Nullable @RequestParam("keyword") String keyword,
-                                                   @RequestParam("sortType") QuestionController.SortType sortType,
+                                                   @RequestParam("sortType") String sortType,
                                                    @RequestParam("filterType") int filterType) {
-        Page<Question> questionPage = questionService.findQuestions(page - 1, keyword, sortType.toString(), filterType);
+        Page<Question> questionPage = questionService.findQuestions(page - 1, keyword, sortType, filterType);
         List<Question> questions = questionPage.getContent();
         return new ResponseEntity<>(
                 new MultiResponseDto<>(questionMapper.questionsToQuestionResponsesDto(questions),
@@ -98,14 +98,13 @@ public class QuestionController {
         return ResponseEntity.created(location).build();
     }
 
-    public QuestionDto.Response response(Question question) {
-        return questionMapper.questionToQuestionResponseDto(question);
+    @PostMapping("/{question-Id}/votes/{member-Id}")
+    public ResponseEntity<?> registerVote(@PathVariable("question-Id") Long questionId, @PathVariable("member-Id") Long memberId) {
+        questionService.addQuestionVote(questionId, memberId);
+        return ResponseEntity.ok().build();
     }
 
-    public enum SortType{
-        created_At, // 최신순
-        modified_At, // 최근 수정순
-        total_Vote, // 좋아요순
-        view // 조회수순
+    public QuestionDto.Response response(Question question) {
+        return questionMapper.questionToQuestionResponseDto(question);
     }
 }

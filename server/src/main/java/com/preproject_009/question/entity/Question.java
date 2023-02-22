@@ -36,9 +36,6 @@ public class Question extends Auditable {
     @Column(name = "VIEW", nullable = false)
     private int view;
 
-    @Column(name = "TOTAL_VOTE", nullable = false)
-    private int totalVote = 0;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "QUESTION_STATUS", nullable = false)
     private QuestionStatus questionStatus = QuestionStatus.QUESTION_REGISTRATION;
@@ -58,7 +55,10 @@ public class Question extends Auditable {
 
     // vote 1:n 양방향
     @OneToMany(mappedBy = "question", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
-    private List<QuestionVote> questionVotes = new ArrayList<>();
+    private List<QuestionVote> questionVote = new ArrayList<>();
+
+    @Column(name = "TOTAL_VOTE")
+    private int totalVote = questionVote.size();
 
     // comment 1:n 양방향
     @OneToMany(mappedBy = "question", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
@@ -93,5 +93,10 @@ public class Question extends Auditable {
     public void setQuestionStatus(QuestionStatus questionStatus) {
         canChangeQuestion(questionStatus);
         this.questionStatus = questionStatus;
+    }
+
+    public int getTotalVotes() {
+        int totalVote = questionVote.size();
+        return totalVote;
     }
 }

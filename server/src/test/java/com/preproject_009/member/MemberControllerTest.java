@@ -1,63 +1,20 @@
 package com.preproject_009.member;
 
 import com.google.gson.Gson;
-import com.jayway.jsonpath.JsonPath;
-import com.preproject_009.member.controller.MemberController;
-import com.preproject_009.member.dto.MemberDto;
-import com.preproject_009.member.entity.Member;
 import com.preproject_009.member.mapper.MemberMapper;
 import com.preproject_009.member.service.MemberService;
-import com.preproject_009.stubdata.MemberStubData;
-import org.junit.jupiter.api.Test;
 import com.preproject_009.question.mapper.QuestionMapper;
 import com.preproject_009.question.service.QuestionService;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
-import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 
-import java.util.List;
-
-import static com.preproject_009.util.ApiDocumentUtils.getRequestPreProcessor;
-import static com.preproject_009.util.ApiDocumentUtils.getResponsePreProcessor;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.startsWith;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.doNothing;
-import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
-import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.hamcrest.Matchers.is;
-
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-
-@WebMvcTest(
-        controllers = {MemberController.class}
-)
+//@WebMvcTest(
+//        controllers = {MemberController.class}
+//)
 @MockBean(JpaMetamodelMappingContext.class)
 @WebAppConfiguration
 @AutoConfigureRestDocs
@@ -82,6 +39,7 @@ public class MemberControllerTest {
     private QuestionService questionService;
     @MockBean
     private QuestionMapper questionMapper;
+}
 
     /*@Test
     public void postMemberTest() throws Exception {
@@ -272,35 +230,6 @@ public class MemberControllerTest {
                 .andExpect(status().isNoContent());
     }*/
 
-
-//    @Test
-//    void getMemberTest() throws Exception {
-//        MemberDto.Post post = new MemberDto.Post("jun1@naver.com",
-//                "최준영",
-//                "안녕하세요. 최준영 입니다.",
-//                "12341234a!");
-//
-//        String request = gson.toJson(post);
-//
-//        ResultActions postActions =
-//                mockMvc.perform(
-//                        post("/v1/members")
-//                                .accept(MediaType.APPLICATION_JSON)
-//                                .contentType(MediaType.APPLICATION_JSON)
-//                                .content(request)
-//                );
-//        String location = postActions.andReturn().getResponse().getHeader("Location");
-//        mockMvc.perform(
-//                get(location)
-//                        .accept(MediaType.APPLICATION_JSON)
-//        )
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.data.email").value(post.getEmail()))
-//                .andExpect(jsonPath("$.data.name").value(post.getName()))
-//                .andExpect(jsonPath("$.data.about").value(post.getAbout()))
-//                .andExpect(jsonPath("$.data.password").value(post.getPassword()));
-//    }
-
 //    @Test
 //    void postQuestionTest() throws Exception {
 //        //given
@@ -325,7 +254,7 @@ public class MemberControllerTest {
 //        // then
 //        actions.andExpect(status().isCreated())
 //                .andExpect(header().string("Location", is(startsWith("/v1/members")))
-//        )
+//        );
 //    }
-}
+//}
 

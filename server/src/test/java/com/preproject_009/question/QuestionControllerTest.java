@@ -1,47 +1,17 @@
 package com.preproject_009.question;
 
 import com.google.gson.Gson;
-import com.preproject_009.answer.controller.AnswerController;
-import com.preproject_009.answer.dto.AnswerDto;
-import com.preproject_009.answer.entity.Answer;
 import com.preproject_009.answer.mapper.AnswerMapper;
 import com.preproject_009.answer.service.AnswerService;
-import com.preproject_009.question.controller.QuestionController;
 import com.preproject_009.question.mapper.QuestionMapper;
 import com.preproject_009.question.service.QuestionService;
-import com.preproject_009.stubdata.AnswerStubData;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
-import org.springframework.restdocs.payload.JsonFieldType;
-import org.springframework.restdocs.request.ParameterDescriptor;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 
-import java.util.List;
-
-import static com.preproject_009.util.ApiDocumentUtils.getRequestPreProcessor;
-import static com.preproject_009.util.ApiDocumentUtils.getResponsePreProcessor;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.startsWith;
-import static org.mockito.BDDMockito.given;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-@WebMvcTest(controllers = {QuestionController.class, AnswerController.class})
+//@WebMvcTest(controllers = {QuestionController.class, AnswerController.class})
 @MockBean(JpaMetamodelMappingContext.class)
 @AutoConfigureRestDocs
 public class QuestionControllerTest {

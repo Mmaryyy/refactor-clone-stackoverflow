@@ -21,7 +21,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v1/answers")
+@RequestMapping("/answers")
 @Validated
 @RequiredArgsConstructor
 public class AnswerController {

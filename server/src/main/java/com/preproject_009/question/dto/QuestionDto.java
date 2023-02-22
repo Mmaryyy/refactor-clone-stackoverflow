@@ -1,5 +1,6 @@
 package com.preproject_009.question.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.preproject_009.answer.entity.Answer;
 import com.preproject_009.question.entity.Question;
 import lombok.AllArgsConstructor;
@@ -44,16 +45,20 @@ public class QuestionDto {
     @AllArgsConstructor
     public static class Response{
         private long questionId;
-
         private long memberId;
         private String title;
         private String content;
         private int view;
+        @JsonProperty("totalVotes")
         private int totalVote;
         private Question.QuestionStatus questionStatus;
         private int totalAnswer;
         private List<Answer> answers;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
+
+        public void setTotalVote(Question question) {
+            this.totalVote = question.getTotalVotes();
+        }
     }
 }
