@@ -2,10 +2,13 @@ package com.preproject_009.member;
 
 import com.google.gson.Gson;
 import com.preproject_009.member.dto.MemberDto;
+import com.preproject_009.question.mapper.QuestionMapper;
+import com.preproject_009.question.service.QuestionService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -28,6 +31,11 @@ public class MemberControllerTest {
 
     @Autowired
     private Gson gson;
+
+    @MockBean
+    private QuestionService questionService;
+    @MockBean
+    private QuestionMapper questionMapper;
 
     @Test
     void postMemberTest() throws Exception {
@@ -76,5 +84,32 @@ public class MemberControllerTest {
 //                .andExpect(jsonPath("$.data.name").value(post.getName()))
 //                .andExpect(jsonPath("$.data.about").value(post.getAbout()))
 //                .andExpect(jsonPath("$.data.password").value(post.getPassword()));
+//    }
+
+//    @Test
+//    void postQuestionTest() throws Exception {
+//        //given
+//        long memberId = 1L;
+//        QuestionDto.Post post = (QuestionDto.Post) QuestionStubData.MockQuestion.getQuestionRequestBody(HttpMethod.POST);
+//        String request = gson.toJson(post);
+//
+//        given(questionMapper.questionPostDtoToQuestion(Mockito.any(QuestionDto.Post.class))).willReturn(new Question());
+//
+//        Question question = QuestionStubData.MockQuestion.getSingleResultQuestion();
+//        given(questionService.createQuestion(Mockito.any(Question.class))).willReturn(question);
+//
+//        //when
+//        ResultActions actions =
+//                mockMvc.perform(
+//                        RestDocumentationRequestBuilders
+//                                .post("/v1/members/{member-id}/questions", memberId)
+//                                .accept(MediaType.APPLICATION_JSON)
+//                                .contentType(MediaType.APPLICATION_JSON)
+//                                .content(request));
+//
+//        // then
+//        actions.andExpect(status().isCreated())
+//                .andExpect(header().string("Location", is(startsWith("/v1/members")))
+//        )
 //    }
 }

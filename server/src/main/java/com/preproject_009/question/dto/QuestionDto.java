@@ -44,6 +44,7 @@ public class QuestionDto {
     @AllArgsConstructor
     public static class Response{
         private long questionId;
+
         private long memberId;
         private String title;
         private String content;
