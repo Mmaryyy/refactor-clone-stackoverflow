@@ -11,7 +11,6 @@ const GlobalStyle = createGlobalStyle`
     }
     .app_wrap {
         display: flex;
-        padding-right: 15px;
         justify-content: center;
         background: none;
     }
