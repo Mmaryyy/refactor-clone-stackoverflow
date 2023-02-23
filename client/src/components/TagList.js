@@ -1,6 +1,6 @@
-import React from 'react'
-import { Link } from "react-router-dom";
-import styled from 'styled-components'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 const Container = styled.div`
   display: flex;
@@ -26,30 +26,29 @@ const Container = styled.div`
     font-size: 13px;
     font-weight: 400;
     &.tagname {
-      color: rgb(57,116,156);
+      color: rgb(57, 116, 156);
       padding: 5px 6px;
       margin: 2px 2px 2px 0;
-      background-color: rgb(225,236,244);
-      border: 1px solid rgb(225,236,244);
+      background-color: rgb(225, 236, 244);
+      border: 1px solid rgb(225, 236, 244);
       border-radius: 3px;
     }
   }
-`
+`;
 
-
-const TagList = ({data}) => {
+const TagList = ({ data }) => {
   return (
     <Container>
-      <div className="top_field">
+      <div className='top_field'>
         <div>
-          <Link to="#" className="linkStyle tagname">{data.title}</Link>
+          <Link to='#' className='linkStyle tagname'>
+            {data.title}
+          </Link>
         </div>
       </div>
-      <div className="middle_field">
-        {`${data.body.slice(0, 100)}...`}
-      </div>
+      <div className='middle_field'>{`${data.body.slice(0, 100)}...`}</div>
     </Container>
   );
-}
+};
 
-export default TagList
+export default TagList;

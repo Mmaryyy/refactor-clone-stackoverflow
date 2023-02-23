@@ -7,7 +7,8 @@ import Avatar from './Avatar';
 const Header = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 10px 0 0 30px;
+  margin-top: 60px;
+  margin-left: 165px;
 `;
 
 const MyProfile = styled.div`
@@ -62,7 +63,7 @@ const Sub = styled.div`
 const Menu = styled.div`
   display: flex;
   flex-direction: row;
-  margin-left: 20px;
+  margin-left: 160px;
 `;
 
 const Menusub = styled.div`
@@ -96,7 +97,7 @@ export const Container = styled.div`
 export const Stats = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 10px 0 0 50px;
+  margin: 10px 0 0 200px;
 
   .stats {
     font-size: 28px;
@@ -131,7 +132,7 @@ export const StatsCount = styled.p`
 export const Section = styled.section`
   display: flex;
   flex-direction: column;
-  margin: 10px 10px 0 50px;
+  margin: 10px 10px 20px 10px;
 `;
 export const Sections = styled.article`
   display: flex;
