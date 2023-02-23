@@ -7,5 +7,6 @@ import java.util.List;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface TagMapper {
+    TagResponseDto tagToTagResponse(Tag tag);
     List<TagResponseDto> tagToTagResponses(List<Tag> tags);
 }
