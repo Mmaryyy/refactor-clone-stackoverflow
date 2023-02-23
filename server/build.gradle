@@ -35,7 +35,7 @@ dependencies {
 	asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor'
 	implementation 'org.mapstruct:mapstruct:1.5.1.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.1.Final'
-	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'mysql:mysql-connector-java:8.0.31'
 	implementation 'com.google.code.gson:gson'
 }
 
