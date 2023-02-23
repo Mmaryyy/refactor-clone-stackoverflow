@@ -15,14 +15,15 @@ const Container = styled.main`
 const HeadContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   /* width: 100%; */
-  height: 10rem;
+  height: 8rem;
   padding: 20px;
   border-bottom: 1px solid var(--tab__focus);
-  > .head_first {
+  > div {
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
 `
 const Title = styled.h1`
@@ -48,6 +49,7 @@ const Contents = () => {
         </div>
         <div className="head_second">
           <span>{contentList.length} questions</span>
+          <SubmitButton bg={'var(--tag__back)' } color={'var(--tag__content)'}>Filter</SubmitButton>
         </div>
       </HeadContainer>
       {contentList.map((singleContent) => {

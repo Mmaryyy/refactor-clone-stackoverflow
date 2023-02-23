@@ -6,10 +6,11 @@ import { getSingleContent } from '../redux/actions/contents'
 import styled from 'styled-components'
 import { SubmitButton, TagButton, LinkContent } from '../styles/styledcomponents'
 import { ToastEditor } from '../components/TextEditor'
+import PostBlock from '../components/PostBlock'
 const PostContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  padding: 15px;
   width: calc(100% - 165px - 300px);
   margin-left: 165px;
   margin-top: 60px;
@@ -24,7 +25,7 @@ const HeaderContainer = styled.div`
   width: 100%;
 `
 const CommonWrapper = styled.div`
-  display: flex;
+  display: ${props => props.display || 'flex'};
   margin: ${props => props.margin || 0};
   justify-content: ${props => props.direct || null};
   width: 100%;
@@ -46,37 +47,6 @@ const Item = styled.span`
   margin: 10px;
   color: var(--black__300);
 `
-const MainContainer = styled.div`
-  display: flex;
-  width: 100%;
-  padding: 10px;
-`
-const VoteWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  > span {
-    font-size: var(--fs--title);
-    margin: 10px 0;
-    color: var(--black__300);
-  }
-`
-const VoteButton = styled.button`
-  border: none;
-  background: none;
-  cursor: pointer;
-`
-const ContentContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 15px;
-  flex-grow: 1;
-  > p.content {
-    /* min-height: 300px; */
-    margin: 0 0 0 10px;
-  }
-`
 const EditBotton = styled.button`
   border: none;
   background: none;
@@ -84,21 +54,6 @@ const EditBotton = styled.button`
   cursor: pointer;
   font-size: ${props => props.size || 'var(--fs--lg)'};
   font-weight: ${props => props.weight || null};
-`
-const AuthorWrapper = styled.div`
-  background: var(--tag__back);
-  border-radius: 5px;
-  display: flex;
-  padding: 3px;
-  align-items: center;
-  a {
-    color: var(--link__content);
-    font-size: var(--fs--mid);
-  }
-`
-const AuthorProfileWrapper = styled.img`
-  width: 30px;
-  margin: 5px;
 `
 const NoticeWrapper = styled.div`
   background: var(--sidebar__body);
@@ -119,24 +74,15 @@ const NoticeWrapper = styled.div`
       color: var(--link__content);
     }
 `
-const CommentWrapper = styled.div`
-    display: flex;
-    padding: 10px 30px;
-    border-bottom: 1px solid var(--black__100);
-    span {
-      margin-right: 10px;
-      font-size: var(--fs--mid);
-    }
-    span.author {
-      color: var(--button__back--hover);
-      cursor: pointer;
-      &:hover {
-        color: var(--button__back);
-      }
-    }
-    span.created_date {
-      color: var(--black__200);
-    }
+const CustomList = styled.ul`
+  display: inline !important;
+  li {
+    display: inherit;
+  }
+`
+const NoticeText = styled.p`
+  font-size: var(--fs--big);
+  margin: 15px 0;
 `
 const Post = () => {
   // 접근 1. content -> title 클릭 -> post
@@ -152,10 +98,12 @@ const Post = () => {
   const { content, author, answer } = singleContent
   const asked = getTimeGap(content.createdAt)
   const modified = getTimeGap(content.lastModifiedAt)
+  const [ showNotice, setShowNotice ] = useState(true)
   // const userData = useSelector(state => state.userDataReducer.userData)
   // const author = userData.filter(el => el.contents.includes(singleContent.shortId))[0]
-  const handleVoteNumber = () => {
-    //vote 넘버 바꿔주는 로직
+
+  const closeNotice = () => {
+    setShowNotice(false)
   }
   return content.title === undefined ? (
     <></>
@@ -175,142 +123,27 @@ const Post = () => {
           <span>{content.view}</span>
         </SummaryWrapper>
       </HeaderContainer>
-      <MainContainer className="main_container">
-        <VoteWrapper className="vote_wrapper">
-          <VoteButton className="vote_up">
-            <svg
-              fill="var(--black__100)"
-              aria-hidden="true"
-              className="svg-icon iconArrowUpLg"
-              width="36"
-              height="36"
-              viewBox="0 0 36 36"
-            >
-              <path d="M2 25h32L18 9 2 25Z"></path>
-            </svg>
-          </VoteButton>
-          <span>{content.votes}</span>
-          <VoteButton className="vote_down">
-            <svg
-              fill="var(--black__100)"
-              aria-hidden="true"
-              className="svg-icon iconArrowDownLg"
-              width="36"
-              height="36"
-              viewBox="0 0 36 36"
-            >
-              <path d="M2 11h32L18 27 2 11Z"></path>
-            </svg>
-          </VoteButton>
-        </VoteWrapper>
-        <ContentContainer className="content_container">
-          <p className="content">{content.content}</p>
-          <CommonWrapper className="tag_container" margin={"10px 0"}>
-            {content.tag.map((el, idx) => {
-              return <TagButton key={idx}>{el}</TagButton>;
-            })}
-          </CommonWrapper>
-          <CommonWrapper className="bottom_container" direct={"space-between"}  bottom={'1px solid var(--black__100)'} padding={'30px 0'}>
-            <EditBotton className="edit_botton">Edit</EditBotton>
-            <AuthorWrapper className="author_wrapper">
-              <AuthorProfileWrapper
-                src={author.avatarUrl}
-                alt="author_profile"
-              ></AuthorProfileWrapper>
-              <a>{author.nickname}</a>
-            </AuthorWrapper>
-          </CommonWrapper>
-          <div className="text_editor_wrapper">
-            {content.comments.length === 0 ? (
-              <p>
-                Know someone who can answer? Share a link to this question via
-                email, Twitter, or Facebook.
-              </p>
-            ) : (
-              <div>
-                {content.comments.map((el, idx) => {
-                  return (<CommentWrapper className='comment_wrapper' key={idx}>
-                    <span>{el.content}</span> <span>-</span> <span className='author'>{el.author}</span> <span className='created_date'>{el.createdAt}</span>
-                    </CommentWrapper>);
-                })}
-              </div>
-            )}
-          </div>
-        </ContentContainer>
-      </MainContainer>
+      <PostBlock content={content} author={author}></PostBlock>
       <div className='answer_container'>
-        <h3>{answer.length} Answers</h3>
+        <NoticeText>{answer.length === 0 ? 
+        <NoticeText>
+          Know someone who can answer? Share a link to this <LinkContent>question</LinkContent> via <LinkContent>email</LinkContent>, <LinkContent>Twitter</LinkContent>, or <LinkContent>Facebook</LinkContent>.
+        </NoticeText>
+        :`${answer.length} Answers`}</NoticeText>
         {answer.map(el => {
           console.log(el)
           return (
-            <MainContainer className="main_container">
-            <VoteWrapper className="vote_wrapper">
-              <VoteButton className="vote_up">
-                <svg
-                  fill="var(--black__100)"
-                  aria-hidden="true"
-                  className="svg-icon iconArrowUpLg"
-                  width="36"
-                  height="36"
-                  viewBox="0 0 36 36"
-                >
-                  <path d="M2 25h32L18 9 2 25Z"></path>
-                </svg>
-              </VoteButton>
-              <span>{el.votes}</span>
-              <VoteButton className="vote_down">
-                <svg
-                  fill="var(--black__100)"
-                  aria-hidden="true"
-                  className="svg-icon iconArrowDownLg"
-                  width="36"
-                  height="36"
-                  viewBox="0 0 36 36"
-                >
-                  <path d="M2 11h32L18 27 2 11Z"></path>
-                </svg>
-              </VoteButton>
-            </VoteWrapper>
-            <ContentContainer className="content_container">
-              <p className="content">{el.content}</p>
-              <CommonWrapper className="bottom_container" direct={"space-between"}  bottom={'1px solid var(--black__100)'} padding={'30px 0'}>
-                <EditBotton className="edit_botton">Edit</EditBotton>
-                <AuthorWrapper className="author_wrapper">
-                  <AuthorProfileWrapper
-                    src={el.author.avatarUrl}
-                    alt="author_profile"
-                  ></AuthorProfileWrapper>
-                  <a>{el.author.nickname}</a>
-                </AuthorWrapper>
-              </CommonWrapper>
-              <div className="text_editor_wrapper">
-                {el.comments.length === 0 ? (
-                  <p>
-                    Know someone who can answer? Share a link to this question via
-                    email, Twitter, or Facebook.
-                  </p>
-                ) : (
-                  <div>
-                    {el.comments.map((el, idx) => {
-                      return (<CommentWrapper className='comment_wrapper' key={idx}>
-                        <span>{el.content}</span> <span>-</span> <span className='author'>{el.author}</span> <span className='created_date'>{el.createdAt}</span>
-                        </CommentWrapper>);
-                    })}
-                  </div>
-                )}
-              </div>
-            </ContentContainer>
-          </MainContainer>
+            <PostBlock className='answer' content={el} author={el.author}></PostBlock>
           )
         })}
-
       </div>
-      <h3>Your Answer</h3>
-      <ToastEditor className="text_editor" />
-      <NoticeWrapper className="notice_wrapper">
+      <NoticeText>Your Answer</NoticeText>
+      <ToastEditor className="text_editor" focusFunction={()=>{console.log('post 되니?')}}/>
+      {showNotice 
+      ? <NoticeWrapper className="notice_wrapper">
         <CommonWrapper direct={"space-between"} className="first_line_wrapper">
           <p>Thanks for contributing an answer to Stack Overflow!</p>
-          <EditBotton color={"black"}>X</EditBotton>
+          <EditBotton color={"var(--black__400)"} onClick={closeNotice}>X</EditBotton>
         </CommonWrapper>
         <p className="list">
           ⏺ Please be sure to answer the question. Provide details and share
@@ -329,10 +162,12 @@ const Post = () => {
           To learn more, see our <span>tips on writing great answers.</span>
         </p>
       </NoticeWrapper>
-      <SubmitButton className="post_button">Post Your Answer</SubmitButton>
-      <p>
+      : null}
+      <SubmitButton className="post_button" margin={'20px 0'}>Post Your Answer</SubmitButton>
+      <CommonWrapper className='notice_underline_wrapper'>
+      <NoticeText>
         Browse other questions tagged{" "}
-        <ul className="tags_list">
+        <CustomList className="tags_list">
           {content.tag.map((el, idx) => {
             return (
               <li key={idx}>
@@ -340,9 +175,11 @@ const Post = () => {
               </li>
             )
           })}
-        </ul>
-        <LinkContent href='#'>or ask your own question.</LinkContent>
-      </p>
+        </CustomList>
+        <span>or </span>
+        <LinkContent href='#' fs={'var(--fs--big)'}>ask your own question.</LinkContent>
+      </NoticeText>
+      </CommonWrapper>
     </PostContainer>
   );
 }

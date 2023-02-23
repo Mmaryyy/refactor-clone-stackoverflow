@@ -1,7 +1,6 @@
 import contents from '../../datas/contents.json'
 import userData from '../../datas/userData.json'
 import answers from '../../datas/answers.json'
-import { Action } from '@remix-run/router'
 
 export const GET_SINGLE_CONTENT = "GET_SINGLE_CONTENT"
 export const GET_CONTENT_LIST = "GET_CONTENT_LIST"

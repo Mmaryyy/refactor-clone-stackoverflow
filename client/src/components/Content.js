@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import { TagButton } from '../styles/styledcomponents'
+import { TagButton, LinkContent } from '../styles/styledcomponents'
 import { Link, useNavigate } from 'react-router-dom'
 import check from './../img/check.png'
 import { useDispatch, useSelector } from 'react-redux'
@@ -119,7 +119,7 @@ const Content = ({ singleContent }) => {
         <SummaryTitle>{view} views</SummaryTitle>
       </SummaryContainer>
       <ContentDetailContainer className="content_details">
-        <PostTitle to={`/post/${singleContent.shortId}`}>{title}</PostTitle>
+        <PostTitle to={`/questions/${singleContent.shortId}`}>{title}</PostTitle>
         <BodyContainer>
           {content}
         </BodyContainer>
