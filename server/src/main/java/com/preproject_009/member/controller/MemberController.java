@@ -36,6 +36,7 @@ import java.util.List;
 @RequestMapping("/members")
 @Validated
 public class MemberController {
+    private final static int pageSize = 16;
     private final static String MEMBER_DEFAULT_URL = "/members";
     private final MemberService memberService;
     private final MemberMapper mapper;
@@ -93,9 +94,8 @@ public class MemberController {
 
     // 유저 조회
     @GetMapping
-    public ResponseEntity getMembers(@Positive @RequestParam int page,
-                                     @Positive @RequestParam int size){
-        Page<Member> pageMembers = memberService.findMembers(page - 1, size);
+    public ResponseEntity getMembers(@Positive @RequestParam int page){
+        Page<Member> pageMembers = memberService.findMembers(page, pageSize);
         List<Member> members = pageMembers.getContent();
         return new ResponseEntity<>(
                 new MultiResponseDto<>(mapper.membersToMemberResponses(members),
