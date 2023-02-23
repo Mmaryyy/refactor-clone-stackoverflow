@@ -47,6 +47,7 @@ public class AnswerService {
         //질문 상태 변경
         Question question = questionService.findQuestion(answer.getQuestion().getQuestionId());
         question.setQuestionStatus(Question.QuestionStatus.QUESTION_ANSWERED);
+        questionRepository.save(question);
 
         answer.setCreatedAt(LocalDateTime.now());
         answer.setModifiedAt(LocalDateTime.now());
@@ -97,6 +98,7 @@ public class AnswerService {
         } else {
             findAnswer.setAnswerStatus(Answer.AnswerStatus.ANSWER_ACCEPTED);
             findQuestion.setQuestionStatus(Question.QuestionStatus.QUESTION_ANSWER_ACCEPTED);
+//            questionRepository.save(findQuestion)
         }
 
         return answerRepository.save(findAnswer);
@@ -134,11 +136,7 @@ public class AnswerService {
         vote.setAnswer(answer);
         vote.setMember(memberRepository.findById(memberId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND)));
-        vote.setCreatedAt(LocalDateTime.now());
-        vote.setModifiedAt(LocalDateTime.now());
         answerVoteRepository.save(vote);
-        answer.getAnswerVotes().add(vote);
         answer.setTotalVotes(answer.getTotalVotes());
-        answerRepository.save(answer);
     }
 }

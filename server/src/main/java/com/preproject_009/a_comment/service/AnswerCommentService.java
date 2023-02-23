@@ -29,6 +29,7 @@ public class AnswerCommentService {
     public AnswerComment createAnswerComment(AnswerComment answerComment) {
         verifyAnswerComment(answerComment);
         answerComment.setCreatedAt(LocalDateTime.now());
+        answerComment.setModifiedAt(LocalDateTime.now());
 
         return answerCommentRepository.save(answerComment);
     }

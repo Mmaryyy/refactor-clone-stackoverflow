@@ -25,6 +25,7 @@ public class QuestionCommentService {
     public QuestionComment createQuestionComment(QuestionComment questionComment) {
         verifyQuestionComment(questionComment);
         questionComment.setCreatedAt(LocalDateTime.now());
+        questionComment.setModifiedAt(LocalDateTime.now());
 
         return questionCommentRepository.save(questionComment);
     }

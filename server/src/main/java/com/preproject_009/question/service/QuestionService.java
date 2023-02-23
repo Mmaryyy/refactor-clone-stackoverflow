@@ -47,7 +47,7 @@ public class QuestionService {
 
     public Question updateQuestion(Question question) {
         Question updatedQuestion = findQuestion(question.getQuestionId());
-        question.canChangeQuestion(question.getQuestionStatus());
+        updatedQuestion.setQuestionStatus(question.getQuestionStatus());
         //관리자 권한 메서드 추가
 
         Optional.ofNullable(question.getTitle())
@@ -61,11 +61,11 @@ public class QuestionService {
 
     // 질문 하나 띄우기
     public Question findQuestion(long questionId) {
-        // 존재하는 질문인지?
-        Question question =
-                questionRepository.findById(questionId)
-                        .orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
-        return question;
+        Optional<Question> optionalQuestion = questionRepository.findById(questionId);
+        Question findQuestion =
+                optionalQuestion.orElseThrow(() ->
+                                new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+        return findQuestion;
     }
 
     public Page<Question> findQuestions(int page, String keyword, String sortType, int filterType){
@@ -111,12 +111,8 @@ public class QuestionService {
         vote.setQuestion(question);
         vote.setMember(memberRepository.findById(memberId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND)));
-        vote.setCreatedAt(LocalDateTime.now());
-        vote.setModifiedAt(LocalDateTime.now());
         questionVoteRepository.save(vote);
-        question.getQuestionVotes().add(vote);
         question.setTotalVotes(question.getTotalVotes());
-        questionRepository.save(question);
     }
 
 
