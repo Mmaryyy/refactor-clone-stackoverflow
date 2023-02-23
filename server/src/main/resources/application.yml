@@ -1,0 +1,19 @@
+server:
+  address: localhost
+  port: 8080
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/stackOverFlow?createDatabaseIfNotExist=true&characterEncoding=UTF-8&characterSetResults=UTF-8&useSSL=true
+    username: hongjae
+    password: qwer@1234
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true    # (1) 스키마 자동 생성
+    properties:
+      hibernate:
+        format_sql: true  # (3) SQL pretty print
+    database: mysql
