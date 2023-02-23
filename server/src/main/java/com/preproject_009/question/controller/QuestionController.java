@@ -89,15 +89,11 @@ public class QuestionController {
         //requestBody.setQuestionId(questionId);
         Question question = questionService.findQuestion(questionId);
         Member member = memberService.findMember(requestBody.getMemberId());
-        System.out.println("memberId = " + member.getMemberId());
         Answer answer = answerMapper.answerPostDtoToAnswer(requestBody);
         answer.setQuestion(question);
         answer.setMember(member);
-        System.out.println("answer.questionId = " + answer.getQuestion().getQuestionId());
-        System.out.println("answer.memberId = " + answer.getMember().getMemberId());
-        System.out.println("?????????????????????????????");
         Answer createdAnswer = answerService.createAnswer(answer);
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
         URI location = UriCreator.createPostAnswerUri(QUESTION_DEFAULT_URL, createdAnswer.getAnswerId());
 
         return ResponseEntity.created(location).build();
@@ -107,7 +103,7 @@ public class QuestionController {
     public ResponseEntity<?> registerVote(@PathVariable("question-Id") Long questionId,
                                           @PathVariable("member-Id") Long memberId) {
         questionService.addQuestionVote(questionId, memberId);
-        System.out.println("cotroller vote well");
+        System.out.println("controller vote well");
         return ResponseEntity.ok().build();
     }
 
