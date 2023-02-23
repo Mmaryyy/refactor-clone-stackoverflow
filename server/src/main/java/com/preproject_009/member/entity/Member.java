@@ -55,6 +55,9 @@ public class Member extends Auditable {
     @Column(columnDefinition = "TEXT")
     private String img;
 
+    @Column(columnDefinition = "TEXT")
+    private String location;
+
     // 멤버 활동, 휴면, 탈퇴 여부
     @Enumerated(value = EnumType.STRING)
     @Column(name = "MEMBER_STATUS", length = 30, nullable = false)
