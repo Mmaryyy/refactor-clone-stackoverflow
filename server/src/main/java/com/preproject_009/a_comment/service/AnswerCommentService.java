@@ -2,7 +2,6 @@ package com.preproject_009.a_comment.service;
 
 import com.preproject_009.a_comment.entity.AnswerComment;
 import com.preproject_009.a_comment.repository.AnswerCommentRepository;
-import com.preproject_009.answer.entity.Answer;
 import com.preproject_009.answer.service.AnswerService;
 import com.preproject_009.exception.BusinessLogicException;
 import com.preproject_009.exception.ExceptionCode;
@@ -29,6 +28,7 @@ public class AnswerCommentService {
 
     public AnswerComment createAnswerComment(AnswerComment answerComment) {
         verifyAnswerComment(answerComment);
+        answerComment.setCreatedAt(LocalDateTime.now());
 
         return answerCommentRepository.save(answerComment);
     }

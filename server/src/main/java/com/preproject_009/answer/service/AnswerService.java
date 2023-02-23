@@ -6,6 +6,7 @@ import com.preproject_009.answer.repository.AnswerRepository;
 import com.preproject_009.answer.repository.AnswerVoteRepository;
 import com.preproject_009.exception.BusinessLogicException;
 import com.preproject_009.exception.ExceptionCode;
+import com.preproject_009.member.entity.Member;
 import com.preproject_009.member.repository.MemberRepository;
 import com.preproject_009.member.service.MemberService;
 import com.preproject_009.question.entity.Question;
@@ -42,19 +43,17 @@ public class AnswerService {
 
     public Answer createAnswer(Answer answer) {
 
-        memberService.findVerifiedMember(answer.getMember().getMemberId());
-
+        Member member = memberService.findVerifiedMember(answer.getMember().getMemberId());
         //질문 상태 변경
         Question question = questionService.findQuestion(answer.getQuestion().getQuestionId());
         question.setQuestionStatus(Question.QuestionStatus.QUESTION_ANSWERED);
 
-        answer.setQuestion(question);
         answer.setCreatedAt(LocalDateTime.now());
         answer.setModifiedAt(LocalDateTime.now());
-        question.getAnswers().add(answer);
-
-        questionRepository.save(question);
-        return answerRepository.save(answer);
+        member.getAnswers().add(answer);
+        answerRepository.save(answer);
+        System.out.println("answer saved in repository");
+        return answer;
     }
 
     public Answer updateAnswer(Answer answer) {
@@ -100,7 +99,6 @@ public class AnswerService {
             findQuestion.setQuestionStatus(Question.QuestionStatus.QUESTION_ANSWER_ACCEPTED);
         }
 
-        questionRepository.save(findQuestion);
         return answerRepository.save(findAnswer);
     }
 
@@ -124,7 +122,7 @@ public class AnswerService {
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
 
         // Check if the member has already voted on the question
-        boolean hasVoted = answer.getAnswerVote().stream()
+        boolean hasVoted = answer.getAnswerVotes().stream()
                 .anyMatch(v -> v.getMember().getMemberId() == memberId);
 
         if (hasVoted) {
@@ -139,7 +137,8 @@ public class AnswerService {
         vote.setCreatedAt(LocalDateTime.now());
         vote.setModifiedAt(LocalDateTime.now());
         answerVoteRepository.save(vote);
-        answer.getAnswerVote().add(vote);
+        answer.getAnswerVotes().add(vote);
+        answer.setTotalVotes(answer.getTotalVotes());
         answerRepository.save(answer);
     }
 }

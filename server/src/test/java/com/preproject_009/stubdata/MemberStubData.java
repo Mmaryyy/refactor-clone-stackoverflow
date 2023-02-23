@@ -11,7 +11,6 @@ import org.springframework.http.HttpMethod;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public class MemberStubData {
     public static class MockMember {
@@ -35,6 +34,8 @@ public class MemberStubData {
                     "홍길동",
                     "12341234a!",
                     "안녕하세요 인사드립니다.",
+                    null,
+                    null,
                     Member.MemberStatus.MEMBER_ACTIVE);
         }
 
@@ -45,12 +46,16 @@ public class MemberStubData {
                             "홍길동1",
                             "12341234a!",
                             "안녕하세요 인사드립니다.",
+                            null,
+                            null,
                             Member.MemberStatus.MEMBER_ACTIVE),
                     new MemberDto.response(2L,
                             "hgd1@gmail.com",
                             "홍길동2",
                             "12341234a!",
                             "안녕하세요 인사드립니다.",
+                            null,
+                            null,
                             Member.MemberStatus.MEMBER_ACTIVE)
             );
         }
