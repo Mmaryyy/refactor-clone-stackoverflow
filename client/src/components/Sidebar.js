@@ -88,7 +88,7 @@ function Sidebar() {
           <div>
             <svg
               aria-hidden="true"
-              class="svg-icon"
+              className="svg-icon"
               width="14"
               height="14"
               viewBox="0 0 14 14">
@@ -106,7 +106,7 @@ function Sidebar() {
           <div>
             <svg
               aria-hidden="true"
-              class="svg-icon"
+              className="svg-icon"
               width="14"
               height="14"
               viewBox="0 0 14 14">
