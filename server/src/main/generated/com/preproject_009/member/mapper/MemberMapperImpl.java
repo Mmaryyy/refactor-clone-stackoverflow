@@ -2,7 +2,7 @@ package com.preproject_009.member.mapper;
 
 import com.preproject_009.member.dto.MemberDto;
 import com.preproject_009.member.entity.Member;
-import com.preproject_009.point.Point;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;

@@ -1,7 +1,6 @@
 package com.preproject_009.answer.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.preproject_009.audit.Auditable;
 import com.preproject_009.member.entity.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +12,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-public class AnswerVote extends Auditable {
+public class AnswerVote {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

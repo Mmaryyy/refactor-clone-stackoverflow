@@ -69,10 +69,11 @@ public class Question extends Auditable {
     @JsonManagedReference
     private List<QuestionComment> questionComments = new ArrayList<>();
 
-    public Question(long questionId, String title, String content) {
+    public Question(long questionId, String title, String content, QuestionStatus questionStatus) {
         this.questionId = questionId;
         this.title = title;
         this.content = content;
+        this.questionStatus = questionStatus;
     }
 
     public enum QuestionStatus{
@@ -90,6 +91,7 @@ public class Question extends Auditable {
     }
 
     public void canChangeQuestion(QuestionStatus questionStatus) {
+        System.out.println("!!!!!!!!!!!! status = " + this.questionStatus);
         if(this.questionStatus == QuestionStatus.QUESTION_ANSWER_ACCEPTED) {
             throw new BusinessLogicException(ExceptionCode.CANNOT_CHANGE_QUESTION);
         }
