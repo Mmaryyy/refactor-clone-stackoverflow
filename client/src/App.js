@@ -39,7 +39,7 @@ function App() {
         {isReady ? (
           <Index />
         ) : (
-          <div className={pathname.includes('in') ? 'background_box' : null}>
+          <div className={pathname.includes("in") || pathname.includes("k")? 'background_box' : null}>
             <div className='app_wrap'>
               {showNav ? <Nav /> : null}
               <Routes>
@@ -54,36 +54,11 @@ function App() {
                   }
                 />
                 <Route path='/questions' element={<Contents />} />
-                <Route
-                  path='/mypage/*'
-                  element={<Mypage setShowSidebar={setShowSidebar} />}
-                />
-                <Route path='/post/:postId' element={<Post />} />
-                <Route path='/users' element={<Users />} />
-                <Route
-                  path='/tags'
-                  element={<Tags setShowSidebar={setShowSidebar} />}
-                />
-                <Route
-                  path='/login'
-                  element={
-                    <Login
-                      setShowNav={setShowNav}
-                      setShowFooter={setShowFooter}
-                      setShowSidebar={setShowSidebar}
-                    />
-                  }
-                />
-                <Route
-                  path='/join'
-                  element={
-                    <Join
-                      setShowNav={setShowNav}
-                      setShowFooter={setShowFooter}
-                      setShowSidebar={setShowSidebar}
-                    />
-                  }
-                />
+                <Route path='/mypage/*' element={<Mypage setShowSidebar={setShowSidebar} />} />
+                <Route path='/questions/:postId' element={<Post />} />
+                <Route path='/tags' element={<Tags setShowSidebar={setShowSidebar} />} />
+                <Route path='/login' element={<Login setShowNav={setShowNav} setShowFooter={setShowFooter} setShowSidebar={setShowSidebar} />} />
+                <Route path='/join' element={<Join setShowNav={setShowNav} setShowFooter={setShowFooter} setShowSidebar={setShowSidebar}/>} />
               </Routes>
               {showSidebar ? (
                 <div className='sidebar'>
