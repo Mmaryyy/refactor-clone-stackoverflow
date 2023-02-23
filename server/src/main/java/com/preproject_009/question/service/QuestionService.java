@@ -2,6 +2,7 @@ package com.preproject_009.question.service;
 
 import com.preproject_009.exception.BusinessLogicException;
 import com.preproject_009.exception.ExceptionCode;
+import com.preproject_009.member.entity.Member;
 import com.preproject_009.member.repository.MemberRepository;
 import com.preproject_009.member.service.MemberService;
 import com.preproject_009.question.entity.Question;
@@ -38,8 +39,7 @@ public class QuestionService {
 
     public Question createQuestion(Question question) {
         // 존재하는 회원인지?
-        memberService.findVerifiedMember(question.getMember().getMemberId());
-
+        Member member = memberService.findVerifiedMember(question.getMember().getMemberId());
         question.setCreatedAt(LocalDateTime.now());
         question.setModifiedAt(LocalDateTime.now());
         return questionRepository.save(question);
@@ -65,7 +65,6 @@ public class QuestionService {
         Question question =
                 questionRepository.findById(questionId)
                         .orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
-        System.out.println("votesize =" + question.getQuestionVotes().size());
         return question;
     }
 
@@ -116,6 +115,7 @@ public class QuestionService {
         vote.setModifiedAt(LocalDateTime.now());
         questionVoteRepository.save(vote);
         question.getQuestionVotes().add(vote);
+        question.setTotalVotes(question.getTotalVotes());
         questionRepository.save(question);
     }
 

@@ -48,10 +48,10 @@ public class QuestionDto {
         private long questionId;
         private long memberId;
         private String memberName;
-        //private String memberImage;
+        private String memberImage;
         private String title;
         private String content;
-        private List<QuestionComment> questionComment;
+        private List<QuestionComment> questionComments;
         private int view;
         @JsonProperty("totalVotes")
         private int totalVotes;
