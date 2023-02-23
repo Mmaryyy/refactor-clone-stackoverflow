@@ -18,6 +18,7 @@ const Wrapper = styled.header`
   right: 0;
   padding: 0 10vw;
   //header 위치 고정
+  z-index: 999;
 `;
 
 const Logo = styled.img`
