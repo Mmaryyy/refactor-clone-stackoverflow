@@ -1,5 +1,7 @@
 package com.preproject_009.question.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.preproject_009.answer.entity.Answer;
 import com.preproject_009.audit.Auditable;
 import com.preproject_009.exception.BusinessLogicException;
@@ -8,6 +10,7 @@ import com.preproject_009.member.entity.Member;
 import com.preproject_009.q_comment.entity.QuestionComment;
 import com.preproject_009.tag.Tag;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -18,6 +21,7 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
+@NoArgsConstructor
 public class Question extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,9 +33,6 @@ public class Question extends Auditable {
     @Column(name = "CONTENT", columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @Column(name = "TOTAL_ANSWER", nullable = false)
-    private int totalAnswer;
-
     @Column(name = "VIEW", nullable = false)
     private int view;
 
@@ -42,25 +43,30 @@ public class Question extends Auditable {
     // member n:1 양방향
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
+    @JsonBackReference
     private Member member;
 
     // tag 1:n 양방향
     @OneToMany(mappedBy = "question")
+    @JsonManagedReference
     private List<Tag> tags = new ArrayList<>();
 
     // answer 1:n 양방향
     @OneToMany(mappedBy = "question", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+    @JsonManagedReference
     private List<Answer> answers = new ArrayList<>();
 
     // vote 1:n 양방향
     @OneToMany(mappedBy = "question", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+    @JsonManagedReference
     private List<QuestionVote> questionVotes;
 
     @Column(name = "TOTAL_VOTE")
-    private int totalVote;
+    private int totalVotes;
 
     // comment 1:n 양방향
     @OneToMany(mappedBy = "question", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+    @JsonManagedReference
     private List<QuestionComment> questionComments = new ArrayList<>();
 
     public Question(long questionId, String title, String content) {
@@ -96,14 +102,13 @@ public class Question extends Auditable {
 
     public int getTotalVotes() {
         int totalVote = questionVotes.size();
-        System.out.println("!!!");
         return totalVote;
     }
     public List<QuestionVote> getQuestionVotes() {
         return questionVotes;
     }
 
-    public Question() {
-        this.questionVotes = new ArrayList<>();
-    }
+//    public Question() {
+//        this.questionVotes = new ArrayList<>();
+//    }
 }

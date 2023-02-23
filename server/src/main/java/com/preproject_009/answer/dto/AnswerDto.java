@@ -1,11 +1,13 @@
 package com.preproject_009.answer.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.preproject_009.answer.entity.Answer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
 
@@ -20,6 +22,7 @@ public class AnswerDto {
         @Positive
         private long questionId;
 
+        @NotNull
         @NotBlank
         private String content;
     }
@@ -40,7 +43,8 @@ public class AnswerDto {
         private long answerId;
         private long memberId;
         private String content;
-        private int totalVote;
+        @JsonProperty("totalVotes")
+        private int totalVotes;
         private Answer.AnswerStatus answerStatus;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;

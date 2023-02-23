@@ -5,6 +5,7 @@ import com.preproject_009.answer.entity.Answer;
 import com.preproject_009.answer.mapper.AnswerMapper;
 import com.preproject_009.answer.service.AnswerService;
 import com.preproject_009.member.dto.MultiResponseDto;
+import com.preproject_009.member.entity.Member;
 import com.preproject_009.member.repository.MemberRepository;
 import com.preproject_009.member.service.MemberService;
 import com.preproject_009.q_comment.dto.QuestionCommentDto;
@@ -65,18 +66,6 @@ public class QuestionController {
         return new ResponseEntity<>(response(question), HttpStatus.OK);
     }
 
-//    @GetMapping
-//    public Page<QuestionDto.Response> getQuestionsV1(@RequestParam("page") int page,
-//                                                   @Nullable @RequestParam("keyword") String keyword,
-//                                                   @RequestParam("sortType") QuestionController.SortType sortType,
-//                                                   @RequestParam("filterType") int filterType) {
-//        Page<Question> questions = questionService.findQuestions(page - 1, keyword, sortType.toString(), filterType);
-//
-//        Page<QuestionDto.Response> response = questions.map(questionMapper::questionToQuestionResponseDto);
-//
-//        return response;
-//    }
-
     @GetMapping
     public ResponseEntity getQuestions(@RequestParam("page") int page,
                                                    @Nullable @RequestParam("keyword") String keyword,
@@ -97,8 +86,18 @@ public class QuestionController {
     @PostMapping("/{question-id}/answers")
     public ResponseEntity postAnswer(@PathVariable("question-id") long questionId,
                                                @Valid @RequestBody AnswerDto.Post requestBody) {
-        requestBody.setQuestionId(questionId);
-        Answer createdAnswer = answerService.createAnswer(answerMapper.answerPostDtoToAnswer(requestBody));
+        //requestBody.setQuestionId(questionId);
+        Question question = questionService.findQuestion(questionId);
+        Member member = memberService.findMember(requestBody.getMemberId());
+        System.out.println("memberId = " + member.getMemberId());
+        Answer answer = answerMapper.answerPostDtoToAnswer(requestBody);
+        answer.setQuestion(question);
+        answer.setMember(member);
+        System.out.println("answer.questionId = " + answer.getQuestion().getQuestionId());
+        System.out.println("answer.memberId = " + answer.getMember().getMemberId());
+        System.out.println("?????????????????????????????");
+        Answer createdAnswer = answerService.createAnswer(answer);
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         URI location = UriCreator.createPostAnswerUri(QUESTION_DEFAULT_URL, createdAnswer.getAnswerId());
 
         return ResponseEntity.created(location).build();
@@ -112,13 +111,16 @@ public class QuestionController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/{question-id}/questionComments/{member-id}")
+    @PostMapping("/{question-id}/questionComments")
     public ResponseEntity postQuestionComment(@PathVariable("question-id") long questionId,
                                               @Valid @RequestBody QuestionCommentDto.Post requestBody) {
         requestBody.setQuestionId(questionId);
-        QuestionComment createdQuestionComment = questionCommentService.createQuestionComment(questionCommentMapper.questionCommentPostDtoToQuestion(requestBody));
+        QuestionComment createdQuestionComment =
+                questionCommentService.createQuestionComment(questionCommentMapper.questionCommentPostDtoToQuestion(requestBody));
+        URI location = UriCreator.createPostAnswerCommentUri(QUESTION_DEFAULT_URL, createdQuestionComment.getQuestionCommentId());
 
-        return new ResponseEntity<>(response(createdQuestionComment), HttpStatus.CREATED);
+
+        return ResponseEntity.created(location).build();
     }
 
     public QuestionDto.Response response(Question question) {
