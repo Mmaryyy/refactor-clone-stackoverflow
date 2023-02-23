@@ -6,15 +6,17 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     height: 100vh;
-    width: calc(100%-465px);
+    width: 100%;
 `
-const Index = ({ setShowSidebar, setShowNav }) => {
+const Index = ({ setShowSidebar, setShowNav, setShowFooter }) => {
   useEffect(() => {
     setShowSidebar(false)
     setShowNav(false)
+    setShowFooter(false)
     return () => {
       setShowSidebar(true)
       setShowNav(true)
+      setShowFooter(true)
     }
   }, [])
   return (

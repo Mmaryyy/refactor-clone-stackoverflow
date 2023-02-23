@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 const Wrapper = styled.header`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
   height: 60px;
   background-color: #f8f9f9;
@@ -16,6 +16,7 @@ const Wrapper = styled.header`
   top: 0;
   left: 0;
   right: 0;
+  padding: 0 10vw;
   //header 위치 고정
 `;
 
@@ -56,7 +57,7 @@ const SearchWrapper = styled.form`
   margin-top: 5px;
   width: 35em;
   height: 2em;
-
+  flex: 1;
   @media (max-width: 650px) {
     display: none;
   }

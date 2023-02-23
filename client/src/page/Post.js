@@ -10,8 +10,9 @@ const PostContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 10px;
-  width: 100vw;
-  margin-left: 195px;
+  width: calc(100% - 165px - 300px);
+  margin-left: 165px;
+  margin-top: 60px;
 `
 const HeaderContainer = styled.div`
   display: flex;
@@ -33,6 +34,7 @@ const CommonWrapper = styled.div`
 const Title = styled.h1`
   font-weight: 400;
   color: var(--black__600);
+  word-break: break-word;
 `
 const SummaryWrapper = styled.div`
   margin: 10px 0;
@@ -47,6 +49,7 @@ const Item = styled.span`
 const MainContainer = styled.div`
   display: flex;
   width: 100%;
+  padding: 10px;
 `
 const VoteWrapper = styled.div`
   display: flex;
@@ -70,7 +73,7 @@ const ContentContainer = styled.div`
   margin: 15px;
   flex-grow: 1;
   > p.content {
-    min-height: 300px;
+    /* min-height: 300px; */
     margin: 0 0 0 10px;
   }
 `
@@ -159,7 +162,7 @@ const Post = () => {
   ) : (
     <PostContainer className="post_container">
       <HeaderContainer className="header_container">
-        <CommonWrapper direct={"space_between"} className="title_wrapper">
+        <CommonWrapper direct={"space-between"} className="title_wrapper" padding={"0 10px"}>
           <Title>{content.title}</Title>
           <SubmitButton>Ask questions</SubmitButton>
         </CommonWrapper>
@@ -303,7 +306,7 @@ const Post = () => {
 
       </div>
       <h3>Your Answer</h3>
-      <ToastEditor className="text_editor"></ToastEditor>
+      <ToastEditor className="text_editor" />
       <NoticeWrapper className="notice_wrapper">
         <CommonWrapper direct={"space-between"} className="first_line_wrapper">
           <p>Thanks for contributing an answer to Stack Overflow!</p>

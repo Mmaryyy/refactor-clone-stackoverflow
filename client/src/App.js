@@ -24,6 +24,7 @@ function App() {
   const [showNav, setShowNav] = useState(true);
   const [showFooter, setShowFooter] = useState(true);
   const [showSidebar, setShowSidebar] = useState(true);
+  console.log(pathname)
   useEffect(() => {
     setTimeout(() => {
       setIsReady(false);
@@ -37,11 +38,11 @@ function App() {
         {isReady ? (
           <Index />
         ) : (
-          <div>
+          <div className={pathname.includes("in") ? 'background_box' : null}>
             <div className='app_wrap'>
               {showNav ? <Nav /> : null}
               <Routes>
-                <Route path='/' element={<Index setShowSidebar={setShowSidebar} setShowNav={setShowNav}/>} />
+                <Route path='/' element={<Index setShowSidebar={setShowSidebar} setShowNav={setShowNav} setShowFooter={setShowFooter}/>} />
                 <Route path='/questions' element={<Contents />} />
                 <Route path='/mypage' element={<Mypage setShowSidebar={setShowSidebar} />} />
                 <Route path='/post/:postId' element={<Post />} />

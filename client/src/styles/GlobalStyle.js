@@ -13,14 +13,18 @@ const GlobalStyle = createGlobalStyle`
         display: flex;
         justify-content: space-between;
         background: none;
+        padding: 0 10vw;
     }
     .sidebar {
         flex: none;
         width: 300px;
-        margin: 0px 30px 15px 24px;
+        /* margin: 0px 30px 15px 24px; */
     }
     .hide {
         display: none;
+    }
+    .background_box {
+        background: rgb(240, 242, 243);
     }
 `
 

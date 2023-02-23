@@ -1,19 +1,29 @@
 import { Editor } from '@toast-ui/react-editor'
 import '@toast-ui/editor/dist/toastui-editor.css'
 import { useRef } from 'react'
+import styled from 'styled-components'
 
-export const ToastEditor = () => {
+const EditorContainer = styled.div`
+    .toastui-editor-toolbar {
+        overflow-x: scroll;
+        overflow-y: hidden;
+        height: 60px;
+        background: #f7f9fc;
+        border-bottom: 1px solid #ebedf2;
+    }
+`
+export const ToastEditor = ({ vertical }) => {
     const editorRef = useRef()
     return (
-        <div className='toast_editor'>
+        <EditorContainer className='toast_editor'>
             <Editor
                 initialValue='please write your problem'
-                height='500px'
+                height={vertical || '500px'}
                 width='100%'
                 hideModeSwitch='true'
                 ref={editorRef}
                 >
             </Editor>
-        </div>
+        </EditorContainer>
     )
 }

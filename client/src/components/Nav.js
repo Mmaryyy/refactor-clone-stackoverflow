@@ -12,7 +12,7 @@ const NavContainer = styled.ul`
     font-weight: 400;
     position: fixed;
     top: 60px;
-    left: 30px;
+    left: 10vw;
 `
 const TapContainer = styled.div`
     display: flex;
