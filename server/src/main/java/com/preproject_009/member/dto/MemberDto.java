@@ -1,10 +1,7 @@
 package com.preproject_009.member.dto;
 
 import com.preproject_009.member.entity.Member;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.util.Assert;
 
 import javax.validation.constraints.Email;
@@ -14,6 +11,7 @@ import javax.validation.constraints.Pattern;
 public class MemberDto {
     @Getter
     @AllArgsConstructor
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class Post {
         @NotBlank
         @Email

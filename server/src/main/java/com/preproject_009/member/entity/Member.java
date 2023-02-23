@@ -46,6 +46,10 @@ public class Member extends Auditable {
     @Column(length = 100)
     private String password;
 
+    // 사용자 등록 시 사용자 권한을 등록하기 위한 테이블 생성
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles = new ArrayList<>();
+
     // true : 어드민, false : 일반 회원
     private boolean authority;
 
