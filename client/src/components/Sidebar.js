@@ -28,6 +28,7 @@ import { Link } from "react-router-dom"
 
 
 const Container = styled.div`
+margin-top: 60px;
 margin-bottom: 20px;
 background-color: rgb(253,247,226);
 box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;

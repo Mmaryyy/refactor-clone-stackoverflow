@@ -9,6 +9,9 @@ const Container = styled.div`
   max-width: 1100px;
   width: calc(100% - 164px);
   padding: 24px;
+  margin-top: 60px;
+  margin-left: 165px;
+  /* min-height: 100vh; */
 `
 const Main = styled.div`
   .title {

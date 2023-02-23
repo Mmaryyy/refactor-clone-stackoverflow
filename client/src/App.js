@@ -24,6 +24,7 @@ function App() {
   const [showNav, setShowNav] = useState(true);
   const [showFooter, setShowFooter] = useState(true);
   const [showSidebar, setShowSidebar] = useState(true);
+  console.log(pathname)
   useEffect(() => {
     setTimeout(() => {
       setIsReady(false);
@@ -37,50 +38,28 @@ function App() {
         {isReady ? (
           <Index />
         ) : (
-          <div className='app_wrap'>
-            {showNav ? <Nav /> : null}
-            <Routes>
-              <Route path='/' element={<Index />} />
-              <Route path='/questions' element={<Contents />} />
-              <Route
-                path='/mypage'
-                element={<Mypage setShowSidebar={setShowSidebar} />}
-              />
-              <Route path='/post/:postId' element={<Post />} />
-              <Route
-                path='/tags'
-                element={<Tags setShowSidebar={setShowSidebar} />}
-              />
-              <Route
-                path='/login'
-                element={
-                  <Login
-                    setShowNav={setShowNav}
-                    setShowFooter={setShowFooter}
-                    setShowSidebar={setShowSidebar}
-                  />
-                }
-              />
-              <Route
-                path='/join'
-                element={
-                  <Join
-                    setShowNav={setShowNav}
-                    setShowFooter={setShowFooter}
-                    setShowSidebar={setShowSidebar}
-                  />
-                }
-              />
-            </Routes>
-            {showSidebar ? (
-              <div className='sidebar'>
-                <Sidebar />
-                {/* <Sidebar2 /> */}
-              </div>
-            ) : null}
-            {/* <Login />
-            <Join /> */}
-            {/* <Login /> */}
+          <div className={pathname.includes("in") ? 'background_box' : null}>
+            <div className='app_wrap'>
+              {showNav ? <Nav /> : null}
+              <Routes>
+                <Route path='/' element={<Index setShowSidebar={setShowSidebar} setShowNav={setShowNav} setShowFooter={setShowFooter}/>} />
+                <Route path='/questions' element={<Contents />} />
+                <Route path='/mypage' element={<Mypage setShowSidebar={setShowSidebar} />} />
+                <Route path='/post/:postId' element={<Post />} />
+                <Route path='/tags' element={<Tags setShowSidebar={setShowSidebar} />} />
+                <Route path='/login' element={<Login setShowNav={setShowNav} setShowFooter={setShowFooter} setShowSidebar={setShowSidebar} />} />
+                <Route path='/join' element={<Join setShowNav={setShowNav} setShowFooter={setShowFooter} setShowSidebar={setShowSidebar}/>} />
+              </Routes>
+              {showSidebar ? (
+                <div className='sidebar'>
+                  <Sidebar />
+                  {/* <Sidebar2 /> */}
+                </div>
+              ) : null}
+              {/* <Login />
+              <Join /> */}
+              {/* <Login /> */}
+            </div>
           </div>
         )}
       </Fragment>

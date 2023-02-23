@@ -8,7 +8,9 @@ import { getContentList, getSingleContent } from '../redux/actions/contents'
 const Container = styled.main`
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  /* height: 100vh; */
+  margin-top: 60px;
+  margin-left: 165px;
 `
 const HeadContainer = styled.div`
   display: flex;

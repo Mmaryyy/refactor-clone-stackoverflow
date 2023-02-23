@@ -4,13 +4,15 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getTimeGap } from '../utils/dateUtil'
 import { getSingleContent } from '../redux/actions/contents'
 import styled from 'styled-components'
-import { SubmitButton, TagButton } from '../styles/styledcomponents'
+import { SubmitButton, TagButton, LinkContent } from '../styles/styledcomponents'
 import { ToastEditor } from '../components/TextEditor'
 const PostContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 10px;
-  width: 100vw;
+  width: calc(100% - 165px - 300px);
+  margin-left: 165px;
+  margin-top: 60px;
 `
 const HeaderContainer = styled.div`
   display: flex;
@@ -32,6 +34,7 @@ const CommonWrapper = styled.div`
 const Title = styled.h1`
   font-weight: 400;
   color: var(--black__600);
+  word-break: break-word;
 `
 const SummaryWrapper = styled.div`
   margin: 10px 0;
@@ -46,6 +49,7 @@ const Item = styled.span`
 const MainContainer = styled.div`
   display: flex;
   width: 100%;
+  padding: 10px;
 `
 const VoteWrapper = styled.div`
   display: flex;
@@ -69,7 +73,7 @@ const ContentContainer = styled.div`
   margin: 15px;
   flex-grow: 1;
   > p.content {
-    min-height: 300px;
+    /* min-height: 300px; */
     margin: 0 0 0 10px;
   }
 `
@@ -87,9 +91,14 @@ const AuthorWrapper = styled.div`
   display: flex;
   padding: 3px;
   align-items: center;
+  a {
+    color: var(--link__content);
+    font-size: var(--fs--mid);
+  }
 `
 const AuthorProfileWrapper = styled.img`
   width: 30px;
+  margin: 5px;
 `
 const NoticeWrapper = styled.div`
   background: var(--sidebar__body);
@@ -153,7 +162,7 @@ const Post = () => {
   ) : (
     <PostContainer className="post_container">
       <HeaderContainer className="header_container">
-        <CommonWrapper direct={"space_between"} className="title_wrapper">
+        <CommonWrapper direct={"space-between"} className="title_wrapper" padding={"0 10px"}>
           <Title>{content.title}</Title>
           <SubmitButton>Ask questions</SubmitButton>
         </CommonWrapper>
@@ -232,6 +241,7 @@ const Post = () => {
       <div className='answer_container'>
         <h3>{answer.length} Answers</h3>
         {answer.map(el => {
+          console.log(el)
           return (
             <MainContainer className="main_container">
             <VoteWrapper className="vote_wrapper">
@@ -247,7 +257,7 @@ const Post = () => {
                   <path d="M2 25h32L18 9 2 25Z"></path>
                 </svg>
               </VoteButton>
-              <span>{content.votes}</span>
+              <span>{el.votes}</span>
               <VoteButton className="vote_down">
                 <svg
                   fill="var(--black__100)"
@@ -262,31 +272,26 @@ const Post = () => {
               </VoteButton>
             </VoteWrapper>
             <ContentContainer className="content_container">
-              <p className="content">{content.content}</p>
-              <CommonWrapper className="tag_container" margin={"10px 0"}>
-                {content.tag.map((el, idx) => {
-                  return <TagButton key={idx}>{el}</TagButton>;
-                })}
-              </CommonWrapper>
+              <p className="content">{el.content}</p>
               <CommonWrapper className="bottom_container" direct={"space-between"}  bottom={'1px solid var(--black__100)'} padding={'30px 0'}>
                 <EditBotton className="edit_botton">Edit</EditBotton>
                 <AuthorWrapper className="author_wrapper">
                   <AuthorProfileWrapper
-                    src={author.avatarUrl}
+                    src={el.author.avatarUrl}
                     alt="author_profile"
                   ></AuthorProfileWrapper>
-                  <a>{author.nickname}</a>
+                  <a>{el.author.nickname}</a>
                 </AuthorWrapper>
               </CommonWrapper>
               <div className="text_editor_wrapper">
-                {content.comments.length === 0 ? (
+                {el.comments.length === 0 ? (
                   <p>
                     Know someone who can answer? Share a link to this question via
                     email, Twitter, or Facebook.
                   </p>
                 ) : (
                   <div>
-                    {content.comments.map((el, idx) => {
+                    {el.comments.map((el, idx) => {
                       return (<CommentWrapper className='comment_wrapper' key={idx}>
                         <span>{el.content}</span> <span>-</span> <span className='author'>{el.author}</span> <span className='created_date'>{el.createdAt}</span>
                         </CommentWrapper>);
@@ -301,7 +306,7 @@ const Post = () => {
 
       </div>
       <h3>Your Answer</h3>
-      <ToastEditor className="text_editor"></ToastEditor>
+      <ToastEditor className="text_editor" />
       <NoticeWrapper className="notice_wrapper">
         <CommonWrapper direct={"space-between"} className="first_line_wrapper">
           <p>Thanks for contributing an answer to Stack Overflow!</p>
@@ -327,7 +332,16 @@ const Post = () => {
       <SubmitButton className="post_button">Post Your Answer</SubmitButton>
       <p>
         Browse other questions tagged{" "}
-        <ul className="tags_list">tag1 tag2 tag3</ul> or ask your own question.
+        <ul className="tags_list">
+          {content.tag.map((el, idx) => {
+            return (
+              <li key={idx}>
+                <TagButton>{el}</TagButton>
+              </li>
+            )
+          })}
+        </ul>
+        <LinkContent href='#'>or ask your own question.</LinkContent>
       </p>
     </PostContainer>
   );
