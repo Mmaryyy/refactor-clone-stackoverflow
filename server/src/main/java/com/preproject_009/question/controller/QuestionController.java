@@ -113,7 +113,7 @@ public class QuestionController {
         requestBody.setQuestionId(questionId);
         QuestionComment createdQuestionComment =
                 questionCommentService.createQuestionComment(questionCommentMapper.questionCommentPostDtoToQuestion(requestBody));
-        URI location = UriCreator.createPostAnswerCommentUri(QUESTION_DEFAULT_URL, createdQuestionComment.getQuestionCommentId());
+        URI location = UriCreator.createPostQuestionCommentUri(QUESTION_DEFAULT_URL, createdQuestionComment.getQuestionCommentId());
 
 
         return ResponseEntity.created(location).build();
