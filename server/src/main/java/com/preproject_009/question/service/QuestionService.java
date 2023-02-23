@@ -48,7 +48,8 @@ public class QuestionService {
     public Question updateQuestion(Question question) {
         Question updatedQuestion = findQuestion(question.getQuestionId());
         updatedQuestion.setQuestionStatus(question.getQuestionStatus());
-        //관리자 권한 메서드 추가
+        // TODO: 2023/02/24 : 관리자 권한 메서드 추가 + 회원이 아닌 사람이 수정하려 들면?
+
 
         Optional.ofNullable(question.getTitle())
                 .ifPresent(title -> updatedQuestion.setTitle(title));
