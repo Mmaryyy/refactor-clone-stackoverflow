@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styled from 'styled-components';
 import TagList from "../components/TagList"
 import tagList from '../datas/tags.json';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const Container = styled.div`
   max-width: 1100px;
@@ -112,10 +112,18 @@ const Main = styled.div`
   }
 `
 
-const Tags = () => {
+const Tags = ({setShowSidebar}) => {
+  
   const [popularFilter, setPopular] = useState(false);
   const [nameFilter, setName] = useState(false);
   const [newFilter, setNew] = useState(false);
+
+  useEffect(() => {
+    setShowSidebar(false)
+    return () => {
+      setShowSidebar(true)
+    }
+  }, [])
 
   return (
     <Container>

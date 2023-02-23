@@ -12,7 +12,7 @@ const EditorContainer = styled.div`
         border-bottom: 1px solid #ebedf2;
     }
 `
-export const ToastEditor = ({ vertical }) => {
+export const ToastEditor = ({ vertical, focusFunction }) => {
     const editorRef = useRef()
     return (
         <EditorContainer className='toast_editor'>
@@ -22,6 +22,7 @@ export const ToastEditor = ({ vertical }) => {
                 width='100%'
                 hideModeSwitch='true'
                 ref={editorRef}
+                onFocus={focusFunction}
                 >
             </Editor>
         </EditorContainer>

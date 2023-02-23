@@ -282,7 +282,7 @@ function Login({setShowNav, setShowFooter, setShowSidebar }) {
                   <div className="error">
                     <svg
                       aria-hidden="true"
-                      class="input-icon"
+                      className="input-icon"
                       width="18"
                       height="18"
                       viewBox="0 0 18 18">
@@ -313,7 +313,7 @@ function Login({setShowNav, setShowFooter, setShowSidebar }) {
                   <div className="error">
                     <svg
                       aria-hidden="true"
-                      class="input-icon"
+                      className="input-icon"
                       width="18"
                       height="18"
                       viewBox="0 0 18 18">
@@ -345,7 +345,7 @@ function Login({setShowNav, setShowFooter, setShowSidebar }) {
               Sign up on Talent
               <svg
                 aria-hidden="true"
-                class="va-text-bottom sm:d-none svg-icon iconShareSm"
+                className="va-text-bottom sm:d-none svg-icon iconShareSm"
                 width="14"
                 height="14"
                 viewBox="0 0 14 14">
