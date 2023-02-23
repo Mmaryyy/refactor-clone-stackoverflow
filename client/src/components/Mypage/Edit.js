@@ -7,7 +7,8 @@ import Avatar from './Avatar';
 const Header = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 10px 0 0 30px;
+  margin-top: 60px;
+  margin-left: 165px;
 `;
 
 const MyProfile = styled.div`
@@ -62,7 +63,7 @@ const Sub = styled.div`
 const Menu = styled.div`
   display: flex;
   flex-direction: row;
-  margin-left: 20px;
+  margin-left: 150px;
 `;
 
 const Menusub = styled.div`
@@ -91,7 +92,7 @@ const Main = styled.div`
 const List = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 10px 50px 0 70px;
+  margin: 10px 50px 0 200px;
 
   div {
     width: 100px;
@@ -171,6 +172,7 @@ const Button = styled.button`
   border: none;
   border-radius: 5px;
   margin-right: 10px;
+  margin-bottom: 10px;
   background-color: ${(props) => props.background};
   color: ${(props) => props.color};
   font-size: var(--fs--mid);
@@ -279,7 +281,6 @@ export default function Edit() {
                 <label htmlFor='location'>Location</label>
                 <input id='location' type='text' />
                 <label htmlFor='about'>About me</label>
-                {/* editor */}
               </div>
             </SectionArticle>
           </Section>
