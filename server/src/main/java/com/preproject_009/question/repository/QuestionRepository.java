@@ -19,4 +19,7 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
 
     @Query(value = "SELECT * FROM Question WHERE MEMBER_ID = :memberId AND Question_Status <> 'QUESTION_DELETE' ", nativeQuery = true)
     Page<Question> findQuestionByMemberId(@Param("memberId") long memberId, Pageable pageable);
+
+    @Query(value = "SELECT * FROM Question WHERE TAG_ID = :tagId AND Question_Status <> 'QUESTION_DELETE' ", nativeQuery = true)
+    Page<Question> findQuestionByTagId(@Param("tagId") long tagId, Pageable pageable);
 }
