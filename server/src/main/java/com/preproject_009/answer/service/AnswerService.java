@@ -9,6 +9,7 @@ import com.preproject_009.exception.ExceptionCode;
 import com.preproject_009.member.repository.MemberRepository;
 import com.preproject_009.member.service.MemberService;
 import com.preproject_009.question.entity.Question;
+import com.preproject_009.question.repository.QuestionRepository;
 import com.preproject_009.question.service.QuestionService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,13 +29,15 @@ public class AnswerService {
     private final QuestionService questionService;
     private final MemberRepository memberRepository;
     private final AnswerVoteRepository answerVoteRepository;
+    private final QuestionRepository questionRepository;
 
-    public AnswerService(AnswerRepository answerRepository, MemberService memberService, QuestionService questionService, MemberRepository memberRepository, AnswerVoteRepository answerVoteRepository) {
+    public AnswerService(AnswerRepository answerRepository, MemberService memberService, QuestionService questionService, MemberRepository memberRepository, AnswerVoteRepository answerVoteRepository, QuestionRepository questionRepository) {
         this.answerRepository = answerRepository;
         this.memberService = memberService;
         this.questionService = questionService;
         this.memberRepository = memberRepository;
         this.answerVoteRepository = answerVoteRepository;
+        this.questionRepository = questionRepository;
     }
 
     public Answer createAnswer(Answer answer) {
@@ -43,12 +46,14 @@ public class AnswerService {
 
         //질문 상태 변경
         Question question = questionService.findQuestion(answer.getQuestion().getQuestionId());
-        question.setQuestionStatus(Question.QuestionStatus.QUESTION_ANSWER_ACCEPTED);
+        question.setQuestionStatus(Question.QuestionStatus.QUESTION_ANSWERED);
 
         answer.setQuestion(question);
         answer.setCreatedAt(LocalDateTime.now());
         answer.setModifiedAt(LocalDateTime.now());
+        question.getAnswers().add(answer);
 
+        questionRepository.save(question);
         return answerRepository.save(answer);
     }
 
@@ -86,13 +91,16 @@ public class AnswerService {
     public Answer acceptAnswer(long memberId, long questionId, long answerId) {
         long findMemberId = questionService.findQuestion(questionId).getMember().getMemberId();
         Answer findAnswer = findAnswer(answerId);
+        Question findQuestion = questionService.findQuestion(questionId);
 
         if(memberId != findMemberId) {
             throw new BusinessLogicException(ExceptionCode.CANNOT_ACCEPT_ANSWER);
         } else {
             findAnswer.setAnswerStatus(Answer.AnswerStatus.ANSWER_ACCEPTED);
+            findQuestion.setQuestionStatus(Question.QuestionStatus.QUESTION_ANSWER_ACCEPTED);
         }
 
+        questionRepository.save(findQuestion);
         return answerRepository.save(findAnswer);
     }
 
