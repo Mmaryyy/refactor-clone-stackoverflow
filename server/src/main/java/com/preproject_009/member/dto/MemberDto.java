@@ -57,6 +57,7 @@ public class MemberDto {
         private long memberId;
         private String email;
         private String name;
+        private String img;
         private String password;
         private String about;
         private List<Question> questions;
