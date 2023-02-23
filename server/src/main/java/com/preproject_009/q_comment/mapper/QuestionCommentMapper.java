@@ -11,6 +11,7 @@ import java.util.List;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface QuestionCommentMapper {
     @Mapping(source = "memberId", target = "member.memberId")
+    @Mapping(source = "questionId", target = "question.questionId")
     QuestionComment questionCommentPostDtoToQuestion(QuestionCommentDto.Post requestBody);
     QuestionComment questionCommentPatchDtoToQuestion(QuestionCommentDto.Patch requestBody);
     @Mapping(target = "memberId", source = "member.memberId")
