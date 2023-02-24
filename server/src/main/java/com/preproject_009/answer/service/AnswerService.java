@@ -84,21 +84,18 @@ public class AnswerService {
         //if(front에서 날려주는 memberId.getEmail() == adminEmail) {answerRepository.delete(findAnswer);}
         findAnswer.canChangeAnswer(findAnswer.getAnswerStatus());
         findAnswer.setAnswerStatus(Answer.AnswerStatus.ANSWER_DELETE);
-
-        answerRepository.delete(findAnswer);
     }
 
     public Answer acceptAnswer(long memberId, long questionId, long answerId) {
         long findMemberId = questionService.findQuestion(questionId).getMember().getMemberId();
         Answer findAnswer = findAnswer(answerId);
-        Question findQuestion = questionService.findQuestion(questionId);
-
-        if(memberId != findMemberId) {
+        System.out.println("!!!!!!!!questionId : " + questionId + "  answer.questionId : " + findAnswer.getQuestion().getQuestionId());
+        if(memberId != findMemberId || questionId != findAnswer.getQuestion().getQuestionId()) {
             throw new BusinessLogicException(ExceptionCode.CANNOT_ACCEPT_ANSWER);
         } else {
+            Question findQuestion = questionService.findQuestion(questionId);
             findAnswer.setAnswerStatus(Answer.AnswerStatus.ANSWER_ACCEPTED);
             findQuestion.setQuestionStatus(Question.QuestionStatus.QUESTION_ANSWER_ACCEPTED);
-//            questionRepository.save(findQuestion)
         }
 
         return answerRepository.save(findAnswer);

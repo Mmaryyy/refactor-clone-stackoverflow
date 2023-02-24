@@ -11,8 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -46,8 +44,8 @@ public class MemberService {
 
     // 유저 찾기
     public Page<Member> findMembers(int page, int size) {
-
-        return memberRepository.findAll(PageRequest.of(page, size, Sort.by("memberId").descending()));
+        PageRequest pageRequest = PageRequest.of(page - 1, size, Sort.by("member_Id").descending());
+        return memberRepository.findAll(pageRequest);
     }
 
     // 유저 수정
@@ -91,6 +89,7 @@ public class MemberService {
         Member findMember =
                 optionalMember.orElseThrow(() ->
                         new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        if(findMember.getMemberStatus() != Member.MemberStatus.MEMBER_ACTIVE) throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
         return findMember;
     }
 }
