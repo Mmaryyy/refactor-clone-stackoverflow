@@ -27,10 +27,14 @@ function App() {
   const [showSidebar, setShowSidebar] = useState(true);
   console.log(pathname);
   useEffect(() => {
+    // window.scrollTo(0, 0)
     setTimeout(() => {
       setIsReady(false);
     }, 5000);
   }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [ pathname ])
   return (
     <>
       <Header />

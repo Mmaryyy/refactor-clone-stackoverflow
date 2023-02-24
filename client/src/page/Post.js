@@ -5,13 +5,15 @@ import { getTimeGap } from '../utils/dateUtil'
 import { getSingleContent } from '../redux/actions/contents'
 import styled from 'styled-components'
 import { SubmitButton, TagButton, LinkContent, SubmitInput } from '../styles/styledcomponents'
-import { ToastEditor } from '../components/TextEditor'
+// import { ToastEditor } from '../components/TextEditor'
 import PostBlock from '../components/PostBlock'
+import { Editor } from '../components/Editor'
 const PostContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 15px;
   width: calc(100% - 165px - 300px);
+  min-height: 80vh;
   margin-left: 165px;
   margin-top: 60px;
 `
@@ -136,7 +138,7 @@ const Post = () => {
         :`${answer.length} Answers`}</NoticeText>
         {answer.map((el, idx) => {
           return (
-            <PostBlock key={idx} className='answer' content={el} author={el.author}></PostBlock>
+            <PostBlock key={idx} className='answer' content={el} author={el.author} isAnswer={true}></PostBlock>
           )
         })}
       </div>
@@ -149,9 +151,14 @@ const Post = () => {
       }}
       action='' 
       method='POST'>
-      <ToastEditor className="text_editor" 
+      {/* <ToastEditor className="text_editor" 
       focusFunction={openNotice}
       setter={setAnswerBody}
+      /> */}
+      <Editor 
+      value={answerBody} 
+      setter={setAnswerBody}
+      focusFunction={openNotice}
       />
       {showNotice 
       ? <NoticeWrapper className="notice_wrapper">

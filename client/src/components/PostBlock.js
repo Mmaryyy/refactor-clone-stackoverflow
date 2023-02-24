@@ -66,7 +66,7 @@ const CommentWrapper = styled.div`
       color: var(--black__200);
     }
 `
-const PostBlock = ({ content, author }) => {
+const PostBlock = ({ content, author, isAnswer }) => {
     // console.log('content: ', content)
     const [ votes, setVotes ] = useState(content.votes)
     // Todo: author 정보랑 현재 로그인한 유저가 같으면 'isSame === true' edit이 가능
@@ -78,6 +78,15 @@ const PostBlock = ({ content, author }) => {
     const handleVoteDown = () => {
         setVotes(votes--)
     }
+    const deleteContent = (postId) => {
+      // content - answer 구분하는 플래그 isAnswer
+      if (isAnswer) {
+        // answer 삭제 api 요청
+      } else {
+        // content 삭제 api 요청
+      }
+    }
+    // console.log(content)
   return (
     <CommonWrapper className="main_container" padding={'10px'}>
         <VoteWrapper className="vote_wrapper">
@@ -119,7 +128,11 @@ const PostBlock = ({ content, author }) => {
           }
           <CommonWrapper className="bottom_container" justify={"space-between"}  bottom={'1px solid var(--black__100)'} padding={'30px 0'}>
             { isSame
-            ?<BaseButton className="edit_botton">Edit</BaseButton>
+            ?
+            <CommonWrapper className='modified_wrapper'>
+              <BaseButton className="edit_botton">Edit</BaseButton>
+              <BaseButton className='delete_botton' margin={'0 10px'} onClick={() => {deleteContent(content.shortId)}}>Delete</BaseButton>
+            </CommonWrapper>
             : null}
             <AuthorWrapper className="author_wrapper">
               <span>asked {new Date(content.createdAt).toLocaleString()}</span>
