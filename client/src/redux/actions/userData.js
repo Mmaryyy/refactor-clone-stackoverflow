@@ -1,7 +1,7 @@
 import contents from '../../datas/contents.json'
 import userData from '../../datas/userData.json'
 import answers from '../../datas/answers.json'
-import { getAllUser } from '../../api/api'
+import { getAllUser } from '../../api/user'
 
 export const GET_LOGIN_USER = "GET_LOGIN_USER"
 export const GET_ALL_USER = "userData/GET_ALL_USER"

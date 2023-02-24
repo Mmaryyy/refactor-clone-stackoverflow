@@ -76,4 +76,5 @@ export const BaseButton = styled.button`
   cursor: pointer;
   font-size: ${props => props.size || 'var(--fs--lg)'};
   font-weight: ${props => props.weight || null};
+  margin: ${props => props.margin || null};
 `
