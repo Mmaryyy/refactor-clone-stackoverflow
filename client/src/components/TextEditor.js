@@ -12,17 +12,26 @@ const EditorContainer = styled.div`
     border-bottom: 1px solid #ebedf2;
   }
 `;
-export const ToastEditor = ({ vertical, focusFunction }) => {
+export const ToastEditor = ({ vertical, focusFunction, setter }) => {
   const editorRef = useRef();
+  const getValue = () => {
+    const data = editorRef.current.getInstance().getMarkdown();
+    // console.log(data)
+    return data
+  }
   return (
     <EditorContainer className='toast_editor'>
       <Editor
-        initialValue='please write your problem'
+        placeholder='please write your problem'
         height={vertical || '500px'}
         width='100%'
         hideModeSwitch='true'
         ref={editorRef}
+        autofocus={false}
         onFocus={focusFunction}
+        onChange={() => {
+          setter(getValue())
+        }}
       ></Editor>
     </EditorContainer>
   );

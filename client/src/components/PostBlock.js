@@ -50,6 +50,7 @@ const CommentWrapper = styled.div`
     display: flex;
     padding: 10px 5px 10px 20px;
     border-bottom: 1px solid var(--black__100);
+    align-items: center;
     span {
       margin-right: 10px;
       font-size: var(--fs--mid);
@@ -66,8 +67,11 @@ const CommentWrapper = styled.div`
     }
 `
 const PostBlock = ({ content, author }) => {
-    console.log('content: ', content)
+    // console.log('content: ', content)
     const [ votes, setVotes ] = useState(content.votes)
+    // Todo: author 정보랑 현재 로그인한 유저가 같으면 'isSame === true' edit이 가능
+    // Todo: 다르면 edit 버튼을 노출하지 않는다.
+    const [ isSame, setIsSame ] = useState(true)
     const handleVoteUp = () => {
         setVotes(votes++)
     }
@@ -114,7 +118,9 @@ const PostBlock = ({ content, author }) => {
             </CommonWrapper>
           }
           <CommonWrapper className="bottom_container" justify={"space-between"}  bottom={'1px solid var(--black__100)'} padding={'30px 0'}>
-            <BaseButton className="edit_botton">Edit</BaseButton>
+            { isSame
+            ?<BaseButton className="edit_botton">Edit</BaseButton>
+            : null}
             <AuthorWrapper className="author_wrapper">
               <span>asked {new Date(content.createdAt).toLocaleString()}</span>
               <CommonWrapper className='author_profile' align={'center'}>

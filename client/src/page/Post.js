@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { getTimeGap } from '../utils/dateUtil'
 import { getSingleContent } from '../redux/actions/contents'
 import styled from 'styled-components'
-import { SubmitButton, TagButton, LinkContent } from '../styles/styledcomponents'
+import { SubmitButton, TagButton, LinkContent, SubmitInput } from '../styles/styledcomponents'
 import { ToastEditor } from '../components/TextEditor'
 import PostBlock from '../components/PostBlock'
 const PostContainer = styled.div`
@@ -94,17 +94,21 @@ const Post = () => {
     dispatch(getSingleContent(postId))
   }, [])
   const singleContent = useSelector(state => state.contentsReducer.currentContent)
-  console.log(singleContent)
+  // console.log(singleContent)
   const { content, author, answer } = singleContent
   const asked = getTimeGap(content.createdAt)
   const modified = getTimeGap(content.lastModifiedAt)
-  const [ showNotice, setShowNotice ] = useState(true)
+  const [ showNotice, setShowNotice ] = useState(false)
   // const userData = useSelector(state => state.userDataReducer.userData)
   // const author = userData.filter(el => el.contents.includes(singleContent.shortId))[0]
-
   const closeNotice = () => {
     setShowNotice(false)
   }
+  const openNotice = () => {
+    setShowNotice(true)
+  }
+  const [ answerBody, setAnswerBody ] = useState('')
+  console.log('answerBody: ', answerBody)
   return content.title === undefined ? (
     <></>
   ) : (
@@ -130,15 +134,25 @@ const Post = () => {
           Know someone who can answer? Share a link to this <LinkContent>question</LinkContent> via <LinkContent>email</LinkContent>, <LinkContent>Twitter</LinkContent>, or <LinkContent>Facebook</LinkContent>.
         </NoticeText>
         :`${answer.length} Answers`}</NoticeText>
-        {answer.map(el => {
-          console.log(el)
+        {answer.map((el, idx) => {
           return (
-            <PostBlock className='answer' content={el} author={el.author}></PostBlock>
+            <PostBlock key={idx} className='answer' content={el} author={el.author}></PostBlock>
           )
         })}
       </div>
       <NoticeText>Your Answer</NoticeText>
-      <ToastEditor className="text_editor" focusFunction={()=>{console.log('post 되니?')}}/>
+      <form className='answer_submit_container' 
+      onSubmit={(e) => {
+        e.preventDefault()
+        //api 요청 보내고 새로고침 하면 됨.
+        console.log('되니?')
+      }}
+      action='' 
+      method='POST'>
+      <ToastEditor className="text_editor" 
+      focusFunction={openNotice}
+      setter={setAnswerBody}
+      />
       {showNotice 
       ? <NoticeWrapper className="notice_wrapper">
         <CommonWrapper direct={"space-between"} className="first_line_wrapper">
@@ -159,11 +173,16 @@ const Post = () => {
           personal experience.
         </p>
         <p>
-          To learn more, see our <span>tips on writing great answers.</span>
+          To learn more, see our <LinkContent fs={'var(--fs--mid)'}>tips on writing great answers.</LinkContent>
         </p>
       </NoticeWrapper>
       : null}
-      <SubmitButton className="post_button" margin={'20px 0'}>Post Your Answer</SubmitButton>
+      <SubmitInput className="post_button" 
+      type='submit'
+      value='Post Your Answer'
+      margin={'20px 0'}
+      />
+      </form>
       <CommonWrapper className='notice_underline_wrapper'>
       <NoticeText>
         Browse other questions tagged{" "}
