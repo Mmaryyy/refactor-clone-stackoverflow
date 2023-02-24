@@ -56,7 +56,7 @@ public class QuestionService {
         Optional.ofNullable(question.getContent())
                 .ifPresent(content -> updatedQuestion.setContent(content));
 
-        updatedQuestion.setModifiedAt(LocalDateTime.now()); // 리팩토링 가능?
+        updatedQuestion.setModifiedAt(LocalDateTime.now());
         return questionRepository.save(updatedQuestion);
     }
 
