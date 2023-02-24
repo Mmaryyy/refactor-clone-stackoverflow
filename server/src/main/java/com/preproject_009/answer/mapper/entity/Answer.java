@@ -1,4 +1,4 @@
-package com.preproject_009.answer.entity;
+package com.preproject_009.answer.mapper.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;

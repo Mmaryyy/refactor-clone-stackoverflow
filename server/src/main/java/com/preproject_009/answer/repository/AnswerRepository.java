@@ -1,7 +1,6 @@
 package com.preproject_009.answer.repository;
 
-import com.preproject_009.answer.entity.Answer;
-import com.preproject_009.question.entity.Question;
+import com.preproject_009.answer.mapper.entity.Answer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

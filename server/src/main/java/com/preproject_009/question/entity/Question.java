@@ -2,7 +2,7 @@ package com.preproject_009.question.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.preproject_009.answer.entity.Answer;
+import com.preproject_009.answer.mapper.entity.Answer;
 import com.preproject_009.audit.Auditable;
 import com.preproject_009.exception.BusinessLogicException;
 import com.preproject_009.exception.ExceptionCode;

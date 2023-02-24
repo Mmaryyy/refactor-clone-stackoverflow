@@ -1,4 +1,4 @@
-package com.preproject_009.answer.entity;
+package com.preproject_009.answer.mapper.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.preproject_009.member.entity.Member;
@@ -29,6 +29,4 @@ public class AnswerVote {
     @JoinColumn(name = "MEMBER_ID")
     @JsonBackReference
     private Member member;
-
-
 }

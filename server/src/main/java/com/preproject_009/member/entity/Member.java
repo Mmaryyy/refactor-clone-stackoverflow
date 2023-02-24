@@ -2,7 +2,7 @@ package com.preproject_009.member.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.preproject_009.a_comment.entity.AnswerComment;
-import com.preproject_009.answer.entity.Answer;
+import com.preproject_009.answer.mapper.entity.Answer;
 import com.preproject_009.audit.Auditable;
 import com.preproject_009.q_comment.entity.QuestionComment;
 import com.preproject_009.question.entity.Question;
