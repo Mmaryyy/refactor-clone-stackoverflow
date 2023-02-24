@@ -12,6 +12,7 @@ import com.preproject_009.tag.Tag;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -76,7 +77,7 @@ public class Question extends Auditable {
         this.questionStatus = questionStatus;
     }
 
-    public enum QuestionStatus{
+    public enum QuestionStatus {
         QUESTION_REGISTRATION("질문 등록"),
         QUESTION_ANSWERED("답변 등록"),
         QUESTION_ANSWER_ACCEPTED("채택 완료"),
@@ -91,8 +92,12 @@ public class Question extends Auditable {
     }
 
     public void canChangeQuestion(QuestionStatus questionStatus) {
+<<<<<<< HEAD
+        if (this.questionStatus == QuestionStatus.QUESTION_ANSWER_ACCEPTED) {
+=======
         if(this.questionStatus == QuestionStatus.QUESTION_ANSWER_ACCEPTED
         || this.questionStatus == QuestionStatus.QUESTION_ANSWERED) {
+>>>>>>> 4e7034fb5d50f359dd94f1025a61348fd9928be9
             throw new BusinessLogicException(ExceptionCode.CANNOT_CHANGE_QUESTION);
         }
     }

@@ -2,7 +2,10 @@ package com.preproject_009.member.mapper;
 
 import com.preproject_009.member.dto.MemberDto;
 import com.preproject_009.member.entity.Member;
+<<<<<<< HEAD
+=======
 
+>>>>>>> 4e7034fb5d50f359dd94f1025a61348fd9928be9
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
@@ -10,8 +13,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-02-20T21:12:12+0900",
-    comments = "version: 1.5.1.Final, compiler: javac, environment: Java 11.0.17 (Azul Systems, Inc.)"
+    date = "2023-02-22T21:55:24+0900",
+    comments = "version: 1.5.1.Final, compiler: javac, environment: Java 11.0.18 (Azul Systems, Inc.)"
 )
 @Component
 public class MemberMapperImpl implements MemberMapper {
@@ -60,7 +63,6 @@ public class MemberMapperImpl implements MemberMapper {
         String password = null;
         String about = null;
         Member.MemberStatus memberStatus = null;
-        Point point = null;
 
         memberId = member.getMemberId();
         email = member.getEmail();
@@ -68,9 +70,8 @@ public class MemberMapperImpl implements MemberMapper {
         password = member.getPassword();
         about = member.getAbout();
         memberStatus = member.getMemberStatus();
-        point = member.getPoint();
 
-        MemberDto.response response = new MemberDto.response( memberId, email, name, password, about, memberStatus, point );
+        MemberDto.response response = new MemberDto.response( memberId, email, name, password, about, memberStatus );
 
         return response;
     }

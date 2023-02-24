@@ -22,3 +22,10 @@ server:
   servlet:
     encoding:
       force-response: true
+mail:
+  address:
+    admin: admin@gmail.com
+jwt:
+  secret: "abcedesdfsdftest32322333333ddssssss"
+  access-token-expiration-minutes: 60
+  refresh-token-expiration-minutes: 560
