@@ -68,6 +68,13 @@ public class AnswerController {
         return ResponseEntity.created(location).build();
     }
 
+    @PostMapping("/{answer-id}/vote/{member-id}")
+    public ResponseEntity postAnswerVote(@PathVariable("answer-id") long answerId,
+                                         @PathVariable("member-id") long memberId) {
+        answerService.addAnswerVote(answerId, memberId);
+        return ResponseEntity.ok().build();
+    }
+
     public AnswerDto.Response response(Answer answer) {
         return answerMapper.answerToAnswerResponse(answer);
     }

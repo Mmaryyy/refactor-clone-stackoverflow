@@ -1,5 +1,6 @@
 package com.preproject_009.member.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.preproject_009.a_comment.entity.AnswerComment;
 import com.preproject_009.answer.entity.Answer;
 import com.preproject_009.audit.Auditable;
@@ -8,11 +9,8 @@ import com.preproject_009.question.entity.Question;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,7 +56,11 @@ public class Member extends Auditable {
     private String about;
 
     // img 이름
-//    private String img;
+    @Column(columnDefinition = "TEXT")
+    private String img;
+
+    @Column(columnDefinition = "TEXT")
+    private String location;
 
     // 멤버 활동, 휴면, 탈퇴 여부
     @Enumerated(value = EnumType.STRING)
@@ -67,18 +69,22 @@ public class Member extends Auditable {
 
     // Question 클래스 1:n 매핑
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
-    private List<Question> question = new ArrayList<>();
+    @JsonManagedReference
+    private List<Question> questions = new ArrayList<>();
 
     // Answer 클래스 1:n 매핑
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
-    private List<Answer> answer = new ArrayList<>();
+    @JsonManagedReference
+    private List<Answer> answers = new ArrayList<>();
 
     // Answer Comment 클래스 1:n 매핑
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
+    @JsonManagedReference
     private List<AnswerComment> answerComment = new ArrayList<>();
 
     // Question_Comment 클래스 1:n 매핑
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
+    @JsonManagedReference
     private List<QuestionComment> questionComment = new ArrayList<>();
 
     public Member(String email) {

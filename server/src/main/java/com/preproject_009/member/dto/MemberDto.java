@@ -1,12 +1,20 @@
 package com.preproject_009.member.dto;
 
+import com.preproject_009.answer.entity.Answer;
 import com.preproject_009.member.entity.Member;
+<<<<<<< HEAD
 import lombok.*;
+=======
+import com.preproject_009.question.entity.Question;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+>>>>>>> 4e7034fb5d50f359dd94f1025a61348fd9928be9
 import org.springframework.util.Assert;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.util.List;
 
 public class MemberDto {
     @Getter
@@ -54,8 +62,12 @@ public class MemberDto {
         private long memberId;
         private String email;
         private String name;
+        private String img;
+        private String location;
         private String password;
         private String about;
+        private List<Question> questions;
+        private List<Answer> answers;
         private Member.MemberStatus memberStatus;
     }
 }

@@ -1,5 +1,7 @@
 package com.preproject_009.answer.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.preproject_009.a_comment.entity.AnswerComment;
 import com.preproject_009.audit.Auditable;
 import com.preproject_009.exception.BusinessLogicException;
@@ -9,7 +11,6 @@ import com.preproject_009.question.entity.Question;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.util.List;
@@ -27,10 +28,6 @@ public class Answer extends Auditable {
     @Column(name = "CONTENT",columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @Formula("(select count(1) from answer_Vote aV where aV.answer_id = answer_id)")
-    @Column(name = "TOTAL_VOTE")
-    private int totalVote;
-
     @Enumerated(value = EnumType.STRING)
     @Column(name = "ANSWER_STATUS", nullable = false)
     private AnswerStatus answerStatus = AnswerStatus.ANSWER_REGISTRATION;
@@ -38,20 +35,28 @@ public class Answer extends Auditable {
     // member n:1 양방향
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
+    @JsonBackReference
     private Member member;
 
     // question n:1 양방향
     @ManyToOne
     @JoinColumn(name = "QUESTION_ID")
+    @JsonBackReference
     private Question question;
 
     // answerComment 1:n 양방향
     @OneToMany(mappedBy = "answer", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @JsonManagedReference
     private List<AnswerComment> answerComment;
 
     // answerVote 1:n 양방향
     @OneToMany(mappedBy = "answer", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    private List<AnswerVote> answerVote;
+    @JsonManagedReference
+    private List<AnswerVote> answerVotes;
+
+    @Column(name = "TOTAL_VOTE")
+    private int totalVotes;
+
 
     public Answer(long answerId, String content) {
         this.answerId = answerId;
@@ -81,5 +86,13 @@ public class Answer extends Auditable {
         if(this.answerStatus == AnswerStatus.ANSWER_ACCEPTED) {
             throw new BusinessLogicException(ExceptionCode.CANNOT_CHANGE_ANSWER);
         }
+    }
+
+    public int getTotalVotes() {
+        int totalVote = answerVotes.size();
+        return totalVote;
+    }
+    public List<AnswerVote> getAnswerVotes() {
+        return answerVotes;
     }
 }

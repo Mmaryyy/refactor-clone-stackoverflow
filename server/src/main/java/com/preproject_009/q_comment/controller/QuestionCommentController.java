@@ -25,15 +25,6 @@ public class QuestionCommentController {
         this.questionCommentMapper = questionCommentMapper;
     }
 
-    @PostMapping("/{question-id}/questionComment")
-    public ResponseEntity postQuestionComment(@PathVariable("question-id") long questionId,
-                                              @Valid @RequestBody QuestionCommentDto.Post requestBody) {
-        requestBody.setQuestionId(questionId);
-        QuestionComment createdQuestionComment = questionCommentService.createQuestionComment(questionCommentMapper.questionCommentPostDtoToQuestion(requestBody));
-
-        return new ResponseEntity<>(response(createdQuestionComment), HttpStatus.CREATED);
-    }
-
     @PatchMapping("/{questionComment-id}")
     public ResponseEntity patchQuestionComment(@PathVariable("questionComment-id") @Positive long questionCommentId,
                                                @Valid @RequestBody QuestionCommentDto.Patch requestBody) {

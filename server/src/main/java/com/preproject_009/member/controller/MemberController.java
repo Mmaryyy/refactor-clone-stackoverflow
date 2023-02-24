@@ -10,7 +10,7 @@ import com.preproject_009.member.mapper.MemberMapper;
 import com.preproject_009.member.service.MemberService;
 import com.preproject_009.question.dto.QuestionDto;
 import com.preproject_009.question.entity.Question;
-import com.preproject_009.question.entity.Tag;
+import com.preproject_009.tag.Tag;
 import com.preproject_009.question.mapper.QuestionMapper;
 import com.preproject_009.question.service.QuestionService;
 import com.preproject_009.utils.UriCreator;
@@ -36,6 +36,10 @@ import java.util.List;
 @RequestMapping("/members")
 @Validated
 public class MemberController {
+<<<<<<< HEAD
+=======
+    private final static int pageSize = 16;
+>>>>>>> 4e7034fb5d50f359dd94f1025a61348fd9928be9
     private final static String MEMBER_DEFAULT_URL = "/members";
     private final MemberService memberService;
     private final MemberMapper mapper;
@@ -92,9 +96,8 @@ public class MemberController {
 
     // 유저 조회
     @GetMapping
-    public ResponseEntity getMembers(@Positive @RequestParam int page,
-                                     @Positive @RequestParam int size){
-        Page<Member> pageMembers = memberService.findMembers(page - 1, size);
+    public ResponseEntity getMembers(@Positive @RequestParam int page){
+        Page<Member> pageMembers = memberService.findMembers(page, pageSize);
         List<Member> members = pageMembers.getContent();
         return new ResponseEntity<>(
                 new MultiResponseDto<>(mapper.membersToMemberResponses(members),
@@ -143,6 +146,15 @@ public class MemberController {
         return new ResponseEntity<>(
                 new MultiResponseDto<>(answerMapper.answersToAnswerResponses(answers),
                         answerPage), HttpStatus.OK);
+    }
+
+    @PatchMapping("/{member-id}/questions/{question-id}/answers/{answer-id}")
+    public ResponseEntity acceptAnswer(@PathVariable("member-id") @Positive long memberId,
+                                       @PathVariable("question-id") @Positive long questionId,
+                                       @PathVariable("answer-id") @Positive long answerId) {
+        Answer answer = answerService.acceptAnswer(memberId, questionId, answerId);
+
+        return new ResponseEntity<>(answerMapper.answerToAnswerResponse(answer), HttpStatus.OK);
     }
 
     public MemberDto.response response(Member member){
