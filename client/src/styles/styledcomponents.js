@@ -9,7 +9,25 @@ export const SubmitButton = styled.button`
   background: ${props => props.bg || 'var(--button__back)'};
   color: ${props => props.color || 'white'};
   border: 1px solid var(--link__content);
-  box-shadow: inset 0 1px rgb(128, 192, 255);
+  box-shadow: inset 0 1px ${props => props.shadow || '#80C0FF'};
+  border-radius: 5px;
+  font-size: var(--fs--mid);
+  font-weight: 550;
+  cursor: pointer;
+  :hover {
+    background: ${props => props.hover || 'var(--button__back--hover)'};
+  }
+`;
+export const SubmitInput = styled.input`
+  padding: 10px;
+  width: fit-content;
+  height: fit-content;
+  margin: ${(props) => props.margin || 0};
+  white-space: nowrap !important;
+  background: ${props => props.bg || 'var(--button__back)'};
+  color: ${props => props.color || 'white'};
+  border: 1px solid var(--link__content);
+  box-shadow: inset 0 1px ${props => props.shadow || '#80C0FF'};
   border-radius: 5px;
   font-size: var(--fs--mid);
   font-weight: 550;
@@ -17,8 +35,7 @@ export const SubmitButton = styled.button`
   :hover {
     background: var(--button__back--hover);
   }
-`;
-
+`
 export const TagButton = styled.button`
   padding: 5px;
   border-radius: 5px;
@@ -29,6 +46,8 @@ export const TagButton = styled.button`
 `;
 
 export const LinkContent = styled.a`
+  /* display: flex;
+  align-items: center; */
   text-decoration: none;
   color: var(--link__content);
   margin: 0 10px 0 0;

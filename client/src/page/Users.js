@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import UserCard from '../components/UserCard';
 import user from '../datas/userData.json';
+import { useDispatch, useSelector } from 'react-redux'
+import { getUserList } from '../redux/actions/userData';
 
 const Container = styled.div`
   max-width: 1100px;
@@ -81,6 +83,12 @@ const User = styled.div`
 `;
 
 export default function Users() {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getUserList())
+  })
+  // const user = useSelector(state => state.userDataReducer.userList)
+  const currentPage = useSelector(state => state.userDataReducer.currentPage)
   return (
     <>
       <Container>
