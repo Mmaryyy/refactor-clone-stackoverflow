@@ -11,7 +11,8 @@ const GlobalStyle = createGlobalStyle`
     }
     .app_wrap {
         display: flex;
-        justify-content: space-between;
+        /* justify-content: space-between; */
+        justify-content: center;
         background: none;
         padding: 0 10vw;
     }

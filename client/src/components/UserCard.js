@@ -28,7 +28,7 @@ const Container = styled.div`
 `;
 
 export default function UserCard({ el }) {
-  console.log(el);
+  // console.log(el);
   return (
     <>
       <Wrapper>

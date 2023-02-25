@@ -2,6 +2,9 @@ import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Editor } from '../components/Editor';
+import tags from '../datas/tags.json'
+import TagList from '../components/TagList_s'
+
 const Container = styled.div`
   width: 100%;
   display: flex;
@@ -9,9 +12,10 @@ const Container = styled.div`
   padding-top: 80px;
   /* padding-left: 165px; */
   /* padding-right: 165px; */
-  background-color: rgb(248, 249, 249);
+  background-color: none;
   .blue_button {
     margin-top: 8px;
+    margin-right: 20px;
     padding: 10.4px;
     width: fit-content;
     height: fit-content;
@@ -36,7 +40,7 @@ const Container = styled.div`
     width: fit-content;
     height: fit-content;
     border: none;
-    background: rgb(248, 249, 249);
+    background: none;
     border-radius: 3px;
     font-size: 13px;
     font-weight: 600;
@@ -165,8 +169,10 @@ const InputField = styled.div`
     .bottom {
       position: relative;
       display: flex;
+      flex-direction: column;
       margin: 2px 0;
-      input {
+
+      #title {
         padding: 7.8px 9.1px;
         width: 100%;
         border: 1px solid var(--black__100);
@@ -174,6 +180,11 @@ const InputField = styled.div`
         ::placeholder {
           color: var(--black__100);
         }
+        :focus {
+          outline: 4px solid rgb(221, 234, 247);
+          border: 1px solid var(--button__back);
+        }
+        
         &.errorbox {
           border: 1px solid rgb(235, 81, 47);
           :focus {
@@ -198,7 +209,71 @@ const InputField = styled.div`
       margin-top: 10px;
     }
   }
-`;
+
+  .add_Tag {
+    display: flex;
+    flex-direction: row;
+    padding: 2px 9.1px 2px 2px;
+    width: 100%;
+    height: 34px;
+    border: 1px solid var(--black__100);
+    border-radius: 3px;
+    ::placeholder {
+      color: var(--black__100);
+    }
+    &:focus-within {
+      outline: 4px solid rgb(221, 234, 247);
+      border: 1px solid var(--button__back);
+    }
+    &.errorbox {
+      border: 1px solid rgb(235, 81, 47);
+      :focus {
+        outline: 4px solid rgb(248, 225, 224);
+      }
+    }
+    input {
+      border: none;
+      flex: 1;
+      padding-left: 5px;
+      :focus {
+      outline: transparent;
+    }
+    }
+    > ul {
+      display: flex;
+      flex-wrap: wrap;
+  
+      .addTag_box {
+        display: flex;
+        cursor: pointer;
+        align-self: start;
+        text-decoration: none;
+        font-size: 12px;
+        font-weight: 500;
+        color: rgb(57, 116, 156);
+        padding: 3px 6px;
+        margin: 2px;
+        background-color: rgb(225, 236, 244);
+        border: 1px solid rgb(225, 236, 244);
+        border-radius: 3px;
+        > .tag-close-icon {
+          display: block;
+          width: 16px;
+          height: 16px;
+          line-height: 16px;
+          text-align: center;
+          font-size: 14px;
+          margin-left: 8px;
+          color: rgb(57, 116, 156);
+          border-radius: 50%;
+          background: #fff;
+          cursor: pointer;
+        }
+      }
+  }
+
+  }
+`
 const Sidebar = styled.div`
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   border: 1px solid var(--black__100);
@@ -234,44 +309,77 @@ const Sidebar = styled.div`
       }
     }
   }
-`;
-const EditorContainer = styled.div`
-  .toastui-editor-toolbar {
-    overflow-x: scroll;
-    overflow-y: hidden;
-    height: 60px;
-    background: #f7f9fc;
-    border-bottom: 1px solid #ebedf2;
-  }
-`;
+`
 
-function Ask({ setShowNav, setShowSidebar }) {
-  const editorRef = useRef();
-  const [isTitle, setIsTitle] = useState(false);
-  const [isProblem, setIsProblem] = useState(false);
-  const [isExpect, setIsExpect] = useState(false);
-  const [isTag, setIsTag] = useState(false);
-  const [inputData, setinputData] = useState('');
+function Ask({setShowNav, setShowSidebar}) {
+const editorRef = useRef()
+  const [isTitle, setIsTitle] = useState(false)
+  const [isProblem, setIsProblem] = useState(false)
+  const [isExpect, setIsExpect] = useState(false)
+  const [isTag, setIsTag] = useState(false)
+  const [isTagList, setIsTagList] = useState(false)
+  
+
+  const [addTitle, setAddTitle] = useState('title')
+  const [addProblem, setAddProblem] = useState('')
+  const [addExpect, setAddExpect] = useState('')
+  const [addTag, setAddTag] = useState([])
+  const [inputTag, setinputTag] = useState('')
 
   useEffect(() => {
     setShowNav(false);
     setShowSidebar(false);
     return () => {
-      setShowNav(true);
-      setShowSidebar(true);
-    };
-  }, []);
+      setShowNav(true)
+      setShowSidebar(true)
+    }
+  }, [])
+  
 
-  const onChange = () => {
-    const data = editorRef.current.getInstance().getMarkdown();
-    return data;
-  };
-  console.log(inputData);
+  const titleButton = (e) => {
+  }
+console.log(addTitle)
+  const tagInputHandler = (e) => {
+    setinputTag(e.target.value)
+    setIsTagList(true)
+  }
+
+  const tagClickHandler = (e) => {
+    if(!(addTag.includes(e.target.textContent)) && addTag.length <= 4) {
+      setAddTag([...addTag, e.target.textContent])
+      setIsTagList(false)
+      setinputTag('')
+    } else {
+      setIsTagList(false)
+      setinputTag('')
+    }
+  }
+
+  const tagEnterHandler = (e) => {
+    const filterd = tags.filter(tag => tag.title.includes(inputTag))
+    if(filterd.length === 1 && e.key === 'Enter') {
+        if(!(addTag.includes(filterd[0].title)) && addTag.length <= 4) {
+          setAddTag([...addTag, filterd[0].title])
+          setinputTag('')
+          setIsTagList(false)
+        } else {
+          setinputTag('')
+          setIsTagList(false)
+        }
+    }
+  }
+
+  const removeTags = (Removeidx) => {
+    setAddTag(addTag.filter((tag, idx) => idx !== Removeidx))
+  }
+
   return (
     <Container>
-      <Content>
-        <form action='' onSubmit={(e) => e.preventDefault()}>
-          <main className='question_form'>
+      <Content onClick={(e) => {
+      setIsTagList(false) 
+    }}>
+        {/* <form action="" onSubmit={e => e.preventDefault()}> */}
+          <main className="question_form">
             <Qnotice>
               <div className='title'>
                 <h1>Ask a public question</h1>
@@ -335,31 +443,31 @@ function Ask({ setShowNav, setShowSidebar }) {
                   </div>
                   <div className='bottom'>
                     <input
-                      id='title'
-                      type='text'
-                      name='title'
-                      maxLength='300'
-                      placeholder='e.g. Is there an R function for finding the index of an element in a vector?'
+                      className={addTitle ? null : "errorbox"}
+                      id="title"
+                      type="text"
+                      name="title"
+                      maxLength="300"
+                      placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
+                      onChange={(e) => setAddTitle(e.target.value)}
                       onClick={() => {
                         setIsTitle(true);
                         setIsProblem(false);
                         setIsExpect(false);
                         setIsTag(false);
-                      }}
-                    ></input>
-                    <svg
-                      aria-hidden='true'
-                      className='s-input-icon js-title-invalid-alert d-none svg-icon iconAlertCircle'
-                      width='18'
-                      height='18'
-                      viewBox='0 0 18 18'
-                    >
-                      <path d='M9 17c-4.36 0-8-3.64-8-8 0-4.36 3.64-8 8-8 4.36 0 8 3.64 8 8 0 4.36-3.64 8-8 8ZM8 4v6h2V4H8Zm0 8v2h2v-2H8Z'></path>
-                    </svg>
+                      }}></input>
+                    {addTitle ? null : <svg
+                      aria-hidden="true"
+                      className="s-input-icon js-title-invalid-alert d-none svg-icon iconAlertCircle"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 18 18">
+                      <path d="M9 17c-4.36 0-8-3.64-8-8 0-4.36 3.64-8 8-8 4.36 0 8 3.64 8 8 0 4.36-3.64 8-8 8ZM8 4v6h2V4H8Zm0 8v2h2v-2H8Z"></path>
+                    </svg>}
                   </div>
-                  <div className='error_message'>Title is missing.</div>
+                  {addTitle ? null : <div className="error_message">Title is missing.</div>}
                 </div>
-                <button className='blue_button'>Next</button>
+                <button className="blue_button" onClick={titleButton}>Next</button>
               </div>
 
               {isTitle ? (
@@ -412,14 +520,16 @@ function Ask({ setShowNav, setShowSidebar }) {
                     </div>
                     <Editor
                       className='text_editor'
-                      vertical={'250px'}
+                      value={addTitle}
                       focusFunction={() => {
                         setIsTitle(false);
                         setIsProblem(true);
                         setIsExpect(false);
                         setIsTag(false);
                       }}
-                    ></Editor>
+                      setter={setAddTitle}
+                    >
+                    </Editor>
                   </div>
                   <button className='blue_button'>Next</button>
                 </div>
@@ -457,7 +567,7 @@ function Ask({ setShowNav, setShowSidebar }) {
                 </Sidebar>
               ) : null}
             </InputField>
-
+      
             <InputField>
               <div className='box top12'>
                 <div className='main'>
@@ -474,7 +584,7 @@ function Ask({ setShowNav, setShowSidebar }) {
                     {/* <ToastEditor className="text_editor" vertical={'250px'} 
                       setIsTitle={setIsTitle} setIsProblem={setIsTitle} setIsExpect={setIsTitle} setIsTag={setIsTitle}
                     ></ToastEditor> */}
-                    <EditorContainer className='toast_editor'>
+                    {/* <EditorContainer className='toast_editor'>
                       <Editor
                         height='250px'
                         width='100%'
@@ -482,7 +592,7 @@ function Ask({ setShowNav, setShowSidebar }) {
                         ref={editorRef}
                         onChange={onChange}
                       ></Editor>
-                    </EditorContainer>
+                    </EditorContainer> */}
                   </div>
                   <button className='blue_button'>Next</button>
                 </div>
@@ -565,25 +675,43 @@ function Ask({ setShowNav, setShowSidebar }) {
                           about. Start typing to see suggestions.
                         </p>
                       </label>
-                      <div className='bottom'>
-                        <input
-                          type='text'
-                          autoComplete='off'
-                          placeholder='e.g. (javascript css)'
-                          onClick={() => {
-                            setIsTitle(false);
-                            setIsProblem(false);
-                            setIsExpect(false);
-                            setIsTag(true);
-                          }}
-                        ></input>
+                      <div className="bottom">
+                          <div className="add_Tag">
+                            <ul id='tags'>
+                              {addTag&&addTag.map((tag, index) => (
+                                <li key={index} className='addTag_box'>
+                                  <span className='tag-title'>{tag}</span>
+                                  <span className='tag-close-icon' onClick={() => removeTags(index)}>
+                                    &times;
+                                  </span>
+                                </li>
+                              ))}
+                            </ul>
+                            <input
+                              type="text"
+                              autoComplete="off"
+                              placeholder="e.g. (javascript css)"
+                              onChange={tagInputHandler}
+                              value={inputTag}
+                              className="tag_input"
+                              onKeyUp={tagEnterHandler}
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                setIsTitle(false);
+                                setIsProblem(false);
+                                setIsExpect(false);
+                                setIsTag(true);
+                                setIsTagList(true)
+                              }}></input>
+                          </div>
+                          { isTagList ? <TagList tagClickHandler={tagClickHandler} data={tags.filter(tag => tag.title.includes(inputTag))} /> : null}
                       </div>
                     </div>
                     <div className='hide_message'></div>
                   </div>
                 </div>
-                <div className='tag_suggestion'></div>
-                <button className='blue_button'>Next</button>
+                <div className="tag_suggestion"></div>
+                <button onClick={e => e.stopPropagation()} className="blue_button">Next</button>
               </div>
 
               {isTag ? (
@@ -685,11 +813,12 @@ function Ask({ setShowNav, setShowSidebar }) {
               </div>
             </SimilarField> */}
 
-            <div className='discard'>
-              <button className='red_button'>Discard draft</button>
+            <div className="discard">
+              <button className="blue_button">Post your question</button>
+              <button className="red_button">Discard draft</button>
             </div>
           </main>
-        </form>
+        {/* </form> */}
       </Content>
     </Container>
   );

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Header from './components/Header';
 import Nav from './components/Nav';
 import Sidebar from './components/Sidebar';
-// import Sidebar2 from './components/Sidebar2';
+import Sidebar2 from './components/Sidebar2';
 import Login from './page/Login';
 import Join from './page/Join';
 import Index from './page/Index';
@@ -25,7 +25,7 @@ function App() {
   const [showNav, setShowNav] = useState(true);
   const [showFooter, setShowFooter] = useState(true);
   const [showSidebar, setShowSidebar] = useState(true);
-  console.log(pathname);
+
   useEffect(() => {
     // window.scrollTo(0, 0)
     setTimeout(() => {
@@ -73,30 +73,11 @@ function App() {
                   element={<Users setShowSidebar={setShowSidebar} />}
                 />
                 <Route path='/questions/:postId' element={<Post />} />
-                <Route
-                  path='/tags'
-                  element={<Tags setShowSidebar={setShowSidebar} />}
-                />
-                <Route
-                  path='/login'
-                  element={
-                    <Login
-                      setShowNav={setShowNav}
-                      setShowFooter={setShowFooter}
-                      setShowSidebar={setShowSidebar}
-                    />
-                  }
-                />
-                <Route
-                  path='/join'
-                  element={
-                    <Join
-                      setShowNav={setShowNav}
-                      setShowFooter={setShowFooter}
-                      setShowSidebar={setShowSidebar}
-                    />
-                  }
-                />
+                <Route path='/tags' element={<Tags setShowSidebar={setShowSidebar} />} />
+                <Route path='/login' element={<Login setShowNav={setShowNav} setShowFooter={setShowFooter} setShowSidebar={setShowSidebar} />} />
+                <Route path='/join' element={<Join setShowNav={setShowNav} setShowFooter={setShowFooter} setShowSidebar={setShowSidebar}/>} />
+                <Route path='/ask' element={<Ask setShowNav={setShowNav} setShowSidebar={setShowSidebar}/>} />
+                <Route path='/users' element={<Users setShowNav={setShowNav} setShowSidebar={setShowSidebar}/>} />
               </Routes>
               {showSidebar ? (
                 <div className='sidebar'>
