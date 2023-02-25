@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import logo from '../img/logo.png';
 import Avatar from './Mypage/Avatar';
 import { Link } from 'react-router-dom';
+import { SubmitButton } from '../styles/styledcomponents';
 
 const Wrapper = styled.header`
   display: flex;
@@ -69,23 +70,6 @@ const SearchInput = styled.input`
   height: 100%;
 `;
 
-const Button = styled.button`
-  background: ${(props) => props.background};
-  color: ${(props) => props.color};
-  margin-left: 5px;
-  margin-top: 5px;
-  border-radius: 5px;
-  border: none;
-  text-align: center;
-  font-size: 15px;
-  width: 80px;
-  height: 40px;
-
-  &:hover {
-    background-color: var(--button__back--hover);
-  }
-`;
-
 const Icon = styled.div`
   display: flex;
   padding: 10px;
@@ -112,6 +96,7 @@ export default function Header() {
   const searchInputHandler = (e) => {
     setSearch(e.target.value);
   };
+  console.log(search);
 
   const searchHandler = () => {
     // search data
@@ -141,8 +126,8 @@ export default function Header() {
             </ProductsLink>
           </>
         )}
-        <SearchWrapper>
-          <SearchInput type='text' />
+        <SearchWrapper onChange={searchHandler}>
+          <SearchInput onChange={searchInputHandler} type='text' />
         </SearchWrapper>
         {login ? (
           <>
@@ -183,31 +168,38 @@ export default function Header() {
               </svg>
             </Icon>
             <Link to='/'>
-              <Button
+              <SubmitButton
                 background='#0A95FF'
                 color='#FDFEFF'
                 onClick={logoutHandler}
               >
                 Logout
-              </Button>
+              </SubmitButton>
             </Link>
           </>
         ) : (
           <>
             <Link to='login'>
-              <Button
+              <SubmitButton
                 className='login'
-                background='#E1ECF4'
-                color='#739DBB'
+                bg='#E1ECF4'
+                color='#78A0BE'
+                shadow='#fff'
+                hover='#B3D3EA'
+                margin='5px 5px 0 5px'
                 onClick={loginHandler}
               >
                 Log in
-              </Button>
+              </SubmitButton>
             </Link>
             <Link to='/join'>
-              <Button className='signup' background='#0A95FF' color='#FDFEFF'>
+              <SubmitButton
+                className='signup'
+                margin='5px 0 0 0'
+                color='#FDFEFF'
+              >
                 Sign up
-              </Button>
+              </SubmitButton>
             </Link>
           </>
         )}

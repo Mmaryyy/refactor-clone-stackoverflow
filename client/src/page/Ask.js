@@ -1,7 +1,7 @@
-import { useEffect, useState, useRef } from 'react'
-import { Link } from 'react-router-dom'
-import styled from 'styled-components'
-import { Editor } from '../components/Editor'
+import { useEffect, useState, useRef } from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { Editor } from '../components/Editor';
 const Container = styled.div`
   width: 100%;
   display: flex;
@@ -9,7 +9,7 @@ const Container = styled.div`
   padding-top: 80px;
   /* padding-left: 165px; */
   /* padding-right: 165px; */
-  background-color: rgb(248,249,249);
+  background-color: rgb(248, 249, 249);
   .blue_button {
     margin-top: 8px;
     padding: 10.4px;
@@ -36,36 +36,36 @@ const Container = styled.div`
     width: fit-content;
     height: fit-content;
     border: none;
-    background: rgb(248,249,249);
+    background: rgb(248, 249, 249);
     border-radius: 3px;
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
     :hover {
-      background: hsl(358,75%,97%);
+      background: hsl(358, 75%, 97%);
     }
   }
 
   .info_link {
-      text-decoration: none;
-      font-weight: 500;
-      color: hsl(206, 100%, 40%);
-    }
-`
+    text-decoration: none;
+    font-weight: 500;
+    color: hsl(206, 100%, 40%);
+  }
+`;
 
 const Content = styled.div`
   width: 100%;
   padding: 0 24px 24px 24px;
   min-height: 750px;
   max-width: 1264px;
-`
+`;
 
 const Qnotice = styled.div`
   display: flex;
   flex-direction: column;
   @media (max-width: 1100px) {
     width: 100% !important;
-}
+  }
   .title {
     margin-bottom: 20px;
     h1 {
@@ -88,8 +88,8 @@ const Qnotice = styled.div`
         @media (max-width: 1100px) {
           width: 100% !important;
         }
-        border: 1px solid rgb(166,206,237);
-        background-color: rgb(235,244,250);
+        border: 1px solid rgb(166, 206, 237);
+        background-color: rgb(235, 244, 250);
         padding: 24px;
         h2 {
           font-weight: 400;
@@ -120,7 +120,7 @@ const Qnotice = styled.div`
       }
     }
   }
-`
+`;
 const InputField = styled.div`
   display: flex;
   width: 100%;
@@ -138,13 +138,12 @@ const InputField = styled.div`
     height: auto;
     align-self: start;
     flex-shrink: 0 !important;
-      @media (max-width: 1100px) {
-        width: 100% !important;
-      }
-      &.top12 {
-        margin-top: 15px;
-      }
-    
+    @media (max-width: 1100px) {
+      width: 100% !important;
+    }
+    &.top12 {
+      margin-top: 15px;
+    }
   }
   .main {
     display: flex;
@@ -199,7 +198,7 @@ const InputField = styled.div`
       margin-top: 10px;
     }
   }
-`
+`;
 const Sidebar = styled.div`
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   border: 1px solid var(--black__100);
@@ -211,10 +210,10 @@ const Sidebar = styled.div`
   &.top12 {
     margin-top: 15px;
   }
-  
+
   .sidebar_top {
     padding: 12px;
-    background-color: hsl(210,8%,97.5%);
+    background-color: hsl(210, 8%, 97.5%);
     border-bottom: 1px solid var(--black__100);
   }
   .sidebar_bottom {
@@ -230,75 +229,75 @@ const Sidebar = styled.div`
       text-align: start;
       margin: 0 8px;
       font-size: 12px;
-      .text_1 { 	
-        margin-bottom: 12px; 
-    }
+      .text_1 {
+        margin-bottom: 12px;
+      }
     }
   }
-`
+`;
 const EditorContainer = styled.div`
-    .toastui-editor-toolbar {
-        overflow-x: scroll;
-        overflow-y: hidden;
-        height: 60px;
-        background: #f7f9fc;
-        border-bottom: 1px solid #ebedf2;
-    }
-`
+  .toastui-editor-toolbar {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    height: 60px;
+    background: #f7f9fc;
+    border-bottom: 1px solid #ebedf2;
+  }
+`;
 
-function Ask({setShowNav, setShowSidebar}) {
-const editorRef = useRef()
-  const [isTitle, setIsTitle] = useState(false)
-  const [isProblem, setIsProblem] = useState(false)
-  const [isExpect, setIsExpect] = useState(false)
-  const [isTag, setIsTag] = useState(false)
-  const [inputData, setinputData] = useState('')
+function Ask({ setShowNav, setShowSidebar }) {
+  const editorRef = useRef();
+  const [isTitle, setIsTitle] = useState(false);
+  const [isProblem, setIsProblem] = useState(false);
+  const [isExpect, setIsExpect] = useState(false);
+  const [isTag, setIsTag] = useState(false);
+  const [inputData, setinputData] = useState('');
 
   useEffect(() => {
-    setShowNav(false)
-    setShowSidebar(false)
+    setShowNav(false);
+    setShowSidebar(false);
     return () => {
-      setShowNav(true)
-      setShowSidebar(true)
-    }
-  }, [])
-  
+      setShowNav(true);
+      setShowSidebar(true);
+    };
+  }, []);
+
   const onChange = () => {
     const data = editorRef.current.getInstance().getMarkdown();
-    return data
-  }
-console.log(inputData)
+    return data;
+  };
+  console.log(inputData);
   return (
     <Container>
       <Content>
-        <form action="" onSubmit={e => e.preventDefault()}>
-          <main className="question_form">
+        <form action='' onSubmit={(e) => e.preventDefault()}>
+          <main className='question_form'>
             <Qnotice>
-              <div className="title">
+              <div className='title'>
                 <h1>Ask a public question</h1>
               </div>
-              <div className="body_field">
-                <div className="body_flex">
-                  <div className="body">
+              <div className='body_field'>
+                <div className='body_flex'>
+                  <div className='body'>
                     <h2>Writing a good question</h2>
                     <p>
                       You’re ready to
-                      <Link to="#" className="info_link">
-                        {" "}
-                        ask{" "}
+                      <Link to='#' className='info_link'>
+                        {' '}
+                        ask{' '}
                       </Link>
                       a
-                      <Link to="#" className="info_link">
-                        {" "}
-                        programming-related question{" "}
+                      <Link to='#' className='info_link'>
+                        {' '}
+                        programming-related question{' '}
                       </Link>
                       and this form will help guide you through the process.
                     </p>
-                    <p className="text_2">
+                    <p className='text_2'>
                       Looking to ask a non-programming question? See
-                      <Link to="#" className="info_link">
-                        {" "}
-                        the topics here{" "}
+                      <Link to='#' className='info_link'>
+                        {' '}
+                        the topics here{' '}
                       </Link>
                       to find a relevant site.
                     </p>
@@ -321,67 +320,71 @@ console.log(inputData)
             </Qnotice>
 
             <InputField>
-              <div className="box top12">
-                <div className="main">
-                  <div className="column">
-                    <div className="top">
-                      <label htmlFor="title" className="s-label">
+              <div className='box top12'>
+                <div className='main'>
+                  <div className='column'>
+                    <div className='top'>
+                      <label htmlFor='title' className='s-label'>
                         Title
-                        <p className="ss-label">
+                        <p className='ss-label'>
                           Be specific and imagine you’re asking a question to
                           another person.
                         </p>
                       </label>
                     </div>
                   </div>
-                  <div className="bottom">
+                  <div className='bottom'>
                     <input
-                      id="title"
-                      type="text"
-                      name="title"
-                      maxLength="300"
-                      placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
+                      id='title'
+                      type='text'
+                      name='title'
+                      maxLength='300'
+                      placeholder='e.g. Is there an R function for finding the index of an element in a vector?'
                       onClick={() => {
                         setIsTitle(true);
                         setIsProblem(false);
                         setIsExpect(false);
                         setIsTag(false);
-                      }}></input>
+                      }}
+                    ></input>
                     <svg
-                      aria-hidden="true"
-                      className="s-input-icon js-title-invalid-alert d-none svg-icon iconAlertCircle"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 18 18">
-                      <path d="M9 17c-4.36 0-8-3.64-8-8 0-4.36 3.64-8 8-8 4.36 0 8 3.64 8 8 0 4.36-3.64 8-8 8ZM8 4v6h2V4H8Zm0 8v2h2v-2H8Z"></path>
+                      aria-hidden='true'
+                      className='s-input-icon js-title-invalid-alert d-none svg-icon iconAlertCircle'
+                      width='18'
+                      height='18'
+                      viewBox='0 0 18 18'
+                    >
+                      <path d='M9 17c-4.36 0-8-3.64-8-8 0-4.36 3.64-8 8-8 4.36 0 8 3.64 8 8 0 4.36-3.64 8-8 8ZM8 4v6h2V4H8Zm0 8v2h2v-2H8Z'></path>
                     </svg>
                   </div>
-                  <div className="error_message">Title is missing.</div>
+                  <div className='error_message'>Title is missing.</div>
                 </div>
-                <button className="blue_button">Next</button>
+                <button className='blue_button'>Next</button>
               </div>
 
               {isTitle ? (
-                <Sidebar className="top12">
-                  <div className="sidebar_top">
+                <Sidebar className='top12'>
+                  <div className='sidebar_top'>
                     <div>Writing a good title</div>
                   </div>
-                  <div className="sidebar_bottom">
-                    <div className="sidebar_img">
+                  <div className='sidebar_bottom'>
+                    <div className='sidebar_img'>
                       <svg
-                        aria-hidden="true"
-                        className="spotPencil"
-                        width="48"
-                        height="48"
-                        viewBox="0 0 48 48">
+                        aria-hidden='true'
+                        className='spotPencil'
+                        width='48'
+                        height='48'
+                        viewBox='0 0 48 48'
+                      >
                         <path
-                          d="M31.52 5.2a.34.34 0 0 0-.46.08L7 39.94a.34.34 0 0 0-.06.16l-.54 5.21c-.03.26.24.45.48.34l4.77-2.29c.05-.02.1-.06.13-.1L35.83 8.58a.34.34 0 0 0-.09-.47l-4.22-2.93Z"
-                          opacity=".2"></path>
-                        <path d="M28.53 2.82c.4-.58 1.2-.73 1.79-.32l4.22 2.92c.58.4.72 1.2.32 1.79L10.82 41.87c-.13.18-.3.33-.5.43l-4.77 2.28c-.9.44-1.93-.29-1.83-1.29l.55-5.2c.02-.22.1-.43.22-.6L28.53 2.81Zm4.43 3.81L29.74 4.4 28.2 6.6l3.22 2.24 1.53-2.21Zm-2.6 3.76-3.23-2.24-20.32 29.3 3.22 2.24 20.32-29.3ZM5.7 42.4 8.62 41l-2.57-1.78-.34 3.18Zm35.12.3a1 1 0 1 0-.9-1.78 35 35 0 0 1-7.94 3.06c-1.93.43-3.8.3-5.71-.04-.97-.17-1.93-.4-2.92-.64l-.3-.07c-.9-.21-1.81-.43-2.74-.62-2.9-.58-6.6-.49-9.43.65a1 1 0 0 0 .74 1.86c2.4-.96 5.68-1.07 8.3-.55.88.18 1.77.4 2.66.6l.3.08c1 .24 2 .48 3.03.66 2.07.37 4.22.53 6.5.02 3-.67 5.77-1.9 8.41-3.22Z"></path>
+                          d='M31.52 5.2a.34.34 0 0 0-.46.08L7 39.94a.34.34 0 0 0-.06.16l-.54 5.21c-.03.26.24.45.48.34l4.77-2.29c.05-.02.1-.06.13-.1L35.83 8.58a.34.34 0 0 0-.09-.47l-4.22-2.93Z'
+                          opacity='.2'
+                        ></path>
+                        <path d='M28.53 2.82c.4-.58 1.2-.73 1.79-.32l4.22 2.92c.58.4.72 1.2.32 1.79L10.82 41.87c-.13.18-.3.33-.5.43l-4.77 2.28c-.9.44-1.93-.29-1.83-1.29l.55-5.2c.02-.22.1-.43.22-.6L28.53 2.81Zm4.43 3.81L29.74 4.4 28.2 6.6l3.22 2.24 1.53-2.21Zm-2.6 3.76-3.23-2.24-20.32 29.3 3.22 2.24 20.32-29.3ZM5.7 42.4 8.62 41l-2.57-1.78-.34 3.18Zm35.12.3a1 1 0 1 0-.9-1.78 35 35 0 0 1-7.94 3.06c-1.93.43-3.8.3-5.71-.04-.97-.17-1.93-.4-2.92-.64l-.3-.07c-.9-.21-1.81-.43-2.74-.62-2.9-.58-6.6-.49-9.43.65a1 1 0 0 0 .74 1.86c2.4-.96 5.68-1.07 8.3-.55.88.18 1.77.4 2.66.6l.3.08c1 .24 2 .48 3.03.66 2.07.37 4.22.53 6.5.02 3-.67 5.77-1.9 8.41-3.22Z'></path>
                       </svg>
                     </div>
-                    <div className="sidebar_text">
-                      <p className="text_1">
+                    <div className='sidebar_text'>
+                      <p className='text_1'>
                         Your title should summarize the problem.
                       </p>
                       <p>
@@ -395,54 +398,56 @@ console.log(inputData)
             </InputField>
 
             <InputField>
-              <div className="box top12">
-                <div className="main">
-                  <div className="column">
-                    <div className="top">
-                      <label htmlFor="problem-details" className="s-label">
+              <div className='box top12'>
+                <div className='main'>
+                  <div className='column'>
+                    <div className='top'>
+                      <label htmlFor='problem-details' className='s-label'>
                         What are the details of your problem?
-                        <p className="ss-label">
+                        <p className='ss-label'>
                           Introduce the problem and expand on what you put in
                           the title. Minimum 20 characters.
                         </p>
                       </label>
                     </div>
                     <Editor
-                      className="text_editor"
-                      vertical={"250px"}
+                      className='text_editor'
+                      vertical={'250px'}
                       focusFunction={() => {
                         setIsTitle(false);
                         setIsProblem(true);
                         setIsExpect(false);
                         setIsTag(false);
-                      }}              
-                      ></Editor>
+                      }}
+                    ></Editor>
                   </div>
-                  <button className="blue_button">Next</button>
+                  <button className='blue_button'>Next</button>
                 </div>
               </div>
 
               {isProblem ? (
-                <Sidebar className="top12">
-                  <div className="sidebar_top">
+                <Sidebar className='top12'>
+                  <div className='sidebar_top'>
                     <div>Introduce the problem</div>
                   </div>
-                  <div className="sidebar_bottom">
-                    <div className="sidebar_img">
+                  <div className='sidebar_bottom'>
+                    <div className='sidebar_img'>
                       <svg
-                        aria-hidden="true"
-                        className="spotPencil"
-                        width="48"
-                        height="48"
-                        viewBox="0 0 48 48">
+                        aria-hidden='true'
+                        className='spotPencil'
+                        width='48'
+                        height='48'
+                        viewBox='0 0 48 48'
+                      >
                         <path
-                          d="M31.52 5.2a.34.34 0 0 0-.46.08L7 39.94a.34.34 0 0 0-.06.16l-.54 5.21c-.03.26.24.45.48.34l4.77-2.29c.05-.02.1-.06.13-.1L35.83 8.58a.34.34 0 0 0-.09-.47l-4.22-2.93Z"
-                          opacity=".2"></path>
-                        <path d="M28.53 2.82c.4-.58 1.2-.73 1.79-.32l4.22 2.92c.58.4.72 1.2.32 1.79L10.82 41.87c-.13.18-.3.33-.5.43l-4.77 2.28c-.9.44-1.93-.29-1.83-1.29l.55-5.2c.02-.22.1-.43.22-.6L28.53 2.81Zm4.43 3.81L29.74 4.4 28.2 6.6l3.22 2.24 1.53-2.21Zm-2.6 3.76-3.23-2.24-20.32 29.3 3.22 2.24 20.32-29.3ZM5.7 42.4 8.62 41l-2.57-1.78-.34 3.18Zm35.12.3a1 1 0 1 0-.9-1.78 35 35 0 0 1-7.94 3.06c-1.93.43-3.8.3-5.71-.04-.97-.17-1.93-.4-2.92-.64l-.3-.07c-.9-.21-1.81-.43-2.74-.62-2.9-.58-6.6-.49-9.43.65a1 1 0 0 0 .74 1.86c2.4-.96 5.68-1.07 8.3-.55.88.18 1.77.4 2.66.6l.3.08c1 .24 2 .48 3.03.66 2.07.37 4.22.53 6.5.02 3-.67 5.77-1.9 8.41-3.22Z"></path>
+                          d='M31.52 5.2a.34.34 0 0 0-.46.08L7 39.94a.34.34 0 0 0-.06.16l-.54 5.21c-.03.26.24.45.48.34l4.77-2.29c.05-.02.1-.06.13-.1L35.83 8.58a.34.34 0 0 0-.09-.47l-4.22-2.93Z'
+                          opacity='.2'
+                        ></path>
+                        <path d='M28.53 2.82c.4-.58 1.2-.73 1.79-.32l4.22 2.92c.58.4.72 1.2.32 1.79L10.82 41.87c-.13.18-.3.33-.5.43l-4.77 2.28c-.9.44-1.93-.29-1.83-1.29l.55-5.2c.02-.22.1-.43.22-.6L28.53 2.81Zm4.43 3.81L29.74 4.4 28.2 6.6l3.22 2.24 1.53-2.21Zm-2.6 3.76-3.23-2.24-20.32 29.3 3.22 2.24 20.32-29.3ZM5.7 42.4 8.62 41l-2.57-1.78-.34 3.18Zm35.12.3a1 1 0 1 0-.9-1.78 35 35 0 0 1-7.94 3.06c-1.93.43-3.8.3-5.71-.04-.97-.17-1.93-.4-2.92-.64l-.3-.07c-.9-.21-1.81-.43-2.74-.62-2.9-.58-6.6-.49-9.43.65a1 1 0 0 0 .74 1.86c2.4-.96 5.68-1.07 8.3-.55.88.18 1.77.4 2.66.6l.3.08c1 .24 2 .48 3.03.66 2.07.37 4.22.53 6.5.02 3-.67 5.77-1.9 8.41-3.22Z'></path>
                       </svg>
                     </div>
-                    <div className="sidebar_text">
-                      <p className="text_1">
+                    <div className='sidebar_text'>
+                      <p className='text_1'>
                         Explain how you encountered the problem you’re trying to
                         solve, and any difficulties that have prevented you from
                         solving it yourself.
@@ -454,13 +459,13 @@ console.log(inputData)
             </InputField>
 
             <InputField>
-              <div className="box top12">
-                <div className="main">
-                  <div className="column">
-                    <div className="top">
-                      <label htmlFor="problem-details" className="s-label">
+              <div className='box top12'>
+                <div className='main'>
+                  <div className='column'>
+                    <div className='top'>
+                      <label htmlFor='problem-details' className='s-label'>
                         What did you try and what were you expecting?
-                        <p className="ss-label">
+                        <p className='ss-label'>
                           Describe what you tried, what you expected to happen,
                           and what actually resulted. Minimum 20 characters.
                         </p>
@@ -469,72 +474,75 @@ console.log(inputData)
                     {/* <ToastEditor className="text_editor" vertical={'250px'} 
                       setIsTitle={setIsTitle} setIsProblem={setIsTitle} setIsExpect={setIsTitle} setIsTag={setIsTitle}
                     ></ToastEditor> */}
-                    <EditorContainer className="toast_editor">
+                    <EditorContainer className='toast_editor'>
                       <Editor
-                        height="250px"
-                        width="100%"
-                        hideModeSwitch="true"
+                        height='250px'
+                        width='100%'
+                        hideModeSwitch='true'
                         ref={editorRef}
                         onChange={onChange}
-                        >
-
-                        </Editor>
+                      ></Editor>
                     </EditorContainer>
                   </div>
-                  <button className="blue_button">Next</button>
+                  <button className='blue_button'>Next</button>
                 </div>
               </div>
 
               {isExpect ? (
-                <Sidebar className="top12">
-                  <div className="sidebar_top">
+                <Sidebar className='top12'>
+                  <div className='sidebar_top'>
                     <div>Expand on the problem</div>
                   </div>
-                  <div className="sidebar_bottom">
-                    <div className="sidebar_img">
+                  <div className='sidebar_bottom'>
+                    <div className='sidebar_img'>
                       <svg
-                        aria-hidden="true"
-                        className="spotPencil"
-                        width="48"
-                        height="48"
-                        viewBox="0 0 48 48">
+                        aria-hidden='true'
+                        className='spotPencil'
+                        width='48'
+                        height='48'
+                        viewBox='0 0 48 48'
+                      >
                         <path
-                          d="M31.52 5.2a.34.34 0 0 0-.46.08L7 39.94a.34.34 0 0 0-.06.16l-.54 5.21c-.03.26.24.45.48.34l4.77-2.29c.05-.02.1-.06.13-.1L35.83 8.58a.34.34 0 0 0-.09-.47l-4.22-2.93Z"
-                          opacity=".2"></path>
-                        <path d="M28.53 2.82c.4-.58 1.2-.73 1.79-.32l4.22 2.92c.58.4.72 1.2.32 1.79L10.82 41.87c-.13.18-.3.33-.5.43l-4.77 2.28c-.9.44-1.93-.29-1.83-1.29l.55-5.2c.02-.22.1-.43.22-.6L28.53 2.81Zm4.43 3.81L29.74 4.4 28.2 6.6l3.22 2.24 1.53-2.21Zm-2.6 3.76-3.23-2.24-20.32 29.3 3.22 2.24 20.32-29.3ZM5.7 42.4 8.62 41l-2.57-1.78-.34 3.18Zm35.12.3a1 1 0 1 0-.9-1.78 35 35 0 0 1-7.94 3.06c-1.93.43-3.8.3-5.71-.04-.97-.17-1.93-.4-2.92-.64l-.3-.07c-.9-.21-1.81-.43-2.74-.62-2.9-.58-6.6-.49-9.43.65a1 1 0 0 0 .74 1.86c2.4-.96 5.68-1.07 8.3-.55.88.18 1.77.4 2.66.6l.3.08c1 .24 2 .48 3.03.66 2.07.37 4.22.53 6.5.02 3-.67 5.77-1.9 8.41-3.22Z"></path>
+                          d='M31.52 5.2a.34.34 0 0 0-.46.08L7 39.94a.34.34 0 0 0-.06.16l-.54 5.21c-.03.26.24.45.48.34l4.77-2.29c.05-.02.1-.06.13-.1L35.83 8.58a.34.34 0 0 0-.09-.47l-4.22-2.93Z'
+                          opacity='.2'
+                        ></path>
+                        <path d='M28.53 2.82c.4-.58 1.2-.73 1.79-.32l4.22 2.92c.58.4.72 1.2.32 1.79L10.82 41.87c-.13.18-.3.33-.5.43l-4.77 2.28c-.9.44-1.93-.29-1.83-1.29l.55-5.2c.02-.22.1-.43.22-.6L28.53 2.81Zm4.43 3.81L29.74 4.4 28.2 6.6l3.22 2.24 1.53-2.21Zm-2.6 3.76-3.23-2.24-20.32 29.3 3.22 2.24 20.32-29.3ZM5.7 42.4 8.62 41l-2.57-1.78-.34 3.18Zm35.12.3a1 1 0 1 0-.9-1.78 35 35 0 0 1-7.94 3.06c-1.93.43-3.8.3-5.71-.04-.97-.17-1.93-.4-2.92-.64l-.3-.07c-.9-.21-1.81-.43-2.74-.62-2.9-.58-6.6-.49-9.43.65a1 1 0 0 0 .74 1.86c2.4-.96 5.68-1.07 8.3-.55.88.18 1.77.4 2.66.6l.3.08c1 .24 2 .48 3.03.66 2.07.37 4.22.53 6.5.02 3-.67 5.77-1.9 8.41-3.22Z'></path>
                       </svg>
                     </div>
-                    <div className="sidebar_text">
-                      <p className="text_1">
+                    <div className='sidebar_text'>
+                      <p className='text_1'>
                         Show what you’ve tried, tell us what happened, and why
                         it didn’t meet your needs.
                       </p>
-                      <p className="text_1">
+                      <p className='text_1'>
                         Not all questions benefit from including code, but if
                         your problem is better understood with code you’ve
                         written, you should include a
                         <Link
-                          to="https://stackoverflow.com/help/minimal-reproducible-example"
-                          className="info_link">
-                          {" "}
+                          to='https://stackoverflow.com/help/minimal-reproducible-example'
+                          className='info_link'
+                        >
+                          {' '}
                           minimal, reproducible example
                         </Link>
                         .
                       </p>
-                      <p className="text_1">
+                      <p className='text_1'>
                         Please make sure to post code and errors as text
                         directly to the question (and
                         <Link
-                          to="https://meta.stackoverflow.com/questions/285551"
-                          className="info_link">
-                          {" "}
-                          not as images{" "}
+                          to='https://meta.stackoverflow.com/questions/285551'
+                          className='info_link'
+                        >
+                          {' '}
+                          not as images{' '}
                         </Link>
                         ), and
                         <Link
-                          to="https://stackoverflow.com/help/formatting"
-                          className="info_link">
-                          {" "}
+                          to='https://stackoverflow.com/help/formatting'
+                          className='info_link'
+                        >
+                          {' '}
                           format them appropriately
                         </Link>
                         .
@@ -546,67 +554,70 @@ console.log(inputData)
             </InputField>
 
             <InputField>
-              <div className="box top12">
-                <div className="main">
-                  <div className="column">
-                    <div className="top">
-                      <label className="s-label">
+              <div className='box top12'>
+                <div className='main'>
+                  <div className='column'>
+                    <div className='top'>
+                      <label className='s-label'>
                         Tags
-                        <p className="ss-label">
+                        <p className='ss-label'>
                           Add up to 5 tags to describe what your question is
                           about. Start typing to see suggestions.
                         </p>
                       </label>
-                      <div className="bottom">
+                      <div className='bottom'>
                         <input
-                          type="text"
-                          autoComplete="off"
-                          placeholder="e.g. (javascript css)"
+                          type='text'
+                          autoComplete='off'
+                          placeholder='e.g. (javascript css)'
                           onClick={() => {
                             setIsTitle(false);
                             setIsProblem(false);
                             setIsExpect(false);
                             setIsTag(true);
-                          }}></input>
+                          }}
+                        ></input>
                       </div>
                     </div>
-                    <div className="hide_message"></div>
+                    <div className='hide_message'></div>
                   </div>
                 </div>
-                <div className="tag_suggestion"></div>
-                <button className="blue_button">Next</button>
+                <div className='tag_suggestion'></div>
+                <button className='blue_button'>Next</button>
               </div>
 
               {isTag ? (
-                <Sidebar className="top12">
-                  <div className="sidebar_top">
+                <Sidebar className='top12'>
+                  <div className='sidebar_top'>
                     <div>Adding tags</div>
                   </div>
-                  <div className="sidebar_bottom">
-                    <div className="sidebar_img">
+                  <div className='sidebar_bottom'>
+                    <div className='sidebar_img'>
                       <svg
-                        aria-hidden="true"
-                        className="spotPencil"
-                        width="48"
-                        height="48"
-                        viewBox="0 0 48 48">
+                        aria-hidden='true'
+                        className='spotPencil'
+                        width='48'
+                        height='48'
+                        viewBox='0 0 48 48'
+                      >
                         <path
-                          d="M31.52 5.2a.34.34 0 0 0-.46.08L7 39.94a.34.34 0 0 0-.06.16l-.54 5.21c-.03.26.24.45.48.34l4.77-2.29c.05-.02.1-.06.13-.1L35.83 8.58a.34.34 0 0 0-.09-.47l-4.22-2.93Z"
-                          opacity=".2"></path>
-                        <path d="M28.53 2.82c.4-.58 1.2-.73 1.79-.32l4.22 2.92c.58.4.72 1.2.32 1.79L10.82 41.87c-.13.18-.3.33-.5.43l-4.77 2.28c-.9.44-1.93-.29-1.83-1.29l.55-5.2c.02-.22.1-.43.22-.6L28.53 2.81Zm4.43 3.81L29.74 4.4 28.2 6.6l3.22 2.24 1.53-2.21Zm-2.6 3.76-3.23-2.24-20.32 29.3 3.22 2.24 20.32-29.3ZM5.7 42.4 8.62 41l-2.57-1.78-.34 3.18Zm35.12.3a1 1 0 1 0-.9-1.78 35 35 0 0 1-7.94 3.06c-1.93.43-3.8.3-5.71-.04-.97-.17-1.93-.4-2.92-.64l-.3-.07c-.9-.21-1.81-.43-2.74-.62-2.9-.58-6.6-.49-9.43.65a1 1 0 0 0 .74 1.86c2.4-.96 5.68-1.07 8.3-.55.88.18 1.77.4 2.66.6l.3.08c1 .24 2 .48 3.03.66 2.07.37 4.22.53 6.5.02 3-.67 5.77-1.9 8.41-3.22Z"></path>
+                          d='M31.52 5.2a.34.34 0 0 0-.46.08L7 39.94a.34.34 0 0 0-.06.16l-.54 5.21c-.03.26.24.45.48.34l4.77-2.29c.05-.02.1-.06.13-.1L35.83 8.58a.34.34 0 0 0-.09-.47l-4.22-2.93Z'
+                          opacity='.2'
+                        ></path>
+                        <path d='M28.53 2.82c.4-.58 1.2-.73 1.79-.32l4.22 2.92c.58.4.72 1.2.32 1.79L10.82 41.87c-.13.18-.3.33-.5.43l-4.77 2.28c-.9.44-1.93-.29-1.83-1.29l.55-5.2c.02-.22.1-.43.22-.6L28.53 2.81Zm4.43 3.81L29.74 4.4 28.2 6.6l3.22 2.24 1.53-2.21Zm-2.6 3.76-3.23-2.24-20.32 29.3 3.22 2.24 20.32-29.3ZM5.7 42.4 8.62 41l-2.57-1.78-.34 3.18Zm35.12.3a1 1 0 1 0-.9-1.78 35 35 0 0 1-7.94 3.06c-1.93.43-3.8.3-5.71-.04-.97-.17-1.93-.4-2.92-.64l-.3-.07c-.9-.21-1.81-.43-2.74-.62-2.9-.58-6.6-.49-9.43.65a1 1 0 0 0 .74 1.86c2.4-.96 5.68-1.07 8.3-.55.88.18 1.77.4 2.66.6l.3.08c1 .24 2 .48 3.03.66 2.07.37 4.22.53 6.5.02 3-.67 5.77-1.9 8.41-3.22Z'></path>
                       </svg>
                     </div>
-                    <div className="sidebar_text">
-                      <p className="text_1">
+                    <div className='sidebar_text'>
+                      <p className='text_1'>
                         Tags help ensure that your question will get attention
                         from the right people.
                       </p>
-                      <p className="text_1">
+                      <p className='text_1'>
                         Tag things in more than one way so people can find them
                         more easily. Add tags for product lines, projects,
                         teams, and the specific technologies or languages used.
                       </p>
-                      <Link to="#" className="info_link">
+                      <Link to='#' className='info_link'>
                         Learn more about tagging
                       </Link>
                     </div>
@@ -674,8 +685,8 @@ console.log(inputData)
               </div>
             </SimilarField> */}
 
-            <div className="discard">
-              <button className="red_button">Discard draft</button>
+            <div className='discard'>
+              <button className='red_button'>Discard draft</button>
             </div>
           </main>
         </form>

@@ -7,8 +7,8 @@ const Wrapper = styled.div`
   padding: 10px;
 
   img {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
   }
 
   .user_name {
