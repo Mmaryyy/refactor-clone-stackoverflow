@@ -380,7 +380,8 @@ function Join({ setShowNav, setShowFooter, setShowSidebar }) {
   //     pwcheck: "numbers",
   //   });
   // }
-
+  
+  //!Math.random()
   // Password: 8글자 미만이면?
   // if (pwCheck && key === "password" && e.target.value && e.target.value.length < 8) {
   //   const num = 8 - e.target.value.length;

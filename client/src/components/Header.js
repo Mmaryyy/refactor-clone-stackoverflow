@@ -18,6 +18,8 @@ const Wrapper = styled.header`
   left: 0;
   right: 0;
   padding: 0 10vw;
+  z-index: 999;
+  box-shadow: 0 1px 2px hsla(0,0%,0%,0.05), 0 1px 4px hsla(0, 0%, 0%, 0.05), 0 2px 8px hsla(0, 0%, 0%, 0.05);
   //header 위치 고정
   z-index: 999;
 `;
