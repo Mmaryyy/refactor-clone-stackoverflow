@@ -1,10 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-// import { Editor } from '@toast-ui/react-editor'
-// import '@toast-ui/editor/dist/toastui-editor.css'
-// import { ToastEditor } from '../components/TextEditor'
-// import getEditorValue from '../utils/getDataUtil'
 import { Editor } from '../components/Editor'
 const Container = styled.div`
   width: 100%;

@@ -4,7 +4,7 @@ import { SubmitButton, LinkContent } from '../styles/styledcomponents'
 import Content from '../components/Content'
 import { useSelector, useDispatch } from 'react-redux'
 import { getContentList, getSingleContent } from '../redux/actions/contents'
-
+import axios from 'axios'
 const Container = styled.main`
   display: flex;
   flex-direction: column;
@@ -92,6 +92,9 @@ const Contents = () => {
   useEffect(() => {
     console.log('여기 타니?')
     dispatch(getContentList())
+    axios.get('/api/members?page=1')
+    .then(res => console.log(res))
+    .catch(error => console.log('error: ', error))
   }, [])
   const contentList = useSelector(state => state.contentsReducer.contentList)
   console.log('contentList: ', contentList)
