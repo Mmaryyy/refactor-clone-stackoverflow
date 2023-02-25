@@ -103,18 +103,7 @@ const PostBlock = ({ content, author, isAnswer }) => {
             </svg>
           </BaseButton>
           <span>{votes}</span>
-          <BaseButton className="vote_down" onClick={handleVoteDown}>
-            <svg
-              fill="var(--black__100)"
-              aria-hidden="true"
-              className="svg-icon iconArrowDownLg"
-              width="36"
-              height="36"
-              viewBox="0 0 36 36"
-            >
-              <path d="M2 11h32L18 27 2 11Z"></path>
-            </svg>
-          </BaseButton>
+
         </VoteWrapper>
         <ContentContainer className="content_container">
           <p className="content">{content.content}</p>
