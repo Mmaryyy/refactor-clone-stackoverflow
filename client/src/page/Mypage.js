@@ -5,11 +5,15 @@ import Edit from '../components/Mypage/Edit';
 import Myinfo from '../components/Mypage/Myinfo';
 import Profile from '../components/Mypage/Profile';
 
-export default function Mypage() {
+export default function Mypage({ setShowSidebar }) {
   return (
     <>
       <Routes>
-        <Route exact path='/' element={<Myinfo />} />
+        <Route
+          exact
+          path='/'
+          element={<Myinfo setShowSidebar={setShowSidebar} />}
+        />
         <Route path='/profile' element={<Profile />} />
         <Route path='/delete' element={<Delete />} />
         <Route path='/edit' element={<Edit />} />

@@ -1,4 +1,5 @@
 import React from 'react';
+import user from '../../datas/userData.json';
 import styled from 'styled-components';
 
 export const UserProfiles = styled.div`

@@ -9,6 +9,8 @@
     "avatarUrl": "/images/Avatar1.png",
     "authority": true,
     "contents": [1],
+    "title": "Javascripting test",
+    "vote": 3,
     "about": {
       "title": "",
       "body": ""

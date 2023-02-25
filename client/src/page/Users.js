@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import UserCard from '../components/UserCard';
 import user from '../datas/userData.json';
-import { useDispatch, useSelector } from 'react-redux'
-import { getUserList } from '../redux/actions/userData';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { getUserList } from '../redux/actions/userData';
 
 const Container = styled.div`
   max-width: 1100px;
@@ -27,7 +27,7 @@ const Wrapper = styled.div`
     flex-direction: row;
 
     .tag_search {
-      margin-bottom: 12px;
+      margin-bottom: 20px;
       position: relative;
     }
 
@@ -54,7 +54,7 @@ const Wrapper = styled.div`
 
     .filter {
       display: flex;
-      margin-bottom: 12px;
+      margin-bottom: 20px;
       margin-left: auto;
     }
 
@@ -77,18 +77,22 @@ const Wrapper = styled.div`
 const User = styled.div`
   .users {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin-top: 20px;
     display: grid;
     gap: 12px;
   }
 `;
 
-export default function Users() {
-  const dispatch = useDispatch()
+export default function Users({ setShowSidebar }) {
   useEffect(() => {
-    dispatch(getUserList())
-  })
-  // const user = useSelector(state => state.userDataReducer.userList)
-  const currentPage = useSelector(state => state.userDataReducer.currentPage)
+    setShowSidebar(false);
+  }, []);
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   dispatch(getUserList());
+  // });
+  // // const user = useSelector(state => state.userDataReducer.userList)
+  // const currentPage = useSelector((state) => state.userDataReducer.currentPage);
   return (
     <>
       <Container>
