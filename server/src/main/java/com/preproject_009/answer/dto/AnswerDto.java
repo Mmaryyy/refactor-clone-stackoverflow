@@ -47,11 +47,7 @@ public class AnswerDto {
         @JsonProperty("totalVotes")
         private int totalVotes;
         private Answer.AnswerStatus answerStatus;
-<<<<<<< HEAD
-        //private LocalDateTime createdAt;
-=======
         private LocalDateTime createdAt;
->>>>>>> 4e7034fb5d50f359dd94f1025a61348fd9928be9
         private LocalDateTime modifiedAt;
     }
 }

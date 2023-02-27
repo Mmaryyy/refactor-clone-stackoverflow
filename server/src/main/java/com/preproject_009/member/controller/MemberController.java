@@ -36,10 +36,8 @@ import java.util.List;
 @RequestMapping("/members")
 @Validated
 public class MemberController {
-<<<<<<< HEAD
-=======
+
     private final static int pageSize = 16;
->>>>>>> 4e7034fb5d50f359dd94f1025a61348fd9928be9
     private final static String MEMBER_DEFAULT_URL = "/members";
     private final MemberService memberService;
     private final MemberMapper mapper;
