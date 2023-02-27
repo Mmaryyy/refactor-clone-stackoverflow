@@ -1,6 +1,6 @@
 package com.preproject_009.member.controller;
 
-import com.preproject_009.answer.entity.Answer;
+import com.preproject_009.answer.mapper.entity.Answer;
 import com.preproject_009.answer.mapper.AnswerMapper;
 import com.preproject_009.answer.service.AnswerService;
 import com.preproject_009.member.dto.MemberDto;
@@ -36,8 +36,9 @@ import java.util.List;
 @RequestMapping("/members")
 @Validated
 public class MemberController {
+
     private final static int pageSize = 16;
-    private final static String MEMBER_DEFAULT_URL = "/api/members";
+    private final static String MEMBER_DEFAULT_URL = "/members";
     private final MemberService memberService;
     private final MemberMapper mapper;
 
