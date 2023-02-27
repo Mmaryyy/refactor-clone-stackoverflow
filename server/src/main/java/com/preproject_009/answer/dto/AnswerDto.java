@@ -1,7 +1,7 @@
 package com.preproject_009.answer.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.preproject_009.answer.entity.Answer;
+import com.preproject_009.answer.mapper.entity.Answer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
