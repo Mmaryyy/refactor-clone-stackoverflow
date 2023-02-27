@@ -3,6 +3,7 @@ package com.preproject_009.q_comment.mapper;
 import com.preproject_009.member.entity.Member;
 import com.preproject_009.q_comment.dto.QuestionCommentDto;
 import com.preproject_009.q_comment.entity.QuestionComment;
+import com.preproject_009.question.entity.Question;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
@@ -10,8 +11,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-02-22T21:55:24+0900",
-    comments = "version: 1.5.1.Final, compiler: javac, environment: Java 11.0.18 (Azul Systems, Inc.)"
+    date = "2023-02-27T16:38:43+0900",
+    comments = "version: 1.5.1.Final, compiler: javac, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
 public class QuestionCommentMapperImpl implements QuestionCommentMapper {
@@ -25,6 +26,7 @@ public class QuestionCommentMapperImpl implements QuestionCommentMapper {
         QuestionComment questionComment = new QuestionComment();
 
         questionComment.setMember( postToMember( requestBody ) );
+        questionComment.setQuestion( postToQuestion( requestBody ) );
         questionComment.setContent( requestBody.getContent() );
 
         return questionComment;
@@ -50,13 +52,13 @@ public class QuestionCommentMapperImpl implements QuestionCommentMapper {
             return null;
         }
 
+        long memberId = 0L;
         long questionCommentId = 0L;
         String content = null;
 
+        memberId = questionCommentMemberMemberId( questionComment );
         questionCommentId = questionComment.getQuestionCommentId();
         content = questionComment.getContent();
-
-        long memberId = 0L;
 
         QuestionCommentDto.Response response = new QuestionCommentDto.Response( questionCommentId, memberId, content );
 
@@ -87,5 +89,29 @@ public class QuestionCommentMapperImpl implements QuestionCommentMapper {
         member.setMemberId( post.getMemberId() );
 
         return member;
+    }
+
+    protected Question postToQuestion(QuestionCommentDto.Post post) {
+        if ( post == null ) {
+            return null;
+        }
+
+        Question question = new Question();
+
+        question.setQuestionId( post.getQuestionId() );
+
+        return question;
+    }
+
+    private long questionCommentMemberMemberId(QuestionComment questionComment) {
+        if ( questionComment == null ) {
+            return 0L;
+        }
+        Member member = questionComment.getMember();
+        if ( member == null ) {
+            return 0L;
+        }
+        long memberId = member.getMemberId();
+        return memberId;
     }
 }
