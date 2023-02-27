@@ -5,22 +5,21 @@ import Avatar from './Mypage/Avatar';
 import { Link } from 'react-router-dom';
 import { SubmitButton } from '../styles/styledcomponents';
 
-
 const Container = styled.header`
-width: 100%;
-min-width: auto;
-/* max-width: 1264px; */
-height: 60px;
-background-color: #f8f9f9;
-border-top: 3px solid #f48225;
-position: fixed;
-top: 0;
-left: 0;
-right: 0;
-z-index: 999;
-box-shadow: 0 1px 2px hsla(0,0%,0%,0.05), 0 1px 4px hsla(0, 0%, 0%, 0.05), 0 2px 8px hsla(0, 0%, 0%, 0.05);
+  width: 100%;
+  min-width: auto;
+  /* max-width: 1264px; */
+  height: 60px;
+  background-color: #f8f9f9;
+  border-top: 3px solid #f48225;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  box-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.05), 0 1px 4px hsla(0, 0%, 0%, 0.05),
+    0 2px 8px hsla(0, 0%, 0%, 0.05);
 `;
-
 
 const Wrapper = styled.header`
   display: flex;
@@ -101,6 +100,7 @@ export default function Header() {
   };
 
   const logoutHandler = () => {
+    // localStorage.removeitem("key")
     setLogin(false);
   };
 
@@ -183,6 +183,7 @@ export default function Header() {
               <SubmitButton
                 background='#0A95FF'
                 color='#FDFEFF'
+                margin='5px 5px 0 5px'
                 onClick={logoutHandler}
               >
                 Logout

@@ -14,9 +14,18 @@ export default function Mypage({ setShowSidebar }) {
           path='/'
           element={<Myinfo setShowSidebar={setShowSidebar} />}
         />
-        <Route path='/profile' element={<Profile />} />
-        <Route path='/delete' element={<Delete />} />
-        <Route path='/edit' element={<Edit />} />
+        <Route
+          path='/profile'
+          element={<Profile setShowSidebar={setShowSidebar} />}
+        />
+        <Route
+          path='/delete'
+          element={<Delete setShowSidebar={setShowSidebar} />}
+        />
+        <Route
+          path='/edit'
+          element={<Edit setShowSidebar={setShowSidebar} />}
+        />
       </Routes>
     </>
   );

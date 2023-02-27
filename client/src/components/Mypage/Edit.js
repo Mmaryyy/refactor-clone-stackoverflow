@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import UserInfoCard from './UserInfoCard';
+import { Editor } from '../../components/Editor';
 
 const Menu = styled.div`
   display: flex;
@@ -52,11 +53,13 @@ const List = styled.div`
 const Content = styled.div`
   display: flex;
   flex-direction: column;
+  margin-top: 10px;
+
   div {
     color: black;
     font-size: var(--fs--title);
     text-align: left;
-    padding: 10px 0 0 20px;
+    padding: 15px 0 0 -10px;
   }
   .sub {
     font-size: var(--fs--big);
@@ -65,31 +68,22 @@ const Content = styled.div`
 
 const Hr = styled.hr`
   width: 1000px;
-  margin: 10px 20px;
+  margin: 10px 0px;
   border: 1px solid var(#e1e3e5);
 `;
 
 const Section = styled.section`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 
   .delete_contents {
     font-size: var(--fs--lg);
   }
-`;
 
-const SectionArticle = styled.div`
-  display: flex;
-  flex-direction: column;
-  border-radius: 5px;
-  border: 1px solid #d6d9dc;
-  margin: 10px 0 0 20px;
-  width: 1000px;
-  height: 500px;
-
-  div {
+  label {
     display: flex;
     flex-direction: column;
+    margin: 10px 5px 0 0;
   }
 
   input {
@@ -97,7 +91,7 @@ const SectionArticle = styled.div`
     border-radius: 5px;
     outline: none;
     border: 2px solid #e0e3e5;
-    margin: 10px 0 10px 0;
+    margin: 10px 5px 10px 0;
     width: 400px;
     height: 30px;
 
@@ -107,19 +101,51 @@ const SectionArticle = styled.div`
   }
 `;
 
+const SectionArticle = styled.div`
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  border: 1px solid #d6d9dc;
+  margin: 10px 0 0 0px;
+  width: 1100px;
+  height: 800px;
+`;
+
 const Button = styled.button`
   width: 100px;
   height: 40px;
   border: none;
   border-radius: 5px;
-  margin-right: 10px;
-  margin-bottom: 10px;
+  margin: 15px 5px 15px 0;
   background-color: ${(props) => props.background};
   color: ${(props) => props.color};
   font-size: var(--fs--mid);
 `;
 
-export default function Edit() {
+export default function Edit({ setShowSidebar }) {
+  useEffect(() => {
+    setShowSidebar(false);
+    return () => {
+      setShowSidebar(true);
+    };
+  }, []);
+
+  const [display, setDisplay] = useState('');
+  const [location, setLocation] = useState('');
+  const [about, setAbout] = useState('');
+
+  const DisplayHandler = (e) => {
+    setDisplay(e.target.value);
+  };
+
+  const LocationHandler = (e) => {
+    setLocation(e.target.value);
+  };
+
+  const aboutHandler = (e) => {
+    setAbout(e.target.value);
+  };
+
   const editHandler = () => {
     window.confirm('변경');
   };
@@ -155,16 +181,17 @@ export default function Edit() {
           <Hr />
           <div className='sub'>Public information</div>
           <Section>
-            <SectionArticle>
-              <div>
-                <label htmlFor='display'>Display name</label>
-                <input id='display' type='text' />
-                <label htmlFor='location'>Location</label>
-                <input id='location' type='text' />
-                <label htmlFor='about'>About me</label>
-              </div>
-            </SectionArticle>
+            {/* form onSubmit */}
+            <form>
+              <label htmlFor='display'>Display name</label>
+              <input onChange={DisplayHandler} id='display' type='text' />
+              <label htmlFor='location'>Location</label>
+              <input onChange={LocationHandler} id='location' type='text' />
+              <p>About</p>
+              <Editor value={about} setter={setAbout} />
+            </form>
           </Section>
+
           <div>
             <Button
               className='save'

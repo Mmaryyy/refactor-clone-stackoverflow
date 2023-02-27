@@ -117,7 +117,14 @@ export const Sections = styled.article`
   }
 `;
 
-export default function Profile() {
+export default function Profile({ setShowSidebar }) {
+  useEffect(() => {
+    setShowSidebar(false);
+    return () => {
+      setShowSidebar(true);
+    };
+  }, []);
+
   const [login, setLogin] = useState(false);
 
   return (
