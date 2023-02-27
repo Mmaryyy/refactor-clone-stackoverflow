@@ -2,6 +2,7 @@ package com.preproject_009.a_comment.mapper;
 
 import com.preproject_009.a_comment.dto.AnswerCommentDto;
 import com.preproject_009.a_comment.entity.AnswerComment;
+import com.preproject_009.answer.mapper.entity.Answer;
 import com.preproject_009.member.entity.Member;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +11,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-02-22T21:55:24+0900",
-    comments = "version: 1.5.1.Final, compiler: javac, environment: Java 11.0.18 (Azul Systems, Inc.)"
+    date = "2023-02-27T16:38:43+0900",
+    comments = "version: 1.5.1.Final, compiler: javac, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
 public class AnswerCommentMapperImpl implements AnswerCommentMapper {
@@ -25,6 +26,7 @@ public class AnswerCommentMapperImpl implements AnswerCommentMapper {
         AnswerComment answerComment = new AnswerComment();
 
         answerComment.setMember( postToMember( requestBody ) );
+        answerComment.setAnswer( postToAnswer( requestBody ) );
         answerComment.setContent( requestBody.getContent() );
 
         return answerComment;
@@ -50,13 +52,13 @@ public class AnswerCommentMapperImpl implements AnswerCommentMapper {
             return null;
         }
 
+        long memberId = 0L;
         long answerCommentId = 0L;
         String content = null;
 
+        memberId = answerCommentMemberMemberId( AnswerComment );
         answerCommentId = AnswerComment.getAnswerCommentId();
         content = AnswerComment.getContent();
-
-        long memberId = 0L;
 
         AnswerCommentDto.Response response = new AnswerCommentDto.Response( answerCommentId, memberId, content );
 
@@ -87,5 +89,29 @@ public class AnswerCommentMapperImpl implements AnswerCommentMapper {
         member.setMemberId( post.getMemberId() );
 
         return member;
+    }
+
+    protected Answer postToAnswer(AnswerCommentDto.Post post) {
+        if ( post == null ) {
+            return null;
+        }
+
+        Answer answer = new Answer();
+
+        answer.setAnswerId( post.getAnswerId() );
+
+        return answer;
+    }
+
+    private long answerCommentMemberMemberId(AnswerComment answerComment) {
+        if ( answerComment == null ) {
+            return 0L;
+        }
+        Member member = answerComment.getMember();
+        if ( member == null ) {
+            return 0L;
+        }
+        long memberId = member.getMemberId();
+        return memberId;
     }
 }

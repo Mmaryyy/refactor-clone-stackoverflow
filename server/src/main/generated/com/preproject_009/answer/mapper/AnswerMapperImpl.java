@@ -1,7 +1,7 @@
 package com.preproject_009.answer.mapper;
 
 import com.preproject_009.answer.dto.AnswerDto;
-import com.preproject_009.answer.entity.Answer;
+import com.preproject_009.answer.mapper.entity.Answer;
 import com.preproject_009.member.entity.Member;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-02-22T21:55:24+0900",
-    comments = "version: 1.5.1.Final, compiler: javac, environment: Java 11.0.18 (Azul Systems, Inc.)"
+    date = "2023-02-27T16:38:43+0900",
+    comments = "version: 1.5.1.Final, compiler: javac, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
 public class AnswerMapperImpl implements AnswerMapper {
@@ -53,18 +53,20 @@ public class AnswerMapperImpl implements AnswerMapper {
         long memberId = 0L;
         long answerId = 0L;
         String content = null;
-        int totalVote = 0;
+        int totalVotes = 0;
         Answer.AnswerStatus answerStatus = null;
+        LocalDateTime createdAt = null;
         LocalDateTime modifiedAt = null;
 
         memberId = answerMemberMemberId( answer );
         answerId = answer.getAnswerId();
         content = answer.getContent();
-        totalVote = answer.getTotalVote();
+        totalVotes = answer.getTotalVotes();
         answerStatus = answer.getAnswerStatus();
+        createdAt = answer.getCreatedAt();
         modifiedAt = answer.getModifiedAt();
 
-        AnswerDto.Response response = new AnswerDto.Response( answerId, memberId, content, totalVote, answerStatus, modifiedAt );
+        AnswerDto.Response response = new AnswerDto.Response( answerId, memberId, content, totalVotes, answerStatus, createdAt, modifiedAt );
 
         return response;
     }
