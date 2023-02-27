@@ -1,5 +1,6 @@
 spring:
   datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://pre-009.cf1lvrl9ujgl.ap-northeast-2.rds.amazonaws.com:3306/pre009db
     username: Administrator
     password: qwerasdf
