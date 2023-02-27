@@ -125,6 +125,7 @@ const Qnotice = styled.div`
     }
   }
 `;
+
 const InputField = styled.div`
   display: flex;
   width: 100%;
@@ -274,6 +275,7 @@ const InputField = styled.div`
 
   }
 `
+
 const Sidebar = styled.div`
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   border: 1px solid var(--black__100);
@@ -312,7 +314,6 @@ const Sidebar = styled.div`
 `
 
 function Ask({setShowNav, setShowSidebar}) {
-const editorRef = useRef()
   const [isTitle, setIsTitle] = useState(false)
   const [isProblem, setIsProblem] = useState(false)
   const [isExpect, setIsExpect] = useState(false)
@@ -335,10 +336,6 @@ const editorRef = useRef()
     }
   }, [])
   
-
-  const titleButton = (e) => {
-  }
-console.log(addTitle)
   const tagInputHandler = (e) => {
     setinputTag(e.target.value)
     setIsTagList(true)
@@ -374,10 +371,10 @@ console.log(addTitle)
   }
 
   return (
-    <Container>
-      <Content onClick={(e) => {
+    <Container onClick={(e) => {
       setIsTagList(false) 
     }}>
+      <Content>
         {/* <form action="" onSubmit={e => e.preventDefault()}> */}
           <main className="question_form">
             <Qnotice>
@@ -467,7 +464,7 @@ console.log(addTitle)
                   </div>
                   {addTitle ? null : <div className="error_message">Title is missing.</div>}
                 </div>
-                <button className="blue_button" onClick={titleButton}>Next</button>
+                {/* <button className="blue_button" >Next</button> */}
               </div>
 
               {isTitle ? (
@@ -520,18 +517,18 @@ console.log(addTitle)
                     </div>
                     <Editor
                       className='text_editor'
-                      value={addTitle}
+                      value={addProblem}
                       focusFunction={() => {
                         setIsTitle(false);
                         setIsProblem(true);
                         setIsExpect(false);
                         setIsTag(false);
                       }}
-                      setter={setAddTitle}
+                      setter={setAddProblem}
                     >
                     </Editor>
                   </div>
-                  <button className='blue_button'>Next</button>
+                  {/* <button className='blue_button'>Next</button> */}
                 </div>
               </div>
 
@@ -581,20 +578,20 @@ console.log(addTitle)
                         </p>
                       </label>
                     </div>
-                    {/* <ToastEditor className="text_editor" vertical={'250px'} 
-                      setIsTitle={setIsTitle} setIsProblem={setIsTitle} setIsExpect={setIsTitle} setIsTag={setIsTitle}
-                    ></ToastEditor> */}
-                    {/* <EditorContainer className='toast_editor'>
-                      <Editor
-                        height='250px'
-                        width='100%'
-                        hideModeSwitch='true'
-                        ref={editorRef}
-                        onChange={onChange}
-                      ></Editor>
-                    </EditorContainer> */}
+                    <Editor
+                      className='text_editor'
+                      value={addExpect}
+                      focusFunction={() => {
+                        setIsTitle(false);
+                        setIsProblem(false);
+                        setIsExpect(true);
+                        setIsTag(false);
+                      }}
+                      setter={setAddExpect}
+                    >
+                    </Editor>
                   </div>
-                  <button className='blue_button'>Next</button>
+                  {/* <button className='blue_button'>Next</button> */}
                 </div>
               </div>
 
@@ -711,7 +708,7 @@ console.log(addTitle)
                   </div>
                 </div>
                 <div className="tag_suggestion"></div>
-                <button onClick={e => e.stopPropagation()} className="blue_button">Next</button>
+                {/* <button className="blue_button">Next</button> */}
               </div>
 
               {isTag ? (

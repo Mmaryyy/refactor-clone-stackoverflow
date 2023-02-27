@@ -54,3 +54,65 @@ export const deleteSingleContent = (postId) => {
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+//* axios 수정내용
+// import {getAllContents, getSingleContent, createContent, updateContent, deleteContent } from '../../api/question'
+
+// export const GET_CONTENT_LIST = "contents/GET_CONTENT_LIST"
+// export const GET_SINGLE_CONTENT = "contents/GET_SINGLE_CONTENT"
+// export const CREATE_CONTENT = "contents/CREATE_CONTENT"
+// export const UPDATE_CONTENT = "contents/UPDATE_CONTENT"
+// export const DELETE_CONTENT = "contents/DELETE_CONTENT"
+// export const CURRENT_DEFAULT = "contents/CURRENT_DEFAULT"
+// // export const VOTE_UP = "contents/VOTE_UP"
+
+// export const allContents = (page = 1) => {
+//     const allContents = getAllContents(page)
+//     return {
+//         type: GET_CONTENT_LIST,
+//         payload: allContents
+//     }
+// }
+
+// export const singleContents = (postId) => {
+//     const singleContent = getSingleContent(postId)
+//     return {
+//         type: GET_SINGLE_CONTENT,
+//         payload: singleContent
+//     }
+// }
+
+// export const newContent = (postId) => {
+//     const newContent = createContent(postId)
+//     return {
+//         type: CREATE_CONTENT,
+//         payload: newContent
+//     }
+// }
+
+// export const editContent = (postId) => {
+//     const editContent = updateContent(postId)
+//     return {
+//         type: UPDATE_CONTENT,
+//         payload: editContent
+//     }
+// }
+
+// export const removeContent = (postId) => {
+//     const allContents = deleteContent(postId)
+//     return {
+//         type: DELETE_CONTENT,
+//         payload: allContents
+//     }
+// }
+
