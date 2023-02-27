@@ -21,7 +21,7 @@ public class QuestionStubData {
         }
 
         public static Question getSingleResultQuestion() {
-            return new Question(1L, "java", "stub data");
+            return new Question(1L, "java", "stub data", Question.QuestionStatus.QUESTION_REGISTRATION);
         }
 
 

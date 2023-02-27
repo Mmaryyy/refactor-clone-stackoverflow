@@ -2,7 +2,7 @@ package com.preproject_009.question.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.preproject_009.answer.entity.Answer;
+import com.preproject_009.answer.mapper.entity.Answer;
 import com.preproject_009.audit.Auditable;
 import com.preproject_009.exception.BusinessLogicException;
 import com.preproject_009.exception.ExceptionCode;
@@ -92,12 +92,9 @@ public class Question extends Auditable {
     }
 
     public void canChangeQuestion(QuestionStatus questionStatus) {
-<<<<<<< HEAD
-        if (this.questionStatus == QuestionStatus.QUESTION_ANSWER_ACCEPTED) {
-=======
+
         if(this.questionStatus == QuestionStatus.QUESTION_ANSWER_ACCEPTED
         || this.questionStatus == QuestionStatus.QUESTION_ANSWERED) {
->>>>>>> 4e7034fb5d50f359dd94f1025a61348fd9928be9
             throw new BusinessLogicException(ExceptionCode.CANNOT_CHANGE_QUESTION);
         }
     }

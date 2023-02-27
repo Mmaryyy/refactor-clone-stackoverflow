@@ -1,7 +1,7 @@
 package com.preproject_009.answer.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.preproject_009.answer.entity.Answer;
+import com.preproject_009.answer.mapper.entity.Answer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -47,11 +47,7 @@ public class AnswerDto {
         @JsonProperty("totalVotes")
         private int totalVotes;
         private Answer.AnswerStatus answerStatus;
-<<<<<<< HEAD
-        //private LocalDateTime createdAt;
-=======
         private LocalDateTime createdAt;
->>>>>>> 4e7034fb5d50f359dd94f1025a61348fd9928be9
         private LocalDateTime modifiedAt;
     }
 }
