@@ -10,7 +10,7 @@ const Container = styled.main`
   flex-direction: column;
   /* height: 100vh; */
   margin-top: 60px;
-  margin-left: 165px;
+  /* margin-left: 165px; */
 `;
 const HeadContainer = styled.div`
   display: flex;

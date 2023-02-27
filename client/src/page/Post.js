@@ -14,7 +14,7 @@ const PostContainer = styled.div`
   padding: 15px;
   width: calc(100% - 165px - 300px);
   min-height: 80vh;
-  margin-left: 165px;
+  /* margin-left: 165px; */
   margin-top: 60px;
 `
 const HeaderContainer = styled.div`

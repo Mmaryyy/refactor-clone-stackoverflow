@@ -17,6 +17,7 @@ import Footer from './components/Footer';
 import Mypage from './page/Mypage';
 import Post from './page/Post';
 import Users from './page/Users';
+import EditPost from './page/EditPost'
 import { useDispatch, useSelector } from 'react-redux';
 
 function App() {
@@ -43,14 +44,8 @@ function App() {
         {isReady ? (
           <Index />
         ) : (
-          <div
-            className={
-              pathname.includes('in') || pathname.includes('k')
-                ? 'background_box'
-                : null
-            }
-          >
-            <div className='app_wrap'>
+          <div className={ pathname.includes('in') || pathname.includes('k') ? 'background_box' : null }>
+            <div className={ pathname.includes('k') ? null : 'app_wrap'}>
               {showNav ? <Nav /> : null}
               <Routes>
                 <Route
@@ -77,17 +72,16 @@ function App() {
                 <Route path='/login' element={<Login setShowNav={setShowNav} setShowFooter={setShowFooter} setShowSidebar={setShowSidebar} />} />
                 <Route path='/join' element={<Join setShowNav={setShowNav} setShowFooter={setShowFooter} setShowSidebar={setShowSidebar}/>} />
                 <Route path='/ask' element={<Ask setShowNav={setShowNav} setShowSidebar={setShowSidebar}/>} />
+                {/* <Route path='/edit' element={<Ask setShowNav={setShowNav} setShowSidebar={setShowSidebar}/>} /> */}
                 <Route path='/users' element={<Users setShowNav={setShowNav} setShowSidebar={setShowSidebar}/>} />
+                <Route path='/edit' element={<EditPost setShowSidebar={setShowSidebar}/>} />
               </Routes>
               {showSidebar ? (
                 <div className='sidebar'>
                   <Sidebar />
-                  {/* <Sidebar2 /> */}
+                  <Sidebar2 />
                 </div>
               ) : null}
-              {/* <Login />
-              <Join /> */}
-              {/* <Login /> */}
             </div>
           </div>
         )}

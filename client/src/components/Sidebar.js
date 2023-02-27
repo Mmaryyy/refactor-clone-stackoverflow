@@ -2,36 +2,13 @@ import styled from "styled-components";
 import { Link } from "react-router-dom"
 
 
-//* GlobalStyle -> sidebar(전체 컨테이너) 반영 전
-// const Container = styled.div`
-// width: 300px;
-// background-color: rgb(253,247,226);
-// margin: 0px 0px 15px 24px;
-// box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-// `;
-
-// const Blog = styled.div`
-// margin: 0px 0px 16px 0px;
-// `;
-
-//* GlobalStyle -> sidebar(전체 컨테이너) 반영 후
-//! GlobalStyle .sidebar추가
-// .sidebar {
-//   width: 300px;
-//   margin: 0px 0px 15px 24px;
-// }
-//! App.js 엘리먼트 추가(</Routes> 밑에 추가해서 작업함)
-//<div className="sidebar">
-//  <Sidebar />
-//  <Sidebar2 />
-//</div> */}
-
-
 const Container = styled.div`
 margin-top: 60px;
 margin-bottom: 20px;
 background-color: rgb(253,247,226);
 box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+border: 1px solid rgb(241,230,187);
+border-radius: 3px;
   ul {
     display:flex;
     flex-direction: column;
@@ -42,11 +19,16 @@ box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     padding: 12px 15px;
     font-weight: 700;
     font-size: 13px;
-    border: 1px solid rgb(241,230,187);
+    border-bottom: 1px solid rgb(241,230,187);
     background-color: rgb(251,243,213);
     color: var(--black__400);
     margin-bottom: 12px;
+    /* border: 1px solid rgb(241,230,187); */
+    &.bottom {
+      border-top: 1px solid rgb(241,230,187);
+    }
   }
+  
 
   .li-list {
     display: flex !important;
@@ -120,7 +102,7 @@ function Sidebar() {
           </Link>
         </li>
 
-        <li className="li-header">Featured on Meta</li>
+        <li className="li-header bottom">Featured on Meta</li>
 
         <li className="li-list">
           <div>📋</div>

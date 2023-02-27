@@ -5,34 +5,44 @@ import Avatar from './Mypage/Avatar';
 import { Link } from 'react-router-dom';
 import { SubmitButton } from '../styles/styledcomponents';
 
+
+const Container = styled.header`
+width: 100%;
+min-width: auto;
+/* max-width: 1264px; */
+height: 60px;
+background-color: #f8f9f9;
+border-top: 3px solid #f48225;
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+z-index: 999;
+box-shadow: 0 1px 2px hsla(0,0%,0%,0.05), 0 1px 4px hsla(0, 0%, 0%, 0.05), 0 2px 8px hsla(0, 0%, 0%, 0.05);
+`;
+
+
 const Wrapper = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  min-width: auto;
+  max-width: 1264px;
+  margin: 0 auto;
   height: 60px;
-  background-color: #f8f9f9;
-  border-top: 3px solid #f48225;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  padding: 0 10vw;
-  z-index: 999;
-  box-shadow: 0 1px 2px hsla(0,0%,0%,0.05), 0 1px 4px hsla(0, 0%, 0%, 0.05), 0 2px 8px hsla(0, 0%, 0%, 0.05);
-  //header 위치 고정
-  z-index: 999;
+  /* padding: 0 10vw; */
 `;
 
 const Logo = styled.img`
-  width: 200px;
+  width: 150px;
 `;
 
 const ProductsLink = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 5px 10px 0 0;
+  margin: 0 10px 0 0;
   height: 30px;
   text-decoration: none;
   &:hover {
@@ -106,7 +116,7 @@ export default function Header() {
   };
 
   return (
-    <>
+    <Container>
       <Wrapper>
         <ProductsLink to='/'>
           <Logo src={logo} alt='stackoverflow logo' />
@@ -206,6 +216,6 @@ export default function Header() {
           </>
         )}
       </Wrapper>
-    </>
+    </Container>
   );
 }

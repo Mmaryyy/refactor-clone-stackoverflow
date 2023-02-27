@@ -2,8 +2,14 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 
+const Container = styled.div`
+border-right: 1px solid var(--tab__focus);
+width: 165px;
+flex-shrink: 0;
+`;
+
 const NavContainer = styled.ul`
-  border-right: 1px solid var(--tab__focus);
+  /* border-right: 1px solid var(--tab__focus); */
   width: 165px;
   height: calc(100vh);
   display: flex;
@@ -12,7 +18,7 @@ const NavContainer = styled.ul`
   font-weight: 400;
   position: fixed;
   top: 60px;
-  left: 10vw;
+  /* left: 10vw; */
 `;
 const TapContainer = styled.div`
   display: flex;
@@ -37,7 +43,7 @@ const TapLink = styled(Link)`
     color: black;
   }
   &.home {
-    padding: 20px 15px;
+    padding: 30px 20px 25px 20px;
   }
   &.menu {
     padding-left: 35px;
@@ -49,24 +55,26 @@ const TabTitle = styled.p`
 `;
 const Nav = () => {
   return (
-    <NavContainer>
-      <TapLink className='home' to='/'>
-        Home
-      </TapLink>
-      <TabTitle>PUBLIC</TabTitle>
-      <TapContainer>
-        <TapLink to='/questions'>
-          <BlankBox>🌏</BlankBox>
-          Questions
+    <Container>
+      <NavContainer>
+        <TapLink className='home' to='/'>
+          Home
         </TapLink>
-        <TapLink className='menu' to='/tags'>
-          Tags
-        </TapLink>
-        <TapLink className='menu' to='/users'>
-          Users
-        </TapLink>
-      </TapContainer>
-    </NavContainer>
+        <TabTitle>PUBLIC</TabTitle>
+        <TapContainer>
+          <TapLink to='/questions'>
+            <BlankBox>🌏</BlankBox>
+            Questions
+          </TapLink>
+          <TapLink className='menu' to='/tags'>
+            Tags
+          </TapLink>
+          <TapLink className='menu' to='/users'>
+            Users
+          </TapLink>
+        </TapContainer>
+      </NavContainer>
+    </Container>
   );
 };
 
