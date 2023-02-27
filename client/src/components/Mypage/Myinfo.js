@@ -145,7 +145,11 @@ const Button = styled(TagButton)`
 export default function Myinfo({ setShowSidebar }) {
   useEffect(() => {
     setShowSidebar(false);
+    return () => {
+      setShowSidebar(true);
+    };
   }, []);
+
   return (
     <div>
       <UserInfoCard />

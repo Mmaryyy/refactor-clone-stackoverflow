@@ -88,7 +88,7 @@ export default function Users({ setShowSidebar }) {
     setShowSidebar(false);
     return () => {
       setShowSidebar(true);
-    }
+    };
   }, []);
   // const dispatch = useDispatch();
   // useEffect(() => {

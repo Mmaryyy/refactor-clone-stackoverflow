@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import UserInfoCard from './UserInfoCard';
@@ -86,7 +86,13 @@ const Button = styled.button`
   font-size: var(--fs--lg);
 `;
 
-export default function Myinfo() {
+export default function Myinfo({ setShowSidebar }) {
+  useEffect(() => {
+    setShowSidebar(false);
+    return () => {
+      setShowSidebar(true);
+    };
+  }, []);
   const [buttonChecked, setButtonChecked] = useState(false);
 
   const clickHandler = (e) => {
