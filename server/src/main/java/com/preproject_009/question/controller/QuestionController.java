@@ -34,9 +34,9 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @Validated
-@RequestMapping("/questions")
+@RequestMapping("/api/questions")
 public class QuestionController {
-    private final static String QUESTION_DEFAULT_URL = "/questions";
+    private final static String QUESTION_DEFAULT_URL = "/api/questions";
     private final QuestionRepository questionRepository;
     private final QuestionMapper questionMapper;
     private final QuestionService questionService;
