@@ -1,21 +1,16 @@
-import contents from '../../datas/contents.json'
-import userData from '../../datas/userData.json'
-import answers from '../../datas/answers.json'
-//contents 액션
-export const GET_SINGLE_CONTENT = "answers/GET_SINGLE_CONTENT"
-export const GET_CONTENT_LIST = "answers/GET_CONTENT_LIST"
+import { addAnswer, patchAnswer, deleteAnswer } from "../../api/answer"
+//answer 액션 생성 함수
+export const ADD_ANSWER = 'answer/ADD_ANSWER'
+export const PATCH_ANSWER = 'answer/PATCH_ANSWER'
+export const DELETE_ANSWER = 'answer/DELETE_ANSWER'
 
-export const getSingleContent = (postId) => {
-    const id = Number(postId)
-    const content = contents.filter(el => el.shortId === id)[0]
-    const author = userData.filter(el => el.contents.includes(id))[0]
-    const answer = answers.filter(el => el.contentNumber === id)
+export const addSingleAnswer = (questionId, answerId, content) => {
     return {
-        type: GET_SINGLE_CONTENT,
+        type: ADD_ANSWER,
         payload: {
-            content,
-            author,
-            answer,
+            questionId,
+            answerId,
+            content
         }
     }
 }

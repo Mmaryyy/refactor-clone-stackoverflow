@@ -1,4 +1,4 @@
-import { GET_SINGLE_CONTENT, GET_CONTENT_LIST, VOTE_UP } from "../actions/contents"
+import { GET_SINGLE_CONTENT, GET_CONTENT_LIST, VOTE_UP, SET_CURRENT_CONTENT, CLEAR_CURRENT_CONTENT } from "../actions/contents"
 const initialState = {
     contentList: [],
     currentContent: {
@@ -6,7 +6,8 @@ const initialState = {
         author: {},
         answer: []
     },
-    currentVote: 0
+    currentVote: 0,
+    currentPostContent: {}
 }
 
 export const contentsReducer = (state = initialState, action) => {
@@ -26,6 +27,16 @@ export const contentsReducer = (state = initialState, action) => {
         ...state,
         currentVote: action.payload.votes
       };
+    case SET_CURRENT_CONTENT:
+      return {
+        ...state,
+        currentPostContent: action.payload
+      }
+    case CLEAR_CURRENT_CONTENT:
+      return {
+        ...state,
+        currentPostContent: action.payload
+      }
     default:
       return state;
   }

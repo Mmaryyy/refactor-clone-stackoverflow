@@ -26,9 +26,8 @@ function App() {
   const [showNav, setShowNav] = useState(true);
   const [showFooter, setShowFooter] = useState(true);
   const [showSidebar, setShowSidebar] = useState(true);
-
+  const [ isSearch, setIsSearch ] = useState(false)
   useEffect(() => {
-    // window.scrollTo(0, 0)
     setTimeout(() => {
       setIsReady(false);
     }, 5000);
@@ -38,7 +37,7 @@ function App() {
   }, [ pathname ])
   return (
     <>
-      <Header />
+      <Header setIsSearch={setIsSearch}/>
       <Fragment>
         <GlobalStyle />
         {isReady ? (
@@ -59,6 +58,7 @@ function App() {
                   }
                 />
                 <Route path='/questions' element={<Contents />} />
+                <Route path='/search/*' element={<Contents isSearch={isSearch}/>} />
                 <Route
                   path='/mypage/*'
                   element={<Mypage setShowSidebar={setShowSidebar} />}

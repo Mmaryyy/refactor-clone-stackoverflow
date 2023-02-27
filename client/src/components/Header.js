@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import logo from '../img/logo.png';
 import Avatar from './Mypage/Avatar';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { SubmitButton } from '../styles/styledcomponents';
 
 const Container = styled.header`
@@ -90,10 +90,10 @@ const Icon = styled.div`
   }
 `;
 
-export default function Header() {
+export default function Header({ setIsSearch }) {
   const [login, setLogin] = useState(false);
   const [search, setSearch] = useState('');
-
+  const navigate = useNavigate()
   //
   const loginHandler = () => {
     setLogin(true);
@@ -110,9 +110,15 @@ export default function Header() {
   };
   console.log(search);
 
-  const searchHandler = () => {
+  const searchHandler = (e) => {
     // search data
     setSearch('');
+    e.preventDefault()
+    if (e.key === 'Enter') {
+      console.log('enter event')
+      setIsSearch(true)
+      navigate('/search')
+    }
   };
 
   return (
@@ -139,7 +145,7 @@ export default function Header() {
           </>
         )}
         <SearchWrapper onChange={searchHandler}>
-          <SearchInput onChange={searchInputHandler} type='text' />
+          <SearchInput onChange={searchInputHandler} onKeyPress={searchHandler} type='text' />
         </SearchWrapper>
         {login ? (
           <>
