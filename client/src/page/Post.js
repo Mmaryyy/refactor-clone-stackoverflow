@@ -1,8 +1,8 @@
-import { useEffect, useState, useRef } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { getTimeGap } from '../utils/dateUtil'
-import { getSingleContent } from '../redux/actions/contents'
+import { getSingleContent, clearCurrentContent } from '../redux/actions/contents'
 import styled from 'styled-components'
 import { SubmitButton, TagButton, LinkContent, SubmitInput } from '../styles/styledcomponents'
 // import { ToastEditor } from '../components/TextEditor'
@@ -90,24 +90,27 @@ const Post = () => {
   // 접근 1. content -> title 클릭 -> post
   // 접근 2. url을 통해 구분된 게시글 id로 접근
   const { postId } = useParams()
+  const navigate = useNavigate()
   // TODO: postId app 에서 받아와서 변수로 바꾸기 !!!!!
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getSingleContent(postId))
   }, [])
   const singleContent = useSelector(state => state.contentsReducer.currentContent)
-  // console.log(singleContent)
+  console.log(singleContent)
   const { content, author, answer } = singleContent
   const asked = getTimeGap(content.createdAt)
   const modified = getTimeGap(content.lastModifiedAt)
   const [ showNotice, setShowNotice ] = useState(false)
-  // const userData = useSelector(state => state.userDataReducer.userData)
-  // const author = userData.filter(el => el.contents.includes(singleContent.shortId))[0]
   const closeNotice = () => {
     setShowNotice(false)
   }
   const openNotice = () => {
     setShowNotice(true)
+  }
+  const handleNewQuestion = () => {
+    dispatch(clearCurrentContent())
+    navigate('/ask')
   }
   const [ answerBody, setAnswerBody ] = useState('')
   console.log('answerBody: ', answerBody)
@@ -118,7 +121,7 @@ const Post = () => {
       <HeaderContainer className="header_container">
         <CommonWrapper direct={"space-between"} className="title_wrapper" padding={"0 10px"}>
           <Title>{content.title}</Title>
-          <SubmitButton>Ask questions</SubmitButton>
+          <SubmitButton onClick={handleNewQuestion}>Ask questions</SubmitButton>
         </CommonWrapper>
         <SummaryWrapper className="summary_wrapper">
           <Item>Asked</Item>
@@ -129,7 +132,7 @@ const Post = () => {
           <span>{content.view}</span>
         </SummaryWrapper>
       </HeaderContainer>
-      <PostBlock content={content} author={author}></PostBlock>
+      <PostBlock content={content} author={author} postId={postId}/>
       <div className='answer_container'>
         <NoticeText>{answer.length === 0 ? 
         <NoticeText>
@@ -138,7 +141,7 @@ const Post = () => {
         :`${answer.length} Answers`}</NoticeText>
         {answer.map((el, idx) => {
           return (
-            <PostBlock key={idx} className='answer' content={el} author={el.author} isAnswer={true}></PostBlock>
+            <PostBlock key={idx} className='answer' content={el} author={el.author} isAnswer={true} questionId={postId} answerId={el.shortId}/>
           )
         })}
       </div>
@@ -151,10 +154,6 @@ const Post = () => {
       }}
       action='' 
       method='POST'>
-      {/* <ToastEditor className="text_editor" 
-      focusFunction={openNotice}
-      setter={setAnswerBody}
-      /> */}
       <Editor 
       value={answerBody} 
       setter={setAnswerBody}

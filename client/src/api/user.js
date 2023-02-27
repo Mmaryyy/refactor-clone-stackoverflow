@@ -5,29 +5,9 @@ export const getAllUser = async (page) => {
   return allUser;
 };
 
-<<<<<<< Updated upstream
-export const getLoginUser = async () => {
-  const loginUser = await axios({
-    url: ``,
-    method: 'post',
-    headers: 'token',
-    data: {
-      id: '',
-      password: '',
-    },
-  })
-    .then((res) => console.log(res))
-    .catch((error) => console.log('error: ', error));
-  return loginUser;
-=======
-let body = {
-  id,
-  password,
-};
-
 export const getLoginUser = async () => {
   await axios
-    .post(`members/`, body)
+    .post(`members/`)
     .then((res) => console.log(res))
     // 로그인 성공하면 로컬스토리지에 담아줌
     // localStorage.setItem("key", value)
@@ -70,5 +50,4 @@ export const deleteUser = async (memberId) => {
     })
     .then((res) => console.log(res))
     .catch((err) => console.log(err));
->>>>>>> Stashed changes
 };

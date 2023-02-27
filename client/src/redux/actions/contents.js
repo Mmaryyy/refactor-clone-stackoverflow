@@ -8,6 +8,8 @@ export const GET_SINGLE_CONTENT = "contents/GET_SINGLE_CONTENT"
 export const GET_CONTENT_LIST = "contents/GET_CONTENT_LIST"
 export const VOTE_UP = "contents/VOTE_UP"
 export const DELETE_CONTENT = 'contents/DELETE_CONTENT'
+export const SET_CURRENT_CONTENT = 'contents/SET_CURRENT_CONTENT'
+export const CLEAR_CURRENT_CONTENT = 'contents/CLEAR_CURRENT_CONTENT'
 
 export const getSingleContent = (postId) => {
     const id = Number(postId)
@@ -21,6 +23,20 @@ export const getSingleContent = (postId) => {
             author,
             answer,
         }
+    }
+}
+export const setCurrentContent = (content) => {
+    return {
+        type: SET_CURRENT_CONTENT,
+        payload: {
+            ...content
+        }
+    }
+}
+export const clearCurrentContent = () => {
+    return {
+        type: CLEAR_CURRENT_CONTENT,
+        payload: {}
     }
 }
 export const getContentList = () => {
