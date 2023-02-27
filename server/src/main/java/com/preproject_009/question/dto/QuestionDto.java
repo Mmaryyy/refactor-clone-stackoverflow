@@ -1,7 +1,7 @@
 package com.preproject_009.question.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.preproject_009.answer.entity.Answer;
+import com.preproject_009.answer.mapper.entity.Answer;
 import com.preproject_009.q_comment.entity.QuestionComment;
 import com.preproject_009.question.entity.Question;
 import lombok.AllArgsConstructor;

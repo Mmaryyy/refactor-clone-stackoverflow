@@ -3,8 +3,7 @@ package com.preproject_009.stubdata;
 import com.preproject_009.a_comment.dto.AnswerCommentDto;
 import com.preproject_009.a_comment.entity.AnswerComment;
 import com.preproject_009.answer.dto.AnswerDto;
-import com.preproject_009.answer.entity.Answer;
-import org.hibernate.loader.entity.NaturalIdEntityJoinWalker;
+import com.preproject_009.answer.mapper.entity.Answer;
 import org.springframework.http.HttpMethod;
 
 import java.time.LocalDateTime;
