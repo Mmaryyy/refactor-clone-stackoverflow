@@ -5,7 +5,6 @@ import com.preproject_009.answer.entity.Answer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.util.Assert;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -47,11 +46,7 @@ public class AnswerDto {
         @JsonProperty("totalVotes")
         private int totalVotes;
         private Answer.AnswerStatus answerStatus;
-<<<<<<< HEAD
-        //private LocalDateTime createdAt;
-=======
         private LocalDateTime createdAt;
->>>>>>> 4e7034fb5d50f359dd94f1025a61348fd9928be9
         private LocalDateTime modifiedAt;
     }
 }
