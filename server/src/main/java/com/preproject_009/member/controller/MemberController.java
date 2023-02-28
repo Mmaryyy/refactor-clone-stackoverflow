@@ -32,6 +32,7 @@ import java.util.List;
  * Description : Member Controller
  */
 
+@RestController
 @RequestMapping("/api/members")
 @Validated
 public class MemberController {
