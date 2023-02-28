@@ -64,11 +64,11 @@ public class SecurityConfiguration {
 //                        .antMatchers(HttpMethod.POST, "/answers/**").hasAnyRole("USER", "ADMIN") // 답변 좋아요
 //                        .antMatchers(HttpMethod.DELETE, "/answers/**").hasAnyRole("USER", "ADMIN") // 답변 삭제
                                 .antMatchers("/login").permitAll()
-                                .antMatchers(HttpMethod.POST, "/members").permitAll()
-                                .antMatchers(HttpMethod.PATCH, "/members/**").hasAnyRole("USER", "ADMIN")
-                                .antMatchers(HttpMethod.GET, "/members").hasAnyRole("USER", "ADMIN")
-                                .antMatchers(HttpMethod.GET, "/members/**").hasAnyRole("USER", "ADMIN")
-                                .antMatchers(HttpMethod.DELETE, "/members/**").hasRole("USER")
+                                .antMatchers(HttpMethod.POST, "/api/members").permitAll()
+                                .antMatchers(HttpMethod.PATCH, "/api/members/**").hasAnyRole("USER", "ADMIN")
+                                .antMatchers(HttpMethod.GET, "/api/members").hasAnyRole("USER", "ADMIN")
+                                .antMatchers(HttpMethod.GET, "/api/members/**").hasAnyRole("USER", "ADMIN")
+                                .antMatchers(HttpMethod.DELETE, "/api/members/**").hasRole("USER")
                                 .anyRequest().permitAll()
                 );
         return http.build();
