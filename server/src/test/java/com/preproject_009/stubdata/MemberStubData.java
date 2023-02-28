@@ -20,6 +20,7 @@ public class MemberStubData {
             stubRequestBody.put(HttpMethod.POST, new MemberDto.Post("jun1@naver.com",
                     "최준영",
                     "안녕하세요. 최준영 입니다.",
+                    "안녕하세요. 최준영 입니다.",
                     "12341234a!"));
             stubRequestBody.put(HttpMethod.PATCH, new MemberDto.Patch(1, "홍길동", "안녕하세요 인사드립니다.", Member.MemberStatus.MEMBER_ACTIVE));
         }
