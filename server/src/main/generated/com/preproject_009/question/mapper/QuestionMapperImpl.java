@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-02-28T14:26:51+0900",
+    date = "2023-02-28T17:07:29+0900",
     comments = "version: 1.5.1.Final, compiler: javac, environment: Java 11.0.18 (Azul Systems, Inc.)"
 )
 @Component
@@ -58,7 +58,7 @@ public class QuestionMapperImpl implements QuestionMapper {
         String memberName = null;
         String memberImage = null;
         List<QuestionComment> questionComments = null;
-        List<Answer> answers = null;
+        List<QuestionDto.Response.AnswerWithMemberInfo> answers = null;
         long questionId = 0L;
         String title = null;
         String content = null;
@@ -75,10 +75,7 @@ public class QuestionMapperImpl implements QuestionMapper {
         if ( list != null ) {
             questionComments = new ArrayList<QuestionComment>( list );
         }
-        List<Answer> list1 = question.getAnswers();
-        if ( list1 != null ) {
-            answers = new ArrayList<Answer>( list1 );
-        }
+        answers = answerListToAnswerWithMemberInfoList( question.getAnswers() );
         questionId = question.getQuestionId();
         title = question.getTitle();
         content = question.getContent();
@@ -102,6 +99,47 @@ public class QuestionMapperImpl implements QuestionMapper {
         List<QuestionDto.Response> list = new ArrayList<QuestionDto.Response>( questions.size() );
         for ( Question question : questions ) {
             list.add( questionToQuestionResponseDto( question ) );
+        }
+
+        return list;
+    }
+
+    @Override
+    public QuestionDto.Response.AnswerWithMemberInfo answerToAnswerWithMemberInfo(Answer answer) {
+        if ( answer == null ) {
+            return null;
+        }
+
+        long memberId = 0L;
+        String memberName = null;
+        String memberImage = null;
+        long answerId = 0L;
+        String content = null;
+        Answer.AnswerStatus answerStatus = null;
+        int totalVotes = 0;
+
+        memberId = answerMemberMemberId( answer );
+        memberName = answerMemberName( answer );
+        memberImage = answerMemberImg( answer );
+        answerId = answer.getAnswerId();
+        content = answer.getContent();
+        answerStatus = answer.getAnswerStatus();
+        totalVotes = answer.getTotalVotes();
+
+        QuestionDto.Response.AnswerWithMemberInfo answerWithMemberInfo = new QuestionDto.Response.AnswerWithMemberInfo( answerId, content, answerStatus, memberId, memberName, memberImage, totalVotes );
+
+        return answerWithMemberInfo;
+    }
+
+    @Override
+    public List<QuestionDto.Response.AnswerWithMemberInfo> answersToAnswerWithMemberInfos(List<QuestionDto.Response.AnswerWithMemberInfo> infos) {
+        if ( infos == null ) {
+            return null;
+        }
+
+        List<QuestionDto.Response.AnswerWithMemberInfo> list = new ArrayList<QuestionDto.Response.AnswerWithMemberInfo>( infos.size() );
+        for ( QuestionDto.Response.AnswerWithMemberInfo answerWithMemberInfo : infos ) {
+            list.add( answerWithMemberInfo );
         }
 
         return list;
@@ -139,6 +177,61 @@ public class QuestionMapperImpl implements QuestionMapper {
             return null;
         }
         Member member = question.getMember();
+        if ( member == null ) {
+            return null;
+        }
+        String img = member.getImg();
+        if ( img == null ) {
+            return null;
+        }
+        return img;
+    }
+
+    protected List<QuestionDto.Response.AnswerWithMemberInfo> answerListToAnswerWithMemberInfoList(List<Answer> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<QuestionDto.Response.AnswerWithMemberInfo> list1 = new ArrayList<QuestionDto.Response.AnswerWithMemberInfo>( list.size() );
+        for ( Answer answer : list ) {
+            list1.add( answerToAnswerWithMemberInfo( answer ) );
+        }
+
+        return list1;
+    }
+
+    private long answerMemberMemberId(Answer answer) {
+        if ( answer == null ) {
+            return 0L;
+        }
+        Member member = answer.getMember();
+        if ( member == null ) {
+            return 0L;
+        }
+        long memberId = member.getMemberId();
+        return memberId;
+    }
+
+    private String answerMemberName(Answer answer) {
+        if ( answer == null ) {
+            return null;
+        }
+        Member member = answer.getMember();
+        if ( member == null ) {
+            return null;
+        }
+        String name = member.getName();
+        if ( name == null ) {
+            return null;
+        }
+        return name;
+    }
+
+    private String answerMemberImg(Answer answer) {
+        if ( answer == null ) {
+            return null;
+        }
+        Member member = answer.getMember();
         if ( member == null ) {
             return null;
         }

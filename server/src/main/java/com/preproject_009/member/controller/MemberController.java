@@ -24,7 +24,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Writer : 최준영
@@ -60,21 +62,22 @@ public class MemberController {
 
     // 유저 생성
     @PostMapping
-    public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post requestBody){
+    public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post requestBody) {
         Member member = mapper.memberPostToMember(requestBody);
 
         Member createdMember = memberService.createMember(member);
-        URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, createdMember.getMemberId());
-
-        return ResponseEntity.created(location).build();
-//        return new ResponseEntity<>(response(createdMember), HttpStatus.CREATED);
+//        URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, createdMember.getMemberId());
+//        return ResponseEntity.created(location).build();
+        Map<String, String> maps = new HashMap<>();
+        maps.put("img", createdMember.getImg());
+        return new ResponseEntity<>(maps, HttpStatus.CREATED);
     }
 
     // 유저 수정
     @PatchMapping("/{member-id}")
     public ResponseEntity patchMember(
             @PathVariable("member-id") @Positive long memberId,
-            @Valid @RequestBody MemberDto.Patch requestBody){
+            @Valid @RequestBody MemberDto.Patch requestBody) {
         requestBody.addMemberId(memberId);
 
         Member member =
@@ -86,14 +89,14 @@ public class MemberController {
     // 특정 유저 조회
     @GetMapping("/{member-id}")
     public ResponseEntity getMember(
-            @PathVariable("member-id") @Positive long memberId){
+            @PathVariable("member-id") @Positive long memberId) {
         Member member = memberService.findMember(memberId);
         return new ResponseEntity<>(response(member), HttpStatus.OK);
     }
 
     // 유저 조회
     @GetMapping
-    public ResponseEntity getMembers(@Positive @RequestParam int page){
+    public ResponseEntity getMembers(@Positive @RequestParam int page) {
         Page<Member> pageMembers = memberService.findMembers(page, pageSize);
         List<Member> members = pageMembers.getContent();
         return new ResponseEntity<>(
@@ -106,7 +109,7 @@ public class MemberController {
     // 유저 삭제 처리
     @DeleteMapping("/{member-id}")
     public ResponseEntity deleteMember(
-            @PathVariable("member-id") @Positive long memberId){
+            @PathVariable("member-id") @Positive long memberId) {
         memberService.deleteMember(memberId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -126,7 +129,7 @@ public class MemberController {
     }
 
     @GetMapping("/{member-id}/questions")
-    public ResponseEntity getQuestions(@PathVariable("member-id") @Positive long memberId){
+    public ResponseEntity getQuestions(@PathVariable("member-id") @Positive long memberId) {
         Page<Question> questionPage = questionService.findQuestionsByMember(memberId);
         List<Question> questions = questionPage.getContent();
 
@@ -154,7 +157,7 @@ public class MemberController {
         return new ResponseEntity<>(answerMapper.answerToAnswerResponse(answer), HttpStatus.OK);
     }
 
-    public MemberDto.response response(Member member){
+    public MemberDto.response response(Member member) {
         return mapper.memberToMemberResponse(member);
     }
 }

@@ -55,20 +55,19 @@ public class SecurityConfiguration {
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
                                 // 로그인
-                                .antMatchers("/login").permitAll()
+                                .antMatchers("/api/login").permitAll()
+                                // 질문 조회
+                                .antMatchers(HttpMethod.GET, "/api/members/*/questions").permitAll()
                                 // 멤버 생성
                                 .antMatchers(HttpMethod.POST, "/api/members").permitAll()
                                 // 멤버 수정
                                 .antMatchers(HttpMethod.PATCH, "/api/members/**").hasAnyRole("USER", "ADMIN")
                                 // 전체 멤버 조회
-                                .antMatchers(HttpMethod.GET, "/api/members").hasAnyRole("USER", "ADMIN")
-                                // 멤버 조회
+                                .antMatchers(HttpMethod.GET, "/api/members").permitAll()
+                                // 특정 멤버 조회
                                 .antMatchers(HttpMethod.GET, "/api/members/**").hasAnyRole("USER", "ADMIN")
                                 // 멤버 삭제
-                                .antMatchers(HttpMethod.DELETE, "/api/members/**").hasRole("USER")
-//                        .antMatchers(HttpMethod.DELETE, "/questions/**").hasAnyRole("USER", "ADMIN") // 질문 삭제
-//                        .antMatchers(HttpMethod.POST, "/answers/**").hasAnyRole("USER", "ADMIN") // 답변 좋아요
-//                        .antMatchers(HttpMethod.DELETE, "/answers/**").hasAnyRole("USER", "ADMIN") // 답변 삭제
+                                .antMatchers(HttpMethod.DELETE, "/api/members/**").hasAnyRole("USER", "ADMIN")
                                 .anyRequest().permitAll()
                 );
         return http.build();
@@ -82,7 +81,7 @@ public class SecurityConfiguration {
 
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);
 
-            jwtAuthenticationFilter.setFilterProcessesUrl("/login");
+            jwtAuthenticationFilter.setFilterProcessesUrl("/api/login");
 
             jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler());
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());

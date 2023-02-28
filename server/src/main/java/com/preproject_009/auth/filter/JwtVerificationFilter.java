@@ -64,7 +64,6 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     private Map<String, Object> verifyJws(HttpServletRequest request) {
         // header에서 JWT 값 입수 (클라이언트 측에서 request로 전달한 값)
         String jws = request.getHeader("Authorization").replace("Bearer ", "");
-        System.out.println("jws는 과연 뜨나? : " + jws);
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
 
         Map<String, Object> claims = jwtTokenizer.getClaims(jws, base64EncodedSecretKey).getBody();

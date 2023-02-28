@@ -102,6 +102,7 @@ public class JwtTokenizer {
         return expiration;
     }
 
+
     private Key getKeyFromBase64EncodedKey(String base64EncodedSecretKey) {
 
         byte[] keyBytes = Decoders.BASE64.decode(base64EncodedSecretKey);
