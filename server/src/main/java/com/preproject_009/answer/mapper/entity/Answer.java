@@ -1,5 +1,6 @@
 package com.preproject_009.answer.mapper.entity;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.preproject_009.a_comment.entity.AnswerComment;
@@ -19,6 +20,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Answer extends Auditable {
 
     @Id
@@ -95,4 +97,10 @@ public class Answer extends Auditable {
     public List<AnswerVote> getAnswerVotes() {
         return answerVotes;
     }
+
+//    public void setMemberInfo(Member member) {
+//        this.memberInfoId = member.getMemberId();
+//        this.memberInfoName = member.getName();
+//        this.memberInfoImg = member.getImg();
+//    }
 }

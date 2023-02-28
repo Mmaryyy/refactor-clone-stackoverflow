@@ -1,5 +1,6 @@
 package com.preproject_009.member.entity;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.preproject_009.a_comment.entity.AnswerComment;
 import com.preproject_009.answer.mapper.entity.Answer;
@@ -24,6 +25,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Member extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
