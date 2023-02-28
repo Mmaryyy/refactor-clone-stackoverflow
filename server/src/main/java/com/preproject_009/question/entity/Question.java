@@ -12,7 +12,6 @@ import com.preproject_009.tag.Tag;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -101,6 +100,16 @@ public class Question extends Auditable {
     public void setQuestionStatus(QuestionStatus questionStatus) {
         canChangeQuestion(questionStatus);
         this.questionStatus = questionStatus;
+    }
+
+    public void setQuestionStatusAccept(QuestionStatus questionStatus) {
+        if(this.questionStatus == QuestionStatus.QUESTION_ANSWER_ACCEPTED
+        || this.questionStatus == QuestionStatus.QUESTION_DELETE) {
+            throw new BusinessLogicException(ExceptionCode.CANNOT_CHANGE_QUESTION);
+        }
+        else {
+            this.questionStatus = questionStatus;
+        }
     }
 
     public int getTotalVotes() {

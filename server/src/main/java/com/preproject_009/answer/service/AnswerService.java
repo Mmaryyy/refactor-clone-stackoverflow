@@ -95,7 +95,7 @@ public class AnswerService {
         } else {
             Question findQuestion = questionService.findQuestion(questionId);
             findAnswer.setAnswerStatus(Answer.AnswerStatus.ANSWER_ACCEPTED);
-            findQuestion.setQuestionStatus(Question.QuestionStatus.QUESTION_ANSWER_ACCEPTED);
+            findQuestion.setQuestionStatusAccept(Question.QuestionStatus.QUESTION_ANSWER_ACCEPTED);
         }
 
         return answerRepository.save(findAnswer);
