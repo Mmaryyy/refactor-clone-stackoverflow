@@ -21,19 +21,11 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-<<<<<<< HEAD
-@RequestMapping("/answers")
-@Validated
-@RequiredArgsConstructor
-public class AnswerController {
-    private final static String ANSWER_DEFAULT_URL = "/answers";
-=======
 @RequestMapping("/api/answers")
 @Validated
 @RequiredArgsConstructor
 public class AnswerController {
     private final static String ANSWER_DEFAULT_URL = "/api/answers";
->>>>>>> 11fd9b9afc9df78ec6872055a39a7a2f3062eeaf
     private final AnswerService answerService;
     private final AnswerMapper answerMapper;
     private final AnswerCommentService answerCommentService;

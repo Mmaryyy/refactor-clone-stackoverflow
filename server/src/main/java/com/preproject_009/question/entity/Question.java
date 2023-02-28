@@ -92,13 +92,8 @@ public class Question extends Auditable {
     }
 
     public void canChangeQuestion(QuestionStatus questionStatus) {
-<<<<<<< HEAD
-        if (this.questionStatus == QuestionStatus.QUESTION_ANSWER_ACCEPTED) {
-=======
-
         if(this.questionStatus == QuestionStatus.QUESTION_ANSWER_ACCEPTED
         || this.questionStatus == QuestionStatus.QUESTION_ANSWERED) {
->>>>>>> 11fd9b9afc9df78ec6872055a39a7a2f3062eeaf
             throw new BusinessLogicException(ExceptionCode.CANNOT_CHANGE_QUESTION);
         }
     }

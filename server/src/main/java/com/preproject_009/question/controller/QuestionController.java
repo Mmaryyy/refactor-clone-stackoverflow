@@ -34,15 +34,9 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @Validated
-<<<<<<< HEAD
-@RequestMapping("/questions")
-public class QuestionController {
-    private final static String QUESTION_DEFAULT_URL = "/questions";
-=======
 @RequestMapping("/api/questions")
 public class QuestionController {
     private final static String QUESTION_DEFAULT_URL = "/api/questions";
->>>>>>> 11fd9b9afc9df78ec6872055a39a7a2f3062eeaf
     private final QuestionRepository questionRepository;
     private final QuestionMapper questionMapper;
     private final QuestionService questionService;
