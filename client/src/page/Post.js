@@ -8,6 +8,7 @@ import { SubmitButton, TagButton, LinkContent, SubmitInput } from '../styles/sty
 // import { ToastEditor } from '../components/TextEditor'
 import PostBlock from '../components/PostBlock'
 import { Editor } from '../components/Editor'
+import axios from 'axios'
 const PostContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -82,7 +83,7 @@ const CustomList = styled.ul`
     display: inherit;
   }
 `
-const NoticeText = styled.p`
+const NoticeText = styled.div`
   font-size: var(--fs--big);
   margin: 15px 0;
 `
@@ -96,7 +97,7 @@ const Post = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getSingleQuestion(postId))
-  }, [postId])
+  }, [])
   const singleContent = useSelector(state => state.contentsReducer.currentContent)
   console.log(singleContent)
   // const { content, memberName, answers } = singleContent
@@ -134,12 +135,12 @@ const Post = () => {
       <div className='answer_container'>
         <NoticeText>{singleContent.answers.length === 0 ? 
         <NoticeText>
-          Know someone who can answer? Share a link to this <LinkContent>question</LinkContent> via <LinkContent>email</LinkContent>, <LinkContent>Twitter</LinkContent>, or <LinkContent>Facebook</LinkContent>.
+          Know someone who can answer? Share a link to this <LinkContent>question</LinkContent>via <LinkContent>email</LinkContent>, <LinkContent>Twitter</LinkContent>, or <LinkContent>Facebook</LinkContent>.
         </NoticeText>
         :`${singleContent.answers.length} Answers`}</NoticeText>
         {singleContent.answers.map((el, idx) => {
           return (
-            <PostBlock key={idx} className='answer' content={el} author={el.author} isAnswer={true} questionId={postId} answerId={el.shortId}/>
+            <PostBlock key={idx} className='answer' content={el} author={'아무나'} isAnswer={true} questionId={postId} answerId={el.shortId}/>
           )
         })}
       </div>

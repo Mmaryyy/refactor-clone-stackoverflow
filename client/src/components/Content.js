@@ -122,17 +122,14 @@ const Content = ({ singleContent }) => {
         <SummaryTitle>{view} views</SummaryTitle>
       </SummaryContainer>
       <ContentDetailContainer className="content_details">
-        <PostTitle to={{
-          pathname: `/questions/${questionId}`,
-          state: {postId: questionId}
-        }}>{title}</PostTitle>
+        <PostTitle to={`/questions/${questionId}`}>{title}</PostTitle>
         <BodyContainer>
           {ellipsisContent(content)}
         </BodyContainer>
         <PostSummaryContainer className="post_summary_meta">
-          {/* <div className="tag_container">
-            {tag.map((el, idx) => <TagButton key={idx}>{el}</TagButton>)}
-          </div> */}
+          <div className="tag_container">
+            {singleContent.tag === undefined ? <></> : singleContent.tag.map((el, idx) => <TagButton key={idx}>{el}</TagButton>)}
+          </div>
           <div className="author_datas">
             <AuthorProfileWrapper src={memberImage} alt='avatar_profile'/>
             <AuthorLink to="#">{memberName}</AuthorLink>

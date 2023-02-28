@@ -5,7 +5,9 @@ const Container = styled.div`
     width: 100%;
     height: 5rem;
     display: flex;
+    /* justify-content: space-around; */
     align-items: center;
+    margin-left: 1rem;
 `
 const PageButton = styled.div`
     border: 1px solid var(--black__100);
