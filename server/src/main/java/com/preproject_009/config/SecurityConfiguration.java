@@ -54,21 +54,21 @@ public class SecurityConfiguration {
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-//                        .antMatchers(HttpMethod.POST, "/members").permitAll()           // 멤버 생성
-//                        .antMatchers(HttpMethod.PATCH, "/members/**").hasAnyRole("USER", "ADMIN")    // 멤버 수정
-//                        .antMatchers(HttpMethod.GET, "/members").permitAll()            // 전체 멤버 조회
-//                        .antMatchers(HttpMethod.GET, "/members/**").hasAnyRole("USER", "ADMIN")     // 멤버 조회
-//                        .antMatchers(HttpMethod.DELETE, "/members/**").hasAnyRole("USER", "ADMIN")          // 멤버 삭제
-//                        .antMatchers(HttpMethod.POST, "/questions/**/**").permitAll() // 질문 좋아요
+                                // 로그인
+                                .antMatchers("/login").permitAll()
+                                // 멤버 생성
+                                .antMatchers(HttpMethod.POST, "/api/members").permitAll()
+                                // 멤버 수정
+                                .antMatchers(HttpMethod.PATCH, "/api/members/**").hasAnyRole("USER", "ADMIN")
+                                // 전체 멤버 조회
+                                .antMatchers(HttpMethod.GET, "/api/members").hasAnyRole("USER", "ADMIN")
+                                // 멤버 조회
+                                .antMatchers(HttpMethod.GET, "/api/members/**").hasAnyRole("USER", "ADMIN")
+                                // 멤버 삭제
+                                .antMatchers(HttpMethod.DELETE, "/api/members/**").hasRole("USER")
 //                        .antMatchers(HttpMethod.DELETE, "/questions/**").hasAnyRole("USER", "ADMIN") // 질문 삭제
 //                        .antMatchers(HttpMethod.POST, "/answers/**").hasAnyRole("USER", "ADMIN") // 답변 좋아요
 //                        .antMatchers(HttpMethod.DELETE, "/answers/**").hasAnyRole("USER", "ADMIN") // 답변 삭제
-                                .antMatchers("/login").permitAll()
-                                .antMatchers(HttpMethod.POST, "/api/members").permitAll()
-                                .antMatchers(HttpMethod.PATCH, "/api/members/**").hasAnyRole("USER", "ADMIN")
-                                .antMatchers(HttpMethod.GET, "/api/members").hasAnyRole("USER", "ADMIN")
-                                .antMatchers(HttpMethod.GET, "/api/members/**").hasAnyRole("USER", "ADMIN")
-                                .antMatchers(HttpMethod.DELETE, "/api/members/**").hasRole("USER")
                                 .anyRequest().permitAll()
                 );
         return http.build();
