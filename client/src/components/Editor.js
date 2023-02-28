@@ -1,6 +1,6 @@
 import MDEditor from '@uiw/react-md-editor';
 
-export const Editor = ({ value, setter, focusFunction }) => {
+export const Editor = ({ value, setter, focusFunction, height }) => {
   // const [value, setValue] = useState('')
   return (
     <div className='editor_container'>
@@ -9,7 +9,7 @@ export const Editor = ({ value, setter, focusFunction }) => {
         onChange={setter}
         onFocus={focusFunction}
         preview='edit'
-        height={'500px'}
+        height={height || '500px'}
       />
     </div>
   );

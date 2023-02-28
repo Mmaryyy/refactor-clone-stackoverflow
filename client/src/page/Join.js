@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import {joinUser, getAllUser} from '../api/user'
+import axios from 'axios';
 
 const Container = styled.div`
   display: flex;
@@ -10,7 +12,6 @@ const Container = styled.div`
   height: 100vh;
   background-color: rgb(240, 242, 243);
 `;
-
 const Content = styled.div`
   display: flex;
   flex-direction: row;
@@ -284,6 +285,8 @@ const InputContainer = styled.div`
 `;
 
 function Join({ setShowNav, setShowFooter, setShowSidebar }) {
+
+
   useEffect(() => {
     setShowNav(false);
     setShowFooter(false);
@@ -295,7 +298,7 @@ function Join({ setShowNav, setShowFooter, setShowSidebar }) {
     };
   }, []);
 
-  const [loginInfo, setLoginInfo] = useState({ userEmail: '', password: '' });
+  const [loginInfo, setLoginInfo] = useState({ userName: 'user', userEmail: '', password: '' });
   const [errorMessage, setErrorMessage] = useState({
     userEmail: '',
     password: '',
@@ -408,7 +411,6 @@ function Join({ setShowNav, setShowFooter, setShowSidebar }) {
       setErrorMessage({
         userEmail: 'Email cannot be empty.',
         password: 'Password cannot be empty.',
-        pwcheck: '',
       });
       // return;
     }
@@ -418,7 +420,6 @@ function Join({ setShowNav, setShowFooter, setShowSidebar }) {
       setErrorMessage({
         userEmail: '',
         password: 'Password cannot be empty.',
-        pwcheck: '',
       });
       // return;
     }
@@ -428,14 +429,31 @@ function Join({ setShowNav, setShowFooter, setShowSidebar }) {
       setErrorMessage({
         userEmail: 'Email cannot be empty.',
         password: '',
-        pwcheck: '',
       });
       // return;
     }
     // console.log(errorMessage);
 
     if (!errorMessage.userEmail && !errorMessage.password)
-      console.log('Sign up Success!');
+      console.log('회원등록 api memberimage 추가, about 삭제');
+
+
+    // const memberImage = `/images/Avatar${parseInt(Math.random()*10)+1}.png`
+    // joinUser(loginInfo.userEmail, loginInfo.userName, loginInfo.password, memberImage)
+  axios({
+    url: `api/members`,
+    headers: { 'Content-Type': 'application/json' },
+    method: 'post',
+    data: {
+        email: loginInfo.userEmail,
+        name: loginInfo.userName,
+        password: loginInfo.password,
+        img: `/images/Avatar${parseInt(Math.random()*10)+1}.png`
+      },
+    })
+    .then((res) => res)
+    .catch((error) => console.log('error: ', error));
+    
     // return axios
     //   .post("url", {loginInfo, checkedKeepLogin})
     //   .then((res) => {
@@ -446,6 +464,9 @@ function Join({ setShowNav, setShowFooter, setShowSidebar }) {
     //   .catch((err) => {
     //     setErrorMessage({userEmail: 'The email or password is incorrect.', password: ''})
     //   });
+    axios.get(`api/members?page=1&size=10`)
+    .then((res) => console.log(res))
+    .catch((error) => console.log('error: ', error));
   };
 
   return (
@@ -549,7 +570,7 @@ function Join({ setShowNav, setShowFooter, setShowSidebar }) {
                   <input
                     id='name'
                     type='text'
-                    onChange={handleInputValue('name')}
+                    onChange={handleInputValue('userName')}
                   ></input>
                 </div>
               </div>

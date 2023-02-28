@@ -13,7 +13,8 @@ const Container = styled.div`
   width: 95%;
   border-radius: 3px;
   background-color: white;
-  border: 1px solid rgb(225, 236, 244);;
+  border: 1px solid rgb(225, 236, 244);
+  z-index: 999;
 
   .linkStyle {
     cursor: pointer;

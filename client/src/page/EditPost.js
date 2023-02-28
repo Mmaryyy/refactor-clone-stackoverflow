@@ -1,5 +1,4 @@
 import { useEffect, useState, useRef } from 'react'
-import { Link, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import { Editor } from '../components/Editor'
@@ -7,6 +6,7 @@ import Sidebar from '../components/Sidebar3'
 import tags from '../datas/tags.json'
 import TagList from '../components/TagList_s'
 import contents from '../datas/contents.json'
+import { editContent } from '../redux/reducers/contentsReducer'
 
 const Container = styled.div`
   width: 100%;
@@ -14,7 +14,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
 `
-
 const EditBlock = styled.div`
   width: 100%;
   display: flex;
@@ -61,32 +60,35 @@ const EditBlock = styled.div`
     padding: 16px;
     border: 1px solid rgb(241,230,187);
     background-color: rgb(253,247,226);
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     p {
       overflow-wrap: break-word !important;
       margin-left: 10px;
-      color: var(--black__500);
+      color: var(--black__600);
       font-size: 13px;
       font-weight: 400;
       height: auto;
+      line-height: 1.3;
       &.first {
         margin-bottom: 13px;
       }
     }
   }
+  
   .title_top, .tags_top, .body_top {
     padding-bottom: 5px;
   }
   
-  .title_bottom{
+  .title_bottom {
     position: relative;
     margin-bottom: 30px;
-    svg {
-      position: absolute;
-      top: 25%;
-      right: 0.7em;
-      fill: rgb(222, 79, 84);
-    }
+  }
+
+  .svg_icon {
+    position: absolute;
+    top: 25%;
+    right: 0.7em;
+    fill: rgb(222, 79, 84);
   }
   
 
@@ -101,6 +103,16 @@ const EditBlock = styled.div`
     border: none;
     border: 1px solid var(--black__100);
     border-radius: 3px;
+    :focus {
+      outline: 4px solid rgb(221, 234, 247);
+      border: 1px solid var(--button__back);
+    }
+    &.errorbox {
+      border: 1px solid rgb(235, 81, 47);
+      :focus {
+        outline: 4px solid rgb(248, 225, 224);
+      }
+    }
   }
 
   .tags_bottom {
@@ -178,6 +190,8 @@ const EditBlock = styled.div`
 `
 
 const EditPost = ({ setShowSidebar }) => {
+  const { title, content } = useSelector(state => state.contentsReducer.currentPostContent)
+
   useEffect(() => {
     setShowSidebar(false);
     return () => {
@@ -185,12 +199,16 @@ const EditPost = ({ setShowSidebar }) => {
     };
   }, []);
 
-  const {title, content, tag } = contents[0]
+  const {title2, content2, tag } = contents[0]
   const [addTitle, setAddTitle] = useState(title)
   const [isBody, setIsBody] = useState(content)
   const [addTag, setAddTag] = useState([...tag])
   const [isTagList, setIsTagList] = useState(false)
   const [inputTag, setinputTag] = useState('')
+
+  const [isTitle, setIsTitle] = useState(false);
+  const [isProblem, setIsProblem] = useState(false);
+  const [isTag, setIsTag] = useState(false);
 
   const tagInputHandler = (e) => {
     setinputTag(e.target.value)
@@ -225,7 +243,19 @@ const EditPost = ({ setShowSidebar }) => {
   const removeTags = (Removeidx) => {
     setAddTag(addTag.filter((tag, idx) => idx !== Removeidx))
   }
-  console.log(addTag)
+
+  // const id = useSelector(state => state.currentContent.id)
+  // const dispatch = useDispatch();
+  const postContent = () => {
+  //   const editContent = {
+  //     id,
+  //     title,
+  //     content,
+  //     tag
+  //   }
+  //   dispatch(editContent(editContent))
+  }
+
   return (
     <Container onClick={(e) => {
       setIsTagList(false) 
@@ -250,8 +280,17 @@ const EditPost = ({ setShowSidebar }) => {
                 <label htmlFor="title" className="">Title</label>
               </div>
               <div className="title_bottom">
-                <input id="title" name="title" type="text" defaultValue={addTitle} onChange={(e) => setAddTitle(e.target.value)}/>
-                <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18"><path d="M9 17c-4.36 0-8-3.64-8-8 0-4.36 3.64-8 8-8 4.36 0 8 3.64 8 8 0 4.36-3.64 8-8 8ZM8 4v6h2V4H8Zm0 8v2h2v-2H8Z"></path></svg>
+                <input className={addTitle ? null : 'errorbox'} id="title" name="title" type="text" defaultValue={title} 
+                onChange={(e) => setAddTitle(e.target.value)}
+                onClick={() => {
+                  setIsTitle(true);
+                  setIsProblem(false);
+                  setIsTag(false);
+                }}
+                />
+                {addTitle ? null : <svg className='svg_icon' aria-hidden="true" width="18" height="18" viewBox="0 0 18 18">
+                  <path d="M9 17c-4.36 0-8-3.64-8-8 0-4.36 3.64-8 8-8 4.36 0 8 3.64 8 8 0 4.36-3.64 8-8 8ZM8 4v6h2V4H8Zm0 8v2h2v-2H8Z"></path>
+                </svg>}
               </div>
             </div>
             <div className="body">
@@ -261,8 +300,14 @@ const EditPost = ({ setShowSidebar }) => {
               <div className="title_bottom">
                 <Editor
                     className='text_editor'
-                    value={isBody}
+                    value={content}
                     setter={setIsBody}
+                    height={'300px'}
+                    focusFunction={() => {
+                      setIsTitle(false);
+                      setIsProblem(true);
+                      setIsTag(false);
+                    }}
                   >
                 </Editor>
                 <div className='divBody'>{isBody}</div>
@@ -296,6 +341,9 @@ const EditPost = ({ setShowSidebar }) => {
                   onClick={(e) => {
                     e.stopPropagation()
                     setIsTagList(true)
+                    setIsTitle(false);
+                    setIsProblem(false);
+                    setIsTag(true);
                   }}
                   />
               </div>
@@ -303,26 +351,30 @@ const EditPost = ({ setShowSidebar }) => {
             </div>
           </div>
 
-          <div className='summary'>
+          {/* <div className='summary'>
               <div className="title_top">
                 <label htmlFor="title" className="">Edit Summary</label>
               </div>
               <div className="title_bottom">
                 <input id="title" className="flex--item s-input w100 js-post-title-field" name="title" type="text"/>
-                <svg aria-hidden="true" className="s-input-icon js-invalid-alert d-none svg-icon iconAlertCircle" width="18" height="18" viewBox="0 0 18 18"><path d="M9 17c-4.36 0-8-3.64-8-8 0-4.36 3.64-8 8-8 4.36 0 8 3.64 8 8 0 4.36-3.64 8-8 8ZM8 4v6h2V4H8Zm0 8v2h2v-2H8Z"></path></svg>
+                {<svg aria-hidden="true" className="svg_icon" width="18" height="18" viewBox="0 0 18 18">
+                  <path d="M9 17c-4.36 0-8-3.64-8-8 0-4.36 3.64-8 8-8 4.36 0 8 3.64 8 8 0 4.36-3.64 8-8 8ZM8 4v6h2V4H8Zm0 8v2h2v-2H8Z"></path>
+                </svg>}
               </div>
-          </div>
+          </div> */}
 
-          <div className='button'>
-            <button className="blue_button">Save edits</button>
-            <button className="red_button">Cancel</button>
+          <div>
+            <button className="blue_button" 
+            onClick={postContent}
+            >Save edits</button>
+            <button className="red_button" onClick={() => window.location='http://localhost:3000/questions'} >Cancel</button>
           </div>
 
         </div>
       </EditBlock>
 
       <div className="sidebar ver3">
-        <Sidebar />
+        <Sidebar isTitle={isTitle} isProblem={isProblem} isTag={isTag} setIsTitle={setIsTitle}/>
       </div>
     </Container>
   );
