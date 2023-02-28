@@ -1,5 +1,6 @@
 package com.preproject_009.question.dto;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.preproject_009.answer.mapper.entity.Answer;
 import com.preproject_009.q_comment.entity.QuestionComment;
@@ -44,7 +45,7 @@ public class QuestionDto {
 
     @Getter
     @AllArgsConstructor
-    public static class Response{
+    public static class Response {
         private long questionId;
         private long memberId;
         private String memberName;
@@ -56,8 +57,20 @@ public class QuestionDto {
         @JsonProperty("totalVotes")
         private int totalVotes;
         private Question.QuestionStatus questionStatus;
-        private List<Answer> answers;
+        private List<AnswerWithMemberInfo> answers;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
+
+        @AllArgsConstructor
+        @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+        public static class AnswerWithMemberInfo {
+            private long answerId;
+            private String content;
+            private Answer.AnswerStatus answerStatus;
+            private long memberId;
+            private String memberName;
+            private String memberImage;
+            private int totalVotes;
+        }
     }
 }
