@@ -5,7 +5,7 @@ import com.preproject_009.a_comment.entity.AnswerComment;
 import com.preproject_009.a_comment.mapper.AnswerCommentMapper;
 import com.preproject_009.a_comment.service.AnswerCommentService;
 import com.preproject_009.answer.dto.AnswerDto;
-import com.preproject_009.answer.entity.Answer;
+import com.preproject_009.answer.mapper.entity.Answer;
 import com.preproject_009.answer.mapper.AnswerMapper;
 import com.preproject_009.answer.service.AnswerService;
 import com.preproject_009.utils.UriCreator;
@@ -21,11 +21,19 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
+<<<<<<< HEAD
 @RequestMapping("/answers")
 @Validated
 @RequiredArgsConstructor
 public class AnswerController {
     private final static String ANSWER_DEFAULT_URL = "/answers";
+=======
+@RequestMapping("/api/answers")
+@Validated
+@RequiredArgsConstructor
+public class AnswerController {
+    private final static String ANSWER_DEFAULT_URL = "/api/answers";
+>>>>>>> 11fd9b9afc9df78ec6872055a39a7a2f3062eeaf
     private final AnswerService answerService;
     private final AnswerMapper answerMapper;
     private final AnswerCommentService answerCommentService;
@@ -66,6 +74,13 @@ public class AnswerController {
         URI location = UriCreator.createPostAnswerCommentUri(ANSWER_DEFAULT_URL, createdAnswerComment.getAnswerCommentId());
 
         return ResponseEntity.created(location).build();
+    }
+
+    @PostMapping("/{answer-id}/vote/{member-id}")
+    public ResponseEntity postAnswerVote(@PathVariable("answer-id") long answerId,
+                                         @PathVariable("member-id") long memberId) {
+        answerService.addAnswerVote(answerId, memberId);
+        return ResponseEntity.ok().build();
     }
 
     public AnswerDto.Response response(Answer answer) {

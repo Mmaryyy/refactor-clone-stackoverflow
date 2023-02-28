@@ -1,6 +1,7 @@
 package com.preproject_009.a_comment.entity;
 
-import com.preproject_009.answer.entity.Answer;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.preproject_009.answer.mapper.entity.Answer;
 import com.preproject_009.audit.Auditable;
 import com.preproject_009.member.entity.Member;
 import lombok.Getter;
@@ -30,10 +31,12 @@ public class AnswerComment extends Auditable {
     // member n:1 양방향
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
+    @JsonBackReference
     private Member member;
 
     // answer n:1 양방향
     @ManyToOne
     @JoinColumn(name = "ANSWER_ID")
+    @JsonBackReference
     private Answer answer;
 }

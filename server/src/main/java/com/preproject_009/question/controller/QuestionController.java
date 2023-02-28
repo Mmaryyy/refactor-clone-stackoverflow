@@ -1,12 +1,17 @@
 package com.preproject_009.question.controller;
 
 import com.preproject_009.answer.dto.AnswerDto;
-import com.preproject_009.answer.entity.Answer;
+import com.preproject_009.answer.mapper.entity.Answer;
 import com.preproject_009.answer.mapper.AnswerMapper;
 import com.preproject_009.answer.service.AnswerService;
 import com.preproject_009.member.dto.MultiResponseDto;
+import com.preproject_009.member.entity.Member;
 import com.preproject_009.member.repository.MemberRepository;
 import com.preproject_009.member.service.MemberService;
+import com.preproject_009.q_comment.dto.QuestionCommentDto;
+import com.preproject_009.q_comment.entity.QuestionComment;
+import com.preproject_009.q_comment.mapper.QuestionCommentMapper;
+import com.preproject_009.q_comment.service.QuestionCommentService;
 import com.preproject_009.question.dto.QuestionDto;
 import com.preproject_009.question.entity.Question;
 import com.preproject_009.question.mapper.QuestionMapper;
@@ -29,12 +34,20 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @Validated
+<<<<<<< HEAD
 @RequestMapping("/questions")
 public class QuestionController {
     private final static String QUESTION_DEFAULT_URL = "/questions";
+=======
+@RequestMapping("/api/questions")
+public class QuestionController {
+    private final static String QUESTION_DEFAULT_URL = "/api/questions";
+>>>>>>> 11fd9b9afc9df78ec6872055a39a7a2f3062eeaf
     private final QuestionRepository questionRepository;
     private final QuestionMapper questionMapper;
     private final QuestionService questionService;
+    private final QuestionCommentService questionCommentService;
+    private final QuestionCommentMapper questionCommentMapper;
     private final MemberService memberService;
     private final MemberRepository memberRepository;
     private final AnswerService answerService;
@@ -59,24 +72,12 @@ public class QuestionController {
         return new ResponseEntity<>(response(question), HttpStatus.OK);
     }
 
-//    @GetMapping
-//    public Page<QuestionDto.Response> getQuestionsV1(@RequestParam("page") int page,
-//                                                   @Nullable @RequestParam("keyword") String keyword,
-//                                                   @RequestParam("sortType") QuestionController.SortType sortType,
-//                                                   @RequestParam("filterType") int filterType) {
-//        Page<Question> questions = questionService.findQuestions(page - 1, keyword, sortType.toString(), filterType);
-//
-//        Page<QuestionDto.Response> response = questions.map(questionMapper::questionToQuestionResponseDto);
-//
-//        return response;
-//    }
-
     @GetMapping
     public ResponseEntity getQuestions(@RequestParam("page") int page,
                                                    @Nullable @RequestParam("keyword") String keyword,
-                                                   @RequestParam("sortType") QuestionController.SortType sortType,
+                                                   @RequestParam("sortType") String sortType,
                                                    @RequestParam("filterType") int filterType) {
-        Page<Question> questionPage = questionService.findQuestions(page - 1, keyword, sortType.toString(), filterType);
+        Page<Question> questionPage = questionService.findQuestions(page - 1, keyword, sortType, filterType);
         List<Question> questions = questionPage.getContent();
         return new ResponseEntity<>(
                 new MultiResponseDto<>(questionMapper.questionsToQuestionResponsesDto(questions),
@@ -92,8 +93,34 @@ public class QuestionController {
     public ResponseEntity postAnswer(@PathVariable("question-id") long questionId,
                                                @Valid @RequestBody AnswerDto.Post requestBody) {
         requestBody.setQuestionId(questionId);
-        Answer createdAnswer = answerService.createAnswer(answerMapper.answerPostDtoToAnswer(requestBody));
+        Question question = questionService.findQuestion(questionId);
+        Member member = memberService.findMember(requestBody.getMemberId());
+        Answer answer = answerMapper.answerPostDtoToAnswer(requestBody);
+        answer.setQuestion(question);
+        answer.setMember(member);
+        Answer createdAnswer = answerService.createAnswer(answer);
+
         URI location = UriCreator.createPostAnswerUri(QUESTION_DEFAULT_URL, createdAnswer.getAnswerId());
+
+        return ResponseEntity.created(location).build();
+    }
+
+    @PostMapping("/{question-Id}/votes/{member-Id}")
+    public ResponseEntity<?> registerVote(@PathVariable("question-Id") Long questionId,
+                                          @PathVariable("member-Id") Long memberId) {
+        questionService.addQuestionVote(questionId, memberId);
+        System.out.println("controller vote well");
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/{question-id}/questionComments")
+    public ResponseEntity postQuestionComment(@PathVariable("question-id") long questionId,
+                                              @Valid @RequestBody QuestionCommentDto.Post requestBody) {
+        requestBody.setQuestionId(questionId);
+        QuestionComment createdQuestionComment =
+                questionCommentService.createQuestionComment(questionCommentMapper.questionCommentPostDtoToQuestion(requestBody));
+        URI location = UriCreator.createPostQuestionCommentUri(QUESTION_DEFAULT_URL, createdQuestionComment.getQuestionCommentId());
+
 
         return ResponseEntity.created(location).build();
     }
@@ -102,10 +129,7 @@ public class QuestionController {
         return questionMapper.questionToQuestionResponseDto(question);
     }
 
-    public enum SortType{
-        created_At, // 최신순
-        modified_At, // 최근 수정순
-        total_Vote, // 좋아요순
-        view // 조회수순
+    public QuestionCommentDto.Response response(QuestionComment questionComment) {
+        return questionCommentMapper.questionCommentToQuestionCommentResponseDto(questionComment);
     }
 }

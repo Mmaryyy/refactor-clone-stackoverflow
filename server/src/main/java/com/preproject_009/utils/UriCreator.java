@@ -36,4 +36,12 @@ public class UriCreator {
                 .buildAndExpand(resourceId)
                 .toUri();
     }
+
+    public static URI createPostQuestionCommentUri(String defaultUrl, long resourceId){
+        return UriComponentsBuilder
+                .newInstance()
+                .path(defaultUrl + "/{resource-id}/QuestionComments")
+                .buildAndExpand(resourceId)
+                .toUri();
+    }
 }

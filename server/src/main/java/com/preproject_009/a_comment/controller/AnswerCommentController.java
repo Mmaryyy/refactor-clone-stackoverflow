@@ -4,8 +4,6 @@ import com.preproject_009.a_comment.dto.AnswerCommentDto;
 import com.preproject_009.a_comment.entity.AnswerComment;
 import com.preproject_009.a_comment.mapper.AnswerCommentMapper;
 import com.preproject_009.a_comment.service.AnswerCommentService;
-import com.preproject_009.answer.dto.AnswerDto;
-import com.preproject_009.answer.entity.Answer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -16,7 +14,11 @@ import javax.validation.constraints.Positive;
 import java.util.List;
 
 @RestController
+<<<<<<< HEAD
 @RequestMapping("/answerComments")
+=======
+@RequestMapping("/api/answerComments")
+>>>>>>> 11fd9b9afc9df78ec6872055a39a7a2f3062eeaf
 @Validated
 public class AnswerCommentController {
     private final AnswerCommentService answerCommentService;

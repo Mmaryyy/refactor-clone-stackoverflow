@@ -12,7 +12,9 @@ public enum ExceptionCode {
     CANNOT_CHANGE_ANSWER(400, "Cannot change answer"),
     QUESTION_NOT_FOUND(404, "Question not found"),
     CANNOT_CHANGE_QUESTION(400, "Cannot change question"),
-    QUESTION_COMMENT_NOT_FOUND(404, "QuestionComment not found");
+    QUESTION_COMMENT_NOT_FOUND(404, "QuestionComment not found"),
+    MEMBER_ALREADY_VOTED(400, "Member already voted"),
+    CANNOT_ACCEPT_ANSWER(400, "Cannot accept answer");
     @Getter
     private int status;
 

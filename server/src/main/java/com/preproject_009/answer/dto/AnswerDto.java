@@ -1,12 +1,14 @@
 package com.preproject_009.answer.dto;
 
-import com.preproject_009.answer.entity.Answer;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.preproject_009.answer.mapper.entity.Answer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.util.Assert;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
 
@@ -18,16 +20,12 @@ public class AnswerDto {
         @Positive
         private long memberId;
 
+        @Positive
         private long questionId;
 
+        @NotNull
         @NotBlank
         private String content;
-
-        // 이거 필요한가?
-        /*public void addQuestionId(long questionId) {
-            Assert.notNull(questionId, "question id must not be null.");
-            this.questionId = questionId;
-        }*/
     }
 
     @Getter
@@ -46,9 +44,14 @@ public class AnswerDto {
         private long answerId;
         private long memberId;
         private String content;
-        private int totalVote;
+        @JsonProperty("totalVotes")
+        private int totalVotes;
         private Answer.AnswerStatus answerStatus;
+<<<<<<< HEAD
         //private LocalDateTime createdAt;
+=======
+        private LocalDateTime createdAt;
+>>>>>>> 11fd9b9afc9df78ec6872055a39a7a2f3062eeaf
         private LocalDateTime modifiedAt;
     }
 }
