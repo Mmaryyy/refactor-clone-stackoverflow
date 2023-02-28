@@ -1,23 +1,34 @@
-import { GET_LOGIN_USER, GET_ALL_USER } from "../actions/userData";
+import { GET_ALL_USER, SET_CURRENT_USER, LOGOUT_USER, REMOVE_USER } from "../actions/userData";
 const initialState = {
   userList: [],
-  currentPage: {},
-  loginUser: {}
+  pageInfo: {},
+  currentUser: {}
 };
 
 export const userDataReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_LOGIN_USER:
+    case SET_CURRENT_USER:
       return {
         ...state,
-        ...action.payload
+        currentUser : action.payload,
       };
     case GET_ALL_USER:
       return {
         ...state,
         userList: action.payload.data,
-        currentPage: action.payload.pageInfo
-      }
+        pageInfo: action.payload.pageInfo,
+      };
+    case LOGOUT_USER:
+      return {
+        ...state,
+        currentUser: {}
+      };
+    case REMOVE_USER:
+      return {
+        ...state,
+        currentUser: {}
+      };
+
     default:
       return state;
   }
