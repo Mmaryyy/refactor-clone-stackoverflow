@@ -61,7 +61,6 @@ public class MemberDto {
         private String name;
         private String img;
         private String location;
-        private String password;
         private String about;
         private List<Question> questions;
         private List<Answer> answers;

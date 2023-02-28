@@ -34,7 +34,6 @@ public class MemberStubData {
                     "홍길동",
                     "img_address",
                     "Seoul",
-                    "12341234a!",
                     "안녕하세요 인사드립니다.",
                     null,
                     null,
@@ -49,7 +48,6 @@ public class MemberStubData {
                             "img_address",
                             "Seoul",
                             "12341234a!",
-                            "안녕하세요 인사드립니다.",
                             null,
                             null,
                             Member.MemberStatus.MEMBER_ACTIVE),
@@ -59,7 +57,6 @@ public class MemberStubData {
                             "img_address",
                             "Seoul",
                             "12341234a!",
-                            "안녕하세요 인사드립니다.",
                             null,
                             null,
                             Member.MemberStatus.MEMBER_ACTIVE)

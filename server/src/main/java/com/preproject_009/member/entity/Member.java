@@ -72,7 +72,7 @@ public class Member extends Auditable {
     @JsonManagedReference
     private List<Question> questions = new ArrayList<>();
 
-    // Answer 클래스 1:n 매핑
+     //Answer 클래스 1:n 매핑
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
     @JsonManagedReference
     private List<Answer> answers = new ArrayList<>();
