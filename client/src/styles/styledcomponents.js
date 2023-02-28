@@ -50,7 +50,7 @@ export const LinkContent = styled.a`
   align-items: center; */
   text-decoration: none;
   color: var(--link__content);
-  margin: 0 10px 0 0;
+  margin: 0 3px 0 0;
   cursor: pointer;
   font-size: ${(props) => props.fs || 'var(--fs--lg)'};
   &:hover {
