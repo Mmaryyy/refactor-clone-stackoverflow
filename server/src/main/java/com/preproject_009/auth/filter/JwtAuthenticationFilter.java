@@ -68,7 +68,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // request header에 추가해서 클라리언트 측의 자격 증명에 사용됨
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.setHeader("Refresh", refreshToken);
-
+        response.setHeader("memberId", String.valueOf(member.getMemberId()));
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
     }
 
@@ -85,6 +85,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
 
         String accessToken = jwtTokenizer.generateAccessToken(claims, subject, expiration, base64EncodedSecretKey);
+
+        System.out.println("access 토큰 임:> "+ accessToken);
 
         return accessToken;
     }
