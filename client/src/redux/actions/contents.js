@@ -1,4 +1,4 @@
-import { deleteContent, getAllContents, getSingleContent, addQuestionComment, voteUp, updateContent, getTags } from '../../api/question'
+import { deleteContent, getAllContents, getSingleContent, addQuestionComment, deleteQuestionComment, updateQuestionComment, voteUp, updateContent, getTags } from '../../api/question'
 //contents 액션
 export const GET_SINGLE_CONTENT = "contents/GET_SINGLE_CONTENT"
 export const GET_CONTENT_LIST = "contents/GET_CONTENT_LIST"
@@ -58,13 +58,32 @@ export const deleteSingleContent = (postId) => async (dispatch) => {
     await deleteContent(postId)
 }
 export const addComment = (questionId, memberId, content) => async (dispatch) => {
-    addQuestionComment(questionId, memberId, content)
+    await addQuestionComment(questionId, memberId, content)
     const updateContent = await getSingleContent(questionId)
     dispatch({
-        type: ADD_QUESTION_COMMENT,
+        type: GET_SINGLE_CONTENT,
         payload: updateContent
     })
 }
+
+export const deleteComment = (commentId, questionId) => async (dispatch) => {
+    await deleteQuestionComment(commentId)
+    const updateContent = await getSingleContent(questionId)
+    dispatch({
+        type: GET_SINGLE_CONTENT,
+        payload: updateContent
+    })
+}
+
+export const updateComment = (commentId, content, questionId) => async (dispatch) => {
+    await updateQuestionComment(commentId, content)
+    const updateContent = await getSingleContent(questionId)
+    dispatch({
+        type: GET_SINGLE_CONTENT,
+        payload: updateContent
+    })
+}
+
 export const getTagList = () => async (dispatch) => {
     const data = await getTags()
     dispatch({

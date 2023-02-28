@@ -108,20 +108,13 @@ const Contents = ({ isSearch }) => {
   const [sortType, setSortType] = useState('created_At')
   const [filterType, setFilterType] = useState(1)
 
-
-
   useEffect(() => {
     // console.log('여기 타니?');
     dispatch(getContentList());
-    axios
-      .get('api/questions?page=1&keyword=&sortType=created_At&filterType=1')
-      .then((res) => console.log(res.data))
-      .catch((error) => console.log('error: ', error));
   }, []);
 
-
-
   const contentList = useSelector((state) => state.contentsReducer.contentList);
+  const pageInfo = useSelector(state => state.contentsReducer.pageInfo)
   // console.log('contentList: ', contentList);
   const handleFilterField = () => {
     setShowFilterField(!showFilterField);
@@ -147,6 +140,9 @@ const Contents = ({ isSearch }) => {
   console.log('sortType: ', sortType)
   const handleFilterType = (e) => {
     setFilterType(e.target.value)
+  }
+  const getContentPageList = (page) => {
+    console.log(page)
   }
   console.log('filterType: ', filterType)
   return contentList.length === 0 ? (
@@ -235,11 +231,11 @@ const Contents = ({ isSearch }) => {
       </HeadContainer>
       {contentList.map((singleContent) => {
         return (
-          <Content key={singleContent.shortId} singleContent={singleContent} />
+          <Content key={singleContent.questionId} singleContent={singleContent} />
         );
       })}
       <div className='pagination_wrapper'>
-        <PaginationBar pageInfo={'라라'}/>
+        <PaginationBar pageInfo={pageInfo} apiCallFunction={getContentPageList}/>
       </div>
     </Container>
   );
