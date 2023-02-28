@@ -33,10 +33,10 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping("/v1/members")
+@RequestMapping("/members")
 @Validated
 public class MemberController {
-    private final static String MEMBER_DEFAULT_URL = "/v1/members";
+    private final static String MEMBER_DEFAULT_URL = "/members";
     private final MemberService memberService;
     private final MemberMapper mapper;
 
@@ -63,7 +63,6 @@ public class MemberController {
         Member member = mapper.memberPostToMember(requestBody);
 
         Member createdMember = memberService.createMember(member);
-        System.out.println("id는 " + createdMember.getMemberId());
         URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, createdMember.getMemberId());
 
         return ResponseEntity.created(location).build();
