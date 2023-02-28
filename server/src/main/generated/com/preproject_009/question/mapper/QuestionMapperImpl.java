@@ -1,14 +1,20 @@
 package com.preproject_009.question.mapper;
 
+import com.preproject_009.answer.mapper.entity.Answer;
+import com.preproject_009.member.entity.Member;
+import com.preproject_009.q_comment.entity.QuestionComment;
 import com.preproject_009.question.dto.QuestionDto;
 import com.preproject_009.question.entity.Question;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-02-20T21:12:12+0900",
-    comments = "version: 1.5.1.Final, compiler: javac, environment: Java 11.0.17 (Azul Systems, Inc.)"
+    date = "2023-02-28T13:52:55+0900",
+    comments = "version: 1.5.1.Final, compiler: javac, environment: Java 11.0.18 (Azul Systems, Inc.)"
 )
 @Component
 public class QuestionMapperImpl implements QuestionMapper {
@@ -48,53 +54,98 @@ public class QuestionMapperImpl implements QuestionMapper {
             return null;
         }
 
+        long memberId = 0L;
+        String memberName = null;
+        String memberImage = null;
+        List<QuestionComment> questionComments = null;
+        List<Answer> answers = null;
         long questionId = 0L;
         String title = null;
         String content = null;
         int view = 0;
-        int totalVote = 0;
+        int totalVotes = 0;
         Question.QuestionStatus questionStatus = null;
-        int totalAnswer = 0;
+        LocalDateTime createdAt = null;
+        LocalDateTime modifiedAt = null;
 
+        memberId = questionMemberMemberId( question );
+        memberName = questionMemberName( question );
+        memberImage = questionMemberImg( question );
+        List<QuestionComment> list = question.getQuestionComments();
+        if ( list != null ) {
+            questionComments = new ArrayList<QuestionComment>( list );
+        }
+        List<Answer> list1 = question.getAnswers();
+        if ( list1 != null ) {
+            answers = new ArrayList<Answer>( list1 );
+        }
         questionId = question.getQuestionId();
         title = question.getTitle();
         content = question.getContent();
         view = question.getView();
-        totalVote = question.getTotalVote();
+        totalVotes = question.getTotalVotes();
         questionStatus = question.getQuestionStatus();
-        totalAnswer = question.getTotalAnswer();
+        createdAt = question.getCreatedAt();
+        modifiedAt = question.getModifiedAt();
 
-        long memberId = 0L;
-
-        QuestionDto.Response response = new QuestionDto.Response( questionId, memberId, title, content, view, totalVote, questionStatus, totalAnswer );
+        QuestionDto.Response response = new QuestionDto.Response( questionId, memberId, memberName, memberImage, title, content, questionComments, view, totalVotes, questionStatus, answers, createdAt, modifiedAt );
 
         return response;
     }
 
     @Override
-    public QuestionDto.ResponseAll questionsToQuestionResponseDto(Question questions) {
+    public List<QuestionDto.Response> questionsToQuestionResponsesDto(List<Question> questions) {
         if ( questions == null ) {
             return null;
         }
 
-        long questionId = 0L;
-        String title = null;
-        String content = null;
-        int totalVote = 0;
-        int view = 0;
-        int totalAnswer = 0;
+        List<QuestionDto.Response> list = new ArrayList<QuestionDto.Response>( questions.size() );
+        for ( Question question : questions ) {
+            list.add( questionToQuestionResponseDto( question ) );
+        }
 
-        questionId = questions.getQuestionId();
-        title = questions.getTitle();
-        content = questions.getContent();
-        totalVote = questions.getTotalVote();
-        view = questions.getView();
-        totalAnswer = questions.getTotalAnswer();
+        return list;
+    }
 
-        long memberId = 0L;
+    private long questionMemberMemberId(Question question) {
+        if ( question == null ) {
+            return 0L;
+        }
+        Member member = question.getMember();
+        if ( member == null ) {
+            return 0L;
+        }
+        long memberId = member.getMemberId();
+        return memberId;
+    }
 
-        QuestionDto.ResponseAll responseAll = new QuestionDto.ResponseAll( questionId, memberId, title, content, totalVote, view, totalAnswer );
+    private String questionMemberName(Question question) {
+        if ( question == null ) {
+            return null;
+        }
+        Member member = question.getMember();
+        if ( member == null ) {
+            return null;
+        }
+        String name = member.getName();
+        if ( name == null ) {
+            return null;
+        }
+        return name;
+    }
 
-        return responseAll;
+    private String questionMemberImg(Question question) {
+        if ( question == null ) {
+            return null;
+        }
+        Member member = question.getMember();
+        if ( member == null ) {
+            return null;
+        }
+        String img = member.getImg();
+        if ( img == null ) {
+            return null;
+        }
+        return img;
     }
 }

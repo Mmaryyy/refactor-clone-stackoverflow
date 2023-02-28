@@ -14,7 +14,7 @@ import javax.validation.constraints.Positive;
 import java.util.List;
 
 @RestController
-@RequestMapping("/questionComments")
+@RequestMapping("/api/questionComments")
 @Validated
 public class QuestionCommentController {
     private final QuestionCommentService questionCommentService;

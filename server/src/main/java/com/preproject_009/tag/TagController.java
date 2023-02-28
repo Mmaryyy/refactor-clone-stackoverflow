@@ -15,7 +15,7 @@ import javax.validation.constraints.Positive;
 import java.util.List;
 
 @RestController
-@RequestMapping("/tags")
+@RequestMapping("/api/tags")
 public class TagController {
     private final TagService tagService;
     private final TagMapper tagMapper;

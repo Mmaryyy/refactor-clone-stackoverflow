@@ -1,8 +1,9 @@
 package com.preproject_009.member.mapper;
 
+import com.preproject_009.answer.mapper.entity.Answer;
 import com.preproject_009.member.dto.MemberDto;
 import com.preproject_009.member.entity.Member;
-
+import com.preproject_009.question.entity.Question;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
@@ -10,8 +11,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-02-20T21:12:12+0900",
-    comments = "version: 1.5.1.Final, compiler: javac, environment: Java 11.0.17 (Azul Systems, Inc.)"
+    date = "2023-02-28T13:52:55+0900",
+    comments = "version: 1.5.1.Final, compiler: javac, environment: Java 11.0.18 (Azul Systems, Inc.)"
 )
 @Component
 public class MemberMapperImpl implements MemberMapper {
@@ -55,22 +56,34 @@ public class MemberMapperImpl implements MemberMapper {
         }
 
         long memberId = 0L;
+        List<Question> questions = null;
+        List<Answer> answers = null;
         String email = null;
         String name = null;
+        String img = null;
+        String location = null;
         String password = null;
         String about = null;
         Member.MemberStatus memberStatus = null;
-        Point point = null;
 
         memberId = member.getMemberId();
+        List<Question> list = member.getQuestions();
+        if ( list != null ) {
+            questions = new ArrayList<Question>( list );
+        }
+        List<Answer> list1 = member.getAnswers();
+        if ( list1 != null ) {
+            answers = new ArrayList<Answer>( list1 );
+        }
         email = member.getEmail();
         name = member.getName();
+        img = member.getImg();
+        location = member.getLocation();
         password = member.getPassword();
         about = member.getAbout();
         memberStatus = member.getMemberStatus();
-        point = member.getPoint();
 
-        MemberDto.response response = new MemberDto.response( memberId, email, name, password, about, memberStatus, point );
+        MemberDto.response response = new MemberDto.response( memberId, email, name, img, location, password, about, questions, answers, memberStatus );
 
         return response;
     }

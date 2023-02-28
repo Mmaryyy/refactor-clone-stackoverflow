@@ -1,9 +1,9 @@
 package com.preproject_009.answer.mapper;
 
 import com.preproject_009.answer.dto.AnswerDto;
-import com.preproject_009.answer.entity.Answer;
+import com.preproject_009.answer.mapper.entity.Answer;
 import com.preproject_009.member.entity.Member;
-import com.preproject_009.question.entity.Question;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-02-20T21:12:12+0900",
-    comments = "version: 1.5.1.Final, compiler: javac, environment: Java 11.0.17 (Azul Systems, Inc.)"
+    date = "2023-02-28T13:52:55+0900",
+    comments = "version: 1.5.1.Final, compiler: javac, environment: Java 11.0.18 (Azul Systems, Inc.)"
 )
 @Component
 public class AnswerMapperImpl implements AnswerMapper {
@@ -25,8 +25,6 @@ public class AnswerMapperImpl implements AnswerMapper {
 
         Answer answer = new Answer();
 
-        answer.setQuestion( postToQuestion( requestBody ) );
-        answer.setMember( postToMember( requestBody ) );
         answer.setContent( requestBody.getContent() );
 
         return answer;
@@ -52,15 +50,23 @@ public class AnswerMapperImpl implements AnswerMapper {
             return null;
         }
 
+        long memberId = 0L;
         long answerId = 0L;
         String content = null;
+        int totalVotes = 0;
+        Answer.AnswerStatus answerStatus = null;
+        LocalDateTime createdAt = null;
+        LocalDateTime modifiedAt = null;
 
+        memberId = answerMemberMemberId( answer );
         answerId = answer.getAnswerId();
         content = answer.getContent();
+        totalVotes = answer.getTotalVotes();
+        answerStatus = answer.getAnswerStatus();
+        createdAt = answer.getCreatedAt();
+        modifiedAt = answer.getModifiedAt();
 
-        long memberId = 0L;
-
-        AnswerDto.Response response = new AnswerDto.Response( answerId, memberId, content );
+        AnswerDto.Response response = new AnswerDto.Response( answerId, memberId, content, totalVotes, answerStatus, createdAt, modifiedAt );
 
         return response;
     }
@@ -79,27 +85,15 @@ public class AnswerMapperImpl implements AnswerMapper {
         return list;
     }
 
-    protected Question postToQuestion(AnswerDto.Post post) {
-        if ( post == null ) {
-            return null;
+    private long answerMemberMemberId(Answer answer) {
+        if ( answer == null ) {
+            return 0L;
         }
-
-        Question question = new Question();
-
-        question.setQuestionId( post.getQuestionId() );
-
-        return question;
-    }
-
-    protected Member postToMember(AnswerDto.Post post) {
-        if ( post == null ) {
-            return null;
+        Member member = answer.getMember();
+        if ( member == null ) {
+            return 0L;
         }
-
-        Member member = new Member();
-
-        member.setMemberId( post.getMemberId() );
-
-        return member;
+        long memberId = member.getMemberId();
+        return memberId;
     }
 }

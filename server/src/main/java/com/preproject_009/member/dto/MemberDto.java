@@ -2,6 +2,7 @@ package com.preproject_009.member.dto;
 
 import com.preproject_009.answer.mapper.entity.Answer;
 import com.preproject_009.member.entity.Member;
+import lombok.*;
 import com.preproject_009.question.entity.Question;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,6 +16,7 @@ import java.util.List;
 public class MemberDto {
     @Getter
     @AllArgsConstructor
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class Post {
         @NotBlank
         @Email

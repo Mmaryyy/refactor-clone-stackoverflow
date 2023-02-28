@@ -28,7 +28,7 @@ public class QuestionDto {
         @NotBlank
         private String content;
 
-        //private List<Tag> tags;
+        // TODO: 2023/02/24 tag 정보 포함시키기
     }
 
     @Getter
