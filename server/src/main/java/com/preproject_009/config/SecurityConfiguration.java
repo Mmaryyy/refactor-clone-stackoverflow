@@ -24,8 +24,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 @Configuration
 public class SecurityConfiguration {
 
@@ -44,7 +42,7 @@ public class SecurityConfiguration {
                 .headers().frameOptions().sameOrigin()
                 .and()
                 .csrf().disable()
-                .cors(withDefaults())
+                .cors().disable() // 수정
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .formLogin().disable()
@@ -56,12 +54,22 @@ public class SecurityConfiguration {
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-                        .antMatchers(HttpMethod.POST, "/members").permitAll()
-                        .antMatchers(HttpMethod.PATCH, "/members/**").hasRole("USER")
-                        .antMatchers(HttpMethod.GET, "/members").hasRole("ADMIN")
-                        .antMatchers(HttpMethod.GET, "/members/**").hasAnyRole("USER", "ADMIN")
-                        .antMatchers(HttpMethod.DELETE, "/members/**").hasRole("USER")
-                        .anyRequest().permitAll()
+//                        .antMatchers(HttpMethod.POST, "/members").permitAll()           // 멤버 생성
+//                        .antMatchers(HttpMethod.PATCH, "/members/**").hasAnyRole("USER", "ADMIN")    // 멤버 수정
+//                        .antMatchers(HttpMethod.GET, "/members").permitAll()            // 전체 멤버 조회
+//                        .antMatchers(HttpMethod.GET, "/members/**").hasAnyRole("USER", "ADMIN")     // 멤버 조회
+//                        .antMatchers(HttpMethod.DELETE, "/members/**").hasAnyRole("USER", "ADMIN")          // 멤버 삭제
+//                        .antMatchers(HttpMethod.POST, "/questions/**/**").permitAll() // 질문 좋아요
+//                        .antMatchers(HttpMethod.DELETE, "/questions/**").hasAnyRole("USER", "ADMIN") // 질문 삭제
+//                        .antMatchers(HttpMethod.POST, "/answers/**").hasAnyRole("USER", "ADMIN") // 답변 좋아요
+//                        .antMatchers(HttpMethod.DELETE, "/answers/**").hasAnyRole("USER", "ADMIN") // 답변 삭제
+                                .antMatchers("/login").permitAll()
+                                .antMatchers(HttpMethod.POST, "/api/members").permitAll()
+                                .antMatchers(HttpMethod.PATCH, "/api/members/**").hasAnyRole("USER", "ADMIN")
+                                .antMatchers(HttpMethod.GET, "/api/members").hasAnyRole("USER", "ADMIN")
+                                .antMatchers(HttpMethod.GET, "/api/members/**").hasAnyRole("USER", "ADMIN")
+                                .antMatchers(HttpMethod.DELETE, "/api/members/**").hasRole("USER")
+                                .anyRequest().permitAll()
                 );
         return http.build();
     }
@@ -74,7 +82,7 @@ public class SecurityConfiguration {
 
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);
 
-            jwtAuthenticationFilter.setFilterProcessesUrl("/seb009/login");
+            jwtAuthenticationFilter.setFilterProcessesUrl("/login");
 
             jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler());
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());

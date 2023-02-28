@@ -32,11 +32,9 @@ import java.util.List;
  * Description : Member Controller
  */
 
-@RestController
 @RequestMapping("/api/members")
 @Validated
 public class MemberController {
-
     private final static int pageSize = 16;
     private final static String MEMBER_DEFAULT_URL = "/api/members";
     private final MemberService memberService;
