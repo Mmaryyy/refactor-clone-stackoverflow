@@ -21,17 +21,23 @@ import EditPost from './page/EditPost'
 import { useDispatch, useSelector } from 'react-redux';
 
 function App() {
-  const [isReady, setIsReady] = useState(false);
+  const [isReady, setIsReady] = useState(true);
   const { pathname } = useLocation();
   const [showNav, setShowNav] = useState(true);
   const [showFooter, setShowFooter] = useState(true);
   const [showSidebar, setShowSidebar] = useState(true);
   const [ isSearch, setIsSearch ] = useState(false)
+  const [ isHome, setIsHome ] = useState(false)
   useEffect(() => {
     setTimeout(() => {
       setIsReady(false);
-    }, 5000);
+    }, 2500);
+    if (pathname === '/') {
+      setIsHome(true)
+    } 
+    
   }, []);
+  console.log('isHome: ', isHome)
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [ pathname ])
@@ -40,23 +46,13 @@ function App() {
       <Header setIsSearch={setIsSearch}/>
       <Fragment>
         <GlobalStyle />
-        {isReady ? (
-          <Index />
-        ) : (
           <div className={ pathname.includes('in') || pathname.includes('k') ? 'background_box' : null }>
             <div className={ pathname.includes('k') ? null : 'app_wrap'}>
-              {showNav ? <Nav /> : null}
+              {showNav ? <Nav isHome={isHome}/> : null}
               <Routes>
-                <Route
-                  path='/'
-                  element={
-                    <Index
-                      setShowSidebar={setShowSidebar}
-                      setShowNav={setShowNav}
-                      setShowFooter={setShowFooter}
-                    />
-                  }
-                />
+                <Route path='/' element={isReady 
+                  ? <Index setShowNav={setShowNav} setShowFooter={setShowFooter} setShowSidebar={setShowSidebar}/>
+                  : <Contents isHome={isHome}/>}/>
                 <Route path='/questions' element={<Contents />} />
                 <Route path='/search/*' element={<Contents isSearch={isSearch}/>} />
                 <Route
@@ -84,7 +80,7 @@ function App() {
               ) : null}
             </div>
           </div>
-        )}
+        {/* )} */}
       </Fragment>
       {showFooter ? <Footer /> : null}
     </>

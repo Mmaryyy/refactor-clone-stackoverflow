@@ -2,42 +2,66 @@ import axios from 'axios'
 
 
 //* 검색했을 때 param 받아오는 api 추가하기
-export const getAllContents = async (page) => {
-    const getAllContents = 
-    await axios.get(`/questions${page}page=1&keyword=&sortType=created_At&filterType=1`)
-        .then(res => res.data.data)
-        .catch(error => console.log(error))
-    return getAllContents
+export const getAllContents = async (page = 1, keyword = '', sortType = 'created_At', filterType = 1) => {
+    return axios.get(`/api/questions?page=${page}&keyword=${keyword}&sortType=${sortType}&filterType=${filterType}`)
+                                          .then(res => res.data)
+                                          .catch(error => console.log(error))
 }
-
-
 export const getSingleContent = async (postId) => {
-    const getSingleContent = await axios.get(`/questions/${postId}`)
-    .then(res => res.data)
-    .catch(error => console.log(error))
-    return getSingleContent
+    return axios.get(`/api/questions/${postId}`)
+                .then(res => res.data)
+                .catch(error => console.log(error))
+}
+export const createContent = (memberId, title, content) => {
+    const newContent = {
+        title,
+        content
+    }
+    const createContent = axios.post(`/api/members/${memberId}/questions`, newContent)
+                                     .then(res => res.data)
+                                     .catch(error => console.log(error))
+    return createContent
+}
+export const updateContent = async (questionId, title, content, tags) => {
+    const updateContent = {
+        questionId,
+        title,
+        content,
+        tags
+    }
+    return axios.patch(`/api/questions/${questionId}`, updateContent)
+                .then(res => res.data)
+                .catch(error => console.log(error))
+}
+export const deleteContent = (questionId) => {
+     axios.delete(`/questions/${questionId}`)
+               .then(res => res)
+               .catch(error => console.log(error))
+}
+//TODO: api 다시 확인하기
+export const voteUp = async (questionId, memberId) => {
+    await axios.post(`/api/questions/${questionId}/vote/${memberId}`)
+               .then(res => res)
+               .catch(error => console.log(error))
 }
 
+//* question comment CUD
 
-export const createContent = async (postId) => {
-    const CreateContent = await axios.post(`/members/${postId}/questions`)
-    .then(res => res.data)
-    .catch(error => console.log(error))
-    return CreateContent
+export const addQuestionComment = (questionId, memberId, content) => {
+    const comment = {
+        memberId,
+        questionId,
+        content
+    }
+    axios.post(`/api/questions/${questionId}/questionComments`, comment)
+         .then(res => res.data)
+         .catch(error => console.log(error))
 }
 
+//* get Tag List
 
-export const updateContent = async (postId) => {
-    const result = await axios.patch(`/questions/${postId}`)
-    .then(res => res.data)
-    .catch(error => console.log(error))
-    getSingleContent(postId)
-    return result
+export const getTags = () => {
+    return axios.get(`/api/tags`)
+                .then(res => res.data)
+                .catch(error => console.log(error))
 }
-
-
-export const deleteContent = async (postId) => {
-    await axios.delete(`/questions/${postId}`)
-    return getAllContents()
-}
-

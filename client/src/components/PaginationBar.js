@@ -28,14 +28,8 @@ const PageButton = styled.div`
         color: white;
     }
 `
-const pageInfo = {
-    page: 5,
-    size: 3,
-    totalElements: 22,
-    totalPages: 99
-}
 
-const PaginationBar = () => {
+const PaginationBar = ({ pageInfo }) => {
   const { page, size, totalElements, totalPages } = pageInfo
   const getMidPage = (currentPage, totalPages) => {
     const pre = currentPage > 2 ? 2 : currentPage === 1 ? 0 : 1
