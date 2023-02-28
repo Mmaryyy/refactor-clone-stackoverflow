@@ -20,14 +20,17 @@ const NavContainer = styled.ul`
   top: 60px;
   /* left: 10vw; */
 `;
+
 const TapContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 `;
+
 const BlankBox = styled.div`
   width: 25px;
 `;
+
 const TapLink = styled(Link)`
   display: flex;
   align-items: center;
@@ -42,17 +45,21 @@ const TapLink = styled(Link)`
     font-weight: bold;
     color: black;
   }
+
   &.home {
-    padding: 30px 20px 25px 20px;
+    margin: 25px 25px 25px 0;
   }
+
   &.menu {
     padding-left: 35px;
   }
 `;
+
 const TabTitle = styled.p`
   margin-left: 10px;
   font-size: var(--fs--caption);
 `;
+
 const Nav = () => {
   return (
     <Container>

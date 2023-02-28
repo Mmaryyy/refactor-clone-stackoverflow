@@ -107,16 +107,22 @@ const Contents = ({ isSearch }) => {
   const [showFilterField, setShowFilterField] = useState(false);
   const [sortType, setSortType] = useState('created_At')
   const [filterType, setFilterType] = useState(1)
+
+
+
   useEffect(() => {
-    console.log('여기 타니?');
+    // console.log('여기 타니?');
     dispatch(getContentList());
     axios
-      .get('/api/members?page=1')
-      .then((res) => console.log(res))
+      .get('api/questions?page=1&keyword=&sortType=created_At&filterType=1')
+      .then((res) => console.log(res.data))
       .catch((error) => console.log('error: ', error));
   }, []);
+
+
+
   const contentList = useSelector((state) => state.contentsReducer.contentList);
-  console.log('contentList: ', contentList);
+  // console.log('contentList: ', contentList);
   const handleFilterField = () => {
     setShowFilterField(!showFilterField);
   };
@@ -130,7 +136,7 @@ const Contents = ({ isSearch }) => {
       sortType,
       filterType
     }
-    console.log('filter: ', filter)
+    // console.log('filter: ', filter)
     // 필터링 검색 api 요청 보내기 -> 받아서 스토어에 contentsList 업데이트 해주기.
     // 그다음 결과값을 search.js로 이동해서 보여줌
     navigate('/search')

@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Editor } from '../components/Editor';
@@ -163,7 +163,7 @@ const InputField = styled.div`
       .ss-label {
         font-size: 12px;
         font-weight: 400;
-        line-height: 1.5;
+        line-height: 2;
       }
     }
 
@@ -523,6 +523,7 @@ function Ask({ setShowNav, setShowSidebar }) {
                   </div>
                   <Editor
                     className='text_editor'
+                    height={'300px'}
                     value={addProblem}
                     focusFunction={() => {
                       setIsTitle(false);
@@ -585,6 +586,7 @@ function Ask({ setShowNav, setShowSidebar }) {
                   </div>
                   <Editor
                     className='text_editor'
+                    height={'300px'}
                     value={addExpect}
                     focusFunction={() => {
                       setIsTitle(false);

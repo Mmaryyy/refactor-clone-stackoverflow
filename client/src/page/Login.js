@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { editContent } from '../redux/reducers/userDataReducer'
+import {setCurrentUser} from '../redux/actions/userData'
+import axios from 'axios';
 
 //
 const Container = styled.div`
@@ -177,6 +181,7 @@ const InputContainer = styled.div`
 `;
 
 function Login({ setShowNav, setShowFooter, setShowSidebar }) {
+  const dispatch = useDispatch();
   useEffect(() => {
     setShowNav(false);
     setShowFooter(false);
@@ -217,6 +222,22 @@ function Login({ setShowNav, setShowFooter, setShowSidebar }) {
       setErrorMessage({ userEmail: '', password: 'Password cannot be empty.' });
     }
 
+  axios({
+    url: `/api/login`,
+    headers: { 'Content-Type': 'application/json' },
+    method: 'post',
+    data: {
+        email: loginInfo.userEmail,
+        password: loginInfo.password,
+      },
+    })
+    .then((res) => console.log(res))
+    .catch((error) => console.log('error: ', error));
+  
+
+
+    // dispatch(setCurrentUser(loginInfo.userEmail, loginInfo.password))
+    // useDispatch()
     // return axios
     //   .post("url", {loginInfo, checkedKeepLogin})
     //   .then((res) => {

@@ -25,6 +25,7 @@ const GlobalStyle = createGlobalStyle`
         width: 300px;
         &.ver3 {
             margin-right: 24px;
+            width: 360px;
         }
     }
     .hide {
