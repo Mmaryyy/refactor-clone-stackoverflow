@@ -56,6 +56,7 @@ public class QuestionDto {
         private String memberImage;
         private String title;
         private String content;
+        @JsonProperty("questionTags")
         private List<TagInfo> tags;
         private List<QuestionComment> questionComments;
         private int view;
