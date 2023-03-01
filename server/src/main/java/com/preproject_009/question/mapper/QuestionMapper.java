@@ -30,4 +30,6 @@ public interface QuestionMapper {
    @Mapping(target = "tagId", source = "questionTag.tag.tagId")
    @Mapping(target = "title", source = "questionTag.tag.title")
     QuestionDto.Response.TagInfo tagToTagInfoDto(QuestionTag questionTag);
+
+   List<QuestionDto.Response.TagInfo> tagsToTagInfoDto(List<QuestionTag> questionTags);
 }
