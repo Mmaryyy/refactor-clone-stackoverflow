@@ -39,6 +39,6 @@ public class AnswerComment extends Auditable {
     // answer n:1 양방향
     @ManyToOne
     @JoinColumn(name = "ANSWER_ID")
-    //@JsonBackReference
+    @JsonBackReference
     private Answer answer;
 }
