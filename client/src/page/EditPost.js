@@ -1,11 +1,11 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import { Editor } from '../components/Editor'
 import Sidebar from '../components/Sidebar3'
-import tags from '../datas/tags.json'
+// import tags from '../datas/tags.json'
 import TagList from '../components/TagList_s'
-import contents from '../datas/contents.json'
+import { updateSingleQuestion } from '../redux/actions/contents'
 import { editContent } from '../redux/reducers/contentsReducer'
 
 const Container = styled.div`
@@ -190,6 +190,9 @@ const EditBlock = styled.div`
 `
 
 const EditPost = ({ setShowSidebar }) => {
+  const dispatch = useDispatch()
+  const tags = useSelector(state => state.contentsReducer.tagList)
+  console.log(tags)
   const { title, content } = useSelector(state => state.contentsReducer.currentPostContent)
 
   useEffect(() => {
@@ -199,10 +202,10 @@ const EditPost = ({ setShowSidebar }) => {
     };
   }, []);
 
-  const {title2, content2, tag } = contents[0]
   const [addTitle, setAddTitle] = useState(title)
   const [isBody, setIsBody] = useState(content)
-  const [addTag, setAddTag] = useState([...tag])
+  //* 현재페이지에서 태그 받아오기 
+  const [addTag, setAddTag] = useState('')
   const [isTagList, setIsTagList] = useState(false)
   const [inputTag, setinputTag] = useState('')
 
@@ -247,6 +250,7 @@ const EditPost = ({ setShowSidebar }) => {
   // const id = useSelector(state => state.currentContent.id)
   // const dispatch = useDispatch();
   const postContent = () => {
+    dispatch(updateSingleQuestion())
   //   const editContent = {
   //     id,
   //     title,
@@ -350,18 +354,6 @@ const EditPost = ({ setShowSidebar }) => {
               { isTagList ? <TagList tagClickHandler={tagClickHandler} data={tags.filter(tag => tag.title.includes(inputTag))} /> : null}
             </div>
           </div>
-
-          {/* <div className='summary'>
-              <div className="title_top">
-                <label htmlFor="title" className="">Edit Summary</label>
-              </div>
-              <div className="title_bottom">
-                <input id="title" className="flex--item s-input w100 js-post-title-field" name="title" type="text"/>
-                {<svg aria-hidden="true" className="svg_icon" width="18" height="18" viewBox="0 0 18 18">
-                  <path d="M9 17c-4.36 0-8-3.64-8-8 0-4.36 3.64-8 8-8 4.36 0 8 3.64 8 8 0 4.36-3.64 8-8 8ZM8 4v6h2V4H8Zm0 8v2h2v-2H8Z"></path>
-                </svg>}
-              </div>
-          </div> */}
 
           <div>
             <button className="blue_button" 

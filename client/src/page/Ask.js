@@ -2,8 +2,11 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Editor } from '../components/Editor';
-import tags from '../datas/tags.json';
+import { useSelector } from 'react-redux';
+// import tags from '../datas/tags.json';
 import TagList from '../components/TagList_s';
+import { createContent } from '../api/question';
+import axios from 'axios';
 
 const Container = styled.div`
   width: 100%;
@@ -367,6 +370,18 @@ function Ask({ setShowNav, setShowSidebar }) {
   const removeTags = (Removeidx) => {
     setAddTag(addTag.filter((tag, idx) => idx !== Removeidx));
   };
+  const data = useSelector(state => state.userDataReducer.currentUser)
+  console.log(data)
+  const tags = useSelector(state => state.contentsReducer.tagList)
+  console.log(tags)
+
+
+  const postQeustion = () => {
+    const body = (`${addProblem} 79a91970-5d15-4da9-a394-d014af1e9916 ${addExpect}`)
+    createContent(data.memberId, addTitle, body, addTag)
+    // axios.get(`api/questions?page=1&keyword=&sortType=created_At&filterType=1`)
+    // .then(res => console.log(res))
+  }
 
   return (
     <Container
@@ -769,67 +784,8 @@ function Ask({ setShowNav, setShowSidebar }) {
             ) : null}
           </InputField>
 
-          {/* <SimilarField className="similar_field">
-              <div className="similar_dropdown">
-                <div className='similar_box'>
-                  <div className='similar_main'>
-                    <div className='similar_top'>
-                      <div className="top_box">
-                        <p>Review questions already on Stack Overflow to see if your question is a duplicate.</p>
-                        <p>Clicking on these questions will open them in a new tab for you to review. Your progress here will be saved so you can come back and continue.</p>
-                      </div>
-                    </div>
-                    <div className='similar_middle'>
-                      <div className="middle_box">
-                        <button>
-                          <div>Do any of these posts answer your question?</div>
-                          <div className='empty'></div>
-                          <div>
-                            <div className='arrow-up'>
-                            <svg aria-hidden="true" className="fc-light svg-icon iconArrowUpAlt" width="18" height="18" viewBox="0 0 18 18"><path d="m16.01 10.62-1.4 1.4L9 6.45l-5.59 5.59-1.4-1.41 7-7 7 7Z"></path></svg>
-                            </div>
-                            <div className='arrow-down'>
-                            <svg aria-hidden="true" className="fc-light svg-icon iconArrowDownAlt" width="18" height="18" viewBox="0 0 18 18"><path d="m16.01 7.43-1.4-1.41L9 11.6 3.42 6l-1.4 1.42 7 7 7-7Z"></path></svg>
-                            </div>
-                          </div>
-                        </button>
-                        <div>
-                          <div>
-                            <p>No duplicate questions found.</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className='similar_bottom'>
-                      <button>
-                        Review your question
-                      </button>
-                    </div>
-
-                  </div>               
-                </div>
-              </div>
-              <div className="similar_sidebar">
-              <div className="sidebar_top">
-                  <div>Make sure we don’t already have an answer for your question</div>
-                </div>
-                <div className="sidebar_bottom">
-                  <div className="sidebar_img">
-                    <svg aria-hidden="true" className="svg-spot spotBell" width="48" height="48" viewBox="0 0 48 48"><path d="M11.81.8a1.37 1.37 0 1 0-2.5 1.16l1.91 4.09a1.37 1.37 0 0 0 2.5-1.16l-1.9-4.1Zm-8.7 3.98a1.37 1.37 0 0 1 1.94-.18l3.97 3.28A1.37 1.37 0 0 1 7.26 10L3.3 6.72a1.38 1.38 0 0 1-.19-1.94Zm34.91 23.57a21.3 21.3 0 0 0-.23-12.08 19.78 19.78 0 0 0-3-5.95 3.49 3.49 0 0 0-1.9-4.19 3.49 3.49 0 0 0-4.43 1.25c-2.2.13-4.4.71-6.44 1.58a21.65 21.65 0 0 0-9.3 7.6c-.82 1.18-1.6 2.39-2.4 3.6l-.38.6c-2.34 3.6-3.55 5.07-4.87 5.64-1.08.47-2.3 1.1-2.82 2.22A3 3 0 0 0 3.7 32.6l27.82 12.98c1.96.91 4.33-.6 4.27-2.8a8.47 8.47 0 0 0-.39-2.24c-.41-1.36-.07-3.24 1.2-7.35.49-1.6 1-3.21 1.42-4.84ZM.27 14.11c.02-.76.66-1.35 1.42-1.33l4.75.16a1.38 1.38 0 0 1-.1 2.75l-4.74-.16a1.38 1.38 0 0 1-1.33-1.42Zm45.99 15.63a1.37 1.37 0 1 0 .73-2.65l-4.96-1.37a1.37 1.37 0 1 0-.74 2.65l4.97 1.37Zm-2.74 6.53c-.5.57-1.37.64-1.94.14l-3.42-2.96a1.38 1.38 0 0 1 1.8-2.08l3.42 2.96c.57.5.64 1.36.14 1.94Zm3.22-15.37a1.37 1.37 0 1 0-1.05-2.54l-4.4 1.8a1.38 1.38 0 0 0 1.05 2.55l4.4-1.8Z" opacity=".2"></path><path d="M13.73 22.3a1 1 0 1 1-1.78-.92c3.61-7.07 8.02-10.8 13.34-11.26a1 1 0 0 1 .17 2c-4.53.39-8.4 3.66-11.73 10.17Zm22.33 3.55c1.13-4.3.95-8.36-.23-12.08a19.77 19.77 0 0 0-3.01-5.95 3.49 3.49 0 0 0-1.9-4.18 3.49 3.49 0 0 0-4.42 1.24c-2.21.13-4.4.71-6.44 1.58a21.65 21.65 0 0 0-9.3 7.6c-.83 1.18-1.61 2.39-2.4 3.6l-.38.6c-2.34 3.6-3.55 5.07-4.87 5.64a9.4 9.4 0 0 0-1.9 1.08 3 3 0 0 0 .52 5.12l27.83 12.98a3 3 0 0 0 4.26-2.8 8.47 8.47 0 0 0-.38-2.24c-.41-1.36-.07-3.24 1.19-7.34l.21-.7c.43-1.38.85-2.75 1.22-4.15Zm-4.23 14.48a1 1 0 0 1-1.43.94L2.58 28.29a1 1 0 0 1-.18-1.7c.43-.32.93-.6 1.5-.86 1.84-.8 3.17-2.4 5.76-6.39l.39-.6c.77-1.19 1.53-2.38 2.35-3.53a19.65 19.65 0 0 1 8.44-6.91 15.72 15.72 0 0 1 6.23-1.44 1 1 0 0 0 .92-.57c.42-.9 1.3-1.21 2.09-.84.8.37 1.11 1.24.7 2.13a1 1 0 0 0 .15 1.09 15.96 15.96 0 0 1 3 5.7 19.36 19.36 0 0 1 .2 10.97c-.37 1.36-.78 2.71-1.2 4.06l-.21.7c-1.4 4.55-1.77 6.61-1.2 8.52.2.61.3 1.18.3 1.71Zm-14.78-.72a1 1 0 1 1 1.78.9 2.44 2.44 0 1 0 4.44 2.03 1 1 0 0 1 1.85.77 4.44 4.44 0 1 1-8.07-3.7Z"></path></svg>
-                  </div>
-                  <div className="sidebar_text">
-                    <p>Stack Overflow is a huge database of knowledge.</p>
-                    <p>
-                    Please make sure your question isn’t already answered before posting, or your question might be closed as a duplicate.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </SimilarField> */}
-
           <div className='discard'>
-            <button className='blue_button'>Post your question</button>
+            <button className='blue_button' onClick={postQeustion}>Post your question</button>
             <button className='red_button'>Discard draft</button>
           </div>
         </main>

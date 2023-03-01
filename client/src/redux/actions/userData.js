@@ -29,23 +29,31 @@ export const getUserList = (page = 1) => async (dispatch) => {
 };
 
 //* 로그인
-export const setCurrentUser = (email, password) => async (dispatch) => {
-  const loginUser = await getLoginToken(email, password)
-  .then(res => {
-      const access = localStorage.getItem("access_token")
-      const refresh = localStorage.getItem("refresh_token")
-    return getLoginUserInfo(access, refresh, res.data.memberId)
-  })
-  dispatch({
+export const setCurrentUser = (loginUser) => {
+  return {
     type: SET_CURRENT_USER,
     payload: loginUser,
-  })
+  }
 };
+// export const setCurrentUser = (email, password) => async (dispatch) => {
+//   const loginUser = await getLoginToken(email, password)
+//     .then(res => {
+//       const access = localStorage.getItem("access_token")
+//       const refresh = localStorage.getItem("refresh_token")
+//     return getLoginUserInfo(access, refresh, res.memberid)
+//   })
+//   dispatch({
+//     type: SET_CURRENT_USER,
+//     payload: loginUser,
+//   })
+// };
 
 //* 회원정보 수정
 export const updateUser = (memberId, name, about, location) => async (dispatch) => {
   const updateInfo = await patchUser(memberId, name, about, location)
-  .then(res => res.data)
+  .then(res => {
+    return res.data
+  })
   dispatch({
     type: SET_CURRENT_USER,
     payload: updateInfo,
@@ -56,6 +64,7 @@ export const updateUser = (memberId, name, about, location) => async (dispatch) 
 export const logoutUser = () => {
   localStorage.removeItem("access_token")
   localStorage.removeItem("refresh_token")
+  localStorage.removeItem("persist:root")
   return {
     type: LOGOUT_USER
   };
@@ -68,6 +77,7 @@ export const removeUser = (memberId) => async (dispatch) => {
     .catch((err) => console.log(err));
   localStorage.removeItem("access_token")
   localStorage.removeItem("refresh_token")
+  localStorage.removeItem("persist:root")
   dispatch({
     type: REMOVE_USER
   });

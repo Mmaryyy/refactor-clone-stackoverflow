@@ -46,7 +46,7 @@ const TagList = ({ data }) => {
           </Link>
         </div>
       </div>
-      <div className='middle_field'>{`${data.body.slice(0, 100)}...`}</div>
+      <div className='middle_field'>{`${data.content.slice(0, 100)}...`}</div>
     </Container>
   );
 };
