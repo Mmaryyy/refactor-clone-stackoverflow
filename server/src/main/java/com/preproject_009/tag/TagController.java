@@ -27,6 +27,12 @@ public class TagController {
         this.questionMapper = questionMapper;
     }
 
+    @GetMapping("/{tag-id}")
+    private ResponseEntity getTag(@PathVariable("tag-id") @Positive long tagId) {
+        Tag tag = tagService.findTag(tagId);
+        return new ResponseEntity(tagMapper.tagToTagResponse(tag), HttpStatus.OK);
+    }
+
     @GetMapping
     private ResponseEntity getTags() {
         List<Tag> tags = tagService.findTags();
@@ -35,9 +41,8 @@ public class TagController {
     }
 
     @GetMapping("/{tag-id}/questions")
-    public ResponseEntity getTagQuestions(@PathVariable("tag-id") @Positive long tagId,
-                                          String title){
-        Page<Question> questionPage = tagService.findQuestionsByTag(title);
+    public ResponseEntity getTagQuestions(@PathVariable("tag-id") @Positive long tagId){
+        Page<Question> questionPage = tagService.findQuestionsByTag(tagId);
         List<Question> questions = questionPage.getContent();
 
         return new ResponseEntity<>(
