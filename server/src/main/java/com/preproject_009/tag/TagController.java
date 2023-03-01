@@ -35,8 +35,9 @@ public class TagController {
     }
 
     @GetMapping("/{tag-id}/questions")
-    public ResponseEntity getTagQuestions(@PathVariable("tag-id") @Positive long tagId){
-        Page<Question> questionPage = tagService.findQuestionsByTag(tagId);
+    public ResponseEntity getTagQuestions(@PathVariable("tag-id") @Positive long tagId,
+                                          String title){
+        Page<Question> questionPage = tagService.findQuestionsByTag(title);
         List<Question> questions = questionPage.getContent();
 
         return new ResponseEntity<>(

@@ -18,12 +18,12 @@ public class QuestionTag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long questionTagId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JsonBackReference
     @JoinColumn(name = "QUESTION_ID")
     private Question question;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JsonBackReference
     @JoinColumn(name = "TAG_ID")
     private Tag tag;

@@ -28,7 +28,7 @@ public class TagService {
     }
 
     public Page<Question> findQuestionsByTag(long tagId) {
-        PageRequest pageRequest = PageRequest.of(0, 10, Sort.by("CREATED_AT").descending());
+        PageRequest pageRequest = PageRequest.of(0, 10);
         return questionRepository.findQuestionByTagId(tagId, pageRequest);
     }
 }

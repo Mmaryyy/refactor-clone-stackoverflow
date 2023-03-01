@@ -1,6 +1,8 @@
 package com.preproject_009.tag;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.preproject_009.question.entity.Question;
 import com.preproject_009.tag.questiontag.QuestionTag;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
