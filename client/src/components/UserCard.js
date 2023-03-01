@@ -28,18 +28,17 @@ const Container = styled.div`
 `;
 
 export default function UserCard({ el }) {
-  // console.log(el);
   return (
     <>
       <Wrapper>
         <Link to='/mypage/profile'>
           {/* <img src={process.env.PUBLIC_URL + './../images/Avatar1.png'} /> */}
-          <img src={el.avatarUrl} alt='user' />
+          <img src={el.img} alt='user' />
         </Link>
         <Container>
-          <div className='user_name'> {el.nickname}</div>
+          <div className='user_name'> {el.name}</div>
           <p className='user_location'>{el.location ? el.location : null} </p>
-          <p className='user_tags'> {el.tags ? el.tags : null}</p>
+          {/* <p className='user_tags'> {el.tags ? el.tags : null}</p> */}
         </Container>
       </Wrapper>
     </>

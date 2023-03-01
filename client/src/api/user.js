@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const getAllUser = async (page = 1) => {
-  await axios.get(`members?page=${page}`)
+  return axios.get(`/api/members?page=${page}`)
             .then((res) => res.data)
             .catch((error) => console.log('error: ', error));
 
@@ -25,7 +25,7 @@ export const joinUser = (email, name, password, memberImage) => {
 
 //* 유저 로그인 -> 토큰 -> 정보
 export const getLoginToken = (email, password) => {
-  axios({
+  return axios({
     url: `/api/login`,
     headers: { 'Content-Type': 'application/json' },
     method: 'post',
@@ -35,24 +35,21 @@ export const getLoginToken = (email, password) => {
       },
     })
     .then((res) => {
-      //* res로 토큰, memberID 받아서 getUser 실행
-      localStorage.setItem("access_token", res)
-      localStorage.setItem("refresh_token", res)
+      console.log(res)
+      localStorage.setItem("access_token", res.headers.authorization)
+      localStorage.setItem("refresh_token", res.headers.refresh)
+      return res.headers
     })
     .catch((error) => console.log('error: ', error));
 };
 
-export const getLoginUserInfo = (token, memberId) => {
-  axios({
+export const getLoginUserInfo = (access, refresh, memberId) => {
+  return axios({
     url: `/api/members/${memberId}`,
-    headers: { authorization: "baerer token.accesstoken", 'Content-Type': 'application/json' },
-    method: 'post',
-    data: {
-        memberId
-      },
+    headers: { authorization: access, refresh, memberId, 'Content-Type': 'application/json' },
+    method: 'get'
     })
     .then((res) => {
-      //* res로 토큰, memberID 받아서 getUser 실행
       return res
     })
     .catch((error) => console.log('error: ', error));
