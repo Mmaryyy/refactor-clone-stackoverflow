@@ -7,7 +7,6 @@ import { getContentList } from '../redux/actions/contents';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import PaginationBar from '../components/PaginationBar';
-import contentList from '../datas/contents.json'
 const Container = styled.main`
   display: flex;
   flex-direction: column;
@@ -103,7 +102,6 @@ const ResultWrapper = styled.div`
   }
 `
 const Contents = ({ isSearch, isHome }) => {
-  // console.log('isSearch? ', isSearch)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showFilterField, setShowFilterField] = useState(false);
@@ -137,7 +135,7 @@ const Contents = ({ isSearch, isHome }) => {
   const handleSortType = (e) => {
     setSortType(e.target.value)
   }
-  console.log('sortType: ', sortType)
+
   const handleFilterType = (e) => {
     setFilterType(e.target.value)
   }

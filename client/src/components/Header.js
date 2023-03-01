@@ -5,6 +5,10 @@ import Avatar from './Mypage/Avatar';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux'
 import { SubmitButton } from '../styles/styledcomponents';
+import { logoutUser } from '../redux/actions/userData';
+import { useDispatch } from 'react-redux';
+import { getLoginUserInfo } from '../api/user';
+import { setCurrentUser } from '../redux/actions/userData';
 
 const Container = styled.header`
   width: 100%;
@@ -100,16 +104,20 @@ export default function Header({ setIsSearch }) {
     if (Object.keys(currentUser).length === 0) {
       setLogin(true)
     }
+    getLoginUserInfo(localStorage.getItem("access_token"), localStorage.getItem("refresh_token"), localStorage.getItem("memberId"))
+    .then(res => dispatch(setCurrentUser(res.data)))
+    
   }, [])
   const [search, setSearch] = useState('');
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   //
   const loginHandler = () => {
     // '/login' 으로 이동하기
   };
 
   const logoutHandler = () => {
-    // localStorage.removeitem("key")
+    dispatch(logoutUser)
     setLogin(false);
   };
 
@@ -117,6 +125,7 @@ export default function Header({ setIsSearch }) {
   const searchInputHandler = (e) => {
     setSearch(e.target.value);
   };
+
   const searchHandler = (e) => {
     // search data
     setSearch('');
@@ -127,6 +136,7 @@ export default function Header({ setIsSearch }) {
       navigate('/search')
     }
   };
+const token = localStorage.getItem("access_token")
 
   return (
     <Container>
@@ -154,7 +164,7 @@ export default function Header({ setIsSearch }) {
         <SearchWrapper onChange={searchHandler}>
           <SearchInput onChange={searchInputHandler} onKeyPress={searchHandler} type='text' />
         </SearchWrapper>
-        {login ? (
+        {token ? (
           <>
             <Link to='/mypage'>
               <Avatar width='28px' height='28px' margin='5px 5px 0 5px' />

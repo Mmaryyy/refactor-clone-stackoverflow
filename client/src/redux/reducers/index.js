@@ -3,6 +3,7 @@ import { userDataReducer } from "./userDataReducer";
 import { answersReducer } from "./answersReducer";
 import { contentsReducer } from './contentsReducer';
 
+
 const rootReducer = combineReducers({
     userDataReducer,
     answersReducer,

@@ -19,8 +19,11 @@ import Post from './page/Post';
 import Users from './page/Users';
 import EditPost from './page/EditPost'
 import { useDispatch, useSelector } from 'react-redux';
+import { getTagList } from './redux/actions/contents';
 
 function App() {
+  const data = useSelector(state => state.userDataReducer.currentUser)
+  console.log(data)
   const [isReady, setIsReady] = useState(true);
   const { pathname } = useLocation();
   const [showNav, setShowNav] = useState(true);
@@ -28,8 +31,11 @@ function App() {
   const [showSidebar, setShowSidebar] = useState(true);
   const [ isSearch, setIsSearch ] = useState(false)
   const [ isHome, setIsHome ] = useState(false)
+  const dispatch = useDispatch()
+
   useEffect(() => {
     setTimeout(() => {
+      dispatch(getTagList())
       setIsReady(false);
     }, 2500);
     if (pathname === '/') {
@@ -37,7 +43,7 @@ function App() {
     } 
     
   }, []);
-  console.log('isHome: ', isHome)
+
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [ pathname ])

@@ -15,24 +15,22 @@ export const getSingleContent = async (postId) => {
 
 
 export const getLoginToken = (email, password) => {
-    return axios({
-      url: `/api/login`,
-      headers: { 'Content-Type': 'application/json' },
-      method: 'post',
-      data: {
-          email,
-          password
-        },
-      })
-      .then((res) => {
-        console.log(res)
-        localStorage.setItem("access_token", res.headers.authorization)
-        localStorage.setItem("refresh_token", res.headers.refresh)
-        return res.headers
-      })
-      .catch((error) => console.log('error: ', error));
-  };
-  
+return axios({
+    url: `/api/login`,
+    headers: { "Content-Type": "application/json" },
+    method: "post",
+    data: {
+        email,
+        password,
+    },
+    }).then(res => {
+    console.log(res);
+    localStorage.setItem("access_token", res.headers.authorization);
+    localStorage.setItem("refresh_token", res.headers.refresh);
+    return res.headers.catch(error => console.log("error: ", error));
+});
+};
+
 export const createContent = (memberId, title, content, tags) => {
     const newContent = {
         memberId,
@@ -52,10 +50,6 @@ export const createContent = (memberId, title, content, tags) => {
         .then(res => res)
         .catch(error => console.log(error))
 }
-
-
-
-
 
 export const updateContent = async (questionId, title, content, tags) => {
     const updateContent = {
