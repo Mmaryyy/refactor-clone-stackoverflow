@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import TagList from "../components/TagList"
 import tagList from '../datas/tags.json';
 import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getTagList } from '../redux/actions/contents';
 import axios from 'axios';
 
 const Container = styled.div`
@@ -114,21 +116,31 @@ const Main = styled.div`
 `
 
 const Tags = ({setShowSidebar}) => {
-  
+
+  const tags = useSelector(state => state.contentsReducer.tagList)
+  const dispatch = useDispatch()
   const [popularFilter, setPopular] = useState(false);
   const [nameFilter, setName] = useState(false);
   const [newFilter, setNew] = useState(false);
-
+  
   useEffect(() => {
+    dispatch(getTagList())
     setShowSidebar(false)
-    axios
-    .get('api/tags')
-    .then((res) => console.log(res.data))
-    .catch((error) => console.log('error: ', error));
-    return () => {
+      return () => {
       setShowSidebar(true)
     }
   }, [])
+
+  // useEffect(() => {
+  //   setShowSidebar(false)
+  //   axios
+  //   .get('api/tags')
+  //   .then((res) => console.log(res.data))
+  //   .catch((error) => console.log('error: ', error));
+  //   return () => {
+  //     setShowSidebar(true)
+  //   }
+  // }, [])
 
   return (
     <Container>
@@ -167,7 +179,7 @@ const Tags = ({setShowSidebar}) => {
           </div>
         </div>
         <div className="tags_list">
-          {tagList.map(data => <TagList key={data.id} data={data}/>)}
+          {tags&&tags.map(data => <TagList key={data.tagId} data={data}/>)}
         </div>
       </Main>
     </Container>

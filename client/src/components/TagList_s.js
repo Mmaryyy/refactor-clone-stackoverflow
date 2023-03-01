@@ -48,7 +48,7 @@ const TagList = ({ data, tagClickHandler }) => {
     <Container>
       {data.map(tag => {
         return (
-          <div key={tag.id} className='linkStyle' onClick={tagClickHandler}>
+          <div key={tag.tagId} className='linkStyle' onClick={tagClickHandler}>
             {tag.title}
           </div>
         )

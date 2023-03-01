@@ -2,11 +2,12 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { editContent } from '../redux/reducers/userDataReducer'
-import {setCurrentUser} from '../redux/actions/userData'
+import { setCurrentUser } from '../redux/actions/userData';
+import { getLoginUserInfo } from '../api/user';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-//
+
 const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -182,16 +183,23 @@ const InputContainer = styled.div`
 
 function Login({ setShowNav, setShowFooter, setShowSidebar }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const data = useSelector(state => state.userDataReducer.currentUser)
+  console.log(data)
+
   useEffect(() => {
     setShowNav(false);
     setShowFooter(false);
     setShowSidebar(false);
+    // if(data&&data.memberId) window.location='http://localhost:3000/questions'
+
     return () => {
       setShowNav(true);
       setShowFooter(true);
       setShowSidebar(true);
     };
-  }, []);
+  }, [data]);
+
   const [loginInfo, setLoginInfo] = useState({ userEmail: '', password: '' });
   const [errorMessage, setErrorMessage] = useState({
     userEmail: '',
@@ -231,8 +239,19 @@ function Login({ setShowNav, setShowFooter, setShowSidebar }) {
         password: loginInfo.password,
       },
     })
-    .then((res) => console.log(res))
-    .catch((error) => console.log('error: ', error));
+    .then((res) => {
+      localStorage.setItem("access_token", res.headers.authorization)
+      localStorage.setItem("refresh_token", res.headers.refresh)
+      return res.headers
+    })
+    .then((res) => {
+      return getLoginUserInfo(res.authorization, res.refresh, res.memberid)
+    })
+    .then(res => {
+      dispatch(setCurrentUser(res.data))
+      navigate('/')
+    })
+    .catch((error) => setErrorMessage({userEmail: 'The email or password is incorrect.', password: ''}));
   
 
 

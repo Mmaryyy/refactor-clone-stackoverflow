@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {joinUser, getAllUser} from '../api/user'
 import axios from 'axios';
 
@@ -297,7 +298,7 @@ function Join({ setShowNav, setShowFooter, setShowSidebar }) {
       setShowSidebar(true);
     };
   }, []);
-
+  const navigate = useNavigate();
   const [loginInfo, setLoginInfo] = useState({ userName: 'user', userEmail: '', password: '' });
   const [errorMessage, setErrorMessage] = useState({
     userEmail: '',
@@ -451,22 +452,9 @@ function Join({ setShowNav, setShowFooter, setShowSidebar }) {
         img: `/images/Avatar${parseInt(Math.random()*10)+1}.png`
       },
     })
-    .then((res) => res)
-    .catch((error) => console.log('error: ', error));
+    .then((res) => navigate('/login'))
+    .catch((error) => setErrorMessage({userEmail: 'You already have an account, please sign in.', password: ''}));
     
-    // return axios
-    //   .post("url", {loginInfo, checkedKeepLogin})
-    //   .then((res) => {
-    //     // setIsLogin(true)
-    //     // setUserInfo(res.data)
-    //     setErrorMessage({userEmail: '', password: '',})
-    //   })
-    //   .catch((err) => {
-    //     setErrorMessage({userEmail: 'The email or password is incorrect.', password: ''})
-    //   });
-    axios.get(`api/members?page=1&size=10`)
-    .then((res) => console.log(res))
-    .catch((error) => console.log('error: ', error));
   };
 
   return (

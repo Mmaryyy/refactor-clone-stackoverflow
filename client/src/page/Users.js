@@ -2,17 +2,15 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import UserCard from '../components/UserCard';
-import user from '../datas/userData.json';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { getUserList } from '../redux/actions/userData';
+// import user from '../datas/userData.json';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserList } from '../redux/actions/userData';
 
 const Container = styled.div`
   max-width: 1100px;
   width: calc(100% - 164px);
   padding: 24px;
   margin-top: 60px;
-  /* margin-left: 165px; */
-  /* min-height: 100vh; */
 `;
 
 const Wrapper = styled.div`
@@ -84,13 +82,16 @@ const User = styled.div`
 `;
 
 export default function Users({ setShowSidebar }) {
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.userDataReducer.userList)
+  console.log(user)
   useEffect(() => {
+    dispatch(getUserList())
     setShowSidebar(false);
     return () => {
       setShowSidebar(true);
     };
   }, []);
-  // const dispatch = useDispatch();
   // useEffect(() => {
   //   dispatch(getUserList());
   // });
@@ -110,7 +111,7 @@ export default function Users({ setShowSidebar }) {
               ></input>
               <svg
                 aria-hidden='true'
-                class='icon_search'
+                className='icon_search'
                 width='18'
                 height='18'
                 viewBox='0 0 18 18'
@@ -140,7 +141,7 @@ export default function Users({ setShowSidebar }) {
         <User>
           <div className='users'>
             {user.map((el) => (
-              <UserCard key={el.shortId} el={el} />
+              <UserCard key={el.memberId} el={el} />
             ))}
           </div>
         </User>

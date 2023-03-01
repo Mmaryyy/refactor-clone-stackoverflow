@@ -8,9 +8,10 @@ const initialState = {
 export const userDataReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_CURRENT_USER:
+      console.log(action.payload)
       return {
         ...state,
-        currentUser : action.payload,
+        currentUser : action.payload
       };
     case GET_ALL_USER:
       return {
