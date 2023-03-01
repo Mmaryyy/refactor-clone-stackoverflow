@@ -3,6 +3,8 @@ package com.preproject_009.question.mapper;
 import com.preproject_009.answer.entity.Answer;
 import com.preproject_009.question.dto.QuestionDto;
 import com.preproject_009.question.entity.Question;
+import com.preproject_009.tag.Tag;
+import com.preproject_009.tag.questiontag.QuestionTag;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
@@ -24,4 +26,8 @@ public interface QuestionMapper {
     QuestionDto.Response.AnswerWithMemberInfo answerToAnswerWithMemberInfo(Answer answer);
 
     List<QuestionDto.Response.AnswerWithMemberInfo> answersToAnswerWithMemberInfos(List<QuestionDto.Response.AnswerWithMemberInfo> infos);
+
+   @Mapping(target = "tagId", source = "questionTag.tag.tagId")
+   @Mapping(target = "title", source = "questionTag.tag.title")
+    QuestionDto.Response.TagInfo tagToTagInfoDto(QuestionTag questionTag);
 }

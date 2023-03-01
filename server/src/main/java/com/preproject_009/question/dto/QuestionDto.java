@@ -56,7 +56,7 @@ public class QuestionDto {
         private String memberImage;
         private String title;
         private String content;
-        private List<Tag> tags;
+        private List<TagInfo> tags;
         private List<QuestionComment> questionComments;
         private int view;
         @JsonProperty("totalVotes")
@@ -76,6 +76,13 @@ public class QuestionDto {
             private String memberName;
             private String memberImage;
             private int totalVotes;
+        }
+
+        @AllArgsConstructor
+        @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+        public static class TagInfo {
+            private long tagId;
+            private String title;
         }
     }
 }
