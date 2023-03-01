@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { TagButton, LinkContent, CommonWrapper, BaseButton, SubmitButton } from '../styles/styledcomponents'
 import { useDispatch, useSelector } from 'react-redux'
-import { setCurrentContent } from '../redux/actions/contents'
+import { setCurrentContent, addComment, deleteComment, updateComment} from '../redux/actions/contents'
 import { useNavigate } from 'react-router-dom'
 import { Editor } from './Editor'
 import CommentEdit from './CommentEdit'
@@ -51,9 +51,10 @@ const AuthorProfileWrapper = styled.img`
 `
 const CommentWrapper = styled.div`
     display: flex;
+    flex-direction: column;
+    align-items: flex-end;
     padding: 10px 5px 10px 20px;
     border-bottom: 1px solid var(--black__100);
-    align-items: center;
     span {
       margin-right: 10px;
       font-size: var(--fs--mid);
@@ -81,19 +82,44 @@ const CommetEditor = styled.input`
     color: var(--black__100);
   }
 `
-const PostBlock = ({ content, author, isAnswer, questionId, answerId }) => {
+const ContentWrapper = styled.p`
+  width: 100%;
+`
+const CommentEditorWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px;
+  > span {
+    margin: 0;
+    cursor: pointer;
+  }
+`
+const PostBlock = ({ content, isAnswer, questionId, answerId }) => {
     // console.log('content: ', content)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const currentContent = useSelector(state => state.contentsReducer.currentPostContent)
+    const { currentUser } = useSelector(state => state.userDataReducer)
+    useEffect(() => {
+      //* postblock이 렌더링 될 때, 각 블럭당 현재 게시물 정보를 스토어에 저장함 ? 해야함 ? 
+    }, [])
+    // const currentContent = useSelector(state => state.contentsReducer.currentPostContent)
+    // console.log(currentContent)
     // edit 요청 받았는지 아닌지에 따라 노출 컨텐츠가 달라져야함
     // 요청 받으면 -> textEditor로 변경
     const [ isEdit, setIsEdit ] = useState(false)
     const [ votes, setVotes ] = useState(content.votes)
     const [ commentValue, setCommentValue ] = useState('')
+    const [ updateValue, setUpdateValue ] = useState('')
+    const [ isCommentEdit, setIsCommentEdit ] = useState(false)
+    const [ currentEditCommentId, setCurrentEditCommentId ] = useState('')
+    console.log(questionId)
     // Todo: author 정보랑 현재 로그인한 유저가 같으면 'isSame === true' edit이 가능
     // Todo: 다르면 edit 버튼을 노출하지 않는다.
     const [ isSame, setIsSame ] = useState(true)
+    const comment = isAnswer ? content.answerComments : content.questionComments
     const handleVoteUp = () => {
         setVotes(votes++)
     }
@@ -117,24 +143,66 @@ const PostBlock = ({ content, author, isAnswer, questionId, answerId }) => {
       console.log('content: ', content)
       console.log('isAnswer: ', isAnswer)
       dispatch(setCurrentContent(content))
-      console.log('currentContent: ', currentContent)
       if (isAnswer) {
         setIsEdit(true)
       } else {
         navigate('/edit')
       }
     }
-    const submitComment = (e, isAnswer) => {
+    const submitComment = (e, isAnswer, memberId, questionId) => {
       if (e.key === 'Enter') {
         // content - answer 여부에 따라 api 요청을 따로 보냄
+        e.preventDefault()
         if (isAnswer) {
           // answer api
           console.log('answer comment api')
         } else {
           // content api
+          dispatch(addComment(questionId, memberId, commentValue))
+          window.location.reload()
           console.log('content comment api')
+          // dispatch(addComment(questionId, currentUser.memberId, commentValue))
+          dispatch(addComment(questionId, 9, commentValue))
+          setCommentValue('')
         }
       }
+    }
+    const onClickCommentDelete = (commentId, isAnswer) => {
+      if (isAnswer !== undefined && isAnswer) {
+        // answer api
+        console.log('delete answer comment api')
+      } else {
+        // content api
+        console.log('delete content comment api')
+        dispatch(deleteComment(commentId, questionId))
+      }
+    }
+    const onClickCommentEdit = (questionCommentId, defaultValue) => {
+      // edit 버튼을 누르면 
+      // 코멘트 내용을 상대로 저장하고
+      // comment 내용 출력하는 태그를 Input으로 변환 (value에 저장한 코멘트 내용 담아주기)
+      setCurrentEditCommentId(questionCommentId)
+      setUpdateValue(defaultValue)
+      setIsCommentEdit(true)
+    }
+    const onKeyUpdateComment = (e, commentId, isAnswer) => {
+      if (e.key === 'Enter') {
+        if (isAnswer) {
+          // answer api
+          console.log('edit answer comment api')
+        } else {
+          // content api
+          console.log('edit content comment api')
+          dispatch(updateComment(commentId, updateValue, questionId))
+          setIsCommentEdit(false)
+          setCurrentEditCommentId('')
+        }
+      }
+    }
+    const cancleCommentEdit = () => {
+      // editvalue 비워주고 input 창 끄고 댓글창으로 돌아가..
+      setIsCommentEdit(false)
+      setCurrentEditCommentId('')
     }
   return isEdit
   ? (
@@ -155,7 +223,7 @@ const PostBlock = ({ content, author, isAnswer, questionId, answerId }) => {
               <path d="M2 25h32L18 9 2 25Z"></path>
             </svg>
           </BaseButton>
-          <span>{votes}</span>
+          <span>{content.totalVotes}</span>
         </VoteWrapper>
         <ContentContainer className="content_container">
           <p className="content">{content.content}</p>
@@ -171,49 +239,56 @@ const PostBlock = ({ content, author, isAnswer, questionId, answerId }) => {
             { isSame
             ?
             <CommonWrapper className='modified_wrapper'>
-              <BaseButton className="edit_botton" onClick={() => editContent(content, isAnswer)}>Edit</BaseButton>
-              <BaseButton className='delete_botton' margin={'0 10px'} onClick={() => {deleteContent(content.shortId)}}>Delete</BaseButton>
+              <BaseButton className="edit_botton" onClick={() => editContent(content, isAnswer)}>edit</BaseButton>
+              <BaseButton className='delete_botton' margin={'0 10px'} onClick={() => {deleteContent(content.shortId)}}>delete</BaseButton>
             </CommonWrapper>
             : null}
             <AuthorWrapper className="author_wrapper">
               <span>asked {new Date(content.createdAt).toLocaleString()}</span>
               <CommonWrapper className='author_profile' align={'center'}>
               <AuthorProfileWrapper
-                src={author.avatarUrl}
+                src={content.memberName === undefined ? '/images/Avatar1.png' : content.memberName}
                 alt="author_profile"
               />
-              <LinkContent fs={'var(--fs--caption)'}>{author.nickname}</LinkContent>
+              <LinkContent fs={'var(--fs--caption)'}>{content.memberName}</LinkContent>
               </CommonWrapper>
             </AuthorWrapper>
           </CommonWrapper>
-            <div className='add_comment'>
+          <div className='add_comment'>
             <CommetEditor id='add_comment'
             value={commentValue}
             onChange={(e) => {setCommentValue(e.target.value)}}
-            onKeyPress={(e) => {submitComment(e, isAnswer)}}
+            onKeyPress={(e) => {submitComment(e, isAnswer, 1, questionId)}}
             placeholder='Add a comment'/>
             </div>
           <div className="comments_container">
-            {content.comments.length === 0 ? (
-              <p>
-                Know someone who can answer? Share a link to this question via
-                email, Twitter, or Facebook.
-              </p>
+            {comment === undefined || comment.length === 0 ? (
+              <></>
             ) : (
               <div>
-                {content.comments.map((el, idx) => {
+                {comment.map((el, idx) => {
                   return (
                     <CommentWrapper className="comment_wrapper" key={idx}>
-                      <span>{el.content}</span> <span>-</span>{" "}
+                      {isCommentEdit && el.questionCommentId === currentEditCommentId 
+                      ? 
+                      <CommentEditorWrapper className='comment_editor_wrapper'>
+                        <CommetEditor className='comment_editor' value={updateValue} 
+                            onChange={(e) => setUpdateValue(e.target.value)}
+                            onKeyUp={(e) => onKeyUpdateComment(e, el.questionCommentId, isAnswer)}/>
+                        <span onClick={cancleCommentEdit}>❌</span>
+                      </CommentEditorWrapper>
+                      : 
+                      <ContentWrapper><span>{el.content}</span> <span>-</span>{" "}
                       <LinkContent className="author" fs={"var(--fs--mid)"}>
                         {el.author}
                       </LinkContent>{" "}
-                      <span className="created_date">{el.createdAt}</span>
+                      <span className="created_date">{new Date(el.createdAt).toLocaleString('ko-KR')}</span>
+                      </ContentWrapper>}
                       { true 
                       ?
                     <div className="edit_wrapper">
-                      <BaseButton margin={'0 10px'}>edit</BaseButton>
-                      <BaseButton margin={'0 10px'}>delete</BaseButton>
+                      <BaseButton margin={'0 10px'} onClick={() => onClickCommentEdit(el.questionCommentId, el.content)}>edit</BaseButton>
+                      <BaseButton margin={'0 10px'} onClick={() => onClickCommentDelete(el.questionCommentId, isAnswer)}>delete</BaseButton>
                     </div> 
                       : null }
                     </CommentWrapper>

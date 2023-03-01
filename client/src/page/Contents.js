@@ -3,16 +3,18 @@ import styled from 'styled-components';
 import { SubmitButton, LinkContent } from '../styles/styledcomponents';
 import Content from '../components/Content';
 import { useSelector, useDispatch } from 'react-redux';
-import { getContentList, getSingleContent } from '../redux/actions/contents';
+import { getContentList } from '../redux/actions/contents';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import PaginationBar from '../components/PaginationBar';
+import contentList from '../datas/contents.json'
 const Container = styled.main`
   display: flex;
   flex-direction: column;
   /* height: 100vh; */
   margin-top: 60px;
   /* margin-left: 165px; */
+  min-height: 90vh;
 `;
 const HeadContainer = styled.div`
   display: flex;
@@ -100,29 +102,21 @@ const ResultWrapper = styled.div`
     }
   }
 `
-const Contents = ({ isSearch }) => {
-  console.log('isSearch? ', isSearch)
+const Contents = ({ isSearch, isHome }) => {
+  // console.log('isSearch? ', isSearch)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showFilterField, setShowFilterField] = useState(false);
   const [sortType, setSortType] = useState('created_At')
   const [filterType, setFilterType] = useState(1)
 
-
-
   useEffect(() => {
     // console.log('여기 타니?');
     dispatch(getContentList());
-    axios
-      .get('api/questions?page=1&keyword=&sortType=created_At&filterType=1')
-      .then((res) => console.log(res.data))
-      .catch((error) => console.log('error: ', error));
   }, []);
 
-
-
   const contentList = useSelector((state) => state.contentsReducer.contentList);
-  // console.log('contentList: ', contentList);
+  const pageInfo = useSelector(state => state.contentsReducer.pageInfo)
   const handleFilterField = () => {
     setShowFilterField(!showFilterField);
   };
@@ -138,8 +132,7 @@ const Contents = ({ isSearch }) => {
     }
     // console.log('filter: ', filter)
     // 필터링 검색 api 요청 보내기 -> 받아서 스토어에 contentsList 업데이트 해주기.
-    // 그다음 결과값을 search.js로 이동해서 보여줌
-    navigate('/search')
+    navigate('/questions')
   };
   const handleSortType = (e) => {
     setSortType(e.target.value)
@@ -148,23 +141,38 @@ const Contents = ({ isSearch }) => {
   const handleFilterType = (e) => {
     setFilterType(e.target.value)
   }
+  const getContentPageList = (page) => {
+    console.log(page)
+  }
   console.log('filterType: ', filterType)
+  const handleNewQuestion = () => {
+    // store에 currentContent 비워야함
+    navigate('/ask')
+  }
   return contentList.length === 0 ? (
-    <></>
+    <Container>
+      <span>데이터가 없습니다.</span>
+    </Container>
   ) : (
     <Container className='contents_container'>
       <HeadContainer>
         <div className='head_first'>
-          <Title>{isSearch ? 'Search Results': 'All Questions'}</Title>
-          <SubmitButton>Ask Question</SubmitButton>
+          <Title>{isSearch ? 'Search Results' : isHome ? 'Top Questions' : 'All Questions'}</Title>
+          <SubmitButton onClick={handleNewQuestion}>Ask Question</SubmitButton>
         </div>
-        <ResultWrapper className='result_text'>
-          <p>Results for {'검색어'}</p>
-          <p>Search options <span>not deleted</span></p>
-        </ResultWrapper>
+        {isHome 
+        ? <></> 
+        : 
+      <ResultWrapper className='result_text'>
+        <p>Results for {'검색어'}</p>
+        <p>Search options <span>not deleted</span></p>
+      </ResultWrapper>}
         <div className='head_second'>
-          <span>{contentList.length} {isSearch ? 'results' : 'questions'}</span>
-          {isSearch 
+          {isHome 
+          ? <></> 
+          : <span>{contentList.length} {isSearch ? 'results' : 'questions'}</span>
+          }
+          {isSearch || isHome
           ? null 
           : <SubmitButton
             bg={'var(--tag__back)'}
@@ -235,11 +243,11 @@ const Contents = ({ isSearch }) => {
       </HeadContainer>
       {contentList.map((singleContent) => {
         return (
-          <Content key={singleContent.shortId} singleContent={singleContent} />
+          <Content key={singleContent.questionId} singleContent={singleContent} />
         );
       })}
       <div className='pagination_wrapper'>
-        <PaginationBar pageInfo={'라라'}/>
+        <PaginationBar pageInfo={pageInfo} apiCallFunction={getContentPageList}/>
       </div>
     </Container>
   );

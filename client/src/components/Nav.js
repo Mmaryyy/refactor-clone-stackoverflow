@@ -47,7 +47,8 @@ const TapLink = styled(Link)`
   }
 
   &.home {
-    margin: 25px 25px 25px 0;
+    margin: 30px 0;
+    padding-left: 20px;
   }
 
   &.menu {

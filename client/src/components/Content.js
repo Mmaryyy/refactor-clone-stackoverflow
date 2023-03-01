@@ -98,38 +98,41 @@ const AuthorProfileWrapper = styled.img`
   width: 20px;
 `
 const Content = ({ singleContent }) => {
-  const { title, content, createdAt, isSelected, lastModifiedAt, tag, view, votes, author, answer } = singleContent
-  const { avatarUrl, nickname } = author
-  const passedTime = getTimeGap(lastModifiedAt)
+  const { title, content, questionStatus, modifiedAt, view, totalVotes, memberName, memberImage, answers, questionId } = singleContent
+  const passedTime = getTimeGap(modifiedAt)
+  const isSelected = questionStatus === 'QUESTION_ANSWER_ACCEPTED' ? true : false
+  const ellipsisContent = (content) => {
+    return `${content.substring(0, 108)}...`
+  }
   return (
     <ContentContainer>
       <SummaryContainer className="content_summary">
-        <SummaryTitle className="view__vote">{votes} votes</SummaryTitle>
+        <SummaryTitle className="view__vote">{totalVotes} votes</SummaryTitle>
         <SummaryTitle className={
           isSelected 
           ? 'answer__selected' 
-          : answer.length !== 0
+          : answers.length !== 0
             ? 'answer__notSelected'
             : null
           }>
             {isSelected 
              ? <CheckContainer src={check} alt='answered'/>
              : null}
-            {answer.length} answers</SummaryTitle>
+            {answers.length} answers</SummaryTitle>
         <SummaryTitle>{view} views</SummaryTitle>
       </SummaryContainer>
       <ContentDetailContainer className="content_details">
-        <PostTitle to={`/questions/${singleContent.shortId}`}>{title}</PostTitle>
+        <PostTitle to={`/questions/${questionId}`}>{title}</PostTitle>
         <BodyContainer>
-          {content}
+          {ellipsisContent(content)}
         </BodyContainer>
         <PostSummaryContainer className="post_summary_meta">
           <div className="tag_container">
-            {tag.map((el, idx) => <TagButton key={idx}>{el}</TagButton>)}
+            {singleContent.tag === undefined ? <></> : singleContent.tag.map((el, idx) => <TagButton key={idx}>{el}</TagButton>)}
           </div>
           <div className="author_datas">
-            <AuthorProfileWrapper src={avatarUrl} alt='avatar_profile'/>
-            <AuthorLink to="#">{nickname}</AuthorLink>
+            <AuthorProfileWrapper src={memberImage} alt='avatar_profile'/>
+            <AuthorLink to="#">{memberName}</AuthorLink>
             <span>modified {passedTime} mins ago</span>
           </div>
         </PostSummaryContainer>

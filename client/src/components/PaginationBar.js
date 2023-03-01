@@ -5,7 +5,9 @@ const Container = styled.div`
     width: 100%;
     height: 5rem;
     display: flex;
+    /* justify-content: space-around; */
     align-items: center;
+    margin-left: 1rem;
 `
 const PageButton = styled.div`
     border: 1px solid var(--black__100);
@@ -29,7 +31,7 @@ const PageButton = styled.div`
     }
 `
 
-const PaginationBar = ({ pageInfo }) => {
+const PaginationBar = ({ pageInfo, apiCallFunction }) => {
   const { page, size, totalElements, totalPages } = pageInfo
   const getMidPage = (currentPage, totalPages) => {
     const pre = currentPage > 2 ? 2 : currentPage === 1 ? 0 : 1
@@ -39,22 +41,43 @@ const PaginationBar = ({ pageInfo }) => {
     }
     return array.filter(el => el >= 1 && el <= totalPages) 
   }
-  const Button = ({ value}) => {
+  const Button = ({ value, currentPage }) => {
+    const onBtnClicked = () => {
+      if (value === 'Prev') {
+        onClickPrev()
+        return
+      }
+      if (value === 'Next') {
+        onClickNext()
+        return
+      }
+      onClickPageNumber()
+    }
+    const onClickPageNumber = () => {
+      apiCallFunction(value)
+    }
+    const onClickPrev = () => {
+      apiCallFunction(currentPage - 1)
+    }
+    const onClickNext = () => {
+      apiCallFunction(currentPage + 1)
+    }
     return (
         <PageButton 
         className={value === String(page) ? 'active' : null} 
+        onClick={() => onBtnClicked()}
         >{value}</PageButton>
     )
   }
   return (
     <Container className='pagination_container'>
-        {page === 1 ? null : <Button key='prev' value='Prev'/>}
+        {page === 1 ? null : <Button key='prev' value='Prev' currentPage={page}/>}
         {page < 4 ? null : <Button key='0' value='1'/>}
         {page < 5 ? null : <span className='prev_compress'>...</span>}
-        {getMidPage(page, totalPages).map((el, idx) => <Button key={idx} value={`${el}`}/>)}
+        {getMidPage(page, totalPages).map((el, idx) => <Button key={idx} value={`${el}`} currentPage={page}/>)}
         {page > totalPages - 4 ? null : <span className='next_compress'>...</span>}
         {page > totalPages - 3 ? null : <Button key='last_page' value={totalPages}/>}
-        <Button key='next' value='Next'/>
+        <Button key='next' value='Next' currentPage={page}/>
     </Container>
   )
 }

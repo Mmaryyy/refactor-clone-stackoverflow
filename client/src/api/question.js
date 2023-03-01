@@ -82,16 +82,32 @@ export const voteUp = async (questionId, memberId) => {
 
 //* question comment CUD
 
-export const addQuestionComment = (questionId, memberId, content) => {
+export const addQuestionComment = async (questionId, memberId, content) => {
     const comment = {
         memberId,
         questionId,
         content
     }
-    axios.post(`/api/questions/${questionId}/questionComments`, comment)
+    return axios.post(`/api/questions/${questionId}/questionComments`, comment)
+         .then(res => res.data)
+         .catch(error => console.log(error))
+}
+
+export const updateQuestionComment = async (commentId, content) => {
+    const comment = {
+        questionCommentId: commentId,
+        content
+    }
+    return axios.patch(`/api/questionComments/${commentId}`, comment)
         .then(res => res.data)
         .catch(error => console.log(error))
 }
+
+export const deleteQuestionComment = async (commentId) => {
+    return axios.delete(`/api/questionComments/${commentId}`)
+         .catch(error => console.log(error))
+}
+
 
 //* get Tag List
 

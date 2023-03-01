@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { getTimeGap } from '../utils/dateUtil'
-import { getSingleContent, clearCurrentContent } from '../redux/actions/contents'
+import { getSingleQuestion } from '../redux/actions/contents'
 import styled from 'styled-components'
 import { SubmitButton, TagButton, LinkContent, SubmitInput } from '../styles/styledcomponents'
 // import { ToastEditor } from '../components/TextEditor'
 import PostBlock from '../components/PostBlock'
 import { Editor } from '../components/Editor'
+import axios from 'axios'
 const PostContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -82,7 +83,7 @@ const CustomList = styled.ul`
     display: inherit;
   }
 `
-const NoticeText = styled.p`
+const NoticeText = styled.div`
   font-size: var(--fs--big);
   margin: 15px 0;
 `
@@ -90,17 +91,16 @@ const Post = () => {
   // 접근 1. content -> title 클릭 -> post
   // 접근 2. url을 통해 구분된 게시글 id로 접근
   const { postId } = useParams()
+  console.log(postId)
   const navigate = useNavigate()
   // TODO: postId app 에서 받아와서 변수로 바꾸기 !!!!!
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(getSingleContent(postId))
+    dispatch(getSingleQuestion(postId))
   }, [])
   const singleContent = useSelector(state => state.contentsReducer.currentContent)
   console.log(singleContent)
-  const { content, author, answer } = singleContent
-  const asked = getTimeGap(content.createdAt)
-  const modified = getTimeGap(content.lastModifiedAt)
+  // const { content, memberName, answers } = singleContent
   const [ showNotice, setShowNotice ] = useState(false)
   const closeNotice = () => {
     setShowNotice(false)
@@ -109,39 +109,38 @@ const Post = () => {
     setShowNotice(true)
   }
   const handleNewQuestion = () => {
-    dispatch(clearCurrentContent())
     navigate('/ask')
   }
   const [ answerBody, setAnswerBody ] = useState('')
   console.log('answerBody: ', answerBody)
-  return content.title === undefined ? (
+  return Object.keys(singleContent).length === 0 ? (
     <></>
   ) : (
     <PostContainer className="post_container">
       <HeaderContainer className="header_container">
         <CommonWrapper direct={"space-between"} className="title_wrapper" padding={"0 10px"}>
-          <Title>{content.title}</Title>
+          <Title>{singleContent.title}</Title>
           <SubmitButton onClick={handleNewQuestion}>Ask questions</SubmitButton>
         </CommonWrapper>
         <SummaryWrapper className="summary_wrapper">
           <Item>Asked</Item>
-          <span>{asked} mins ago</span>
+          <span>{getTimeGap(singleContent.createdAt)} mins ago</span>
           <Item>Modified</Item>
-          <span>{modified} mins ago</span>
+          <span>{getTimeGap(singleContent.modifiedAt)} mins ago</span>
           <Item>Viewed</Item>
-          <span>{content.view}</span>
+          <span>{singleContent.view}</span>
         </SummaryWrapper>
       </HeaderContainer>
-      <PostBlock content={content} author={author} postId={postId}/>
+      <PostBlock content={singleContent} questionId={postId} isAnswer={false}/>
       <div className='answer_container'>
-        <NoticeText>{answer.length === 0 ? 
+        <NoticeText>{singleContent.answers.length === 0 ? 
         <NoticeText>
-          Know someone who can answer? Share a link to this <LinkContent>question</LinkContent> via <LinkContent>email</LinkContent>, <LinkContent>Twitter</LinkContent>, or <LinkContent>Facebook</LinkContent>.
+          Know someone who can answer? Share a link to this <LinkContent>question</LinkContent>via <LinkContent>email</LinkContent>, <LinkContent>Twitter</LinkContent>, or <LinkContent>Facebook</LinkContent>.
         </NoticeText>
-        :`${answer.length} Answers`}</NoticeText>
-        {answer.map((el, idx) => {
+        :`${singleContent.answers.length} Answers`}</NoticeText>
+        {singleContent.answers.map((el, idx) => {
           return (
-            <PostBlock key={idx} className='answer' content={el} author={el.author} isAnswer={true} questionId={postId} answerId={el.shortId}/>
+            <PostBlock key={idx} className='answer' content={el} author={'아무나'} isAnswer={true} questionId={postId} answerId={el.shortId}/>
           )
         })}
       </div>
@@ -192,15 +191,15 @@ const Post = () => {
       <CommonWrapper className='notice_underline_wrapper'>
       <NoticeText>
         Browse other questions tagged{" "}
-        <CustomList className="tags_list">
-          {content.tag.map((el, idx) => {
+        {/* <CustomList className="tags_list">
+          {singleContent.tag.map((el, idx) => {
             return (
               <li key={idx}>
                 <TagButton>{el}</TagButton>
               </li>
             )
           })}
-        </CustomList>
+        </CustomList> */}
         <span>or </span>
         <LinkContent href='#' fs={'var(--fs--big)'}>ask your own question.</LinkContent>
       </NoticeText>

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import logo from '../img/logo.png';
 import Avatar from './Mypage/Avatar';
 import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux'
 import { SubmitButton } from '../styles/styledcomponents';
 
 const Container = styled.header`
@@ -92,11 +93,19 @@ const Icon = styled.div`
 
 export default function Header({ setIsSearch }) {
   const [login, setLogin] = useState(false);
+  const currentUser = useSelector(state => state.userDataReducer.currentUser)
+  console.log(currentUser)
+  //* 로그인에 성공해서 store에 currentUser가 있으면 login -> true, 없으면 login -> false
+  useEffect(() => {
+    if (Object.keys(currentUser).length === 0) {
+      setLogin(true)
+    }
+  }, [])
   const [search, setSearch] = useState('');
   const navigate = useNavigate()
   //
   const loginHandler = () => {
-    setLogin(true);
+    // '/login' 으로 이동하기
   };
 
   const logoutHandler = () => {
@@ -108,8 +117,6 @@ export default function Header({ setIsSearch }) {
   const searchInputHandler = (e) => {
     setSearch(e.target.value);
   };
-  console.log(search);
-
   const searchHandler = (e) => {
     // search data
     setSearch('');
@@ -155,7 +162,7 @@ export default function Header({ setIsSearch }) {
             <Icon>
               <svg
                 aria-hidden='true'
-                class='svg-icon iconInbox'
+                className='svg-icon iconInbox'
                 width='28'
                 height='28'
                 viewBox='0 0 20 15'
@@ -166,7 +173,7 @@ export default function Header({ setIsSearch }) {
             <Icon>
               <svg
                 aria-hidden='true'
-                class='svg-icon iconAchievements'
+                className='svg-icon iconAchievements'
                 width='28'
                 height='28'
                 viewBox='0 0 18 15'
@@ -177,7 +184,7 @@ export default function Header({ setIsSearch }) {
             <Icon>
               <svg
                 aria-hidden='true'
-                class='svg-icon iconHelp'
+                className='svg-icon iconHelp'
                 width='28'
                 height='28'
                 viewBox='0 0 18 15'
