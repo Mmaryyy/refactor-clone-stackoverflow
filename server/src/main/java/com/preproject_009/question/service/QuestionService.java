@@ -21,7 +21,7 @@ import java.util.Optional;
 @Transactional
 @Service
 public class QuestionService {
-    private final int pageSize = 3;
+    private final int pageSize = 15;
     private final QuestionRepository questionRepository;
     private final MemberService memberService;
     private final MemberRepository memberRepository;
@@ -47,7 +47,7 @@ public class QuestionService {
 
     public Question updateQuestion(Question question) {
         Question updatedQuestion = findQuestion(question.getQuestionId());
-        updatedQuestion.setQuestionStatus(question.getQuestionStatus());
+        updatedQuestion.setQuestionStatusPatch(question.getQuestionStatus());
         // TODO: 2023/02/24 : 관리자 권한 메서드 추가 + 회원이 아닌 사람이 수정하려 들면?
 
 
@@ -80,7 +80,7 @@ public class QuestionService {
     public void deleteQuestion(long questionId) {
         Question question = findQuestion(questionId);
         question.canChangeQuestion(question.getQuestionStatus());
-        question.setQuestionStatus(Question.QuestionStatus.QUESTION_DELETE);
+        question.setQuestionStatusPatch(Question.QuestionStatus.QUESTION_DELETE);
     }
 
     public Page<Question> findQuestionsByMember(long memberId) {

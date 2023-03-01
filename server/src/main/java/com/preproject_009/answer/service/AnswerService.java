@@ -46,7 +46,7 @@ public class AnswerService {
         Member member = memberService.findVerifiedMember(answer.getMember().getMemberId());
         //질문 상태 변경
         Question question = questionService.findQuestion(answer.getQuestion().getQuestionId());
-        question.setQuestionStatus(Question.QuestionStatus.QUESTION_ANSWERED);
+        question.setQuestionStatusAccept(Question.QuestionStatus.QUESTION_ANSWERED);
         questionRepository.save(question);
 
         answer.setCreatedAt(LocalDateTime.now());
