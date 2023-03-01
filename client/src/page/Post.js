@@ -139,7 +139,7 @@ const Post = () => {
         :`${singleContent.answers.length} Answers`}</NoticeText>
         {singleContent.answers.map((el, idx) => {
           return (
-            <PostBlock key={idx} className='answer' content={el} author={'아무나'} isAnswer={true} questionId={postId} answerId={el.shortId}/>
+            <PostBlock key={idx} className='answer' content={el} isAnswer={true} questionId={postId} answerId={el.shortId}/>
           )
         })}
       </div>
