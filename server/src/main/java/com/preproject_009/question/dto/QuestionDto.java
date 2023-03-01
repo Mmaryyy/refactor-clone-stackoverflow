@@ -2,16 +2,9 @@ package com.preproject_009.question.dto;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
-<<<<<<< HEAD
 import com.preproject_009.answer.entity.Answer;
 import com.preproject_009.q_comment.entity.QuestionComment;
-=======
-import com.preproject_009.answer.mapper.entity.Answer;
->>>>>>> 1a5033a10ffc6086fa23d90ff235d287a6853dc9
 import com.preproject_009.question.entity.Question;
-import com.preproject_009.tag.Tag;
-import com.preproject_009.tag.TagResponseDto;
-import com.preproject_009.tag.questiontag.QuestionTag;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,7 +14,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionDto {
@@ -61,12 +53,8 @@ public class QuestionDto {
         private String memberImage;
         private String title;
         private String content;
-<<<<<<< HEAD
         private List<QuestionTagsWithTagInfo> tags;
-        private List<QuestionComment> questionComments;
-=======
         private List<QuestionCommentWithMemberInfo> questionComments;
->>>>>>> 1a5033a10ffc6086fa23d90ff235d287a6853dc9
         private int view;
         @JsonProperty("totalVotes")
         private int totalVotes;
