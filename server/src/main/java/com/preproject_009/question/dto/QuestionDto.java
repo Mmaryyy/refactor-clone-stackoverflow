@@ -3,7 +3,6 @@ package com.preproject_009.question.dto;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.preproject_009.answer.mapper.entity.Answer;
-import com.preproject_009.q_comment.entity.QuestionComment;
 import com.preproject_009.question.entity.Question;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -52,7 +51,7 @@ public class QuestionDto {
         private String memberImage;
         private String title;
         private String content;
-        private List<QuestionComment> questionComments;
+        private List<QuestionCommentWithMemberInfo> questionComments;
         private int view;
         @JsonProperty("totalVotes")
         private int totalVotes;
@@ -60,6 +59,18 @@ public class QuestionDto {
         private List<AnswerWithMemberInfo> answers;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
+
+        @AllArgsConstructor
+        @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+        public static class QuestionCommentWithMemberInfo {
+            private long questionCommentId;
+            private long memberId;
+            private String memberName;
+            private String memberImage;
+            private String content;
+            private LocalDateTime createdAt;
+            private LocalDateTime modifiedAt;
+        }
 
         @AllArgsConstructor
         @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
@@ -71,6 +82,19 @@ public class QuestionDto {
             private String memberName;
             private String memberImage;
             private int totalVotes;
+            private List<AnswerCommentWithMemberInfo> answerComment;
+        }
+
+        @AllArgsConstructor
+        @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+        public static class AnswerCommentWithMemberInfo {
+            private long answerCommentId;
+            private long memberId;
+            private String memberName;
+            private String memberImage;
+            private String content;
+            private LocalDateTime createdAt;
+            private LocalDateTime modifiedAt;
         }
     }
 }
