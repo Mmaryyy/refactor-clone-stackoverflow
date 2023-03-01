@@ -63,6 +63,7 @@ public class QuestionService {
             Tag tag = tagRepository.findByTitle(tagTitle).orElseGet(() -> {
                 Tag newTag = new Tag();
                 newTag.setTitle(tagTitle);
+                newTag.setContent("new tag");
                 tagRepository.save(newTag);
                 return newTag;
             });

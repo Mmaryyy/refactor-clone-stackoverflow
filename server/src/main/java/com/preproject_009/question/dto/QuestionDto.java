@@ -7,6 +7,7 @@ import com.preproject_009.q_comment.entity.QuestionComment;
 import com.preproject_009.question.entity.Question;
 import com.preproject_009.tag.Tag;
 import com.preproject_009.tag.TagResponseDto;
+import com.preproject_009.tag.questiontag.QuestionTag;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,7 +29,7 @@ public class QuestionDto {
         @NotNull
         @NotBlank
         private String title;
-        @NotNull
+        //@NotNull
         @NotBlank
         private String content;
 
@@ -56,8 +57,7 @@ public class QuestionDto {
         private String memberImage;
         private String title;
         private String content;
-        @JsonProperty("questionTags")
-        private List<TagInfo> tags;
+        private List<QuestionTagsWithTagInfo> tags;
         private List<QuestionComment> questionComments;
         private int view;
         @JsonProperty("totalVotes")
@@ -81,7 +81,7 @@ public class QuestionDto {
 
         @AllArgsConstructor
         @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-        public static class TagInfo {
+        public static class QuestionTagsWithTagInfo {
             private long tagId;
             private String title;
         }

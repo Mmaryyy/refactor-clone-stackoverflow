@@ -18,6 +18,7 @@ public interface QuestionMapper {
     @Mapping(target = "memberId", source = "member.memberId")
     @Mapping(target = "memberName", source = "member.name")
     @Mapping(target = "memberImage", source = "member.img")
+    @Mapping(target = "tags", source = "questionTags")
     QuestionDto.Response questionToQuestionResponseDto(Question question);
     List<QuestionDto.Response> questionsToQuestionResponsesDto(List<Question> questions);
     @Mapping(target = "memberId", source = "member.memberId")
@@ -29,7 +30,7 @@ public interface QuestionMapper {
 
    @Mapping(target = "tagId", source = "questionTag.tag.tagId")
    @Mapping(target = "title", source = "questionTag.tag.title")
-    QuestionDto.Response.TagInfo tagToTagInfoDto(QuestionTag questionTag);
+    QuestionDto.Response.QuestionTagsWithTagInfo tagToTagInfoDto(QuestionTag questionTag);
 
-   List<QuestionDto.Response.TagInfo> tagsToTagInfoDto(List<QuestionTag> questionTags);
+   List<QuestionDto.Response.QuestionTagsWithTagInfo> tagsToTagInfoDto(List<QuestionTag> questionTags);
 }
