@@ -2,7 +2,8 @@ package com.preproject_009.question.dto;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.preproject_009.answer.mapper.entity.Answer;
+import com.preproject_009.answer.entity.Answer;
+import com.preproject_009.q_comment.entity.QuestionComment;
 import com.preproject_009.question.entity.Question;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,10 +25,11 @@ public class QuestionDto {
         @NotNull
         @NotBlank
         private String title;
-        @NotNull
+        //@NotNull
         @NotBlank
         private String content;
 
+        private List<String> tagTitles;
         // TODO: 2023/02/24 tag 정보 포함시키기
     }
 
@@ -51,6 +53,7 @@ public class QuestionDto {
         private String memberImage;
         private String title;
         private String content;
+        private List<QuestionTagsWithTagInfo> tags;
         private List<QuestionCommentWithMemberInfo> questionComments;
         private int view;
         @JsonProperty("totalVotes")
@@ -95,6 +98,13 @@ public class QuestionDto {
             private String content;
             private LocalDateTime createdAt;
             private LocalDateTime modifiedAt;
+        }
+
+        @AllArgsConstructor
+        @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+        public static class QuestionTagsWithTagInfo {
+            private long tagId;
+            private String title;
         }
     }
 }

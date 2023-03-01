@@ -2,13 +2,14 @@ package com.preproject_009.question.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.preproject_009.answer.mapper.entity.Answer;
+import com.preproject_009.answer.entity.Answer;
 import com.preproject_009.audit.Auditable;
 import com.preproject_009.exception.BusinessLogicException;
 import com.preproject_009.exception.ExceptionCode;
 import com.preproject_009.member.entity.Member;
 import com.preproject_009.q_comment.entity.QuestionComment;
 import com.preproject_009.tag.Tag;
+import com.preproject_009.tag.questiontag.QuestionTag;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -46,10 +47,10 @@ public class Question extends Auditable {
     @JsonBackReference
     private Member member;
 
-    // tag 1:n 양방향
-    @OneToMany(mappedBy = "question")
+    // tag n:m 양방향
+    @OneToMany(mappedBy = "question", cascade = CascadeType.PERSIST)
     @JsonManagedReference
-    private List<Tag> tags = new ArrayList<>();
+    private List<QuestionTag> questionTags;
 
     // answer 1:n 양방향
     @OneToMany(mappedBy = "question", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})

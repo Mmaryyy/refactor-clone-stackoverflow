@@ -1,7 +1,7 @@
 package com.preproject_009.answer.service;
 
-import com.preproject_009.answer.mapper.entity.Answer;
-import com.preproject_009.answer.mapper.entity.AnswerVote;
+import com.preproject_009.answer.entity.Answer;
+import com.preproject_009.answer.entity.AnswerVote;
 import com.preproject_009.answer.repository.AnswerRepository;
 import com.preproject_009.answer.repository.AnswerVoteRepository;
 import com.preproject_009.exception.BusinessLogicException;
