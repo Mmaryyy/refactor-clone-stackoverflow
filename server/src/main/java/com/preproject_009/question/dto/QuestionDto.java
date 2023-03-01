@@ -2,8 +2,12 @@ package com.preproject_009.question.dto;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
+<<<<<<< HEAD
 import com.preproject_009.answer.entity.Answer;
 import com.preproject_009.q_comment.entity.QuestionComment;
+=======
+import com.preproject_009.answer.mapper.entity.Answer;
+>>>>>>> 1a5033a10ffc6086fa23d90ff235d287a6853dc9
 import com.preproject_009.question.entity.Question;
 import com.preproject_009.tag.Tag;
 import com.preproject_009.tag.TagResponseDto;
@@ -57,8 +61,12 @@ public class QuestionDto {
         private String memberImage;
         private String title;
         private String content;
+<<<<<<< HEAD
         private List<QuestionTagsWithTagInfo> tags;
         private List<QuestionComment> questionComments;
+=======
+        private List<QuestionCommentWithMemberInfo> questionComments;
+>>>>>>> 1a5033a10ffc6086fa23d90ff235d287a6853dc9
         private int view;
         @JsonProperty("totalVotes")
         private int totalVotes;
@@ -66,6 +74,18 @@ public class QuestionDto {
         private List<AnswerWithMemberInfo> answers;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
+
+        @AllArgsConstructor
+        @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+        public static class QuestionCommentWithMemberInfo {
+            private long questionCommentId;
+            private long memberId;
+            private String memberName;
+            private String memberImage;
+            private String content;
+            private LocalDateTime createdAt;
+            private LocalDateTime modifiedAt;
+        }
 
         @AllArgsConstructor
         @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
@@ -77,6 +97,19 @@ public class QuestionDto {
             private String memberName;
             private String memberImage;
             private int totalVotes;
+            private List<AnswerCommentWithMemberInfo> answerComment;
+        }
+
+        @AllArgsConstructor
+        @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+        public static class AnswerCommentWithMemberInfo {
+            private long answerCommentId;
+            private long memberId;
+            private String memberName;
+            private String memberImage;
+            private String content;
+            private LocalDateTime createdAt;
+            private LocalDateTime modifiedAt;
         }
 
         @AllArgsConstructor

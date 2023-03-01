@@ -98,12 +98,12 @@ public class Question extends Auditable {
         }
     }
 
-    public void setQuestionStatus(QuestionStatus questionStatus) {
+    public void setQuestionStatusPatch(QuestionStatus questionStatus) { // 질문글 수정/삭제시 호출
         canChangeQuestion(questionStatus);
         this.questionStatus = questionStatus;
     }
 
-    public void setQuestionStatusAccept(QuestionStatus questionStatus) {
+    public void setQuestionStatusAccept(QuestionStatus questionStatus) { // 답변 등록/채택시 호출
         if(this.questionStatus == QuestionStatus.QUESTION_ANSWER_ACCEPTED
         || this.questionStatus == QuestionStatus.QUESTION_DELETE) {
             throw new BusinessLogicException(ExceptionCode.CANNOT_CHANGE_QUESTION);
