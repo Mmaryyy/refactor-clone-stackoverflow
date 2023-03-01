@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Optional;
+
 public interface QuestionRepository extends JpaRepository<Question, Long> {
     @Query(value = "SELECT * FROM Question WHERE (:keyword IS NULL OR TITLE LIKE CONCAT('%', :keyword, '%')) AND (Question_Status <> 'QUESTION_DELETE')", nativeQuery = true)
     Page<Question> findByTitleContains(String keyword, Pageable pageable);

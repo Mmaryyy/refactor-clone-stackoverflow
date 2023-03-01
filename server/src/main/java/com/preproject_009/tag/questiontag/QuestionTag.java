@@ -1,7 +1,8 @@
-package com.preproject_009.answer.mapper.entity;
+package com.preproject_009.tag.questiontag;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.preproject_009.member.entity.Member;
+import com.preproject_009.question.entity.Question;
+import com.preproject_009.tag.Tag;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,21 +13,18 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-public class AnswerVote {
-
+public class QuestionTag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long answerVoteId;
+    private long questionTagId;
 
-    // answer n:1 양방향
     @ManyToOne
-    @JoinColumn(name = "ANSWER_ID")
     @JsonBackReference
-    private Answer answer;
+    @JoinColumn(name = "QUESTION_ID")
+    private Question question;
 
-    // member n:1 단방향
     @ManyToOne
-    @JoinColumn(name = "MEMBER_ID")
     @JsonBackReference
-    private Member member;
+    @JoinColumn(name = "TAG_ID")
+    private Tag tag;
 }

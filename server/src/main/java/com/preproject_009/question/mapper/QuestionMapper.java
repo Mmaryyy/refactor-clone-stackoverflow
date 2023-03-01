@@ -1,6 +1,6 @@
 package com.preproject_009.question.mapper;
 
-import com.preproject_009.answer.mapper.entity.Answer;
+import com.preproject_009.answer.entity.Answer;
 import com.preproject_009.question.dto.QuestionDto;
 import com.preproject_009.question.entity.Question;
 import org.mapstruct.Mapper;

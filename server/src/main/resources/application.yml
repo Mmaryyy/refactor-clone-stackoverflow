@@ -1,9 +1,8 @@
 spring:
   datasource:
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://pre-009.cf1lvrl9ujgl.ap-northeast-2.rds.amazonaws.com:3306/pre009db?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-      username: admin
-      password: qwerasdf
+      url: jdbc:mysql://127.0.0.1:3306/stackoverflow?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+      username: hongjae
+      password: qwer@1234
   jpa:
     hibernate:
       ddl-auto: none
@@ -18,6 +17,7 @@ logging:
         orm:
           jpa: DEBUG
 server:
+  port: 1200
   servlet:
     encoding:
       force-response: true
