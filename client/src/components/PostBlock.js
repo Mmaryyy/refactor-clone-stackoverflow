@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { TagButton, LinkContent, CommonWrapper, BaseButton, SubmitButton } from '../styles/styledcomponents'
 import { useDispatch, useSelector } from 'react-redux'
-import { setCurrentContent, addComment, deleteComment, updateComment} from '../redux/actions/contents'
+import { setCurrentContent, addComment, deleteComment, updateComment, deleteSingleContent} from '../redux/actions/contents'
 import { useNavigate } from 'react-router-dom'
 import { Editor } from './Editor'
 import CommentEdit from './CommentEdit'
@@ -118,16 +118,23 @@ const PostBlock = ({ content, isAnswer, questionId, answerId }) => {
     console.log(questionId)
     // Todo: author 정보랑 현재 로그인한 유저가 같으면 'isSame === true' edit이 가능
     // Todo: 다르면 edit 버튼을 노출하지 않는다.
-    const [ isSame, setIsSame ] = useState(true)
+    // const [ isSame, setIsSame ] = useState(true)
     const comment = isAnswer ? content.answerComments : content.questionComments
+    const splitContent = (content) => {
+      return content.split('79a91970-5d15-4da9-a394-d014af1e9916').join()
+    } 
     const handleVoteUp = () => {
         setVotes(votes++)
     }
-    const deleteContent = (postId) => {
+    const onClickContentdelete = (content, isAnswer) => {
+      const contentId = isAnswer ? content.answerId : content.questionId
       // content - answer 구분하는 플래그 isAnswer
       if (isAnswer) {
         // answer 삭제 api 요청
       } else {
+        dispatch(deleteSingleContent(contentId))
+        // navigate('/questions')
+        window.location.href = '/questions'
         // content 삭제 api 요청
       }
     }
@@ -204,9 +211,14 @@ const PostBlock = ({ content, isAnswer, questionId, answerId }) => {
       setIsCommentEdit(false)
       setCurrentEditCommentId('')
     }
+    const handleDisplayButton = (authorId) => {
+      // store에 저장된 currentUser memberId랑
+      // 타겟의 작성자 memberId랑 같으면 true, 다르면 false 리턴
+      return currentUser.memberId === authorId
+    }
   return isEdit
   ? (
-    <CommentEdit value={content.content} setIsEdit={setIsEdit} questionId={questionId} answerId={answerId}/>
+    <CommentEdit value={splitContent(content.content)} setIsEdit={setIsEdit} questionId={questionId} answerId={answerId}/>
   )
   :(
     <CommonWrapper className="main_container" padding={'10px'}>
@@ -226,7 +238,7 @@ const PostBlock = ({ content, isAnswer, questionId, answerId }) => {
           <span>{content.totalVotes}</span>
         </VoteWrapper>
         <ContentContainer className="content_container">
-          <p className="content">{content.content}</p>
+          <p className="content">{splitContent(content.content)}</p>
           {content.tag === undefined
             ? <></> 
             : <CommonWrapper className="tag_container" margin={"10px 0"}>
@@ -236,11 +248,11 @@ const PostBlock = ({ content, isAnswer, questionId, answerId }) => {
             </CommonWrapper>
           }
           <CommonWrapper className="bottom_container" justify={"space-between"}  bottom={'1px solid var(--black__100)'} padding={'30px 0'}>
-            { isSame
+            { handleDisplayButton(content.memberId)
             ?
             <CommonWrapper className='modified_wrapper'>
               <BaseButton className="edit_botton" onClick={() => editContent(content, isAnswer)}>edit</BaseButton>
-              <BaseButton className='delete_botton' margin={'0 10px'} onClick={() => {deleteContent(content.shortId)}}>delete</BaseButton>
+              <BaseButton className='delete_botton' margin={'0 10px'} onClick={() => {onClickContentdelete(content, isAnswer)}}>delete</BaseButton>
             </CommonWrapper>
             : null}
             <AuthorWrapper className="author_wrapper">

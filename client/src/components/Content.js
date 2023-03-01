@@ -30,6 +30,7 @@ const ContentDetailContainer = styled.div`
         margin: 5px 0;
     }
     color: var(--black__400);
+    overflow: hidden;
 `
 const PostSummaryContainer = styled.div`
     display: flex;
@@ -102,7 +103,9 @@ const Content = ({ singleContent }) => {
   const passedTime = getTimeGap(modifiedAt)
   const isSelected = questionStatus === 'QUESTION_ANSWER_ACCEPTED' ? true : false
   const ellipsisContent = (content) => {
-    return `${content.substring(0, 108)}...`
+    const result = content.split('79a91970-5d15-4da9-a394-d014af1e9916').join()
+    console.log(result)
+    return `${result.substring(0, 108)}...`
   }
   return (
     <ContentContainer>

@@ -55,8 +55,8 @@ export const voteUpdate = (questionId, memberId) => async (dispatch) => {
         payload: result
     })
 }
-export const deleteSingleContent = (postId) => async (dispatch) => {
-    await deleteContent(postId)
+export const deleteSingleContent = (questionId) => async (dispatch) => {
+    await deleteContent(questionId)
 }
 export const addComment = (questionId, memberId, content) => async (dispatch) => {
     await addQuestionComment(questionId, memberId, content)

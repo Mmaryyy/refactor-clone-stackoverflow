@@ -106,7 +106,13 @@ export default function Header({ setIsSearch }) {
     }
     getLoginUserInfo(localStorage.getItem("access_token"), localStorage.getItem("refresh_token"), localStorage.getItem("memberId"))
     .then(res => dispatch(setCurrentUser(res.data)))
-    
+    .catch((error) => {
+      if (error.response.status === 401) {
+        // 토큰 만료되면 다시 로그인 화면으로, 로그인 화면에도 header컨퍼넌트가 있어서 currentUser를 초기화 
+        dispatch(setCurrentUser({}))
+        window.location = '/login'
+      }
+    })
   }, [])
   const [search, setSearch] = useState('');
   const navigate = useNavigate()

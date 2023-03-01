@@ -438,11 +438,10 @@ function Join({ setShowNav, setShowFooter, setShowSidebar }) {
     if (!errorMessage.userEmail && !errorMessage.password)
       console.log('회원등록 api memberimage 추가, about 삭제');
 
-
     // const memberImage = `/images/Avatar${parseInt(Math.random()*10)+1}.png`
     // joinUser(loginInfo.userEmail, loginInfo.userName, loginInfo.password, memberImage)
   axios({
-    url: `api/members`,
+    url: `/api/members`,
     headers: { 'Content-Type': 'application/json' },
     method: 'post',
     data: {
@@ -452,8 +451,13 @@ function Join({ setShowNav, setShowFooter, setShowSidebar }) {
         img: `/images/Avatar${parseInt(Math.random()*10)+1}.png`
       },
     })
-    .then((res) => navigate('/login'))
-    .catch((error) => setErrorMessage({userEmail: 'You already have an account, please sign in.', password: ''}));
+    .then((res) => {
+      console.log() 
+      navigate('/login')})
+    .catch((error) => {
+      console.log(error)
+      setErrorMessage({userEmail: 'You already have an account, please sign in.', password: ''})
+    });
     
   };
 

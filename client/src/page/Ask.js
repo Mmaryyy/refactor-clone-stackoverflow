@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Editor } from '../components/Editor';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 // import tags from '../datas/tags.json';
 import TagList from '../components/TagList_s';
 import { createContent } from '../api/question';
+import { getContentList } from '../redux/actions/contents';
 import axios from 'axios';
 
 const Container = styled.div`
@@ -328,6 +329,9 @@ function Ask({ setShowNav, setShowSidebar }) {
   const [addTag, setAddTag] = useState([]);
   const [inputTag, setinputTag] = useState('');
 
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
   useEffect(() => {
     setShowNav(false);
     setShowSidebar(false);
@@ -377,11 +381,20 @@ function Ask({ setShowNav, setShowSidebar }) {
   console.log(tags)
 
 
-  const postQeustion = () => {
+  const postQuestion = () => {
     const body = (`${addProblem} 79a91970-5d15-4da9-a394-d014af1e9916 ${addExpect}`)
     createContent(data.memberId, addTitle, body, addTag)
-    // axios.get(`api/questions?page=1&keyword=&sortType=created_At&filterType=1`)
-    // .then(res => console.log(res))
+    .then(res => {
+      console.log(res)
+      dispatch(getContentList())
+    })
+    .catch(error => {
+      console.log(error)
+    })
+    .then(res => {
+      console.log(res)
+      navigate('/questions')
+    })
   }
 
   return (
@@ -786,7 +799,7 @@ function Ask({ setShowNav, setShowSidebar }) {
           </InputField>
 
           <div className='discard'>
-            <button className='blue_button' onClick={postQeustion}>Post your question</button>
+            <button className='blue_button' onClick={postQuestion}>Post your question</button>
             <button className='red_button'>Discard draft</button>
           </div>
         </main>

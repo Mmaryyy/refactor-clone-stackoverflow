@@ -24,7 +24,6 @@ return axios({
         password,
     },
     }).then(res => {
-    console.log(res);
     localStorage.setItem("access_token", res.headers.authorization);
     localStorage.setItem("refresh_token", res.headers.refresh);
     return res.headers.catch(error => console.log("error: ", error));
@@ -36,7 +35,7 @@ export const createContent = (memberId, title, content, tags) => {
         memberId,
         title,
         content,
-        tags
+        tagTitles: tags
     }
     console.log(newContent)
     return axios({
@@ -44,7 +43,7 @@ export const createContent = (memberId, title, content, tags) => {
         headers: { 'Content-Type': 'application/json' },
         method: 'post',
         data: {
-            newContent
+            ...newContent
         }
     })
         .then(res => res)
@@ -63,7 +62,7 @@ export const updateContent = async (questionId, title, content, tags) => {
                 .catch(error => console.log(error))
 }
 export const deleteContent = (questionId) => {
-    axios.delete(`/questions/${questionId}`)
+    axios.delete(`/api/questions/${questionId}`)
                 .then(res => res)
                 .catch(error => console.log(error))
 }

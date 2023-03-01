@@ -212,7 +212,10 @@ const EditPost = ({ setShowSidebar }) => {
   const [isTitle, setIsTitle] = useState(false);
   const [isProblem, setIsProblem] = useState(false);
   const [isTag, setIsTag] = useState(false);
-
+  //* 키 기준으로 split해서 받는 함수
+  const splitContent = (content) => {
+    return content.split('79a91970-5d15-4da9-a394-d014af1e9916').join()
+  } 
   const tagInputHandler = (e) => {
     setinputTag(e.target.value)
     setIsTagList(true)
