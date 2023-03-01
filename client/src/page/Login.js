@@ -242,13 +242,10 @@ function Login({ setShowNav, setShowFooter, setShowSidebar }) {
     .then((res) => {
       localStorage.setItem("access_token", res.headers.authorization)
       localStorage.setItem("refresh_token", res.headers.refresh)
-      return res.headers
-    })
-    .then((res) => {
-      return getLoginUserInfo(res.authorization, res.refresh, res.memberid)
+      localStorage.setItem("memberId", res.headers.memberid)
+
     })
     .then(res => {
-      dispatch(setCurrentUser(res.data))
       navigate('/')
     })
     .catch((error) => setErrorMessage({userEmail: 'The email or password is incorrect.', password: ''}));

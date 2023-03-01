@@ -372,6 +372,7 @@ function Ask({ setShowNav, setShowSidebar }) {
   };
   const data = useSelector(state => state.userDataReducer.currentUser)
   console.log(data)
+  
   const tags = useSelector(state => state.contentsReducer.tagList)
   console.log(tags)
 
