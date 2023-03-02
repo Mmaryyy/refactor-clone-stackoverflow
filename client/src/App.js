@@ -20,6 +20,7 @@ import Users from './page/Users';
 import EditPost from './page/EditPost'
 import { useDispatch, useSelector } from 'react-redux';
 import { getTagList } from './redux/actions/contents';
+import Userpage from './page/Userpage'
 
 function App() {
   const [isReady, setIsReady] = useState(true);
@@ -71,6 +72,10 @@ function App() {
                 <Route
                   path='/users'
                   element={<Users setShowSidebar={setShowSidebar} />}
+                />
+                <Route
+                  path='/users/:userId'
+                  element={<Userpage setShowSidebar={setShowSidebar} />}
                 />
                 <Route path='/questions/:postId' element={<Post />} />
                 <Route path='/tags' element={<Tags setShowSidebar={setShowSidebar} />} />

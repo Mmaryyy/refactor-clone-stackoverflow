@@ -125,30 +125,13 @@ export default function Users({ setShowSidebar }) {
                 <path d='m18 16.5-5.14-5.18h-.35a7 7 0 1 0-1.19 1.19v.35L16.5 18l1.5-1.5ZM12 7A5 5 0 1 1 2 7a5 5 0 0 1 10 0Z'></path>
               </svg>
             </div>
-            {/* <div className='filter'>
-              <Link to='#' className='filtered'>
-                Reputation
-              </Link>
-              <Link to='#' className='filtered'>
-                New users
-              </Link>
-              <Link to='#' className='filtered'>
-                Voters
-              </Link>
-              <Link to='#' className='filtered'>
-                Editors
-              </Link>
-              <Link to='#' className='filtered'>
-                Moderators
-              </Link>
-            </div> */}
           </div>
         </Wrapper>
         <User>
           <div className='users'>
             {user&&user.map((el) => (
               <UserCard key={el.memberId} el={el} />
-            ))}
+              ))}
           </div>
         </User>
         {user.length !== 0 ? <PaginationBar pageInfo={pageInfo} apiCallFunction={getContentPageList} /> : null}

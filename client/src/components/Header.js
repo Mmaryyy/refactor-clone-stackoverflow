@@ -4,9 +4,10 @@ import logo from '../img/logo.png';
 import Avatar from './Mypage/Avatar';
 import { Link, useNavigate } from 'react-router-dom';
 import { SubmitButton } from '../styles/styledcomponents';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getLoginUserInfo } from '../api/user';
 import { setCurrentUser, logoutUser } from '../redux/actions/userData';
+
 
 const Container = styled.header`
   width: 100%;
@@ -137,6 +138,8 @@ export default function Header({ setIsSearch }) {
       navigate(`/search?page=${1}&keyword=${search}`)
     }
   };
+  const user = useSelector(state => state.userDataReducer.currentUser)
+  // console.log(user)
   return (
     <Container>
       <Wrapper>
@@ -166,7 +169,7 @@ export default function Header({ setIsSearch }) {
         {login ? (
           <>
             <Link to='/mypage'>
-              <Avatar width='38px' height='38px' margin='5px 5px 0 5px' />
+            {user ? <Avatar width='45px' height='45px' margin='10px' user={user} /> : null}
             </Link>
             <Icon>
               <svg
