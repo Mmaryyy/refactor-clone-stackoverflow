@@ -85,6 +85,7 @@ public class QuestionDto {
             private String memberName;
             private String memberImage;
             private int totalVotes;
+            private LocalDateTime createdAt;
             private List<AnswerCommentWithMemberInfo> answerComment;
         }
 
