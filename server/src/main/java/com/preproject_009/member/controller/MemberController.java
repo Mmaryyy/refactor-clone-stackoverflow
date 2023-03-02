@@ -38,7 +38,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/members")
 @Validated
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://ec2-3-35-19-166.ap-northeast-2.compute.amazonaws.com:8080",allowedHeaders = "*")
 public class MemberController {
     private final static int pageSize = 16;
     private final static String MEMBER_DEFAULT_URL = "/api/members";
