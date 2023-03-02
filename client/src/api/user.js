@@ -52,20 +52,23 @@ export const getLoginUserInfo = (access, refresh, memberId) => {
     .then((res) => {
       return res
     })
-    .catch((error) => console.log('error: ', error));
+    .catch((error) => {
+      console.log(error)
+      localStorage.setItem("access_token", error.headers.authorization)
+      console.log('error: ', error)
+    });
 };
 
 
 // 유저 정보수정
 export const patchUser = (memberId, name, about, location) => {
+  const refresh = localStorage.getItem("access_token")
   return axios({
       url: `/api/members/${memberId}`,
       method: 'patch',
-      headers: {
-        'Content-Type': 'application/json',
-        //! 토큰!
-      },
+      headers: { authorization: localStorage.getItem("access_token"), refresh, memberId, 'Content-Type': 'application/json' },
       data: {
+        memberId,
         name,
         about,
         location,
@@ -76,18 +79,17 @@ export const patchUser = (memberId, name, about, location) => {
 };
 
 // 회원 탈퇴
-export const deleteUser = (memberId) => {
+export const deleteUser = (access, refresh, memberId) => {
+  console.log(memberId)
   axios({
       url: `/api/members/${memberId}`,
       method: 'delete',
-      // headers: {
-        //! 토큰 날리기!
-        
-      //   'Content-Type': 'application/json',
-      // },
-      // localStorage.removeItem("access_token", res)
-      // localStorage.removeItem("refresh_token", res)
+      headers: { authorization: access, refresh, memberId, 'Content-Type': 'application/json' },
     })
-    .then((res) => console.log(res))
+    .then((res) => {
+      localStorage.removeItem("access_token")
+      localStorage.removeItem("refresh_token")
+      localStorage.removeItem("memberId")    
+    })
     .catch((err) => console.log(err));
 };

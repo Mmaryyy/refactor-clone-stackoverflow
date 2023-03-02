@@ -5,12 +5,15 @@ import UserCard from '../components/UserCard';
 // import user from '../datas/userData.json';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserList } from '../redux/actions/userData';
+import PaginationBar from '../components/PaginationBar'
 
 const Container = styled.div`
   max-width: 1100px;
   width: calc(100% - 164px);
   padding: 24px;
   margin-top: 60px;
+  min-height: 600px;
+
 `;
 
 const Wrapper = styled.div`
@@ -76,6 +79,7 @@ const User = styled.div`
   .users {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     margin-top: 20px;
+    margin-bottom: 20px;
     display: grid;
     gap: 12px;
   }
@@ -84,7 +88,12 @@ const User = styled.div`
 export default function Users({ setShowSidebar }) {
   const dispatch = useDispatch();
   const user = useSelector(state => state.userDataReducer.userList)
-  console.log(user)
+  // console.log(user)
+  const pageInfo = useSelector((state) => state.userDataReducer.pageInfo);
+  const getContentPageList = () => {
+
+  }
+
   useEffect(() => {
     dispatch(getUserList())
     setShowSidebar(false);
@@ -92,11 +101,6 @@ export default function Users({ setShowSidebar }) {
       setShowSidebar(true);
     };
   }, []);
-  // useEffect(() => {
-  //   dispatch(getUserList());
-  // });
-  // // const user = useSelector(state => state.userDataReducer.userList)
-  // const currentPage = useSelector((state) => state.userDataReducer.currentPage);
   return (
     <>
       <Container>
@@ -119,7 +123,7 @@ export default function Users({ setShowSidebar }) {
                 <path d='m18 16.5-5.14-5.18h-.35a7 7 0 1 0-1.19 1.19v.35L16.5 18l1.5-1.5ZM12 7A5 5 0 1 1 2 7a5 5 0 0 1 10 0Z'></path>
               </svg>
             </div>
-            <div className='filter'>
+            {/* <div className='filter'>
               <Link to='#' className='filtered'>
                 Reputation
               </Link>
@@ -135,16 +139,17 @@ export default function Users({ setShowSidebar }) {
               <Link to='#' className='filtered'>
                 Moderators
               </Link>
-            </div>
+            </div> */}
           </div>
         </Wrapper>
         <User>
           <div className='users'>
-            {user.map((el) => (
+            {user&&user.map((el) => (
               <UserCard key={el.memberId} el={el} />
             ))}
           </div>
         </User>
+        <PaginationBar pageInfo={pageInfo} apiCallFunction={getContentPageList} />
       </Container>
     </>
   );

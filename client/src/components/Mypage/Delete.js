@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import UserInfoCard from './UserInfoCard';
-
+import { useSelector } from 'react-redux';
+import { deleteUser } from '../../api/user';
+const Wrap = styled.div`
+  max-width: 1100;
+`
 const Menu = styled.div`
   display: flex;
   flex-direction: row;
-  margin-left: 160px;
+  /* margin-left: 160px; */
 `;
 
 const Menusub = styled.div`
   text-align: center;
   margin: 0 0 0 30px;
-  font-size: var(--fs--big);
-  border-radius: 10px;
-  width: 90px;
-  height: 35px;
+  font-size: 15px;
+  border-radius: 50px;
+  width: 80px;
+  height: 30px;
   padding: 5px;
   color: ${(props) => (props.color ? props.color : 'var(--black__300)')};
   background-color: ${(props) => (props.bg ? props.bg : 'white')};
@@ -33,18 +37,18 @@ const Main = styled.div`
 const List = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 10px 50px 0 200px;
+  margin: 10px 30px 0 30px;
 
   div {
-    width: 100px;
+    width: 120px;
     height: 30px;
     margin: 10px 0 10px 0;
-    color: var(--black__500);
-    font-size: var(--fs--lg);
+    /* color: var(--black__500); */
+    font-size: 15px;
 
     &:hover {
       border-radius: 50px;
-      background-color: var(--tab__focus);
+      /* background-color: var(--tab__focus); */
     }
   }
 `;
@@ -52,11 +56,12 @@ const List = styled.div`
 const Content = styled.div`
   display: flex;
   flex-direction: column;
+  margin-top: 7px;
   div {
     color: black;
     font-size: var(--fs--title);
     text-align: left;
-    padding: 10px 0 0 20px;
+    padding: 10px 0 0 0px;
   }
 `;
 
@@ -65,28 +70,35 @@ const Section = styled.section`
   flex-direction: row;
 
   .delete_contents {
-    font-size: var(--fs--lg);
+    font-size: 15px;
+  }
+  input {
+    margin-right: 10px;
   }
 `;
 
 const Hr = styled.hr`
   width: 1000px;
-  margin: 10px 20px;
+  margin: 10px 0px;
   border: 1px solid var(#e1e3e5);
 `;
 
 const Button = styled.button`
-  width: 150px;
-  height: 50px;
+  width: 120px;
+  height: 40px;
   border: none;
   border-radius: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  /* margin-right: 10px; */
   background-color: ${(props) => (props.disabled ? '#E89C9F' : '#D0393E')};
   color: #fff;
   font-size: var(--fs--lg);
+  cursor: pointer;
 `;
 
 export default function Myinfo({ setShowSidebar }) {
+  const navigate = useNavigate()
   useEffect(() => {
     setShowSidebar(false);
     return () => {
@@ -99,21 +111,20 @@ export default function Myinfo({ setShowSidebar }) {
     setButtonChecked(e.target.checked);
   };
 
+  const currentUser = useSelector(state => state.userDataReducer.currentUser)
   const deleteButton = () => {
-    window.confirm('ㅇ');
+    deleteUser(localStorage.getItem("access_token"), localStorage.getItem("refresh_token"), currentUser.memberId)
+    navigate('/')
   };
 
   return (
-    <div>
+    <Wrap>
       <UserInfoCard />
       <Menu>
-        <Link to='/mypage/profile' style={{ textDecoration: 'none' }}>
+        <Link to='/mypage/' style={{ textDecoration: 'none' }}>
           <Menusub>Profile</Menusub>
         </Link>
-        <Link to='/mypage' style={{ textDecoration: 'none' }}>
-          <Menusub>Activity</Menusub>
-        </Link>
-        <Menusub>Saves</Menusub>
+
         <Link to='/mypage/delete' style={{ textDecoration: 'none' }}>
           <Menusub bg='#F48225' color='#fff'>
             Settings
@@ -123,10 +134,16 @@ export default function Myinfo({ setShowSidebar }) {
       <Main>
         <List>
           <Link to='/mypage/edit' style={{ textDecoration: 'none' }}>
-            <div>Edit Profile</div>
+          <Menusub>
+          Edit Profile
+          </Menusub>
+            {/* <div></div> */}
           </Link>
           <Link to='/mypage/delete' style={{ textDecoration: 'none' }}>
-            <div>Delete Profile</div>
+          <Menusub bg='#F48225' color='#fff'>
+            Delete Profile
+          </Menusub>
+            {/* <div></div> */}
           </Link>
         </List>
         <Content>
@@ -173,6 +190,6 @@ export default function Myinfo({ setShowSidebar }) {
           </Section>
         </Content>
       </Main>
-    </div>
+    </Wrap>
   );
 }

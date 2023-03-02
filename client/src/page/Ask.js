@@ -375,24 +375,21 @@ function Ask({ setShowNav, setShowSidebar }) {
     setAddTag(addTag.filter((tag, idx) => idx !== Removeidx));
   };
   const data = useSelector(state => state.userDataReducer.currentUser)
-  console.log(data)
+ 
   
   const tags = useSelector(state => state.contentsReducer.tagList)
-  console.log(tags)
 
 
   const postQuestion = () => {
     const body = (`${addProblem} 79a91970-5d15-4da9-a394-d014af1e9916 ${addExpect}`)
     createContent(data.memberId, addTitle, body, addTag)
     .then(res => {
-      console.log(res)
       dispatch(getContentList())
     })
     .catch(error => {
       console.log(error)
     })
     .then(res => {
-      console.log(res)
       navigate('/questions')
     })
   }

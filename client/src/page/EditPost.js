@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components'
-import { Editor } from '../components/Editor'
 import Sidebar from '../components/Sidebar3'
-// import tags from '../datas/tags.json'
 import TagList from '../components/TagList_s'
+import { Editor } from '../components/Editor'
 import { updateSingleQuestion } from '../redux/actions/contents'
-import { editContent } from '../redux/reducers/contentsReducer'
+import { useNavigate } from 'react-router-dom'
 
 const Container = styled.div`
   width: 100%;
@@ -190,10 +189,11 @@ const EditBlock = styled.div`
 `
 
 const EditPost = ({ setShowSidebar }) => {
+  const navigate = useNavigate()
   const dispatch = useDispatch()
-  const tags = useSelector(state => state.contentsReducer.tagList)
-  console.log(tags)
-  const { title, content } = useSelector(state => state.contentsReducer.currentPostContent)
+  const tagList = useSelector(state => state.contentsReducer.tagList)
+  const { title, content, tags, questionId } = useSelector(state => state.contentsReducer.currentContent)
+  const contentKey = content.replace(' 79a91970-5d15-4da9-a394-d014af1e9916', '')
 
   useEffect(() => {
     setShowSidebar(false);
@@ -203,19 +203,21 @@ const EditPost = ({ setShowSidebar }) => {
   }, []);
 
   const [addTitle, setAddTitle] = useState(title)
-  const [isBody, setIsBody] = useState(content)
-  //* 현재페이지에서 태그 받아오기 
-  const [addTag, setAddTag] = useState('')
+  const [isBody, setIsBody] = useState(contentKey)
+
+  const [addTag, setAddTag] = useState(tags&&tags.map(tag => tag.title))
   const [isTagList, setIsTagList] = useState(false)
   const [inputTag, setinputTag] = useState('')
 
   const [isTitle, setIsTitle] = useState(false);
   const [isProblem, setIsProblem] = useState(false);
   const [isTag, setIsTag] = useState(false);
+
   //* 키 기준으로 split해서 받는 함수
-  const splitContent = (content) => {
-    return content.split('79a91970-5d15-4da9-a394-d014af1e9916').join()
-  } 
+  // const splitContent = (content) => {
+  //   return content.split('79a91970-5d15-4da9-a394-d014af1e9916').join()
+  // } 
+
   const tagInputHandler = (e) => {
     setinputTag(e.target.value)
     setIsTagList(true)
@@ -233,7 +235,7 @@ const EditPost = ({ setShowSidebar }) => {
   }
 
   const tagEnterHandler = (e) => {
-    const filterd = tags.filter(tag => tag.title.includes(inputTag))
+    const filterd = tagList.filter(tag => tag.title.includes(inputTag))
     if(filterd.length === 1 && e.key === 'Enter') {
         if(!(addTag.includes(filterd[0].title)) && addTag.length <= 4) {
           setAddTag([...addTag, filterd[0].title])
@@ -250,17 +252,10 @@ const EditPost = ({ setShowSidebar }) => {
     setAddTag(addTag.filter((tag, idx) => idx !== Removeidx))
   }
 
-  // const id = useSelector(state => state.currentContent.id)
-  // const dispatch = useDispatch();
   const postContent = () => {
-    dispatch(updateSingleQuestion())
-  //   const editContent = {
-  //     id,
-  //     title,
-  //     content,
-  //     tag
-  //   }
-  //   dispatch(editContent(editContent))
+    dispatch(updateSingleQuestion(questionId, addTitle, isBody, addTag))
+    navigate(`/questions/${questionId}`)
+
   }
 
   return (
@@ -307,7 +302,7 @@ const EditPost = ({ setShowSidebar }) => {
               <div className="title_bottom">
                 <Editor
                     className='text_editor'
-                    value={content}
+                    value={isBody}
                     setter={setIsBody}
                     height={'300px'}
                     focusFunction={() => {
@@ -354,7 +349,7 @@ const EditPost = ({ setShowSidebar }) => {
                   }}
                   />
               </div>
-              { isTagList ? <TagList tagClickHandler={tagClickHandler} data={tags.filter(tag => tag.title.includes(inputTag))} /> : null}
+              { isTagList ? <TagList tagClickHandler={tagClickHandler} data={tagList.filter(tag => tag.title.includes(inputTag))} /> : null}
             </div>
           </div>
 

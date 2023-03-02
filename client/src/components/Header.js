@@ -97,34 +97,33 @@ const Icon = styled.div`
 
 export default function Header({ setIsSearch }) {
   const [login, setLogin] = useState(false);
-  const currentUser = useSelector(state => state.userDataReducer.currentUser)
-  console.log(currentUser)
+  // const currentUser = useSelector(state => state.userDataReducer.currentUser)
+
   //* 로그인에 성공해서 store에 currentUser가 있으면 login -> true, 없으면 login -> false
   useEffect(() => {
-    if (Object.keys(currentUser).length === 0) {
+    // if (Object.keys(currentUser).length !== 0) {
+      // }
+      getLoginUserInfo(localStorage.getItem("access_token"), localStorage.getItem("refresh_token"), localStorage.getItem("memberId"))
+      .then(res => {
       setLogin(true)
-    }
-    getLoginUserInfo(localStorage.getItem("access_token"), localStorage.getItem("refresh_token"), localStorage.getItem("memberId"))
-    .then(res => dispatch(setCurrentUser(res.data)))
+      dispatch(setCurrentUser(res.data))})
     .catch((error) => {
-      if (error.response.status === 401) {
+        console.log('a')
         // 토큰 만료되면 다시 로그인 화면으로, 로그인 화면에도 header컨퍼넌트가 있어서 currentUser를 초기화 
         dispatch(setCurrentUser({}))
-        window.location = '/login'
-      }
+        localStorage.setItem("access_token", error.headers.authorization)
+        // window.location = '/login'
     })
   }, [])
+
   const [search, setSearch] = useState('');
   const navigate = useNavigate()
   const dispatch = useDispatch()
   //
-  const loginHandler = () => {
-    // '/login' 으로 이동하기
-  };
-
   const logoutHandler = () => {
     dispatch(logoutUser)
     setLogin(false);
+    window.location = '/questions'
   };
 
   //
@@ -137,12 +136,10 @@ export default function Header({ setIsSearch }) {
     setSearch('');
     e.preventDefault()
     if (e.key === 'Enter') {
-      console.log('enter event')
       setIsSearch(true)
       navigate('/search')
     }
   };
-const token = localStorage.getItem("access_token")
 
   return (
     <Container>
@@ -170,10 +167,10 @@ const token = localStorage.getItem("access_token")
         <SearchWrapper onChange={searchHandler}>
           <SearchInput onChange={searchInputHandler} onKeyPress={searchHandler} type='text' />
         </SearchWrapper>
-        {token ? (
+        {login ? (
           <>
             <Link to='/mypage'>
-              <Avatar width='28px' height='28px' margin='5px 5px 0 5px' />
+              <Avatar width='38px' height='38px' margin='5px 5px 0 5px' />
             </Link>
             <Icon>
               <svg
@@ -221,7 +218,7 @@ const token = localStorage.getItem("access_token")
           </>
         ) : (
           <>
-            <Link to='login'>
+            <Link to='/login'>
               <SubmitButton
                 className='login'
                 bg='#E1ECF4'
@@ -229,7 +226,6 @@ const token = localStorage.getItem("access_token")
                 shadow='#fff'
                 hover='#B3D3EA'
                 margin='5px 5px 0 5px'
-                onClick={loginHandler}
               >
                 Log in
               </SubmitButton>

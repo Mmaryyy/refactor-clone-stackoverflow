@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {joinUser, getAllUser} from '../api/user'
 import axios from 'axios';
 
 const Container = styled.div`
@@ -367,43 +366,6 @@ function Join({ setShowNav, setShowFooter, setShowSidebar }) {
     }
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
   };
-  // Password: 숫자만 있으면?
-  // if (key === "password" && e.target.value
-  //   && e.target.value.search(/\D/) === -1) {
-  //     pwCheck = false;
-  //     setErrorMessage({...errorMessage,
-  //       password: "Please add one of the following things to make your password stronger: ", pwcheck: "letters",
-  //   });
-  // }
-
-  // Password: 문자만 있으면?
-  // if (key === "password" && e.target.value && e.target.value.search(/\d/) === -1) {
-  //   pwCheck = false;
-  //   setErrorMessage({...errorMessage,
-  //     password:"Please add one of the following things to make your password stronger: ",
-  //     pwcheck: "numbers",
-  //   });
-  // }
-  
-  //!Math.random()
-  // Password: 8글자 미만이면?
-  // if (pwCheck && key === "password" && e.target.value && e.target.value.length < 8) {
-  //   const num = 8 - e.target.value.length;
-  //     num === 1
-  //       ? setErrorMessage({...errorMessage,
-  //           password: `Must contain at least 1 more character.`,
-  //           pwcheck: "",
-  //         })
-  //       : setErrorMessage({...errorMessage,
-  //           password: `Must contain at least ${num} more characters.`,
-  //           pwcheck: "",
-  //         });
-  // } else if (pwCheck && key === "password" && e.target.value && e.target.value.length >= 8) {
-  //   setErrorMessage({...errorMessage, password: "", pwcheck: "",});
-  // }
-
-  // else if (pwCheck && key === "password" && e.target.value && e.target.value.length >= 8) {
-  //   setErrorMessage({...errorMessage, password: "", pwcheck: "",});
 
   //* 회원가입 버튼 onClick이벤트 함수 : 빈칸일 때만 경고, 에러메시지 유무에 따라 동작
   const loginRequestHandler = () => {
@@ -438,8 +400,6 @@ function Join({ setShowNav, setShowFooter, setShowSidebar }) {
     if (!errorMessage.userEmail && !errorMessage.password)
       console.log('회원등록 api memberimage 추가, about 삭제');
 
-    // const memberImage = `/images/Avatar${parseInt(Math.random()*10)+1}.png`
-    // joinUser(loginInfo.userEmail, loginInfo.userName, loginInfo.password, memberImage)
   axios({
     url: `/api/members`,
     headers: { 'Content-Type': 'application/json' },
