@@ -5,7 +5,14 @@ import UserInfoCard from './UserInfoCard';
 import { useSelector } from 'react-redux';
 import { deleteUser } from '../../api/user';
 const Wrap = styled.div`
-  max-width: 1100;
+  max-width: 1100px;
+  width: calc(100% - 164px);
+  padding: 24px;
+  /* margin-top: 30px; */
+  min-height: 610px;
+  li {
+    text-decoration: none;
+  }
 `
 const Menu = styled.div`
   display: flex;
@@ -67,7 +74,7 @@ const Content = styled.div`
 
 const Section = styled.section`
   display: flex;
-  min-height: 800px;
+  min-height: 60vh;
   flex-direction: row;
 
   .delete_contents {
@@ -99,6 +106,7 @@ const Button = styled.button`
 `;
 
 export default function Myinfo({ setShowSidebar }) {
+  const user = useSelector(state => state.userDataReducer.userList)
   const navigate = useNavigate()
   useEffect(() => {
     setShowSidebar(false);
@@ -120,7 +128,7 @@ export default function Myinfo({ setShowSidebar }) {
 
   return (
     <Wrap>
-      <UserInfoCard />
+      <UserInfoCard user={currentUser}/>
       <Menu>
         <Link to='/mypage/' style={{ textDecoration: 'none' }}>
           <Menusub>Profile</Menusub>

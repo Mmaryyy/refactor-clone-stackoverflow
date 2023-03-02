@@ -11,7 +11,7 @@ export const UserProfiles = styled.div`
 
   /* 나중에 수정 */
   background-image: ${(props) =>
-    props.img
+    props
       ? `url(${props.img})`
       : `url("/image/Avatar1.png")`};
   cursor: pointer;
@@ -20,12 +20,14 @@ export const UserProfiles = styled.div`
   }
 `;
 
-export default function Avatar({ width, height, margin }) {
-  const data = useSelector(state => state.userDataReducer.currentUser)
+export default function Avatar({ width, height, margin, user }) {
+// let userImg = `url("/image/Avatar1.png")`;
+
 
   return (
     <>
-      <UserProfiles width={width} height={height} margin={margin} img={data.img} />
+      <UserProfiles width={width} height={height} margin={margin} img={user.img}
+      />
     </>
   );
 }
