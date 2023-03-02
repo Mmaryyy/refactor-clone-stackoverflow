@@ -7,7 +7,14 @@ import { Editor } from '../../components/Editor';
 import { updateUser } from '../../redux/actions/userData';
 import { useNavigate } from 'react-router-dom';
 const Wrap = styled.div`
-  max-width: 1100;
+  max-width: 1100px;
+  width: calc(100% - 164px);
+  padding: 24px;
+  /* margin-top: 30px; */
+  min-height: 610px;
+  li {
+    text-decoration: none;
+  }
 `
 const Menu = styled.div`
   display: flex;
@@ -134,6 +141,7 @@ const Button = styled.button`
 `;
 
 export default function Edit({ setShowSidebar }) {
+  const user = useSelector(state => state.userDataReducer.currentUser)
   const navigate = useNavigate()
   const dispatch = useDispatch()
   useEffect(() => {
@@ -163,7 +171,7 @@ export default function Edit({ setShowSidebar }) {
 
   return (
     <Wrap>
-      <UserInfoCard />
+      <UserInfoCard user={user}/>
       <Menu>
         <Link to='/mypage' style={{ textDecoration: 'none' }}>
           <Menusub>Profile</Menusub>

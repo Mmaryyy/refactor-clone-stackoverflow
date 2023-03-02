@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { TagButton } from '../../styles/styledcomponents';
 import UserInfoCard from './UserInfoCard';
+import { useSelector } from 'react-redux';
 
 const Menu = styled.div`
   display: flex;
@@ -151,10 +152,11 @@ export default function Myinfo({ setShowSidebar }) {
       setShowSidebar(true);
     };
   }, []);
+  const user = useSelector(state => state.userDataReducer.userList)
 
   return (
     <div>
-      <UserInfoCard />
+      <UserInfoCard user={user}/>
       <Menu>
         <Link to='/mypage/profile' style={{ textDecoration: 'none' }}>
           <Menusub>Profile</Menusub>
