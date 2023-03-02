@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import styled from 'styled-components'
 import { Editor } from './Editor'
 import { BaseButton } from '../styles/styledcomponents'
 import { useDispatch } from 'react-redux'

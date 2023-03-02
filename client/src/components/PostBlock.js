@@ -2,8 +2,8 @@ import { useState } from 'react'
 import styled from 'styled-components'
 import { TagButton, LinkContent, CommonWrapper, BaseButton, SubmitButton } from '../styles/styledcomponents'
 import { useDispatch, useSelector } from 'react-redux'
-import { setCurrentContent, addComment, deleteComment, updateComment, deleteSingleContent, contentVoteUpdate} from '../redux/actions/contents'
-import { deleteSingleAnswer, addAnswerCommentAction, answerVoteUpAction, adoptSingleAnswer } from '../redux/actions/answers'
+import { setCurrentContent, addComment, deleteComment, updateComment, deleteSingleContent, contentVoteUpdate, updateSingleQuestion} from '../redux/actions/contents'
+import { deleteSingleAnswer, addAnswerCommentAction, answerVoteUpAction, adoptSingleAnswer, patchComment, deleteAnswerCommentAction } from '../redux/actions/answers'
 import { useNavigate } from 'react-router-dom'
 import CommentEdit from './CommentEdit'
 const VoteWrapper = styled.div`
@@ -100,7 +100,7 @@ const CommentEditorWrapper = styled.div`
 const Flagwrapper = styled.div`
   margin: 10px;
 `
-const PostBlock = ({ content, isAnswer, questionId, answerId, isOwner }) => {
+const PostBlock = ({ content, isAnswer, questionId, answerId, isOwner, isAdopted }) => {
     // console.log('content: ', content)
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -116,6 +116,7 @@ const PostBlock = ({ content, isAnswer, questionId, answerId, isOwner }) => {
     // Todo: 다르면 edit 버튼을 노출하지 않는다.
     const comment = isAnswer ? content.answerComment : content.questionComments
     const tags = isAnswer ? undefined : content.tags
+    
     const AdoptFlag = ({ content }) => {
       const fill = content.answerStatus === 'ANSWER_ACCEPTED' ? "var(--point__color)" : 'var(--black__100)'
       return (
@@ -150,11 +151,12 @@ const PostBlock = ({ content, isAnswer, questionId, answerId, isOwner }) => {
       </Flagwrapper>
       )
     }
-    const AdoptButton = ({ content }) => {
+    const AdoptButton = () => {
       const onClickAdoptAnswer = () => {
         // api 요청 보내기
         if(window.confirm('Would you like to adopt this post?')) {
           dispatch(adoptSingleAnswer(currentUser.memberId, questionId, answerId))
+          window.location.reload()
         }
       }
       return (
@@ -166,7 +168,7 @@ const PostBlock = ({ content, isAnswer, questionId, answerId, isOwner }) => {
           border={'var(--black__300)'}
           shadow={'var(--black__200)'}
           hover={'var(--black__400)'}
-          onClick={onClickAdoptAnswer}
+          onClick={() => onClickAdoptAnswer()}
         >
           adopt
         </SubmitButton>
@@ -177,16 +179,13 @@ const PostBlock = ({ content, isAnswer, questionId, answerId, isOwner }) => {
     } 
     const handleVoteUp = (isAnswer, memberId) => {
       // voteup api 요청 보내고
-      // 다시 singlecontent update 요청 받아서 스토어 상태 업데이트함
       const contentId = isAnswer ? content.answerId : content.questionId
       // content - answer 구분하는 플래그 isAnswer
       if (isAnswer) {
-        // answer 삭제 api 요청
-        dispatch(answerVoteUpAction(contentId, memberId))
-        // window.location.reload()
+        // answer 투표수 up api 요청
+        dispatch(answerVoteUpAction(contentId, memberId, questionId))
       } else {
-        dispatch(contentVoteUpdate(contentId, memberId))
-        // window.location.reload()
+        dispatch(contentVoteUpdate(contentId, memberId, questionId))
       }
     }
     const onClickContentdelete = (content, isAnswer) => {
@@ -198,7 +197,7 @@ const PostBlock = ({ content, isAnswer, questionId, answerId, isOwner }) => {
         window.location.reload()
       } else {
         dispatch(deleteSingleContent(contentId))
-        // window.location.href = '/questions'
+        window.location.href = '/questions'
         // content 삭제 api 요청
       }
     }
@@ -220,24 +219,24 @@ const PostBlock = ({ content, isAnswer, questionId, answerId, isOwner }) => {
     }
     const submitComment = (e, isAnswer, content) => {
       const contentId = isAnswer ? content.answerId : content.questionId
-
       if (e.key === 'Enter') {
         // content - answer 여부에 따라 api 요청을 따로 보냄
         e.preventDefault()
         if (Object.keys(currentUser).length === 0) {
           window.alert('If you want to leave a comment, you need to log in first.')
           return
-        }
-        if (isAnswer) {
-          // answer api
-          dispatch(addAnswerCommentAction(currentUser.memberId, contentId, commentValue))
-          setCommentValue('')
-          window.location.reload()
         } else {
-          // content api
-          dispatch(addComment(contentId, currentUser.memberId, commentValue))
-          setCommentValue('')
-          window.location.reload()
+          if (isAnswer) {
+            // answer api
+            dispatch(addAnswerCommentAction(currentUser.memberId, contentId, commentValue, questionId))
+            setCommentValue('')
+            // window.location.reload()
+          } else {
+            // content api
+            dispatch(addComment(contentId, currentUser.memberId, commentValue))
+            setCommentValue('')
+            // window.location.reload()
+          }
         }
       }
     }
@@ -245,6 +244,8 @@ const PostBlock = ({ content, isAnswer, questionId, answerId, isOwner }) => {
       if (isAnswer) {
         // answer api
         console.log('delete answer comment api')
+        console.log(questionId)
+        dispatch(deleteAnswerCommentAction(commentId, questionId))
       } else {
         // content api
         console.log('delete content comment api')
@@ -261,18 +262,21 @@ const PostBlock = ({ content, isAnswer, questionId, answerId, isOwner }) => {
     }
     const onKeyUpdateComment = (e, commentId, isAnswer) => {
       if (e.key === 'Enter') {
-        if (isAnswer) {
-          // answer api
-          console.log('edit answer comment api')
-        } else {
-          // content api
-          console.log('edit content comment api')
-          dispatch(updateComment(commentId, updateValue, questionId))
-          setIsCommentEdit(false)
-          setCurrentEditCommentId('')
+          if (isAnswer) {
+            // answer api
+            console.log('edit answer comment api')
+            dispatch(patchComment(commentId, updateValue, questionId))
+            setIsCommentEdit(false)
+            setCurrentEditCommentId('')
+          } else {
+            // content api
+            dispatch(updateComment(commentId, updateValue, questionId))
+            setIsCommentEdit(false)
+            setCurrentEditCommentId('')
+          }
         }
       }
-    }
+    
     const cancleCommentEdit = () => {
       // editvalue 비워주고 input 창 끄고 댓글창으로 돌아가..
       setIsCommentEdit(false)
@@ -283,6 +287,7 @@ const PostBlock = ({ content, isAnswer, questionId, answerId, isOwner }) => {
       // 타겟의 작성자 memberId랑 같으면 true, 다르면 false 리턴
       return currentUser.memberId === authorId
     }
+    console.log(content)
   return isEdit ? (
     <CommentEdit
       value={splitContent(content.content)}
@@ -300,7 +305,7 @@ const PostBlock = ({ content, isAnswer, questionId, answerId, isOwner }) => {
         >
           👍
         </BaseButton>
-        {isOwner && content.answerStatus !== "ANSWER_ACCEPTED" && content.questionStatus !== "QUESTION_ANSWER_ACCEPTED"? (
+        {isOwner && !isAdopted? (
           <AdoptButton />
         ) : null}
         {isAnswer ? <AdoptFlag content={content} /> : null}
@@ -377,10 +382,12 @@ const PostBlock = ({ content, isAnswer, questionId, answerId, isOwner }) => {
           ) : (
             <div>
               {comment.map((el, idx) => {
+                console.log('여기 postblock: ', el)
+                const contentId = isAnswer ? el.answerCommentId : el.questionCommentId
                 return (
                   <CommentWrapper className="comment_wrapper" key={idx}>
                     {isCommentEdit &&
-                    el.questionCommentId === currentEditCommentId ? (
+                    contentId === currentEditCommentId ? (
                       <CommentEditorWrapper className="comment_editor_wrapper">
                         <CommetEditor
                           className="comment_editor"
@@ -389,7 +396,7 @@ const PostBlock = ({ content, isAnswer, questionId, answerId, isOwner }) => {
                           onKeyUp={(e) =>
                             onKeyUpdateComment(
                               e,
-                              el.questionCommentId,
+                              contentId,
                               isAnswer
                             )
                           }
@@ -411,16 +418,16 @@ const PostBlock = ({ content, isAnswer, questionId, answerId, isOwner }) => {
                       <div className="edit_wrapper">
                         <BaseButton
                           margin={"0 10px"}
-                          onClick={() =>
-                            onClickCommentEdit(el.questionCommentId, el.content)
-                          }
+                          onClick={() =>{
+                            onClickCommentEdit(contentId, el.content)
+                          }}
                         >
                           edit
                         </BaseButton>
                         <BaseButton
                           margin={"0 10px"}
                           onClick={() =>
-                            onClickCommentDelete(el.questionCommentId, isAnswer)
+                            onClickCommentDelete(contentId, isAnswer)
                           }
                         >
                           delete

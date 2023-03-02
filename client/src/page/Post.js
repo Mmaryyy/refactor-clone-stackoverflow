@@ -90,17 +90,15 @@ const Post = () => {
   // 접근 1. content -> title 클릭 -> post
   // 접근 2. url을 통해 구분된 게시글 id로 접근
   const { postId } = useParams()
-  console.log(postId)
   const navigate = useNavigate()
-  // TODO: postId app 에서 받아와서 변수로 바꾸기 !!!!!
   const dispatch = useDispatch()
+  const singleContent = useSelector(state => state.contentsReducer.currentContent)
+  const currentUser = useSelector(state => state.userDataReducer.currentUser)
+  const [ showNotice, setShowNotice ] = useState(false)
+  const [ answerBody, setAnswerBody ] = useState('')
   useEffect(() => {
     dispatch(getSingleQuestion(postId))
   }, [])
-  const singleContent = useSelector(state => state.contentsReducer.currentContent)
-  const currentUser = useSelector(state => state.userDataReducer.currentUser)
-  // const { content, memberName, answers } = singleContent
-  const [ showNotice, setShowNotice ] = useState(false)
   const closeNotice = () => {
     setShowNotice(false)
   }
@@ -116,15 +114,24 @@ const Post = () => {
       window.alert('You can write question after log-in')
     } 
   }
-  const createAnswer = async () => {
-    dispatch(addSingleAnswer(postId, currentUser.memberId, answerBody))
-    window.location.reload()
-  }
   const isQuestionOwner = () => {
     return currentUser.memberId === singleContent.memberId
   }
-  const [ answerBody, setAnswerBody ] = useState('')
-  console.log(singleContent)
+  const onClickSubmitAnswer = () => {
+    if (Object.keys(currentUser).length === 0) {
+      window.alert('You can write answer after log-in')
+      return
+    } else {
+      dispatch(addSingleAnswer(postId, currentUser.memberId, answerBody))
+      setAnswerBody('')
+      //* 새로고침 안 하고 스테이트가 업데이트 되면 좋겠다
+      window.location.reload()
+    }
+  }
+  const getQuestionStatus = () => {
+    
+    return
+  }
   return Object.keys(singleContent).length === 0 ? (
     <></>
   ) : (
@@ -145,29 +152,28 @@ const Post = () => {
       </HeaderContainer>
       <PostBlock content={singleContent} questionId={postId} isAnswer={false} isOwner={false}/>
       <div className='answer_container'>
-        <NoticeText>{singleContent.answers.length === 0 ? 
         <NoticeText>
-          Know someone who can answer? Share a link to this <LinkContent>question</LinkContent>via <LinkContent>email</LinkContent>, <LinkContent>Twitter</LinkContent>, or <LinkContent>Facebook</LinkContent>.
+          {singleContent.answers.length === 0 
+           ? 
+             <div>
+              Know someone who can answer? Share a link to this <LinkContent>question</LinkContent>via <LinkContent>email</LinkContent>, <LinkContent>Twitter</LinkContent>, or <LinkContent>Facebook</LinkContent>.
+             </div>
+           :`${singleContent.answers.length} Answers`}
         </NoticeText>
-        :`${singleContent.answers.length} Answers`}</NoticeText>
         {singleContent.answers.filter(el => el.answerStatus !== 'ANSWER_DELETE').map((el, idx) => {
           return (
-            <PostBlock key={idx} className='answer' content={el} isAnswer={true} questionId={postId} answerId={el.answerId} isOwner={isQuestionOwner()}/>
+            <PostBlock key={idx} className='answer' 
+              content={el} 
+              isAnswer={true} 
+              questionId={postId} 
+              answerId={el.answerId} 
+              isOwner={isQuestionOwner()}
+              isAdopted={singleContent.questionStatus === 'QUESTION_ANSWER_ACCEPTED'}
+              />
           )
         })}
       </div>
       <NoticeText>Your Answer</NoticeText>
-      <form className='answer_submit_container' 
-      onSubmit={(e) => {
-        e.preventDefault()
-        //api 요청 보내고 새로고침 하면 됨.
-        if (Object.keys(currentUser).length !== 0) {
-          createAnswer()
-        }
-        window.alert('You can write answer after log-in')
-      }}
-      action='' 
-      method='POST'>
       <Editor 
       value={answerBody} 
       setter={setAnswerBody}
@@ -197,12 +203,7 @@ const Post = () => {
         </p>
       </NoticeWrapper>
       : null}
-      <SubmitInput className="post_button" 
-      type='submit'
-      value='Post Your Answer'
-      margin={'20px 0'}
-      />
-      </form>
+      <SubmitButton className='post_button' margin={'20px 0'} onClick={onClickSubmitAnswer}>Post Your Answer</SubmitButton>
       <CommonWrapper className='notice_underline_wrapper'>
       <NoticeText>
         Browse other questions tagged{" "}

@@ -108,7 +108,6 @@ const Contents = ({ isSearch, isHome }) => {
   const contentList = useSelector((state) => state.contentsReducer.contentList);
   const pageInfo = useSelector(state => state.contentsReducer.pageInfo)
   const currentUser = useSelector(state => state.userDataReducer.currentUser)
-
   useEffect(() => {
     dispatch(getContentList(
       getParamValue(queryParams.get('page')), 
