@@ -1,8 +1,6 @@
 package com.preproject_009.auth;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.io.Encoders;
 import io.jsonwebtoken.security.Keys;
@@ -11,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
+import java.security.InvalidParameterException;
 import java.security.Key;
 import java.util.Calendar;
 import java.util.Date;
@@ -20,7 +19,7 @@ import java.util.Map;
  * Writer : 최준영
  * Date   : 2023-02-22
  * Description : 로그인 인증에 성공 -> 클라이언트에게 JWT 생성 및 발급
- *               클라이언트의 요청 때마다 전달된 JWT 검증
+ * 클라이언트의 요청 때마다 전달된 JWT 검증
  */
 @Component
 public class JwtTokenizer {
@@ -45,7 +44,7 @@ public class JwtTokenizer {
     public String generateAccessToken(Map<String, Object> claims,
                                       String subject,
                                       Date expiration,
-                                      String base64EncodedSecretKey){
+                                      String base64EncodedSecretKey) {
 
         Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
 
@@ -94,14 +93,13 @@ public class JwtTokenizer {
                 .parseClaimsJws(jws);
     }
 
-    public Date getTokenExpiration(int expirationMinutes){
+
+    public Date getTokenExpiration(int expirationMinutes) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MINUTE, expirationMinutes);
         Date expiration = calendar.getTime();
-
         return expiration;
     }
-
 
     private Key getKeyFromBase64EncodedKey(String base64EncodedSecretKey) {
 
