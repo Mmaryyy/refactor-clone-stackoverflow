@@ -395,8 +395,6 @@ function Join({ setShowNav, setShowFooter, setShowSidebar }) {
     }
     // console.log(errorMessage);
 
-    if (!errorMessage.userEmail && !errorMessage.password)
-      console.log('회원등록 api memberimage 추가, about 삭제');
 
   axios({
     url: `${process.env.REACT_APP_API_URL}/api/members`,
@@ -410,8 +408,8 @@ function Join({ setShowNav, setShowFooter, setShowSidebar }) {
       },
     })
     .then((res) => {
-      console.log() 
-      navigate('/login')})
+      // console.log() 
+      if(res) navigate('/login')})
     .catch((error) => {
       console.log(error)
       setErrorMessage({userEmail: 'You already have an account, please sign in.', password: ''})

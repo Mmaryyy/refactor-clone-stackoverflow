@@ -75,7 +75,7 @@ export const answerVoteUp = async (answerId, memberId) => {
          .then(res => res.data)
          .catch(error => {
             if(error) {
-                window.alert('You already voted it.')
+                window.alert(`You can't vote it`)
             }
         })
 }
