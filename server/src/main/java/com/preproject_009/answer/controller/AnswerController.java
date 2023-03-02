@@ -5,7 +5,7 @@ import com.preproject_009.a_comment.entity.AnswerComment;
 import com.preproject_009.a_comment.mapper.AnswerCommentMapper;
 import com.preproject_009.a_comment.service.AnswerCommentService;
 import com.preproject_009.answer.dto.AnswerDto;
-import com.preproject_009.answer.mapper.entity.Answer;
+import com.preproject_009.answer.entity.Answer;
 import com.preproject_009.answer.mapper.AnswerMapper;
 import com.preproject_009.answer.service.AnswerService;
 import com.preproject_009.utils.UriCreator;

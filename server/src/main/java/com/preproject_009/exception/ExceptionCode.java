@@ -14,7 +14,8 @@ public enum ExceptionCode {
     CANNOT_CHANGE_QUESTION(400, "Cannot change question"),
     QUESTION_COMMENT_NOT_FOUND(404, "QuestionComment not found"),
     MEMBER_ALREADY_VOTED(400, "Member already voted"),
-    CANNOT_ACCEPT_ANSWER(400, "Cannot accept answer");
+    CANNOT_ACCEPT_ANSWER(400, "Cannot accept answer"),
+    TAG_NOT_FOUND(404, "Tag not found");
     @Getter
     private int status;
 

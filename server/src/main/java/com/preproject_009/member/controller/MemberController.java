@@ -1,6 +1,6 @@
 package com.preproject_009.member.controller;
 
-import com.preproject_009.answer.mapper.entity.Answer;
+import com.preproject_009.answer.entity.Answer;
 import com.preproject_009.answer.mapper.AnswerMapper;
 import com.preproject_009.answer.service.AnswerService;
 import com.preproject_009.auth.filter.JwtVerificationFilter;
@@ -11,7 +11,7 @@ import com.preproject_009.member.mapper.MemberMapper;
 import com.preproject_009.member.service.MemberService;
 import com.preproject_009.question.dto.QuestionDto;
 import com.preproject_009.question.entity.Question;
-import com.preproject_009.tag.Tag;
+import com.preproject_009.tag.questiontag.QuestionTag;
 import com.preproject_009.question.mapper.QuestionMapper;
 import com.preproject_009.question.service.QuestionService;
 import com.preproject_009.utils.UriCreator;
@@ -123,8 +123,7 @@ public class MemberController {
         Member member = memberService.findMember(memberId);
         Question question = questionMapper.questionPostDtoToQuestion(requestBody);
         question.setMember(member);
-        question.setTags(new ArrayList<Tag>());
-        Question createdQuestion = questionService.createQuestion(question);
+        Question createdQuestion = questionService.createQuestion(question, requestBody.getTagTitles());
         URI location = UriCreator.createPostQuestionUri(MEMBER_DEFAULT_URL, createdQuestion.getQuestionId());
 
         return ResponseEntity.created(location).build();

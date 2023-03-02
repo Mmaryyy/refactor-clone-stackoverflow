@@ -25,6 +25,12 @@ public class TagController {
         this.questionMapper = questionMapper;
     }
 
+    @GetMapping("/{tag-id}")
+    private ResponseEntity getTag(@PathVariable("tag-id") @Positive long tagId) {
+        Tag tag = tagService.findTag(tagId);
+        return new ResponseEntity(tagMapper.tagToTagResponse(tag), HttpStatus.OK);
+    }
+
     @GetMapping
     private ResponseEntity getTags() {
         List<Tag> tags = tagService.findTags();

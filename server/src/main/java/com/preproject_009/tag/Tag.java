@@ -1,11 +1,16 @@
 package com.preproject_009.tag;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.preproject_009.question.entity.Question;
+import com.preproject_009.tag.questiontag.QuestionTag;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -22,8 +27,8 @@ public class Tag {
     @Column(name = "CONTENT", columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    // Question 클래스 n:1 양방향
-    @ManyToOne
-    @JoinColumn(name = "QUESTION_ID")
-    private Question question;
+    // Question n:m 양방향
+    @JsonManagedReference
+    @OneToMany(mappedBy = "tag", cascade = CascadeType.PERSIST)
+    private List<QuestionTag> questionTags;
 }

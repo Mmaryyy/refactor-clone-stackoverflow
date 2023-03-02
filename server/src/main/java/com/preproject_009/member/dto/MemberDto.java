@@ -1,6 +1,6 @@
 package com.preproject_009.member.dto;
 
-import com.preproject_009.answer.mapper.entity.Answer;
+import com.preproject_009.answer.entity.Answer;
 import com.preproject_009.member.entity.Member;
 import lombok.*;
 import com.preproject_009.question.entity.Question;
