@@ -38,6 +38,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/members")
 @Validated
+@CrossOrigin("*")
 public class MemberController {
     private final static int pageSize = 16;
     private final static String MEMBER_DEFAULT_URL = "/api/members";

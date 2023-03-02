@@ -24,6 +24,7 @@ import java.util.List;
 @RequestMapping("/api/answers")
 @Validated
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class AnswerController {
     private final static String ANSWER_DEFAULT_URL = "/api/answers";
     private final AnswerService answerService;
