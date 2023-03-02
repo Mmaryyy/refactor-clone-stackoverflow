@@ -24,7 +24,7 @@ import java.util.List;
 @RequestMapping("/api/answers")
 @Validated
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://ec2-3-35-19-166.ap-northeast-2.compute.amazonaws.com:8080",allowedHeaders = "*")
+@CrossOrigin(origins = "http://ec2-3-35-19-166.ap-northeast-2.compute.amazonaws.com:8080", allowedHeaders = "*", exposedHeaders = "Authorization")
 public class AnswerController {
     private final static String ANSWER_DEFAULT_URL = "/api/answers";
     private final AnswerService answerService;

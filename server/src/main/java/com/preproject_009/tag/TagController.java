@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/tags")
-@CrossOrigin(origins = "http://ec2-3-35-19-166.ap-northeast-2.compute.amazonaws.com:8080",allowedHeaders = "*")
+@CrossOrigin(origins = "http://ec2-3-35-19-166.ap-northeast-2.compute.amazonaws.com:8080", allowedHeaders = "*", exposedHeaders = "Authorization")
 public class TagController {
     private final TagService tagService;
     private final TagMapper tagMapper;
