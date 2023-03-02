@@ -12,7 +12,7 @@ const Container = styled.div`
   width: calc(100% - 164px);
   padding: 24px;
   margin-top: 60px;
-  min-height: 600px;
+  min-height: 610px;
 
 `;
 
@@ -82,6 +82,7 @@ const User = styled.div`
     margin-bottom: 20px;
     display: grid;
     gap: 12px;
+    min-height: 610px;
   }
 `;
 
@@ -90,8 +91,8 @@ export default function Users({ setShowSidebar }) {
   const user = useSelector(state => state.userDataReducer.userList)
   // console.log(user)
   const pageInfo = useSelector((state) => state.userDataReducer.pageInfo);
-  const getContentPageList = () => {
-
+  const getContentPageList = (page) => {
+    dispatch(getUserList(page));
   }
 
   useEffect(() => {
