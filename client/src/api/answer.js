@@ -25,8 +25,11 @@ export const patchAnswer = (answerId, content) => {
 export const deleteAnswer = (answerId) => {
     axios.delete(`/api/answers/${answerId}`)
          .then(res => res)
-         .catch(error => console.log(error))
-    
+         .catch(error => {
+            if(error) {
+                window.alert('You cannot delete a post for the following reasons:\n1. You do not have permission to delete this post.\n2. If the post has an answer, it cannot delete it.')
+            }
+        })
 }
 export const adoptAnswer = (memberId, questionId, answerId) => {
     const access = localStorage.getItem("access_token")
@@ -70,5 +73,9 @@ export const deleteAnswerComment = (commentId) => {
 export const answerVoteUp = async (answerId, memberId) => {
     await axios.post(`/api/answers/${answerId}/vote/${memberId}`)
          .then(res => res.data)
-         .catch(error => console.log(error))
+         .catch(error => {
+            if(error) {
+                window.alert('You already voted it.')
+            }
+        })
 }

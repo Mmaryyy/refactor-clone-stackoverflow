@@ -8,7 +8,6 @@ import styled from 'styled-components'
 import { SubmitButton, TagButton, LinkContent, SubmitInput } from '../styles/styledcomponents'
 import PostBlock from '../components/PostBlock'
 import { Editor } from '../components/Editor'
-import axios from 'axios'
 const PostContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -119,6 +118,7 @@ const Post = () => {
     return currentUser.memberId === singleContent.memberId
   }
   const [ answerBody, setAnswerBody ] = useState('')
+  console.log(singleContent)
   return Object.keys(singleContent).length === 0 ? (
     <></>
   ) : (
@@ -198,15 +198,13 @@ const Post = () => {
       <CommonWrapper className='notice_underline_wrapper'>
       <NoticeText>
         Browse other questions tagged{" "}
-        {/* <CustomList className="tags_list">
-          {singleContent.tag.map((el, idx) => {
-            return (
-              <li key={idx}>
-                <TagButton>{el}</TagButton>
-              </li>
-            )
-          })}
-        </CustomList> */}
+          {singleContent.tags.length !== 0
+          ? <CustomList className="tags_list">
+            {singleContent.tags.map((el, idx) => {
+              return <TagButton key={idx}>{el.title}</TagButton>
+            })}
+          </CustomList>
+          : null}
         <span>or </span>
         <LinkContent href='#' fs={'var(--fs--big)'}>ask your own question.</LinkContent>
       </NoticeText>

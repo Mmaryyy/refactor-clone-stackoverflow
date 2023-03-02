@@ -43,6 +43,7 @@ export const TagButton = styled.button`
   background: var(--tag__back);
   color: var(--tag__content);
   margin: 0 3px;
+  cursor: pointer;
 `;
 
 export const LinkContent = styled.a`

@@ -65,13 +65,21 @@ export const updateContent = async (questionId, title, content, tags) => {
 export const deleteContent = (questionId) => {
     axios.delete(`/api/questions/${questionId}`)
                 .then(res => res)
-                .catch(error => console.log(error))
+                .catch(error => {
+                    if(error) {
+                        window.alert('You cannot delete a post for the following reasons:\n1. You do not have permission to delete this post.\n2. If the post has an answer, it cannot delete it.')
+                    }
+                })
 }
 //TODO: api 다시 확인하기
 export const contentVoteUp = async (questionId, memberId) => {
     await axios.post(`/api/questions/${questionId}/votes/${memberId}`)
                 .then(res => res)
-                .catch(error => console.log(error))
+                .catch(error => {
+                    if(error) {
+                        window.alert('You already voted it.')
+                    }
+                })
 }
 
 //* question comment CUD

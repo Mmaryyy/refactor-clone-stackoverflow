@@ -1,14 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 import { TagButton, LinkContent, CommonWrapper, BaseButton, SubmitButton } from '../styles/styledcomponents'
 import { useDispatch, useSelector } from 'react-redux'
 import { setCurrentContent, addComment, deleteComment, updateComment, deleteSingleContent, contentVoteUpdate} from '../redux/actions/contents'
 import { deleteSingleAnswer, addAnswerCommentAction, answerVoteUpAction, adoptSingleAnswer } from '../redux/actions/answers'
-import { answerVoteUp } from '../api/answer'
 import { useNavigate } from 'react-router-dom'
 import CommentEdit from './CommentEdit'
-import { getSingleContent } from '../api/question'
-import { notInitialized } from 'react-redux/es/utils/useSyncExternalStore'
 const VoteWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -28,7 +25,7 @@ const ContentContainer = styled.div`
   flex-grow: 1;
   word-break: break-all;
   > p.content {
-    /* min-height: 300px; */
+    min-height: 100px;
     margin: 0 0 0 10px;
   }
 `
@@ -156,7 +153,7 @@ const PostBlock = ({ content, isAnswer, questionId, answerId, isOwner }) => {
     const AdoptButton = ({ content }) => {
       const onClickAdoptAnswer = () => {
         // api 요청 보내기
-        if(window.confirm('이 게시글을 채택하시겠습니까?')) {
+        if(window.confirm('Would you like to adopt this post?')) {
           dispatch(adoptSingleAnswer(currentUser.memberId, questionId, answerId))
         }
       }
