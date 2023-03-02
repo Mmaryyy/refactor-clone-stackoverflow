@@ -2,25 +2,29 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import UserInfoCard from './UserInfoCard';
+import { useSelector, useDispatch } from 'react-redux';
 import { Editor } from '../../components/Editor';
-
+import { updateUser } from '../../redux/actions/userData';
+import { useNavigate } from 'react-router-dom';
+const Wrap = styled.div`
+  max-width: 1100;
+`
 const Menu = styled.div`
   display: flex;
   flex-direction: row;
-  margin-left: 160px;
+  /* margin-left: 160px; */
 `;
 
 const Menusub = styled.div`
   text-align: center;
   margin: 0 0 0 30px;
-  font-size: var(--fs--big);
-  border-radius: 10px;
-  width: 90px;
-  height: 35px;
+  font-size: 15px;
+  border-radius: 50px;
+  width: 80px;
+  height: 30px;
   padding: 5px;
   color: ${(props) => (props.color ? props.color : 'var(--black__300)')};
   background-color: ${(props) => (props.bg ? props.bg : 'white')};
-
   &:hover {
     background-color: ${(props) => (props.bg ? props.bg : 'var(--tab__focus)')};
   }
@@ -34,18 +38,18 @@ const Main = styled.div`
 const List = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 10px 50px 0 200px;
+  margin: 10px 30px 0 30px;
 
   div {
-    width: 100px;
+    width: 120px;
     height: 30px;
     margin: 10px 0 10px 0;
-    color: var(--black__500);
-    font-size: var(--fs--lg);
+    /* color: var(--black__500); */
+    font-size: 15px;
 
     &:hover {
       border-radius: 50px;
-      background-color: var(--tab__focus);
+      /* background-color: var(--tab__focus); */
     }
   }
 `;
@@ -53,10 +57,11 @@ const List = styled.div`
 const Content = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 10px;
+  margin-top: 17px;
+  /* margin-left: 10px; */
 
   div {
-    color: black;
+    /* color: black; */
     font-size: var(--fs--title);
     text-align: left;
     padding: 15px 0 0 -10px;
@@ -64,10 +69,11 @@ const Content = styled.div`
   .sub {
     font-size: var(--fs--big);
   }
+
 `;
 
 const Hr = styled.hr`
-  width: 1000px;
+  width: 800px;
   margin: 10px 0px;
   border: 1px solid var(#e1e3e5);
 `;
@@ -75,6 +81,7 @@ const Hr = styled.hr`
 const Section = styled.section`
   display: flex;
   flex-direction: column;
+  max-width: 600px;
 
   .delete_contents {
     font-size: var(--fs--lg);
@@ -87,17 +94,20 @@ const Section = styled.section`
   }
 
   input {
-    margin-top: 5px;
     border-radius: 5px;
     outline: none;
     border: 2px solid #e0e3e5;
-    margin: 10px 5px 10px 0;
+    margin: 5px 5px 20px 0;
     width: 400px;
     height: 30px;
+    padding-left: 5px;
 
     &:focus {
       border: 3px solid #8fd8f7;
     }
+  }
+  p {
+    margin: 10px 0 5px 0;
   }
 `;
 
@@ -120,19 +130,22 @@ const Button = styled.button`
   background-color: ${(props) => props.background};
   color: ${(props) => props.color};
   font-size: var(--fs--mid);
+  cursor: pointer;
 `;
 
 export default function Edit({ setShowSidebar }) {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
   useEffect(() => {
     setShowSidebar(false);
     return () => {
       setShowSidebar(true);
     };
   }, []);
-
-  const [display, setDisplay] = useState('');
-  const [location, setLocation] = useState('');
-  const [about, setAbout] = useState('');
+  const data = useSelector(state => state.userDataReducer.currentUser)
+  const [display, setDisplay] = useState(data.name);
+  const [location, setLocation] = useState(data.location);
+  const [about, setAbout] = useState(data.about);
 
   const DisplayHandler = (e) => {
     setDisplay(e.target.value);
@@ -142,25 +155,21 @@ export default function Edit({ setShowSidebar }) {
     setLocation(e.target.value);
   };
 
-  const aboutHandler = (e) => {
-    setAbout(e.target.value);
-  };
-
   const editHandler = () => {
-    window.confirm('변경');
+    console.log(location)
+    dispatch(updateUser(data.memberId, display, about, location))
+    window.location = 'http://localhost:3000/mypage'
   };
 
   return (
-    <div>
+    <Wrap>
       <UserInfoCard />
       <Menu>
-        <Link to='/mypage/profile' style={{ textDecoration: 'none' }}>
+        <Link to='/mypage' style={{ textDecoration: 'none' }}>
           <Menusub>Profile</Menusub>
         </Link>
-        <Link to='/mypage' style={{ textDecoration: 'none' }}>
-          <Menusub>Activity</Menusub>
-        </Link>
-        <Menusub>Saves</Menusub>
+
+        {/* <Menusub>Saves</Menusub> */}
         <Link to='/mypage/delete' style={{ textDecoration: 'none' }}>
           <Menusub bg='#F48225' color='#fff'>
             Settings
@@ -170,25 +179,29 @@ export default function Edit({ setShowSidebar }) {
       <Main>
         <List>
           <Link to='/mypage/edit' style={{ textDecoration: 'none' }}>
-            <div>Edit Profile</div>
+          <Menusub bg='#F48225' color='#fff'>
+            Edit Profile
+          </Menusub>
           </Link>
           <Link to='/mypage/delete' style={{ textDecoration: 'none' }}>
-            <div>Delete Profile</div>
+          <Menusub>
+            Delete Profile
+          </Menusub>
           </Link>
         </List>
         <Content>
           <div>Edit your profile</div>
           <Hr />
-          <div className='sub'>Public information</div>
+          {/* <div className='sub'>Public information</div> */}
           <Section>
             {/* form onSubmit */}
             <form>
               <label htmlFor='display'>Display name</label>
-              <input onChange={DisplayHandler} id='display' type='text' />
+              <input onChange={DisplayHandler} id='display' type='text' value={display}/>
               <label htmlFor='location'>Location</label>
               <input onChange={LocationHandler} id='location' type='text' />
               <p>About</p>
-              <Editor value={about} setter={setAbout} />
+              <Editor value={about} setter={setAbout} height={'250px'}/>
             </form>
           </Section>
 
@@ -207,6 +220,6 @@ export default function Edit({ setShowSidebar }) {
           </div>
         </Content>
       </Main>
-    </div>
+    </Wrap>
   );
 }

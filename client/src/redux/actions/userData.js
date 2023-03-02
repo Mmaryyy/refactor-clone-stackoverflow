@@ -51,9 +51,8 @@ export const setCurrentUser = (loginUser) => {
 //* 회원정보 수정
 export const updateUser = (memberId, name, about, location) => async (dispatch) => {
   const updateInfo = await patchUser(memberId, name, about, location)
-  .then(res => {
-    return res.data
-  })
+  // console.log(updateInfo)
+  .then(res => console.log(res))
   dispatch({
     type: SET_CURRENT_USER,
     payload: updateInfo,
@@ -64,7 +63,7 @@ export const updateUser = (memberId, name, about, location) => async (dispatch) 
 export const logoutUser = () => {
   localStorage.removeItem("access_token")
   localStorage.removeItem("refresh_token")
-  localStorage.removeItem("persist:root")
+  localStorage.removeItem("memberId")
   return {
     type: LOGOUT_USER
   };
@@ -77,7 +76,7 @@ export const removeUser = (memberId) => async (dispatch) => {
     .catch((err) => console.log(err));
   localStorage.removeItem("access_token")
   localStorage.removeItem("refresh_token")
-  localStorage.removeItem("persist:root")
+  localStorage.removeItem("memberId")
   dispatch({
     type: REMOVE_USER
   });

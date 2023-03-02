@@ -4,19 +4,26 @@ import user from '../../datas/userData.json';
 import { Link } from 'react-router-dom';
 import UserInfoCard from './UserInfoCard';
 
+const Wrap = styled.div`
+  max-width: 1100;
+`
+
 const Menu = styled.div`
   display: flex;
   flex-direction: row;
-  margin-left: 160px;
+  /* margin-left: 160px; */
+  .nav {
+    font-size: 15px;
+  }
 `;
 
 const Menusub = styled.div`
   text-align: center;
   margin: 0 0 0 30px;
   font-size: var(--fs--big);
-  border-radius: 10px;
-  width: 90px;
-  height: 35px;
+  border-radius: 50px;
+  width: 80px;
+  height: 30px;
   padding: 5px;
   color: ${(props) => (props.color ? props.color : 'var(--black__300)')};
   background-color: ${(props) => (props.bg ? props.bg : 'white')};
@@ -39,10 +46,10 @@ export const Container = styled.div`
 export const Stats = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 10px 0 0 200px;
+  margin: 10px 0 0 30px;
 
   .stats {
-    font-size: 28px;
+    font-size: 20px;
   }
 `;
 
@@ -59,6 +66,9 @@ export const StatsBox = styled.div`
 export const StatsBoxs = styled.div`
   display: flex;
   flex-direction: row;
+  .margin {
+    margin-right: 20px;
+  }
 `;
 
 export const StatsTitle = styled.p`
@@ -67,7 +77,7 @@ export const StatsTitle = styled.p`
 `;
 
 export const StatsCount = styled.p`
-  font-size: 22px;
+  font-size: 18px;
   margin-right: 5px;
 `;
 
@@ -80,7 +90,8 @@ export const Sections = styled.article`
   display: flex;
   flex-direction: column;
   > .title {
-    font-size: 28px;
+    font-size: 20px;
+    font-weight: 400;
   }
 
   > .contents_post {
@@ -97,7 +108,7 @@ export const Sections = styled.article`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 920px;
+    width: 700px;
     height: 130px;
     border: 1px solid #d6d9dc;
     border-radius: 5px;
@@ -117,7 +128,7 @@ export const Sections = styled.article`
   }
 `;
 
-export default function Profile({ setShowSidebar }) {
+export default function Profile({ setShowSidebar, data }) {
   useEffect(() => {
     setShowSidebar(false);
     return () => {
@@ -128,20 +139,18 @@ export default function Profile({ setShowSidebar }) {
   const [login, setLogin] = useState(false);
 
   return (
-    <div>
+    <Wrap>
       <UserInfoCard />
       <Menu>
-        <Link to='/mypage/profile' style={{ textDecoration: 'none' }}>
-          <Menusub bg='#F48225' color='#fff'>
+        <Link to='/mypage' style={{ textDecoration: 'none' }}>
+          <Menusub className='nav' bg='#F48225' color='#fff'>
             Profile
           </Menusub>
         </Link>
-        <Link to='/mypage' style={{ textDecoration: 'none' }}>
-          <Menusub>Activity</Menusub>
-        </Link>
-        <Menusub>Saves</Menusub>
-        <Link to='/mypage/delete' style={{ textDecoration: 'none' }}>
-          <Menusub>Settings</Menusub>
+
+        {/* <Menusub className='nav'>Saves</Menusub> */}
+        <Link to='/mypage/edit' style={{ textDecoration: 'none' }}>
+          <Menusub className='nav'>Settings</Menusub>
         </Link>
       </Menu>
       <Main>
@@ -150,9 +159,9 @@ export default function Profile({ setShowSidebar }) {
           <StatsBox>
             <StatsBoxs>
               <StatsCount>answers</StatsCount>
-              <StatsCount>{user[0].contents.length}</StatsCount>
+              <StatsCount className='margin'>{data.answers&&data.answers.length}</StatsCount>
               <StatsCount>questions</StatsCount>
-              <StatsCount>0</StatsCount>
+              <StatsCount>{data.questions&&data.questions.length}</StatsCount>
             </StatsBoxs>
           </StatsBox>
         </Stats>
@@ -246,6 +255,6 @@ export default function Profile({ setShowSidebar }) {
           </Sections>
         </Section>
       </Main>
-    </div>
+    </Wrap>
   );
 }

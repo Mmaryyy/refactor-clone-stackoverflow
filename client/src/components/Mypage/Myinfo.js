@@ -7,16 +7,16 @@ import UserInfoCard from './UserInfoCard';
 const Menu = styled.div`
   display: flex;
   flex-direction: row;
-  margin-left: 160px;
+  /* margin-left: 160px; */
 `;
 
 const Menusub = styled.div`
   text-align: center;
   margin: 0 0 0 30px;
-  font-size: var(--fs--big);
-  border-radius: 10px;
-  width: 90px;
-  height: 35px;
+  font-size: 15px;
+  border-radius: 50px;
+  width: 80px;
+  height: 30px;
   padding: 5px;
   color: ${(props) => (props.color ? props.color : 'var(--black__300)')};
   background-color: ${(props) => (props.bg ? props.bg : 'white')};
@@ -24,6 +24,8 @@ const Menusub = styled.div`
   &:hover {
     background-color: ${(props) => (props.bg ? props.bg : 'var(--tab__focus)')};
   }
+
+
 `;
 const Main = styled.div`
   display: flex;
@@ -158,11 +160,11 @@ export default function Myinfo({ setShowSidebar }) {
           <Menusub>Profile</Menusub>
         </Link>
         <Link to='/mypage' style={{ textDecoration: 'none' }}>
-          <Menusub bg='#F48225' color='#fff'>
+          {/* <Menusub bg='#F48225' color='#fff'>
             Activity
-          </Menusub>
+          </Menusub> */}
         </Link>
-        <Menusub>Saves</Menusub>
+        {/* <Menusub>Saves</Menusub> */}
         <Link to='/mypage/delete' style={{ textDecoration: 'none' }}>
           <Menusub>Settings</Menusub>
         </Link>

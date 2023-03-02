@@ -13,6 +13,7 @@ const Container = styled.div`
   width: calc(100% - 164px);
   padding: 24px;
   margin-top: 60px;
+  min-height: 600px;
   /* margin-left: 165px; */
   /* min-height: 100vh; */
 `
@@ -130,17 +131,6 @@ const Tags = ({setShowSidebar}) => {
       setShowSidebar(true)
     }
   }, [])
-
-  // useEffect(() => {
-  //   setShowSidebar(false)
-  //   axios
-  //   .get('api/tags')
-  //   .then((res) => console.log(res.data))
-  //   .catch((error) => console.log('error: ', error));
-  //   return () => {
-  //     setShowSidebar(true)
-  //   }
-  // }, [])
 
   return (
     <Container>

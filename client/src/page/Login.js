@@ -1,10 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentUser } from '../redux/actions/userData';
-import { getLoginUserInfo } from '../api/user';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 
@@ -182,30 +178,25 @@ const InputContainer = styled.div`
 `;
 
 function Login({ setShowNav, setShowFooter, setShowSidebar }) {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const data = useSelector(state => state.userDataReducer.currentUser)
-  console.log(data)
 
   useEffect(() => {
     setShowNav(false);
     setShowFooter(false);
     setShowSidebar(false);
-    // if(data&&data.memberId) window.location='http://localhost:3000/questions'
 
     return () => {
       setShowNav(true);
       setShowFooter(true);
       setShowSidebar(true);
     };
-  }, [data]);
+  }, []);
 
   const [loginInfo, setLoginInfo] = useState({ userEmail: '', password: '' });
   const [errorMessage, setErrorMessage] = useState({
     userEmail: '',
     password: '',
   });
-  // const [checkedKeepLogin, setCheckedKeepLogin] = useState(false);
+
 
   //* ID, 패스워드 인풋창 onChange 이벤트 함수
   const handleInputValue = (key) => (e) => {
@@ -240,30 +231,16 @@ function Login({ setShowNav, setShowFooter, setShowSidebar }) {
       },
     })
     .then((res) => {
+      console.log(res)
       localStorage.setItem("access_token", res.headers.authorization)
       localStorage.setItem("refresh_token", res.headers.refresh)
       localStorage.setItem("memberId", res.headers.memberid)
-
+      window.location.href = '/questions'
     })
-    .then(res => {
-      navigate('/')
+    .catch(error => {
+      setErrorMessage({userEmail: 'The email or password is incorrect.', password: ''})
     })
-    .catch((error) => setErrorMessage({userEmail: 'The email or password is incorrect.', password: ''}));
-  
 
-
-    // dispatch(setCurrentUser(loginInfo.userEmail, loginInfo.password))
-    // useDispatch()
-    // return axios
-    //   .post("url", {loginInfo, checkedKeepLogin})
-    //   .then((res) => {
-    //     // setIsLogin(true)
-    //     // setUserInfo(res.data)
-    //     setErrorMessage({userEmail: '', password: '',})
-    //   })
-    //   .catch((err) => {
-    //     setErrorMessage({userEmail: 'The email or password is incorrect.', password: ''})
-    //   });
   };
 
   return (
