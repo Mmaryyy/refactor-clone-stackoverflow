@@ -13,7 +13,6 @@ const Container = styled.div`
   padding: 24px;
   margin-top: 60px;
   min-height: 610px;
-
 `;
 
 const Wrapper = styled.div`
