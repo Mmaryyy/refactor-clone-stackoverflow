@@ -38,7 +38,7 @@ export const createContent = (memberId, title, content, tags) => {
         content,
         tagTitles: tags
     }
-    console.log(newContent)
+
     return axios({
         url: `/api/members/${memberId}/questions`,
         headers: { 'Content-Type': 'application/json' },

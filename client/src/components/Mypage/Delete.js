@@ -67,6 +67,7 @@ const Content = styled.div`
 
 const Section = styled.section`
   display: flex;
+  min-height: 800px;
   flex-direction: row;
 
   .delete_contents {
@@ -78,7 +79,7 @@ const Section = styled.section`
 `;
 
 const Hr = styled.hr`
-  width: 1000px;
+  width: 800px;
   margin: 10px 0px;
   border: 1px solid var(#e1e3e5);
 `;
