@@ -224,6 +224,10 @@ const PostBlock = ({ content, isAnswer, questionId, answerId, isOwner }) => {
       if (e.key === 'Enter') {
         // content - answer 여부에 따라 api 요청을 따로 보냄
         e.preventDefault()
+        if (Object.keys(currentUser).length === 0) {
+          window.alert('If you want to leave a comment, you need to log in first.')
+          return
+        }
         if (isAnswer) {
           // answer api
           dispatch(addAnswerCommentAction(currentUser.memberId, contentId, commentValue))

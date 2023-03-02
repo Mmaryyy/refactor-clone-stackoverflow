@@ -3,13 +3,13 @@ import axios from 'axios'
 
 //* 검색했을 때 param 받아오는 api 추가하기
 export const getAllContents = async (page = 1, keyword = '', sortType = 'created_At', filterType = 1) => {
-    return axios.get(`/api/questions?page=${page}&keyword=${keyword}&sortType=${sortType}&filterType=${filterType}`)
+    return axios.get(`${process.env.REACT_APP_API_URL}/api/questions?page=${page}&keyword=${keyword}&sortType=${sortType}&filterType=${filterType}`)
                 .then(res => res.data)
                 .catch(error => console.log(error))
 }
 export const getSingleContent = async (postId) => {
     console.log(postId)
-    return axios.get(`/api/questions/${postId}`)
+    return axios.get(`${process.env.REACT_APP_API_URL}/api/questions/${postId}`)
                 .then(res => res.data)
                 .catch(error => console.log(error))
 }
@@ -17,7 +17,7 @@ export const getSingleContent = async (postId) => {
 
 export const getLoginToken = (email, password) => {
 return axios({
-    url: `/api/login`,
+    url: `${process.env.REACT_APP_API_URL}/api/login`,
     headers: { "Content-Type": "application/json" },
     method: "post",
     data: {
@@ -40,7 +40,7 @@ export const createContent = (memberId, title, content, tags) => {
     }
 
     return axios({
-        url: `/api/members/${memberId}/questions`,
+        url: `${process.env.REACT_APP_API_URL}/api/members/${memberId}/questions`,
         headers: { 'Content-Type': 'application/json' },
         method: 'post',
         data: {
@@ -58,12 +58,12 @@ export const updateContent = async (questionId, title, content, tags) => {
         content,
         tags
     }
-    return axios.patch(`/api/questions/${questionId}`, updateContent)
+    return axios.patch(`${process.env.REACT_APP_API_URL}/api/questions/${questionId}`, updateContent)
                 .then(res => res.data)
                 .catch(error => console.log(error))
 }
 export const deleteContent = (questionId) => {
-    axios.delete(`/api/questions/${questionId}`)
+    axios.delete(`${process.env.REACT_APP_API_URL}/api/questions/${questionId}`)
                 .then(res => res)
                 .catch(error => {
                     if(error) {
@@ -73,7 +73,7 @@ export const deleteContent = (questionId) => {
 }
 //TODO: api 다시 확인하기
 export const contentVoteUp = async (questionId, memberId) => {
-    await axios.post(`/api/questions/${questionId}/votes/${memberId}`)
+    await axios.post(`${process.env.REACT_APP_API_URL}/api/questions/${questionId}/votes/${memberId}`)
                 .then(res => res)
                 .catch(error => {
                     if(error) {
@@ -90,7 +90,7 @@ export const addQuestionComment = async (questionId, memberId, content) => {
         questionId,
         content
     }
-    return axios.post(`/api/questions/${questionId}/questionComments`, comment)
+    return axios.post(`${process.env.REACT_APP_API_URL}/api/questions/${questionId}/questionComments`, comment)
          .then(res => res.data)
          .catch(error => console.log(error))
 }
@@ -100,13 +100,13 @@ export const updateQuestionComment = async (commentId, content) => {
         questionCommentId: commentId,
         content
     }
-    return axios.patch(`/api/questionComments/${commentId}`, comment)
+    return axios.patch(`${process.env.REACT_APP_API_URL}/api/questionComments/${commentId}`, comment)
         .then(res => res.data)
         .catch(error => console.log(error))
 }
 
 export const deleteQuestionComment = async (commentId) => {
-    return axios.delete(`/api/questionComments/${commentId}`)
+    return axios.delete(`${process.env.REACT_APP_API_URL}/api/questionComments/${commentId}`)
          .catch(error => console.log(error))
 }
 
@@ -114,7 +114,7 @@ export const deleteQuestionComment = async (commentId) => {
 //* get Tag List
 
 export const getTags = () => {
-    return axios.get(`/api/tags`)
+    return axios.get(`${process.env.REACT_APP_API_URL}/api/tags`)
                 .then(res => res.data)
                 .catch(error => console.log(error))
 }

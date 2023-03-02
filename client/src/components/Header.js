@@ -117,7 +117,7 @@ export default function Header({ setIsSearch }) {
   const dispatch = useDispatch()
   //
   const logoutHandler = () => {
-    dispatch(logoutUser)
+    dispatch(logoutUser())
     setLogin(false);
     window.location = '/questions'
   };

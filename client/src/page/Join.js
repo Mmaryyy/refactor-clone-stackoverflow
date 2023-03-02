@@ -285,8 +285,6 @@ const InputContainer = styled.div`
 `;
 
 function Join({ setShowNav, setShowFooter, setShowSidebar }) {
-
-
   useEffect(() => {
     setShowNav(false);
     setShowFooter(false);
@@ -401,7 +399,7 @@ function Join({ setShowNav, setShowFooter, setShowSidebar }) {
       console.log('회원등록 api memberimage 추가, about 삭제');
 
   axios({
-    url: `/api/members`,
+    url: `${process.env.REACT_APP_API_URL}/api/members`,
     headers: { 'Content-Type': 'application/json' },
     method: 'post',
     data: {

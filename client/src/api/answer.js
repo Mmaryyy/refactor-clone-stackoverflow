@@ -8,7 +8,7 @@ export const addAnswer = (questionId, currentUserId, content) => {
         content
     }
     // answer create API 요청 보내기
-    axios.post(`/api/questions/${id}/answers`, requestBody)
+    axios.post(`${process.env.REACT_APP_API_URL}/api/questions/${id}/answers`, requestBody )
          .then(res => res)
          .catch(error => console.log(error))
 }
@@ -18,12 +18,12 @@ export const patchAnswer = (answerId, content) => {
         answerId: id,
         content
     }
-    axios.patch(`/api/answers/${answerId}`, requestBody)
+    axios.patch(`${process.env.REACT_APP_API_URL}/api/answers/${answerId}`, requestBody)
          .then(res => res)
          .catch(error => console.log(error))
 }
 export const deleteAnswer = (answerId) => {
-    axios.delete(`/api/answers/${answerId}`)
+    axios.delete(`${process.env.REACT_APP_API_URL}/api/answers/${answerId}`)
          .then(res => res)
          .catch(error => {
             if(error) {
@@ -34,7 +34,7 @@ export const deleteAnswer = (answerId) => {
 export const adoptAnswer = (memberId, questionId, answerId) => {
     const access = localStorage.getItem("access_token")
     const refresh = localStorage.getItem("refresh_token")
-    axios.patch(`/api/members/${memberId}/questions/${questionId}/answers/${answerId}`, {}, {headers: {
+    axios.patch(`${process.env.REACT_APP_API_URL}/api/members/${memberId}/questions/${questionId}/answers/${answerId}`, {}, {headers: {
         "Authorization": access,
         "refresh": refresh
     }})
@@ -49,7 +49,7 @@ export const addAnswerComment = (memberId, answerId, content) => {
         content
     }
     console.log(data)
-    axios.post(`/api/answers/${answerId}/answerComments`, data)
+    axios.post(`${process.env.REACT_APP_API_URL}/api/answers/${answerId}/answerComments`, data)
          .then(res => res.data)
          .catch(error => console.log(error))
 }
@@ -59,19 +59,19 @@ export const patchAnswerComment = (commentId, content) => {
         answerCommentId: commentId,
         content
     }
-    axios.patch(`/api/answerComments/${commentId}`, updateData)
+    axios.patch(`${process.env.REACT_APP_API_URL}/api/answerComments/${commentId}`, updateData)
          .then(res => res.data)
          .catch(error => console.log(error))
 }
 
 export const deleteAnswerComment = (commentId) => {
-    axios.delete(`/api/answerComments/${commentId}`)
+    axios.delete(`${process.env.REACT_APP_API_URL}/api/answerComments/${commentId}`)
          .then(res => res)
          .catch(error => console.log(error))
 }
 
 export const answerVoteUp = async (answerId, memberId) => {
-    await axios.post(`/api/answers/${answerId}/vote/${memberId}`)
+    await axios.post(`${process.env.REACT_APP_API_URL}/api/answers/${answerId}/vote/${memberId}`)
          .then(res => res.data)
          .catch(error => {
             if(error) {

@@ -222,20 +222,22 @@ function Login({ setShowNav, setShowFooter, setShowSidebar }) {
     }
 
   axios({
-    url: `/api/login`,
+    url: `${process.env.REACT_APP_API_URL}/api/login`,
     headers: { 'Content-Type': 'application/json' },
     method: 'post',
     data: {
         email: loginInfo.userEmail,
         password: loginInfo.password,
       },
+    withCredentials: true
     })
     .then((res) => {
-      console.log(res)
+      if(res) {
       localStorage.setItem("access_token", res.headers.authorization)
       localStorage.setItem("refresh_token", res.headers.refresh)
       localStorage.setItem("memberId", res.headers.memberid)
       window.location.href = '/questions'
+    }
     })
     .catch(error => {
       setErrorMessage({userEmail: 'The email or password is incorrect.', password: ''})
