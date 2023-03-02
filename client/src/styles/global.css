@@ -1,0 +1,46 @@
+:root {
+    /* color */
+    --point__color: #F48225;
+
+    --menu__active: #F1F2F3;
+    /* component border line color */
+    --tab__focus: #E3E6E8;
+    
+    --button__back: #0A95FF;
+    --button__back--hover: #0069C5;
+    --button__light--hover: #B9D2E8;
+
+    --tag__back: #E1ECF4;
+    --tag__content: #39739D;
+    
+    --sidebar__top: #FBF3D5;
+    --sidebar__body: #FDF7E2;
+    --sidebar__line: #F1E5BC;
+    
+    --footer__back: #23262A;
+
+    --content__view--low: #989EA4;
+    --content__view--mid: #83690B;
+    --content__view--high: #922024;
+    --content__answer: #2E7044;
+    
+    --sidebar__related: #5EBA7C;
+
+    --link__content: #0074CC;
+
+    /* text color */
+    --black__100:#BABFC4;
+    --black__200:#989EA4;
+    --black__300:#6A737C;
+    --black__400:#3B4044;
+    --black__500:#2e3235;
+    --black__600:#222427;
+    --black__700:#0c0d0e;
+
+    /* font size */
+    --fs--caption: 12px;
+    --fs--mid: 14px;
+    --fs--lg: 16px;
+    --fs--big: 18px;
+    --fs--title: 27px;
+}
