@@ -3,12 +3,11 @@ import styled from 'styled-components';
 import logo from '../img/logo.png';
 import Avatar from './Mypage/Avatar';
 import { Link, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux'
 import { SubmitButton } from '../styles/styledcomponents';
 import { useDispatch } from 'react-redux';
 import { getLoginUserInfo } from '../api/user';
 import { setCurrentUser, logoutUser } from '../redux/actions/userData';
-import { getContentList } from '../redux/actions/contents';
+
 const Container = styled.header`
   width: 100%;
   min-width: auto;
@@ -111,7 +110,6 @@ export default function Header({ setIsSearch }) {
         localStorage.setItem("access_token", error.headers.authorization)
         // window.location = '/login'
     })}, [])
-  const currentUser = useSelector(state => state.userDataReducer.currentUser)
   //* 로그인에 성공해서 store에 currentUser가 있으면 login -> true, 없으면 login -> false
 
   const [search, setSearch] = useState('');
