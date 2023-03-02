@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/answerComments")
 @Validated
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://ec2-3-35-19-166.ap-northeast-2.compute.amazonaws.com:8080",allowedHeaders = "*")
 public class AnswerCommentController {
     private final AnswerCommentService answerCommentService;
     private final AnswerCommentMapper answerCommentMapper;
