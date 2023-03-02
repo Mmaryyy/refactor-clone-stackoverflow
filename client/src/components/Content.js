@@ -1,10 +1,7 @@
-import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import { TagButton, LinkContent } from '../styles/styledcomponents'
-import { Link, useNavigate } from 'react-router-dom'
+import { TagButton } from '../styles/styledcomponents'
+import { Link } from 'react-router-dom'
 import check from './../img/check.png'
-import { useDispatch, useSelector } from 'react-redux'
-import { getSingleContent } from '../redux/actions/contents'
 import { getTimeGap } from '../utils/dateUtil'
 const ContentContainer = styled.section`
   display: flex;
@@ -30,7 +27,6 @@ const ContentDetailContainer = styled.div`
         margin: 5px 0;
     }
     color: var(--black__400);
-    overflow: hidden;
 `
 const PostSummaryContainer = styled.div`
     display: flex;
@@ -79,7 +75,7 @@ const PostTitle = styled(Link)`
   }
 `
 const BodyContainer = styled.p`
-  overflow: hidden;
+  word-break: break-all;
   width: inherit;
 `
 const AuthorLink = styled.h3`
@@ -104,7 +100,6 @@ const Content = ({ singleContent }) => {
   const isSelected = questionStatus === 'QUESTION_ANSWER_ACCEPTED' ? true : false
   const ellipsisContent = (content) => {
     const result = content.split('79a91970-5d15-4da9-a394-d014af1e9916').join()
-    console.log(result)
     return `${result.substring(0, 108)}...`
   }
   return (

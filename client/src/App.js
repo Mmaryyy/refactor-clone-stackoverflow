@@ -22,8 +22,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getTagList } from './redux/actions/contents';
 
 function App() {
-  const data = useSelector(state => state.userDataReducer.currentUser)
-  console.log(data)
   const [isReady, setIsReady] = useState(true);
   const { pathname } = useLocation();
   const [showNav, setShowNav] = useState(true);
@@ -38,15 +36,20 @@ function App() {
       dispatch(getTagList())
       setIsReady(false);
     }, 2500);
-    if (pathname === '/') {
-      setIsHome(true)
-    } 
-    
   }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0)
+    if (pathname === '/') {
+      setIsHome(true)
+    } 
+    if (!pathname.includes('/search')) {
+      setIsSearch(false)
+    } 
   }, [ pathname ])
+  const onNavClicked = () => {
+    setIsSearch(false)
+  }
   return (
     <>
       <Header setIsSearch={setIsSearch}/>
@@ -54,13 +57,13 @@ function App() {
         <GlobalStyle />
           <div className={ pathname.includes('in') || pathname.includes('k') ? 'background_box' : null }>
             <div className={ pathname.includes('k') ? null : 'app_wrap'}>
-              {showNav ? <Nav isHome={isHome}/> : null}
+              {showNav ? <Nav isHome={isHome} onClick={onNavClicked}/> : null}
               <Routes>
                 <Route path='/' element={isReady 
                   ? <Index setShowNav={setShowNav} setShowFooter={setShowFooter} setShowSidebar={setShowSidebar}/>
-                  : <Contents isHome={isHome}/>}/>
-                <Route path='/questions' element={<Contents />} />
-                <Route path='/search/*' element={<Contents isSearch={isSearch}/>} />
+                  : <Contents isHome={isHome} isSearch={isSearch}/>}/>
+                <Route path='/questions' element={<Contents isHome={false} isSearch={isSearch}/>} />
+                <Route path='/search/*' element={<Contents isHome={false} isSearch={isSearch}/>} />
                 <Route
                   path='/mypage/*'
                   element={<Mypage setShowSidebar={setShowSidebar} />}

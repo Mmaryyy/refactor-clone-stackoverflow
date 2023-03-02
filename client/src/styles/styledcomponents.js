@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 
 export const SubmitButton = styled.button`
-  padding: 10px;
+  padding: ${props => props.padding || '10px'};
   width: fit-content;
   height: fit-content;
   margin: ${(props) => props.margin || 0};
   white-space: nowrap !important;
   background: ${(props) => props.bg || 'var(--button__back)'};
   color: ${(props) => props.color || 'white'};
-  border: 1px solid var(--link__content);
+  border: 1px solid ${props => props.border || 'var(--link__content)'};
   box-shadow: inset 0 1px ${(props) => props.shadow || '#80C0FF'};
   border-radius: 5px;
   font-size: var(--fs--mid);

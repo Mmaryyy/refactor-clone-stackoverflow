@@ -1,4 +1,4 @@
-import { deleteContent, getAllContents, getSingleContent, addQuestionComment, deleteQuestionComment, updateQuestionComment, voteUp, updateContent, getTags } from '../../api/question'
+import { deleteContent, getAllContents, getSingleContent, addQuestionComment, deleteQuestionComment, updateQuestionComment, contentVoteUp, updateContent, getTags } from '../../api/question'
 //contents 액션
 export const GET_SINGLE_CONTENT = "contents/GET_SINGLE_CONTENT"
 export const GET_CONTENT_LIST = "contents/GET_CONTENT_LIST"
@@ -44,8 +44,8 @@ export const getContentList = (page, keyword, sortType, filterType) => async (di
         }
     })
 }
-export const voteUpdate = (questionId, memberId) => async (dispatch) => {
-    const result =  await voteUp(questionId, memberId)
+export const contentVoteUpdate = (questionId, memberId) => async (dispatch) => {
+    const result =  await contentVoteUp(questionId, memberId)
                         .then(res => getSingleContent(questionId))
     // singleContent 업데이트
     // singleContent api 다시 타서 받아오고
@@ -57,6 +57,8 @@ export const voteUpdate = (questionId, memberId) => async (dispatch) => {
 }
 export const deleteSingleContent = (questionId) => async (dispatch) => {
     await deleteContent(questionId)
+    .then(res => res.data)
+    .catch(error => console.log(error))
 }
 export const addComment = (questionId, memberId, content) => async (dispatch) => {
     await addQuestionComment(questionId, memberId, content)

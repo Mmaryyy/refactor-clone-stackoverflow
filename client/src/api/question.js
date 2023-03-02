@@ -8,6 +8,7 @@ export const getAllContents = async (page = 1, keyword = '', sortType = 'created
                 .catch(error => console.log(error))
 }
 export const getSingleContent = async (postId) => {
+    console.log(postId)
     return axios.get(`/api/questions/${postId}`)
                 .then(res => res.data)
                 .catch(error => console.log(error))
@@ -67,8 +68,8 @@ export const deleteContent = (questionId) => {
                 .catch(error => console.log(error))
 }
 //TODO: api 다시 확인하기
-export const voteUp = async (questionId, memberId) => {
-    await axios.post(`/api/questions/${questionId}/vote/${memberId}`)
+export const contentVoteUp = async (questionId, memberId) => {
+    await axios.post(`/api/questions/${questionId}/votes/${memberId}`)
                 .then(res => res)
                 .catch(error => console.log(error))
 }
