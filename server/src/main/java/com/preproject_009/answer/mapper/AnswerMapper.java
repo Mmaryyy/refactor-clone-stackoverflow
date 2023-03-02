@@ -1,7 +1,7 @@
 package com.preproject_009.answer.mapper;
 
 import com.preproject_009.answer.dto.AnswerDto;
-import com.preproject_009.answer.mapper.entity.Answer;
+import com.preproject_009.answer.entity.Answer;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;

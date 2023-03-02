@@ -12,7 +12,7 @@ public class QuestionStubData {
         private static Map<HttpMethod, Object> stubQuestionRequestBody;
         static {
             stubQuestionRequestBody = new HashMap<>();
-            stubQuestionRequestBody.put(HttpMethod.POST, new QuestionDto.Post(1L,"java","stub data"));
+            stubQuestionRequestBody.put(HttpMethod.POST, new QuestionDto.Post(1L,"java","stub data", null));
             stubQuestionRequestBody.put(HttpMethod.PATCH, new QuestionDto.Patch(1L, null,"stub Patch"));
         }
 
@@ -23,7 +23,5 @@ public class QuestionStubData {
         public static Question getSingleResultQuestion() {
             return new Question(1L, "java", "stub data", Question.QuestionStatus.QUESTION_REGISTRATION);
         }
-
-
     }
 }

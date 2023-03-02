@@ -2,7 +2,7 @@ package com.preproject_009.a_comment.mapper;
 
 import com.preproject_009.a_comment.dto.AnswerCommentDto;
 import com.preproject_009.a_comment.entity.AnswerComment;
-import com.preproject_009.answer.mapper.entity.Answer;
+import com.preproject_009.answer.entity.Answer;
 import com.preproject_009.member.entity.Member;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-03-01T21:12:21+0900",
-    comments = "version: 1.5.1.Final, compiler: javac, environment: Java 11.0.18 (Azul Systems, Inc.)"
+    date = "2023-03-01T10:53:54+0900",
+    comments = "version: 1.5.1.Final, compiler: javac, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
 public class AnswerCommentMapperImpl implements AnswerCommentMapper {
