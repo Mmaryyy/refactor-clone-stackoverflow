@@ -91,6 +91,7 @@ export default function Users({ setShowSidebar }) {
   const user = useSelector(state => state.userDataReducer.userList)
   // console.log(user)
   const pageInfo = useSelector((state) => state.userDataReducer.pageInfo);
+
   const getContentPageList = (page) => {
     dispatch(getUserList(page));
   }
@@ -150,7 +151,7 @@ export default function Users({ setShowSidebar }) {
             ))}
           </div>
         </User>
-        <PaginationBar pageInfo={pageInfo} apiCallFunction={getContentPageList} />
+        {user.length !== 0 ? <PaginationBar pageInfo={pageInfo} apiCallFunction={getContentPageList} /> : null}
       </Container>
     </>
   );

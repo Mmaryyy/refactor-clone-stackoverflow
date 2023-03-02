@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const getAllUser = async (page = 1) => {
-  return axios.get(`/api/members?page=${page}`)
+  return axios.get(`${process.env.REACT_APP_API_URL}/api/members?page=${page}`)
             .then((res) => res.data)
             .catch((error) => console.log('error: ', error));
 
@@ -9,7 +9,7 @@ export const getAllUser = async (page = 1) => {
 
 export const joinUser = (email, name, password, memberImage) => {
   axios({
-    url: `api/members`,
+    url: `${process.env.REACT_APP_API_URL}/api/members`,
     headers: { 'Content-Type': 'application/json' },
     method: 'post',
     data: {
@@ -26,7 +26,7 @@ export const joinUser = (email, name, password, memberImage) => {
 //* 유저 로그인 -> 토큰 -> 정보
 export const getLoginToken = (email, password) => {
   return axios({
-    url: `/api/login`,
+    url: `${process.env.REACT_APP_API_URL}/api/login`,
     headers: { 'Content-Type': 'application/json' },
     method: 'post',
     data: {
@@ -45,7 +45,7 @@ export const getLoginToken = (email, password) => {
 
 export const getLoginUserInfo = (access, refresh, memberId) => {
   return axios({
-    url: `/api/members/${memberId}`,
+    url: `${process.env.REACT_APP_API_URL}/api/members/${memberId}`,
     headers: { authorization: access, refresh, memberId, 'Content-Type': 'application/json' },
     method: 'get'
     })
@@ -64,7 +64,7 @@ export const getLoginUserInfo = (access, refresh, memberId) => {
 export const patchUser = (memberId, name, about, location) => {
   const refresh = localStorage.getItem("access_token")
   return axios({
-      url: `/api/members/${memberId}`,
+      url: `${process.env.REACT_APP_API_URL}/api/members/${memberId}`,
       method: 'patch',
       headers: { authorization: localStorage.getItem("access_token"), refresh, memberId, 'Content-Type': 'application/json' },
       data: {
@@ -82,7 +82,7 @@ export const patchUser = (memberId, name, about, location) => {
 export const deleteUser = (access, refresh, memberId) => {
   console.log(memberId)
   axios({
-      url: `/api/members/${memberId}`,
+      url: `${process.env.REACT_APP_API_URL}/api/members/${memberId}`,
       method: 'delete',
       headers: { authorization: access, refresh, memberId, 'Content-Type': 'application/json' },
     })

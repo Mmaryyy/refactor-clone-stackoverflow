@@ -107,6 +107,8 @@ const Contents = ({ isSearch, isHome }) => {
   const [filterType, setFilterType] = useState(1)
   const contentList = useSelector((state) => state.contentsReducer.contentList);
   const pageInfo = useSelector(state => state.contentsReducer.pageInfo)
+  const currentUser = useSelector(state => state.userDataReducer.currentUser)
+
   useEffect(() => {
     dispatch(getContentList(
       getParamValue(queryParams.get('page')), 
@@ -155,10 +157,17 @@ const Contents = ({ isSearch, isHome }) => {
       getParamValue(queryParams.get('filterType'))
     ));
   }
-  const handleNewQuestion = () => {
-    // store에 currentContent 비워야함
-    navigate('/ask')
+  
+  const handleNewQuestion = () => { 
+    // store에 currentContent 비워야함 
+    if(Object.keys(currentUser).length !== 0) { 
+      navigate('/ask') 
+    } 
+    else {
+      window.alert('You can write question after log-in')
+    } 
   }
+  
   return contentList.length === 0 ? (
     <Container>
       <HeadContainer>

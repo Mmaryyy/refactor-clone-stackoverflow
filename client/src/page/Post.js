@@ -107,8 +107,14 @@ const Post = () => {
   const openNotice = () => {
     setShowNotice(true)
   }
-  const handleNewQuestion = () => {
-    navigate('/ask')
+  const handleNewQuestion = () => { 
+    // store에 currentContent 비워야함 
+    if(Object.keys(currentUser).length !== 0) { 
+      navigate('/ask') 
+    } 
+    else {
+      window.alert('You can write question after log-in')
+    } 
   }
   const createAnswer = async () => {
     dispatch(addSingleAnswer(postId, currentUser.memberId, answerBody))
@@ -155,8 +161,10 @@ const Post = () => {
       onSubmit={(e) => {
         e.preventDefault()
         //api 요청 보내고 새로고침 하면 됨.
-        console.log('되니?')
-        createAnswer()
+        if (Object.keys(currentUser).length !== 0) {
+          createAnswer()
+        }
+        window.alert('You can write answer after log-in')
       }}
       action='' 
       method='POST'>
