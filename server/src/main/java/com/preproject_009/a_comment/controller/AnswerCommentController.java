@@ -16,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/answerComments")
 @Validated
+@CrossOrigin("*")
 public class AnswerCommentController {
     private final AnswerCommentService answerCommentService;
     private final AnswerCommentMapper answerCommentMapper;

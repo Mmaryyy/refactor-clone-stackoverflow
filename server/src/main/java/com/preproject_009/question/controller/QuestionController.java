@@ -35,6 +35,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Validated
 @RequestMapping("/api/questions")
+@CrossOrigin("*")
 public class QuestionController {
     private final static String QUESTION_DEFAULT_URL = "/api/questions";
     private final QuestionRepository questionRepository;
