@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import logo from '../img/logo.png';
 import Avatar from './Mypage/Avatar';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux'
 import { SubmitButton } from '../styles/styledcomponents';
-import { logoutUser } from '../redux/actions/userData';
 import { useDispatch } from 'react-redux';
 import { getLoginUserInfo } from '../api/user';
-import { setCurrentUser } from '../redux/actions/userData';
-
+import { setCurrentUser, logoutUser } from '../redux/actions/userData';
+import { getContentList } from '../redux/actions/contents';
 const Container = styled.header`
   width: 100%;
   min-width: auto;
@@ -97,8 +96,6 @@ const Icon = styled.div`
 
 export default function Header({ setIsSearch }) {
   const [login, setLogin] = useState(false);
-  // const currentUser = useSelector(state => state.userDataReducer.currentUser)
-
   //* 로그인에 성공해서 store에 currentUser가 있으면 login -> true, 없으면 login -> false
   useEffect(() => {
     // if (Object.keys(currentUser).length !== 0) {
@@ -113,8 +110,9 @@ export default function Header({ setIsSearch }) {
         dispatch(setCurrentUser({}))
         localStorage.setItem("access_token", error.headers.authorization)
         // window.location = '/login'
-    })
-  }, [])
+    })}, [])
+  const currentUser = useSelector(state => state.userDataReducer.currentUser)
+  //* 로그인에 성공해서 store에 currentUser가 있으면 login -> true, 없으면 login -> false
 
   const [search, setSearch] = useState('');
   const navigate = useNavigate()
@@ -133,14 +131,14 @@ export default function Header({ setIsSearch }) {
 
   const searchHandler = (e) => {
     // search data
-    setSearch('');
-    e.preventDefault()
     if (e.key === 'Enter') {
+      e.preventDefault()
       setIsSearch(true)
-      navigate('/search')
+      setSearch('');
+      // search api 요청 보내고
+      navigate(`/search?page=${1}&keyword=${search}`)
     }
   };
-
   return (
     <Container>
       <Wrapper>
@@ -165,7 +163,7 @@ export default function Header({ setIsSearch }) {
           </>
         )}
         <SearchWrapper onChange={searchHandler}>
-          <SearchInput onChange={searchInputHandler} onKeyPress={searchHandler} type='text' />
+          <SearchInput onChange={(e) => searchInputHandler(e)} onKeyPress={searchHandler} value={search}/>
         </SearchWrapper>
         {login ? (
           <>

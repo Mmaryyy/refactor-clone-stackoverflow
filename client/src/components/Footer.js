@@ -59,6 +59,7 @@ const Container = styled.div`
   justify-content: space-between;
   flex: 1;
   flex-direction: row;
+  max-width: 1264px;
 `;
 
 const stackoverflow = ['Questions', 'Help'];

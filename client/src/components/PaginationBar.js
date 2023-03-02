@@ -42,7 +42,7 @@ const PaginationBar = ({ pageInfo, apiCallFunction }) => {
     return array.filter(el => el >= 1 && el <= totalPages) 
   }
   const Button = ({ value, currentPage }) => {
-    const onBtnClicked = () => {
+      const onBtnClicked = () => {
       if (value === 'Prev') {
         onClickPrev()
         return
@@ -77,7 +77,7 @@ const PaginationBar = ({ pageInfo, apiCallFunction }) => {
         {getMidPage(page, totalPages).map((el, idx) => <Button key={idx} value={`${el}`} currentPage={page}/>)}
         {page > totalPages - 4 ? null : <span className='next_compress'>...</span>}
         {page > totalPages - 3 ? null : <Button key='last_page' value={totalPages}/>}
-        <Button key='next' value='Next' currentPage={page}/>
+        {page === totalPages ? null : <Button key='next' value='Next' currentPage={page}/>}
     </Container>
   )
 }

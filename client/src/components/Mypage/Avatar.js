@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 
@@ -14,8 +13,8 @@ export const UserProfiles = styled.div`
   background-image: ${(props) =>
     props.img
       ? `url(${props.img})`
-      : `url("/images/Avatar1.png")`};
-
+      : `url("/image/Avatar1.png")`};
+  cursor: pointer;
   &:hover {
     height: ${(props) => props.height};
   }

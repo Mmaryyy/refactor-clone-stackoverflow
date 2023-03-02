@@ -1,33 +1,34 @@
-import { addAnswer, patchAnswer, deleteAnswer, adoptAnswer } from "../../api/answer"
+import { addAnswer, patchAnswer, deleteAnswer, adoptAnswer, addAnswerComment, patchAnswerComment, deleteAnswerComment, answerVoteUp } from "../../api/answer"
 //answer 액션 생성 함수
-export const ADD_ANSWER = 'answer/ADD_ANSWER'
-export const PATCH_ANSWER = 'answer/PATCH_ANSWER'
-export const DELETE_ANSWER = 'answer/DELETE_ANSWER'
 
-export const addSingleAnswer = (questionId, answerId, content) => async (getSingleQuestion) => {
-    await addAnswer(questionId, answerId, content)
-    .then(res => res.data)
-    .catch(error => console.log(error))
-    getSingleQuestion(questionId)
+export const addSingleAnswer = (questionId, currentUserId, content) => async (dispatch) => {
+    await addAnswer(questionId, currentUserId, content)
 }
 
-export const updateAnswer = (questionId, answerId, content) => async (getSingleQuestion) => {
+export const updateAnswer = (answerId, content) => async (dispatch) => {
     await patchAnswer(answerId, content)
-    .then(res => res.data)
-    .catch(error => console.log(error))
-    getSingleQuestion(questionId)
 }
 
-export const deleteSingleAnswer = (questionId, answerId) => async (getSingleQuestion) => {
+export const deleteSingleAnswer = (answerId) => async (dispatch) => {
     await deleteAnswer(answerId)
-    .then(res => res.data)
-    .catch(error => console.log(error))
-    getSingleQuestion(questionId)
 }
 
-export const adoptSingleAnswer = (memberId, questionId, answerId) => async (getSingleQuestion) => {
+export const adoptSingleAnswer = (memberId, questionId, answerId) => async (dispatch) => {
     await adoptAnswer(memberId, questionId, answerId)
-    .then(res => res.data)
-    .catch(error => console.log(error))
-    getSingleQuestion(questionId)
+}
+
+export const addAnswerCommentAction = (memberId, answerId, content) => async (dispatch) => {
+    await addAnswerComment(memberId, answerId, content)
+}
+
+export const patchComment = (commentId, content) => async (dispatch) => {
+    await patchAnswerComment(commentId, content)
+}
+
+export const deleteComment = (commentId) => async (dispatch) => {
+    await deleteAnswerComment(commentId)
+}
+
+export const answerVoteUpAction = (memberId, answerId) => async (dispatch) => {
+    await answerVoteUp(memberId, answerId)
 }

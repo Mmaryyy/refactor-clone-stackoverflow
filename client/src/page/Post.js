@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { getTimeGap } from '../utils/dateUtil'
 import { getSingleQuestion } from '../redux/actions/contents'
+import { addSingleAnswer } from '../redux/actions/answers'
 import styled from 'styled-components'
 import { SubmitButton, TagButton, LinkContent, SubmitInput } from '../styles/styledcomponents'
 import PostBlock from '../components/PostBlock'
@@ -98,7 +99,7 @@ const Post = () => {
     dispatch(getSingleQuestion(postId))
   }, [])
   const singleContent = useSelector(state => state.contentsReducer.currentContent)
-  console.log(singleContent)
+  const currentUser = useSelector(state => state.userDataReducer.currentUser)
   // const { content, memberName, answers } = singleContent
   const [ showNotice, setShowNotice ] = useState(false)
   const closeNotice = () => {
@@ -110,8 +111,14 @@ const Post = () => {
   const handleNewQuestion = () => {
     navigate('/ask')
   }
+  const createAnswer = async () => {
+    dispatch(addSingleAnswer(postId, currentUser.memberId, answerBody))
+    window.location.reload()
+  }
+  const isQuestionOwner = () => {
+    return currentUser.memberId === singleContent.memberId
+  }
   const [ answerBody, setAnswerBody ] = useState('')
-  console.log('answerBody: ', answerBody)
   return Object.keys(singleContent).length === 0 ? (
     <></>
   ) : (
@@ -130,16 +137,16 @@ const Post = () => {
           <span>{singleContent.view}</span>
         </SummaryWrapper>
       </HeaderContainer>
-      <PostBlock content={singleContent} questionId={postId} isAnswer={false}/>
+      <PostBlock content={singleContent} questionId={postId} isAnswer={false} isOwner={false}/>
       <div className='answer_container'>
         <NoticeText>{singleContent.answers.length === 0 ? 
         <NoticeText>
           Know someone who can answer? Share a link to this <LinkContent>question</LinkContent>via <LinkContent>email</LinkContent>, <LinkContent>Twitter</LinkContent>, or <LinkContent>Facebook</LinkContent>.
         </NoticeText>
         :`${singleContent.answers.length} Answers`}</NoticeText>
-        {singleContent.answers.map((el, idx) => {
+        {singleContent.answers.filter(el => el.answerStatus !== 'ANSWER_DELETE').map((el, idx) => {
           return (
-            <PostBlock key={idx} className='answer' content={el} isAnswer={true} questionId={postId} answerId={el.shortId}/>
+            <PostBlock key={idx} className='answer' content={el} isAnswer={true} questionId={postId} answerId={el.answerId} isOwner={isQuestionOwner()}/>
           )
         })}
       </div>
@@ -149,6 +156,7 @@ const Post = () => {
         e.preventDefault()
         //api 요청 보내고 새로고침 하면 됨.
         console.log('되니?')
+        createAnswer()
       }}
       action='' 
       method='POST'>
