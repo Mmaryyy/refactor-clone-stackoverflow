@@ -3,6 +3,7 @@ package com.preproject_009.member.controller;
 import com.preproject_009.answer.mapper.entity.Answer;
 import com.preproject_009.answer.mapper.AnswerMapper;
 import com.preproject_009.answer.service.AnswerService;
+import com.preproject_009.auth.filter.JwtVerificationFilter;
 import com.preproject_009.member.dto.MemberDto;
 import com.preproject_009.member.dto.MultiResponseDto;
 import com.preproject_009.member.entity.Member;
@@ -50,6 +51,7 @@ public class MemberController {
     private final AnswerService answerService;
 
     private final AnswerMapper answerMapper;
+
 
     public MemberController(MemberService memberService, MemberMapper mapper, QuestionMapper questionMapper, QuestionService questionService, AnswerService answerService, AnswerMapper answerMapper) {
         this.memberService = memberService;
@@ -104,7 +106,6 @@ public class MemberController {
                         pageMembers),
                 HttpStatus.OK);
     }
-
 
     // 유저 삭제 처리
     @DeleteMapping("/{member-id}")

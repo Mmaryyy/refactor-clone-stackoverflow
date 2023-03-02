@@ -1,19 +1,35 @@
 package com.preproject_009.auth.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import com.preproject_009.auth.JwtTokenizer;
 import com.preproject_009.member.dto.LoginDto;
+import com.preproject_009.member.dto.MemberDto;
 import com.preproject_009.member.entity.Member;
+import com.preproject_009.member.service.MemberService;
+import com.preproject_009.response.ErrorResponse;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
@@ -24,17 +40,19 @@ import java.util.Map;
  * Date   : 2023-02-22
  * Description : 로그인 인증 정보 직접 수신 -> 인증 처리의 시작점 역할
  */
-
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenizer jwtTokenizer;
+    private final MemberService memberService;
 
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager,
-                                   JwtTokenizer jwtTokenizer){
+                                   JwtTokenizer jwtTokenizer,
+                                   MemberService memberService) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenizer = jwtTokenizer;
+        this.memberService = memberService;
     }
-    
+
     // 인증 시도 로직
     @SneakyThrows
     @Override
@@ -46,7 +64,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
-
         return authenticationManager.authenticate(authenticationToken);
     }
 
@@ -56,8 +73,15 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             HttpServletResponse response,
                                             FilterChain chain,
                                             Authentication authResult) throws ServletException, IOException {
-        
+
         Member member = (Member) authResult.getPrincipal();
+
+        try {
+            Member memberStatus = memberService.findMember(member.getMemberId());
+        } catch (Exception e) {
+            e.printStackTrace();
+            sendErrorResponse(response);
+        }
         // Access Token 생성
         String accessToken = delegateAccessToken(member);
         // Refresh Token 생성
@@ -73,7 +97,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     }
 
     // Access Token, Refresh Token 생성 로직
-    private String delegateAccessToken(Member member){
+    private String delegateAccessToken(Member member) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("email", member.getEmail());
         claims.put("roles", member.getRoles());
@@ -86,12 +110,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String accessToken = jwtTokenizer.generateAccessToken(claims, subject, expiration, base64EncodedSecretKey);
 
-        System.out.println("access 토큰 임:> "+ accessToken);
-
         return accessToken;
     }
 
-    // 6
     private String delegateRefreshToken(Member member) {
         String subject = member.getEmail();
         Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getRefreshTokenExpirationMinutes());
@@ -102,4 +123,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         return refreshToken;
     }
+
+    private void sendErrorResponse(HttpServletResponse response) throws IOException {
+        Gson gson = new Gson();
+        ErrorResponse errorResponse = ErrorResponse.of(HttpStatus.NOT_FOUND);
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.getWriter().write(gson.toJson(errorResponse, ErrorResponse.class));
+    }
+
 }
